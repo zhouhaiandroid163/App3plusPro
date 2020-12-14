@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:stepHistogramView="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical"
+    tools:context=".module.home.exercise.StepHistoryActivity">
+
+    <include layout="@layout/public_head_white_text" />
+
+    <com.haibin.calendarview.CalendarLayout
+        android:id="@+id/calendarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:calendar_content_view_id="@+id/nestedScrollView"
+        app:calendar_show_mode="both_month_week_view"
+        app:default_status="shrink">
+
+        <com.haibin.calendarview.CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/base_activity_bg"
+            app:calendar_height="40dp"
+            app:current_day_text_color="#ffffff"
+            app:current_month_lunar_text_color="#000000"
+            app:current_month_text_color="@color/white"
+            app:min_year="2004"
+            app:month_view="com.zjw.apps3pluspro.view.mycalendar.SimpleMonthView"
+            app:other_month_text_color="#5fffffff"
+            app:scheme_text=""
+            app:scheme_text_color="#ffffff"
+            app:scheme_theme_color="#ffffff"
+            app:selected_lunar_text_color="#CFCFCF"
+            app:selected_text_color="@color/white"
+            app:selected_theme_color="@color/dialog_bg"
+            app:week_background="@color/base_activity_bg"
+            app:week_text_color="@color/white"
+            app:week_view="com.zjw.apps3pluspro.view.mycalendar.SimpleWeekView"
+            app:year_view_day_text_color="@color/year_is_now_no_biaoji_month_text_color"
+            app:year_view_day_text_size="9sp"
+            app:year_view_month_text_color="@color/year_month_text_color"
+            app:year_view_month_text_size="20sp"
+            app:year_view_scheme_color="@color/year_is_now_is_biaoji_month_text_color" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/base_activity_bg"
+                android:orientation="vertical"
+                tools:ignore="KeyboardInaccessibleWidget">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:background="@mipmap/shadow_bg" />
+
+                <include
+                    android:id="@+id/layoutNoData"
+                    layout="@layout/public_nodata"
+                    android:visibility="gone" />
+
+
+                <LinearLayout
+                    android:id="@+id/layoutData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/step_history_gradient_bg"
+                        android:gravity="center"
+                        android:minHeight="100dp"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:id="@+id/tvSlidingValue"
+                            style="@style/data_page_number"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/data_bg"
+                            android:paddingLeft="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingRight="8dp"
+                            android:paddingBottom="4dp"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+
+                        <com.zjw.apps3pluspro.view.StepHistogramView
+                            android:id="@+id/stepHistogramView"
+                            android:layout_width="match_parent"
+                            android:layout_height="136dp"
+                            android:layout_marginTop="6dp"
+                            android:background="@color/transparent"
+                            stepHistogramView:stepHistogramView_histogram="@color/white_50"
+                            stepHistogramView:stepHistogramView_histogram_bg="@color/transparent"
+                            stepHistogramView:stepHistogramView_histogram_touch="@color/white"
+                            stepHistogramView:stepHistogramView_isDrawX0="true"
+                            stepHistogramView:stepHistogramView_x_text_color="@color/white" />
+                    </LinearLayout>
+
+                    <include layout="@layout/step_history_layout" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/selector_white_bg"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/target_steps"
+                                android:textColor="#ff000011"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/tvTarget"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="(8000)"
+                                android:textColor="#ff000011"
+                                android:textSize="14sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="right">
+
+                                <TextView
+                                    android:id="@+id/tvComplete"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="35%"
+                                    android:textColor="#ff000011"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/targetProgress"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="12dp"
+                            android:layout_marginTop="12dp"
+                            android:max="100"
+                            android:progress="50"
+                            android:progressDrawable="@drawable/step_progress_bg" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </com.haibin.calendarview.CalendarLayout>
+
+</LinearLayout>

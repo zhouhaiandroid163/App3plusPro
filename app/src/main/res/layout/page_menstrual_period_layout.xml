@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutMenstualPeriod"
+        style="@style/data_page_constraint_layout">
+
+        <ImageView
+            android:id="@+id/ivTitle"
+            style="@style/data_page_img"
+            android:background="@mipmap/data_menstrual_period"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/tvMenstualPeriodTitle"
+            style="@style/data_page_title"
+            android:text="@string/cycle_tile"
+            app:layout_constraintLeft_toLeftOf="@+id/ivTitle"
+            app:layout_constraintTop_toBottomOf="@+id/ivTitle" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_index_cycle_no_set"
+            style="@style/data_page_no_data_layout"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="@+id/tvMenstualPeriodTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvMenstualPeriodTitle">
+
+            <TextView
+                style="@style/data_page_sub_title"
+                android:text="@string/no_data" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_index_cycle_yes_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="@+id/tvMenstualPeriodTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvMenstualPeriodTitle">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@+id/tvMenstualPeriodTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvMenstualPeriodTitle">
+
+                <TextView
+                    android:id="@+id/tvLength"
+                    style="@style/data_page_sub_title"
+                    android:text="@string/no_data_default" />
+
+
+                <TextView
+                    style="@style/data_page_sub_title"
+                    android:text="@string/number_day" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp">
+
+                    <TextView
+                        android:id="@+id/tvState1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/menstrual_period_bg" />
+
+                    <TextView
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvState2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/menstrual_period_bg" />
+
+                    <TextView
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvState3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/menstrual_period_bg" />
+
+                    <TextView
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tvState4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@drawable/menstrual_period_bg" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/cycle_period"
+                        android:textColor="#7F8088"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tv2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/cycle_security"
+                        android:textColor="#7F8088"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tv3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/cycle_danger"
+                        android:textColor="#7F8088"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/tv4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/cycle_security"
+                        android:textColor="#7F8088"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+
+                        <TextView
+                            style="@style/public_text_count2_style"
+
+                            android:text="0" />
+
+                        <TextView
+                            style="@style/public_text_count2_style"
+                            android:text="@string/cycle_day" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_cycle_target"
+                            style="@style/public_text_count2_style"
+
+                            android:text="@string/sleep_gang" />
+
+                        <TextView
+                            style="@style/public_text_count2_style"
+                            android:text="@string/cycle_day" />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

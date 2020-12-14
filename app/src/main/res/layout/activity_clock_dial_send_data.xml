@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:colorRoundAttr="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/public_head" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dip">
+
+                    <RelativeLayout
+                        android:layout_width="135dp"
+                        android:layout_height="135dp"
+                        android:background="@drawable/list_my_theme_bg2"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="12dip">
+
+                        <ImageView
+                            android:id="@+id/ivEffectBg"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                        <ImageView
+                            android:id="@+id/ivEffectText"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                        <ImageView
+                            android:id="@+id/ivCover"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@mipmap/cover_bg"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/llCustomView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvSelectPicture"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginLeft="48dp"
+                        android:layout_marginRight="48dp"
+                        android:background="@drawable/blue_ring_bg"
+                        android:gravity="center"
+                        android:text="@string/select_picture"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/select_color"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.zjw.apps3pluspro.view.ColorRoundView
+                            android:id="@+id/crv11"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            colorRoundAttr:bgColor="@color/white"
+                            colorRoundAttr:ringColor="#dddddd" />
+
+                        <com.zjw.apps3pluspro.view.ColorRoundView
+                            android:id="@+id/crv12"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            colorRoundAttr:bgColor="#80fffd"
+                            colorRoundAttr:ringColor="#dddddd" />
+
+                        <com.zjw.apps3pluspro.view.ColorRoundView
+                            android:id="@+id/crv13"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            colorRoundAttr:bgColor="#57cdff"
+                            colorRoundAttr:ringColor="#dddddd" />
+
+                        <com.zjw.apps3pluspro.view.ColorRoundView
+                            android:id="@+id/crv14"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            colorRoundAttr:bgColor="#04bfc0"
+                            colorRoundAttr:ringColor="#dddddd" />
+
+                        <com.zjw.apps3pluspro.view.ColorRoundView
+                            android:id="@+id/crv15"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            colorRoundAttr:bgColor="#578b00"
+                            colorRoundAttr:ringColor="#dddddd" />
+
+                        <com.zjw.apps3pluspro.view.ColorRoundView
+                            android:id="@+id/crv16"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            colorRoundAttr:bgColor="#e4001d"
+                            colorRoundAttr:ringColor="#dddddd" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.zjw.apps3pluspro.view.ColorRoundView
+                            android:id="@+id/crv21"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            colorRoundAttr:bgColor="#0100be"
+                            colorRoundAttr:ringColor="#dddddd" />
+
+                        <com.zjw.apps3pluspro.view.ColorRoundView
+                            android:id="@+id/crv22"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            colorRoundAttr:bgColor="#ea7e8d"
+                            colorRoundAttr:ringColor="#dddddd" />
+
+                        <com.zjw.apps3pluspro.view.ColorRoundView
+                            android:id="@+id/crv23"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            colorRoundAttr:bgColor="#b6731a"
+                            colorRoundAttr:ringColor="#dddddd" />
+
+                        <com.zjw.apps3pluspro.view.ColorRoundView
+                            android:id="@+id/crv24"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            colorRoundAttr:bgColor="#95f103"
+                            colorRoundAttr:ringColor="#dddddd" />
+
+                        <com.zjw.apps3pluspro.view.ColorRoundView
+                            android:id="@+id/crv25"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            colorRoundAttr:bgColor="#8300fe"
+                            colorRoundAttr:ringColor="#dddddd" />
+
+                        <ImageView
+                            android:id="@+id/ivSelectColor"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:src="@mipmap/select_color_bg" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/sendData"
+                    style="@style/big_button_stytle"
+                    android:layout_marginTop="76dp"
+                    android:layout_marginBottom="36dp"
+                    android:text="@string/custom_sync" />
+            </LinearLayout>
+
+
+        </ScrollView>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

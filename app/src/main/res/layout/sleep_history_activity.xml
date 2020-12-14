@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical"
+    tools:context=".module.home.exercise.StepHistoryActivity">
+
+    <include layout="@layout/public_head_white_text" />
+
+    <com.haibin.calendarview.CalendarLayout
+        android:id="@+id/calendarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:calendar_content_view_id="@+id/nestedScrollView"
+        app:calendar_show_mode="both_month_week_view"
+        app:default_status="shrink">
+
+        <com.haibin.calendarview.CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/base_activity_bg"
+            app:calendar_height="40dp"
+            app:current_day_text_color="#ffffff"
+            app:current_month_lunar_text_color="#000000"
+            app:current_month_text_color="@color/white"
+            app:min_year="2004"
+            app:month_view="com.zjw.apps3pluspro.view.mycalendar.SimpleMonthView"
+            app:other_month_text_color="#5fffffff"
+            app:scheme_text=""
+            app:scheme_text_color="#ffffff"
+            app:scheme_theme_color="#ffffff"
+            app:selected_lunar_text_color="#CFCFCF"
+            app:selected_text_color="@color/white"
+            app:selected_theme_color="@color/dialog_bg"
+            app:week_background="@color/base_activity_bg"
+            app:week_text_color="#ffffff"
+            app:week_view="com.zjw.apps3pluspro.view.mycalendar.SimpleWeekView"
+            app:year_view_day_text_color="@color/year_is_now_no_biaoji_month_text_color"
+            app:year_view_day_text_size="9sp"
+            app:year_view_month_text_color="@color/year_month_text_color"
+            app:year_view_month_text_size="20sp"
+            app:year_view_scheme_color="@color/year_is_now_is_biaoji_month_text_color" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/base_activity_bg"
+                android:orientation="vertical"
+                tools:ignore="KeyboardInaccessibleWidget">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:background="@mipmap/shadow_bg" />
+
+                <include
+                    android:id="@+id/layoutNoData"
+                    layout="@layout/public_nodata"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/layoutData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="24dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/top_bar_base"
+                        android:gravity="center"
+                        android:minHeight="100dp"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:gravity="bottom">
+
+                            <LinearLayout
+                                android:id="@+id/sleep_details_lin_data_yes"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="4dip"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingLeft="5dip"
+                                android:paddingRight="5dip"
+                                android:visibility="visible">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="40dip"
+                                    android:gravity="center">
+
+                                    <LinearLayout
+                                        android:id="@+id/ll_sleep_state"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/data_bg"
+                                        android:gravity="center"
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="8dp"
+                                        android:paddingTop="4dp"
+                                        android:paddingRight="8dp"
+                                        android:paddingBottom="8dp"
+                                        android:visibility="invisible">
+
+                                        <TextView
+                                            android:id="@+id/tv_sleep_state"
+                                            style="@style/public_text_count1_style" />
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content">
+
+                                            <TextView
+                                                android:id="@+id/tv_sleep_state_start_time"
+                                                style="@style/public_text_count1_style"
+                                                android:text="00:00"
+                                                android:textColor="@color/white" />
+
+                                            <TextView
+                                                android:id="@+id/tv_sleep_state_fenge"
+                                                style="@style/public_text_count1_style"
+                                                android:layout_centerVertical="true"
+                                                android:layout_toRightOf="@+id/tv_sleep_state_start_time"
+                                                android:text=" - "
+                                                android:textColor="@color/white" />
+
+                                            <TextView
+                                                android:id="@+id/tv_sleep_state_end_time"
+                                                style="@style/public_text_count1_style"
+                                                android:text="00:00"
+                                                android:textColor="@color/white" />
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+
+                                <RelativeLayout
+                                    android:id="@+id/rl_sleep_details_chart_view1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0px"
+                                    android:layout_centerInParent="true"
+                                    android:layout_marginTop="5dip"
+                                    android:layout_weight="2" />
+
+                                <RelativeLayout
+                                    android:id="@+id/rl_sleep_details_chart_view2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0px"
+                                    android:layout_centerInParent="true"
+                                    android:layout_marginTop="-2dp"
+                                    android:layout_weight="2" />
+
+                                <RelativeLayout
+                                    android:id="@+id/rl_sleep_details_chart_view3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0px"
+                                    android:layout_centerInParent="true"
+                                    android:layout_marginTop="-2dp"
+                                    android:layout_weight="4" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/sleep_details_seek_data_yes"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="10dip"
+                                android:orientation="vertical"
+                                android:paddingLeft="5dip"
+                                android:paddingRight="5dip">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:gravity="center">
+
+                                    <TextView
+                                        style="@style/public_text_count1_style"
+                                        android:text="" />
+
+                                </LinearLayout>
+
+
+                                <SeekBar
+                                    android:id="@+id/sleep_seek_bar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:paddingStart="0dp"
+                                    android:paddingEnd="0dp"
+                                    android:progressDrawable="@drawable/ecg_seekbar_bg"
+                                    android:thumb="@drawable/ecg_seekbar_bg" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                        <include layout="@layout/line_layout" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:layout_marginRight="5dip">
+
+                            <TextView
+                                android:id="@+id/tv_sleep_start_time"
+                                style="@style/public_text_count2_style"
+                                android:layout_width="wrap_content"
+                                android:text="@string/sleep_gang"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tv_sleep_end_time"
+                                style="@style/public_text_count2_style"
+                                android:layout_width="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:text="@string/sleep_gang"
+                                android:textColor="@color/white" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/selector_white_bg"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:visibility="gone">
+
+                        <com.zjw.apps3pluspro.view.MultiProgressView
+                            android:id="@+id/multiProgressView"
+                            android:layout_width="match_parent"
+                            android:layout_height="36dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="#088E4CFA" />
+                    </LinearLayout>
+
+                    <include layout="@layout/sleep_history_layout" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/selector_white_bg"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/sleep_target"
+                                android:textColor="#ff000011"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/tvTarget"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="(8000)"
+                                android:textColor="#ff000011"
+                                android:textSize="14sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="right">
+
+                                <TextView
+                                    android:id="@+id/tvComplete"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="35%"
+                                    android:textColor="#ff000011"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <ProgressBar
+                            android:id="@+id/targetProgress"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="12dp"
+                            android:layout_marginTop="12dp"
+                            android:max="100"
+                            android:progress="50"
+                            android:progressDrawable="@drawable/sleep_progress_bg" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </com.haibin.calendarview.CalendarLayout>
+
+</LinearLayout>

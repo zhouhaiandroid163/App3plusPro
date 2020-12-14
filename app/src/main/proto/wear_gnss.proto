@@ -1,0 +1,45 @@
+// wear_gnss.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "GnssProtos";
+
+message Gnss {
+    enum GnssID {
+        REQUEST_ONLINE = 0x00;
+        REQUEST_OFFLINE = 0x01;
+        SEND_GPS_INFO = 0x02;
+    }
+
+    oneof payload {
+        uint32 days = 1;
+        Data data = 2;
+        GpsInfo gps_info = 3;
+    }
+}
+
+message Data {
+    enum Type {
+        AGPS = 0x01;
+        BEIDOU = 0x02;
+    }
+
+    required Type type = 1;
+    // source must be consistent with server
+    // eg: ublox/broadcom/airoha
+    required string source = 2 [(nanopb).type = FT_POINTER];
+    optional uint32 days = 3 [(nanopb).int_size = IS_8];
+
+    // some gps vendor need gps info, such as airoha
+    optional bool need_gps_info = 4;
+}
+
+message GpsInfo {
+    required uint32 timestamp = 1;
+    required double longitude = 2;
+    required double latitude = 3;
+    optional double altitude = 4;
+}

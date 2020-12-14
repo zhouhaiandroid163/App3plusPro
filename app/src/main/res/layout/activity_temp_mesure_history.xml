@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical"
+    tools:context=".module.home.temp.TempHistoryActivity">
+
+    <include layout="@layout/public_head_white_text" />
+
+    <com.haibin.calendarview.CalendarLayout
+        android:id="@+id/calendarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:calendar_content_view_id="@+id/nestedScrollView"
+        app:calendar_show_mode="both_month_week_view"
+        app:default_status="shrink">
+
+        <com.haibin.calendarview.CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/base_activity_bg"
+            app:calendar_height="40dp"
+            app:current_day_text_color="#ffffff"
+            app:current_month_lunar_text_color="#000000"
+            app:current_month_text_color="@color/white"
+            app:min_year="2004"
+            app:month_view="com.zjw.apps3pluspro.view.mycalendar.SimpleMonthView"
+            app:other_month_text_color="#5fffffff"
+            app:scheme_text=""
+            app:scheme_text_color="#ffffff"
+            app:scheme_theme_color="#ffffff"
+            app:selected_lunar_text_color="#CFCFCF"
+            app:selected_text_color="@color/white"
+            app:selected_theme_color="@color/dialog_bg"
+            app:week_background="@color/base_activity_bg"
+            app:week_text_color="#ffffff"
+            app:week_view="com.zjw.apps3pluspro.view.mycalendar.SimpleWeekView"
+            app:year_view_day_text_color="@color/year_is_now_no_biaoji_month_text_color"
+            app:year_view_day_text_size="9sp"
+            app:year_view_month_text_color="@color/year_month_text_color"
+            app:year_view_month_text_size="20sp"
+            app:year_view_scheme_color="@color/year_is_now_is_biaoji_month_text_color" />
+
+        <LinearLayout
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/base_activity_bg"
+                android:orientation="vertical"
+                tools:ignore="KeyboardInaccessibleWidget">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:background="@mipmap/shadow_bg" />
+
+                <include
+                    android:id="@+id/layoutNoData"
+                    layout="@layout/public_nodata"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/layoutData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="6dp"
+                    android:orientation="vertical"
+                    android:paddingBottom="24dp">
+
+                    <ListView
+                        android:id="@+id/temp_mesure_history_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:divider="@color/transparent"
+                        android:dividerHeight="12dip" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.haibin.calendarview.CalendarLayout>
+
+</LinearLayout>

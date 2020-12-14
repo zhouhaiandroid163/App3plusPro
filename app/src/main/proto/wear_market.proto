@@ -1,0 +1,70 @@
+// wear_market.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "MarketProtos";
+
+message Market {
+    enum MarketID {
+        // only install by package name
+        TRY_INSTALL_APK = 0x00;
+        TRY_INSTALL_APKS = 0x01;
+        // compatible for old version(NOT_SUPPORT)
+        REPORT_INSTALL_PROGRESS = 0x02;
+        TRY_INSTALL_APK_NEW = 0x03;
+        TRY_INSTALL_APKS_NEW = 0x04;
+    }
+
+    oneof payload {
+        Apk apk = 1;
+        Apk.List apk_list = 2;
+        InstallProgress install_progress = 3;
+    }
+}
+
+enum ApkType {
+    APP = 0x00;
+    WATCH_FACE = 0x01;
+}
+
+message Apk {
+    required ApkType type = 1;
+    oneof payload {
+        string package_name = 2 [(nanopb).type = FT_POINTER];
+        // deprecated
+        string url = 3 [(nanopb).type = FT_POINTER];
+        ApkInfo apk_info = 4;
+    }
+
+    message List {
+        repeated Apk list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message ApkInfo {
+    required string package_name = 1 [(nanopb).type = FT_POINTER];
+    required string package_hash = 2 [(nanopb).type = FT_POINTER];
+    required uint64 version_code = 3;
+}
+
+enum InstallCode {
+    VERSION_DOWNGRADE = 0x00;
+    LATEST_VERSION = 0x01;
+    APK_NOT_FOUND = 0x02;
+    WAITING_DOWNLOAD = 0x03;
+    DOWNLOADING = 0x04;
+    DOWNLOAD_FAILED = 0x05;
+    INSTALLING = 0x06;
+    INSTALL_SUCCESS = 0x07;
+    INSTALL_FAILED = 0x08;
+    CANCELLED = 0x09;
+}
+
+message InstallProgress {
+    required InstallCode code = 1;
+    required string package_name = 2 [(nanopb).type = FT_POINTER];
+    optional uint32 download_progress = 3 [(nanopb).int_size = IS_8];
+}

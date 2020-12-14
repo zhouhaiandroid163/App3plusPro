@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/sfClockDialMarket"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dip">
+
+        <GridView
+            android:id="@+id/gvClockDialMarket"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dip"
+            android:horizontalSpacing="2dp"
+            android:numColumns="3"
+            android:verticalSpacing="10dip" />
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</RelativeLayout>

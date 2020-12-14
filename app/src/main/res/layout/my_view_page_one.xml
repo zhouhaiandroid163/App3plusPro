@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dip">
+
+        <LinearLayout
+            android:id="@+id/my_page_heart"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:background="@drawable/my_icon_noti_heart" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/heart_warning_tip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
+                    android:text="@string/notices_opened" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/my_page_meeting"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/my_item1_selector"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:background="@drawable/my_icon_noti_heart" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/public_text_title2_style"
+                    android:text="@string/metting_title" />
+
+                <TextView
+                    android:id="@+id/tv_metting_switch"
+                    style="@style/public_text_company2_style"
+                    android:layout_marginTop="5dip"
+                    android:text="@string/notices_opened" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/my_page_water"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/my_item1_selector"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:background="@drawable/my_icon_noti_heshui" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/public_text_title2_style"
+                    android:text="@string/drink_water_title" />
+
+                <TextView
+                    android:id="@+id/tv_metting_water"
+                    style="@style/public_text_company2_style"
+                    android:layout_marginTop="5dip"
+                    android:text="@string/notices_opened" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dip">
+
+        <LinearLayout
+            android:id="@+id/my_page_sit"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/my_item1_selector"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:background="@drawable/my_icon_noti_jiuzuo" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/public_text_title2_style"
+                    android:text="@string/long_sit_title" />
+
+                <TextView
+                    android:id="@+id/tv_metting_sit"
+                    style="@style/public_text_company2_style"
+                    android:layout_marginTop="5dip"
+                    android:text="@string/notices_opened" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/my_page_drug"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/my_item1_selector"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:background="@drawable/my_icon_notiface_chiyao" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/public_text_title2_style"
+                    android:text="@string/medicine_title" />
+
+                <TextView
+                    android:id="@+id/tv_metting_drug"
+                    style="@style/public_text_company2_style"
+                    android:layout_marginTop="5dip"
+                    android:text="@string/notices_opened" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

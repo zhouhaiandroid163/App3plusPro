@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head_white_text" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dip">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="18dip"
+                    android:layout_height="18dip"
+                    android:background="@drawable/cycle_yuan1" />
+
+                <TextView
+                    style="@style/public_text_title2_style"
+                    android:layout_marginLeft="10dip"
+                    android:text="@string/cycle_period" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/public_text_company2_style"
+                android:layout_marginTop="10dip"
+                android:text="@string/cycle_info_text1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dip"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="18dip"
+                    android:layout_height="18dip"
+                    android:background="@drawable/cycle_yuan2" />
+
+                <TextView
+                    style="@style/public_text_title2_style"
+                    android:layout_marginLeft="10dip"
+                    android:text="@string/cycle_security" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/public_text_company2_style"
+                android:layout_marginTop="10dip"
+                android:text="@string/cycle_info_text3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dip"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dip"
+                    android:background="@drawable/cycle_yuan3" />
+
+                <TextView
+                    style="@style/public_text_title2_style"
+                    android:layout_marginLeft="10dip"
+                    android:text="@string/cycle_danger" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/public_text_company2_style"
+                android:layout_marginTop="10dip"
+                android:text="@string/cycle_info_text4" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

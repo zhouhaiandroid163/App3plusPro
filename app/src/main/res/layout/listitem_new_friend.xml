@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="65dp"
+    android:paddingLeft="@dimen/history_list_par"
+    android:paddingRight="@dimen/history_list_par">
+
+    <com.zjw.apps3pluspro.view.CircleImageView
+        android:id="@+id/ci_new_friend_head"
+        android:layout_width="45dip"
+        android:layout_height="45dip"
+        android:layout_centerVertical="true"
+        android:src="@drawable/default_header" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dip"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/friend_new_name"
+                style="@style/public_text_title2_style"
+                android:text="xxxx" />
+
+            <TextView
+                android:id="@+id/riend_new_message"
+                style="@style/public_text_company2_style"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right|center">
+
+            <Button
+                android:id="@+id/riend_new_delete_button"
+                android:layout_width="66dp"
+                android:layout_height="40dp"
+                android:background="@drawable/my_button3_selector"
+                android:text="@string/care_ignore"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/riend_new_add_button"
+                android:layout_width="66dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/bt_gradient_bg"
+                android:text="@string/friend_accept"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

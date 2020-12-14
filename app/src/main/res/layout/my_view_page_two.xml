@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dip">
+
+        <LinearLayout
+            android:id="@+id/my_page_clock"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/my_item1_selector"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:background="@drawable/my_icon_noti_clock" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/public_text_title2_style"
+                    android:text="@string/colok_title" />
+
+                <TextView
+                    android:id="@+id/tv_alarm_clock_switch"
+                    style="@style/public_text_company2_style"
+                    android:layout_marginTop="5dip"
+                    android:text="@string/notices_opened" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/my_page_disturb"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/my_item1_selector"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:background="@drawable/my_icon_noti_not" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/public_text_title2_style"
+                    android:text="@string/do_not_disturb" />
+
+                <TextView
+                    android:id="@+id/tv_disturb_switch"
+                    style="@style/public_text_company2_style"
+                    android:layout_marginTop="5dip"
+                    android:text="@string/notices_opened" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="60dip">
+
+        <LinearLayout
+            android:id="@+id/my_page_app"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/my_item1_selector"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="35dip"
+                android:background="@drawable/my_icon_noti_app" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/public_text_title2_style"
+                    android:text="@string/more_app_remain" />
+
+                <TextView
+                    android:id="@+id/tv_more_app_switch"
+                    style="@style/public_text_company2_style"
+                    android:layout_marginTop="5dip"
+                    android:text="@string/notices_opened" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/my_page_more"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/my_item1_selector"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="35dip"
+                android:layout_height="35dip"
+                android:background="@drawable/my_icon_noti_more" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/public_text_title2_style"
+                    android:text="@string/more_set_tip" />
+
+                <TextView
+                    style="@style/public_text_company2_style"
+                    android:layout_marginTop="5dip"
+                    android:text="@string/notices_opened"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

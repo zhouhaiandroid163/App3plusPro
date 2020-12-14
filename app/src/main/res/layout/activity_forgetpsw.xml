@@ -1,0 +1,119 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dip">
+
+
+        <EditText
+            android:id="@+id/et_forget_account"
+            style="@style/public_edit_account_style"
+            android:hint="@string/input_your_mobile_phone" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1effffff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginTop="12dp">
+
+            <EditText
+                android:id="@+id/et_forget_account_getcode"
+                style="@style/public_edit_verification_code_style"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:hint="@string/input_code" />
+
+            <Button
+                android:id="@+id/btn_forget_account_getcode"
+                style="@style/get_code_button_style"
+                android:layout_gravity="center"
+                android:text="@string/send_code" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1effffff" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginTop="12dp">
+
+
+            <EditText
+                android:id="@+id/et_account_forget_password1"
+                style="@style/public_edit_password_style"
+                android:hint="@string/input_your_pas" />
+
+
+            <CheckBox
+                android:id="@+id/cb_account_forget_again1"
+                style="@style/MyCheckBox2" />
+        </RelativeLayout>
+
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1effffff" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginTop="12dp">
+
+            <EditText
+                android:id="@+id/et_account_forget_password2"
+                style="@style/public_edit_password_style"
+                android:hint="@string/set_pas_again" />
+
+            <CheckBox
+                android:id="@+id/cb_account_forget_again2"
+                style="@style/MyCheckBox2" />
+
+        </RelativeLayout>
+
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1effffff" />
+
+        <TextView
+            style="@style/public_text_company2_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dip"
+            android:text="@string/password_lenght"
+            android:textColor="@color/white_50" />
+
+
+        <Button
+            android:id="@+id/btn_account_forget_ok"
+            style="@style/big_button_stytle"
+            android:layout_marginTop="38dip"
+            android:text="@string/dialog_yes" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

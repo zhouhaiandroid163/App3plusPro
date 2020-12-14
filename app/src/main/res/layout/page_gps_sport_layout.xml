@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutSportCard"
+        style="@style/data_page_constraint_layout">
+
+        <ImageView
+            android:id="@+id/ivGpsSportTitle"
+            style="@style/data_page_img"
+            android:background="@mipmap/data_sport"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvGpsSportTitle"
+            style="@style/data_page_title"
+            android:text="@string/data_sport"
+            app:layout_constraintLeft_toLeftOf="@+id/ivGpsSportTitle"
+            app:layout_constraintTop_toBottomOf="@+id/ivGpsSportTitle" />
+
+        <TextView
+            android:id="@+id/tvUpdateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@string/sleep_gang"
+            android:visibility="gone"
+            android:textColor="@color/color_7f8088"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvGpsSportTitle"
+            app:layout_constraintLeft_toRightOf="@+id/tvGpsSportTitle"
+            app:layout_constraintTop_toTopOf="@+id/tvGpsSportTitle" />
+
+
+        <LinearLayout
+            android:id="@+id/layoutGpsSportShowData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="@+id/tvGpsSportTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvGpsSportTitle">
+
+            <LinearLayout
+                android:id="@+id/layoutGpsSport0"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/layoutStep"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="bottom">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvStep"-->
+<!--                        style="@style/data_page_number" />-->
+
+<!--                    <TextView-->
+<!--                        style="@style/data_page_unit"-->
+<!--                        android:text="@string/steps" />-->
+
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/layoutCal"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="12dp"-->
+<!--                    android:gravity="bottom">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvCal"-->
+<!--                        style="@style/data_page_number" />-->
+
+<!--                    <TextView-->
+<!--                        style="@style/data_page_unit"-->
+<!--                        android:text="@string/big_calory" />-->
+
+
+<!--                </LinearLayout>-->
+                <TextView
+                    android:id="@+id/tvValue0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="消耗112kcal  时长00:32:12"
+                    android:textColor="#ff7f7f87"
+                    android:textSize="14sp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutGpsSport1"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvValue1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="消耗112kcal  时长00:32:12"
+                    android:textColor="#ff7f7f87"
+                    android:textSize="14sp"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutGpsSportNoData"
+            style="@style/data_page_no_data_layout"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="@+id/tvGpsSportTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvGpsSportTitle">
+
+            <TextView
+                style="@style/data_page_sub_title"
+                android:text="@string/no_data" />
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -1,0 +1,16 @@
+package tutorial;
+option java_package = "cn.jubo.customsystem";
+option java_outer_classname = "AddressBookProtos";
+
+//required = 必须的
+//optional = 可选
+//repeated = 重复的
+message Person {
+    required int32 age = 1;
+    required string username = 2;
+    required string myphone = 3;
+}
+
+message AddressBook {
+     repeated Person people = 1;
+}

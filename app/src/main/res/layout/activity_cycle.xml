@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/title_bg_cycle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-30dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_exercise_day_choose"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/top_conner_bg">
+
+            <TextView
+                android:id="@+id/tv_calendar_cycle_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textColor="#000011"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_calendar_cycle_left"
+                android:layout_width="60dip"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dip"
+                android:layout_toLeftOf="@id/tv_calendar_cycle_date"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:background="@drawable/icon_left_enable_on" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_calendar_cycle_right"
+                android:layout_width="60dip"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@id/tv_calendar_cycle_date"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:background="@drawable/icon_right_enable_on" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <com.haibin.calendarview.CalendarLayout
+            android:id="@+id/calendarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:calendar_content_view_id="@+id/nestedScrollView">
+
+            <com.haibin.calendarview.CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:background="@color/white"
+                app:calendar_height="40dp"
+                app:calendar_padding="1dp"
+                app:current_month_lunar_text_color="#000011"
+                app:current_month_text_color="#000011"
+                app:min_year="2004"
+                app:month_view="com.zjw.apps3pluspro.view.cyclecalendarview.SimpleMonthView"
+                app:other_month_text_color="#e1e1e1"
+                app:scheme_text=""
+                app:scheme_text_color="#ffffff"
+                app:scheme_theme_color="#333"
+                app:selected_theme_color="@color/cycle_color_type1_bg"
+                app:week_background="@color/white"
+                app:week_text_color="@color/week_is_now_text_color"
+                app:week_view="com.zjw.apps3pluspro.view.cyclecalendarview.SimpleWeekView"
+                app:year_view_day_text_color="@color/year_is_now_no_biaoji_month_text_color"
+                app:year_view_day_text_size="9sp"
+                app:year_view_month_text_color="@color/year_month_text_color"
+                app:year_view_month_text_size="20sp"
+                app:year_view_scheme_color="@color/year_is_now_is_biaoji_month_text_color" />
+
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nestedScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:orientation="vertical"
+                    tools:ignore="KeyboardInaccessibleWidget">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="68dp"
+                        android:background="@color/base_activity_bg" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-68dp"
+                        android:background="@drawable/bottom_conner_bg"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="12dp"
+                            android:background="#E5E5E7" />
+
+                        <RelativeLayout
+                            android:id="@+id/cycle_go_to_cycle_info"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="12dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="15dip"
+                                    android:layout_height="15dip"
+                                    android:layout_marginLeft="10dip"
+                                    android:background="@drawable/cycle_yuan1" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dip"
+                                    android:maxWidth="80dp"
+                                    android:text="@string/cycle_period"
+                                    android:textColor="#141a1f"
+                                    android:textSize="12sp" />
+
+
+                                <ImageView
+                                    android:layout_width="15dip"
+                                    android:layout_height="15dip"
+                                    android:layout_marginLeft="10dip"
+                                    android:background="@drawable/cycle_yuan2" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dip"
+                                    android:maxWidth="80dp"
+                                    android:text="@string/cycle_security"
+                                    android:textColor="#141a1f"
+                                    android:textSize="12sp" />
+
+
+                                <ImageView
+                                    android:layout_width="15dip"
+                                    android:layout_height="15dp"
+                                    android:layout_marginLeft="10dip"
+                                    android:background="@drawable/cycle_yuan3" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="2dip"
+                                    android:maxWidth="80dp"
+                                    android:text="@string/cycle_danger"
+                                    android:textColor="#141a1f"
+                                    android:textSize="12sp" />
+
+
+                            </LinearLayout>
+
+
+                            <ImageView
+                                android:layout_width="@dimen/my_icon_right_img_size"
+                                android:layout_height="@dimen/my_icon_right_img_size"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:background="@mipmap/icon_enter" />
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lin_cycle_type1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/selector_white_bg"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:minHeight="60dip"
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dip"
+                            android:paddingTop="10dip"
+                            android:paddingRight="15dip"
+                            android:paddingBottom="10dip">
+
+                            <LinearLayout
+                                android:layout_width="0px"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:layout_width="@dimen/my_img_size"
+                                    android:layout_height="@dimen/my_img_size"
+                                    android:layout_centerVertical="true"
+                                    android:background="@drawable/my_img_cycle_end" />
+
+                                <TextView
+                                    android:id="@+id/text_cycle_end"
+                                    style="@style/public_text_title2_style"
+                                    android:layout_centerVertical="true"
+                                    android:paddingLeft="5dip"
+                                    android:text="@string/cycle_end" />
+
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="60dip"
+                                android:layout_height="40dip">
+
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/sw_cycle_end"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:theme="@style/CycleSwitchTheme" />
+
+                                <Button
+                                    android:id="@+id/cycle_test_data"
+                                    android:layout_width="60dip"
+                                    android:layout_height="40dip"
+                                    android:layout_centerVertical="true"
+                                    android:background="#00000000" />
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+
+
+                        <include layout="@layout/public_line_15" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:minHeight="60dip"
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dip"
+                            android:paddingTop="10dip"
+                            android:paddingRight="15dip"
+                            android:paddingBottom="10dip">
+
+                            <LinearLayout
+                                android:layout_width="0px"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:layout_width="@dimen/my_img_size"
+                                    android:layout_height="@dimen/my_img_size"
+                                    android:layout_centerVertical="true"
+                                    android:background="@drawable/my_img_cycle_device" />
+
+                                <TextView
+                                    style="@style/public_text_title2_style"
+                                    android:layout_centerVertical="true"
+                                    android:paddingLeft="5dip"
+                                    android:text="@string/cycle_device" />
+
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/sw_cycle_device"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:theme="@style/CycleSwitchTheme" />
+
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+
+
+                        <include layout="@layout/public_line_15" />
+
+                        <LinearLayout
+                            android:id="@+id/lin_cycle_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:minHeight="60dip"
+                            android:orientation="horizontal"
+                            android:paddingLeft="15dip"
+                            android:paddingTop="10dip"
+                            android:paddingRight="15dip"
+                            android:paddingBottom="10dip">
+
+                            <LinearLayout
+                                android:layout_width="0px"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:layout_width="@dimen/my_img_size"
+                                    android:layout_height="@dimen/my_img_size"
+                                    android:layout_centerVertical="true"
+                                    android:background="@drawable/my_img_cycle_date" />
+
+                                <TextView
+                                    style="@style/public_text_title2_style"
+                                    android:layout_centerVertical="true"
+                                    android:paddingLeft="5dip"
+                                    android:text="@string/cycle_lately_one" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:id="@+id/text_cycle_date"
+                                    style="@style/public_text_title2_style"
+                                    android:layout_marginRight="5dip"
+                                    android:text="2018-10-10" />
+
+
+                                <ImageView
+                                    android:id="@+id/iv_cycle_right"
+                                    android:layout_width="@dimen/my_icon_right_img_size"
+                                    android:layout_height="@dimen/my_icon_right_img_size"
+                                    android:background="@mipmap/icon_enter" />
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lin_cycle_type2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/selector_white_bg"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingBottom="12dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/text_cycle_no_change"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dip"
+                            android:text="@string/cycle_new_no_change" />
+
+                        <Button
+                            android:id="@+id/button_cycle_go_to_today"
+                            style="@style/public_button1_style"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="30dip"
+                            android:background="@drawable/my_button4_selector"
+                            android:paddingLeft="20dip"
+                            android:paddingRight="20dip"
+                            android:text="@string/cycle_to_today" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            　
+        </com.haibin.calendarview.CalendarLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutEcgCard"
+        style="@style/data_page_constraint_layout">
+
+        <ImageView
+            android:id="@+id/ivTitle"
+            style="@style/data_page_img"
+            android:background="@mipmap/data_ecg"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvEcgTitle"
+            style="@style/data_page_title"
+            android:text="@string/ecg_measure_ecg"
+            app:layout_constraintLeft_toLeftOf="@+id/ivTitle"
+            app:layout_constraintTop_toBottomOf="@+id/ivTitle"  />
+
+        <LinearLayout
+            android:id="@+id/layoutEcgNoData"
+            style="@style/data_page_no_data_layout"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="@+id/tvEcgTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvEcgTitle">
+
+            <TextView
+                style="@style/data_page_sub_title"
+                android:text="@string/no_data" />
+        </LinearLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutEcgShowData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="@+id/tvEcgTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvEcgTitle">
+
+            <LinearLayout
+                android:id="@+id/layoutEcgBp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|bottom"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <TextView
+                    style="@style/data_page_sub_title"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/ecg_bp" />
+                <TextView
+                    android:id="@+id/tvEcgBloodPressure"
+                    style="@style/data_page_number" />
+
+                <TextView
+                    style="@style/data_page_unit"
+                    android:text="@string/mmHg" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

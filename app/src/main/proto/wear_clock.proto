@@ -1,0 +1,80 @@
+// wear_clock.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+import "wear_common.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "ClockProtos";
+
+message Clock {
+    enum ClockID {
+        GET_CLOCK_LIST = 0x00;
+        ADD_CLOCK = 0x01;
+        UPDATE_CLOCK = 0x02;
+        REMOVE_CLOCK = 0x03;
+        REMOVE_CLOCKS = 0x04;
+        ENABLE_OR_DISABLE_CLOCK = 0x05;
+        SYNC_HOLIDAY = 0x06;
+        WEAR_REQUEST_HOLIDAY = 0x07;
+
+        GET_WORLD_CLOCK_LIST = 0x0A;
+        ADD_WORLD_CLOCK = 0x0B;
+        REMOVE_WORLD_CLOCK = 0x0C;
+        REMOVE_WORLD_CLOCKS = 0x0D;
+    }
+
+    oneof payload {
+        ClockInfo.List clock_info_list = 1;
+        ClockInfo.Data clock_data = 2;
+        ClockInfo clock_info = 3;
+        uint32 id = 4;
+        ClockIdList clock_id_list = 5;
+        bool enable = 6;
+        ClockHoliday clock_holiday = 7;
+        ClockError clock_error = 8;
+
+        WorldClockIdList world_clock_id_list = 11; // GET_WORLD_CLOCK_LIST & REMOVE_WORLD_CLOCKS
+        string world_clock_id = 12 [(nanopb).type = FT_POINTER]; // ADD_WORLD_CLOCK & REMOVE_WORLD_CLOCK
+        WorldClockResult world_clock_result = 13;
+    }
+}
+
+message ClockInfo {
+    message Data {
+        required Time time = 2;
+        required ClockMode clock_mode = 3;
+        optional uint32 week_days = 4 [(nanopb).int_size = IS_8];
+        required bool enable = 5;
+        optional string label = 6 [(nanopb).type = FT_POINTER];
+    }
+
+    required uint32 id = 1;
+    required ClockInfo.Data data = 2;
+
+    message List {
+        repeated ClockInfo list = 1 [(nanopb).type = FT_POINTER];
+        optional uint32 support_max_clocks = 2;
+    }
+}
+
+message ClockIdList {
+    repeated uint32 id = 1 [(nanopb).type = FT_POINTER];
+}
+
+enum ClockError {
+    EXCEED_LIMIT = 0x01;
+    INVALID_ID = 0x02;
+    INVALID_DATA = 0x03;
+    NOT_SUPPORT_HOLIDAY = 0x04;
+}
+
+message WorldClockIdList {
+    repeated string id = 1 [(nanopb).type = FT_POINTER];
+}
+
+enum WorldClockResult {
+    OPERATE_SUCCESS = 0x00; // add or remove world clock success
+    ID_NOT_SUPPORT = 0x01; // world clock id not matched with our resources
+}

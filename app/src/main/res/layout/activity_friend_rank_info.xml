@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:id="@+id/rl_friend_info_ecg_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/selector_white_bg"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dip">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+
+                        <TextView
+                            style="@style/public_text_title1_style"
+                            android:text="@string/ecg_measure_ecg" />
+
+
+                        <TextView
+                            android:id="@+id/tv_friend_info_ecg_state"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:background="@drawable/my_circle_bg_two_2"
+                            android:paddingLeft="5dip"
+                            android:paddingRight="5dip"
+                            android:text="@string/user_par_state2"
+                            android:textColor="@color/my_circle_bg_two_2_bg"
+                            android:textSize="10sp"
+                            android:visibility="gone" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical|right">
+
+                            <TextView
+                                android:id="@+id/tv_friend_info_ecg_time"
+                                style="@style/public_text_count2_style"
+                                android:text="@string/sleep_gang"
+                                android:textColor="@color/white" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="15dip"
+                        android:paddingBottom="15dip">
+
+                        <LinearLayout
+                            android:id="@+id/ll_friend_info_ecg_help"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/health_index"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_width="25dip"
+                                android:layout_height="25dip"
+                                android:layout_marginLeft="5dip"
+                                android:background="@drawable/my_icon_dengpao_black"
+                                android:visibility="gone" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:paddingRight="8dip">
+
+                            <TextView
+                                android:id="@+id/tv_friend_info_health_number"
+                                style="@style/public_text_number1_style"
+                                android:text="@string/sleep_gang" />
+
+                            <TextView
+                                android:id="@+id/tv_friend_info_health_state"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dip"
+                                android:layout_toRightOf="@id/tv_friend_info_health_number"
+                                android:background="@drawable/my_circle_bg_two_2"
+                                android:paddingLeft="5dip"
+                                android:paddingRight="5dip"
+                                android:text="@string/user_par_state2"
+                                android:textColor="@color/my_circle_bg_two_2_bg"
+                                android:textSize="10sp"
+                                android:visibility="gone" />
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_ecg_heart"
+                                    style="@style/public_text_number1_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_company1_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/bpm" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dip">
+
+                                <TextView
+                                    style="@style/public_text_count1_style"
+                                    android:text="ECG" />
+
+                                <TextView
+                                    style="@style/public_text_count1_style"
+                                    android:text="@string/heart" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_ecg_sdp"
+                                    style="@style/public_text_number1_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_number1_style"
+                                    android:text="/" />
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_ecg_dbp"
+                                    style="@style/public_text_number1_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_company1_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/mmHg" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dip">
+
+                                <TextView
+                                    style="@style/public_text_count1_style"
+                                    android:text="ECG" />
+
+                                <TextView
+                                    style="@style/public_text_count1_style"
+                                    android:text="@string/blood_pressure" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ll_friend_info_sport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/selector_white_bg"
+                android:orientation="vertical">/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dip">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+
+                        <TextView
+                            style="@style/public_text_title1_style"
+                            android:text="@string/title_sport" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sport_step"
+                                    style="@style/public_text_number1_style"
+                                    android:text="@string/sleep_gang" />
+                            </LinearLayout>
+
+                            <TextView
+                                style="@style/public_text_count1_style"
+                                android:layout_marginTop="2dip"
+                                android:text="@string/sport_step" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sport_distance"
+                                    style="@style/public_text_number1_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sport_distance_unit"
+                                    style="@style/public_text_company1_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/sport_distance_unit" />
+                            </LinearLayout>
+
+                            <TextView
+                                style="@style/public_text_count1_style"
+                                android:layout_marginTop="2dip"
+                                android:text="@string/sport_distance" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sport_calory"
+                                    style="@style/public_text_number1_style"
+                                    android:text="@string/sleep_gang" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                style="@style/public_text_count1_style"
+                                android:layout_marginTop="2dip"
+                                android:text="@string/sport_calorie" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/ll_friend_info_sleep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/selector_white_bg"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dip">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+
+                        <TextView
+                            style="@style/public_text_title1_style"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_sleep" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dip"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/sleep_length_time"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:paddingRight="8dip">
+
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sleep_time_h"
+                                    style="@style/public_text_number2_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_count3_style"
+                                    android:text="@string/hour" />
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sleep_time_m"
+                                    style="@style/public_text_number2_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_count3_style"
+                                    android:text="@string/minute" />
+
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sleep_deep_time_h"
+                                    style="@style/public_text_number2_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_count3_style"
+                                    android:text="@string/hour" />
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sleep_deep_time_m"
+                                    style="@style/public_text_number2_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_count3_style"
+                                    android:text="@string/minute" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dip"
+                                android:gravity="center">
+
+
+                                <TextView
+                                    style="@style/public_text_count2_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/deep_sleep" />
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sleep_deep_proportion"
+                                    style="@style/public_text_count2_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_count2_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="%" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sleep_light_time_h"
+                                    style="@style/public_text_number2_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_count3_style"
+                                    android:text="@string/hour" />
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sleep_light_time_m"
+                                    style="@style/public_text_number2_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_count3_style"
+                                    android:text="@string/minute" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dip"
+                                android:gravity="center">
+
+
+                                <TextView
+                                    style="@style/public_text_count2_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/light_sleep" />
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sleep_light_proportion"
+                                    style="@style/public_text_count2_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_count2_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="%" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sleep_sober_time_h"
+                                    style="@style/public_text_number2_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_count3_style"
+                                    android:text="@string/hour" />
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sleep_sober_time_m"
+                                    style="@style/public_text_number2_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_count3_style"
+                                    android:text="@string/minute" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dip"
+                                android:gravity="center">
+
+
+                                <TextView
+                                    style="@style/public_text_count2_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/sober" />
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_sleep_sober_proportion"
+                                    style="@style/public_text_count2_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_count2_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="%" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ll_friend_info_heart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_marginBottom="10dip"
+                android:background="@drawable/selector_white_bg"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dip">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+
+                        <TextView
+                            style="@style/public_text_title1_style"
+                            android:text="@string/heart" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp">
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_heart_last"
+                                    style="@style/public_text_number1_style"
+                                    android:layout_width="wrap_content"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_company1_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/bpm" />
+                            </LinearLayout>
+
+                            <TextView
+                                style="@style/public_text_count1_style"
+                                android:layout_marginTop="2dip"
+                                android:text="@string/last_time" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_heart_avg"
+                                    style="@style/public_text_number1_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_company1_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/bpm" />
+                            </LinearLayout>
+
+                            <TextView
+                                style="@style/public_text_count1_style"
+                                android:layout_marginTop="2dip"
+                                android:text="@string/average_heart" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_heart_height"
+                                    style="@style/public_text_number1_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_company1_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/bpm" />
+                            </LinearLayout>
+
+                            <TextView
+                                style="@style/public_text_count1_style"
+                                android:layout_marginTop="2dip"
+                                android:text="@string/sleep_max_heart" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_heart_low"
+                                    style="@style/public_text_number1_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_company1_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/bpm" />
+                            </LinearLayout>
+
+                            <TextView
+                                style="@style/public_text_count1_style"
+                                android:layout_marginTop="2dip"
+                                android:text="@string/sleep_min_heart" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_friend_rank_bp_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/selector_white_bg"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dip">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+
+                        <TextView
+                            style="@style/public_text_title1_style"
+                            android:text="@string/blood_pressure" />
+
+
+                        <TextView
+                            android:id="@+id/tv_friend_info_bp_state"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:background="@drawable/my_circle_bg_two_2"
+                            android:paddingLeft="5dip"
+                            android:paddingRight="5dip"
+                            android:text="@string/user_par_state2"
+                            android:textColor="@color/my_circle_bg_two_2_bg"
+                            android:textSize="10sp"
+                            android:visibility="gone" />
+
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical|right">
+
+                            <TextView
+                                android:id="@+id/tv_friend_info_bp_time"
+                                style="@style/public_text_count2_style"
+                                android:layout_marginLeft="10dip"
+                                android:text="@string/sleep_gang" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp">
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_bp_heart"
+                                    style="@style/public_text_number1_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_company1_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/bpm" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dip">
+
+                                <TextView
+                                    style="@style/public_text_count1_style"
+                                    android:text="PPG" />
+
+                                <TextView
+                                    style="@style/public_text_count1_style"
+                                    android:text="@string/heart" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0px"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_bp_sbp"
+                                    style="@style/public_text_number1_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_number1_style"
+                                    android:text="/" />
+
+                                <TextView
+                                    android:id="@+id/tv_friend_info_bp_dbp"
+                                    style="@style/public_text_number1_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_company1_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/mmHg" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dip">
+
+                                <TextView
+                                    style="@style/public_text_count1_style"
+                                    android:text="PPG" />
+
+                                <TextView
+                                    style="@style/public_text_count1_style"
+                                    android:text="@string/blood_pressure" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/btn_friend_info_delete"
+                style="@style/public_button2_style"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_marginBottom="10dip"
+                android:text="@string/delete_friend"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

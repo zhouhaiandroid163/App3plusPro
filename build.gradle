@@ -1,0 +1,47 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext {
+        kotlin_version = '1.3.61'
+    }
+    repositories {
+//
+//        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+////        google()
+//        maven {
+//            url 'https://maven.google.com/'
+//            name 'Google'
+//        }
+////        jcenter { url 'http://jcenter.bintray.com/'}
+//        jcenter()
+//        mavenCentral()// 数据库需要
+
+        google()
+        jcenter()
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // 数据库需要
+        classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-rc2'// 数据库需要
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.8'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+//        mavenCentral()
+//        maven { url 'https://maven.google.com' }
+//        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        jcenter()
+        google()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

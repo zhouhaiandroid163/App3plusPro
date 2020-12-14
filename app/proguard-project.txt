@@ -1,0 +1,570 @@
+# To enable ProGuard in your project, edit project.properties
+# to define the proguard.config property as described in that file.
+#
+# Add project specific ProGuard rules here.
+# By default, the flags in this file are appended to flags specified
+# in ${sdk.dir}/tools/proguard/proguard-android.txt
+# You can edit the include path and order by changing the ProGuard
+# include property in project.properties.
+#
+# For more details, see
+#   http://developer.android.com/guide/developing/tools/proguard.html
+
+# Add any project specific keep options here:
+
+# If your project uses WebView with JS, uncomment the following
+# and specify the fully qualified class name to the JavaScript interface
+# class:
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#  public *;
+#}
+
+-dontwarn
+-optimizationpasses 5
+
+#不使用大小写混写类名(默认情况下混淆的类名可以包含大小写字符的混合),混合后的类名为小写。
+-dontusemixedcaseclassnames
+
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
+#预校验: 不做预校验，preverify是proguard的四个步骤之一，Android不需要preverify，去掉这一步能够加快混淆速度。
+-dontpreverify
+
+#打印混淆详细信息
+-verbose
+
+#-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+#google推荐算法
+-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*
+
+-dontoptimize
+
+-keepattributes *Annotation*
+-keepattributes Signature
+
+-keep public class com.google.vending.licensing.ILicensingService
+-keep public class com.android.vending.licensing.ILicensingService
+
+#保留四大组件，自定义的Application等这些类不被混淆
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class * extends android.support.v4.app.Fragment
+-keep public class * extends android.app.Fragment
+
+
+-dontwarn org.achartengine.**
+-dontwarn cn.sharesdk.tencent.qq.**
+-dontwarn cn.sharesdk.framework.**
+-dontwarn com.tencent.**
+-dontwarn org.slf4j.**
+-dontwarn com.mob.tools.**
+-dontwarn com.sina.sso.**
+-dontwarn cn.sharesdk.sina.weibo.**
+-dontwarn com.mob.logcollector.**
+-dontwarn com.google.gson.**
+-dontwarn org.slf4j.impl.**
+-dontwarn org.apache.mina.**
+-dontwarn android.support.**
+-dontwarn com.amap.api.**
+-dontwarn com.autonavi.**
+-dontwarn com.android.volley.**
+-dontwarn com.lidroid.xutils.**
+
+
+
+# -libraryjars libs/armeabi/liblocSDK6a.so
+# -libraryjars libs/achartengine-1.0.0.jar
+# -libraryjars libs/gson-2.2.1.jar
+## -libraryjars libs/mina-core-2.0.9.jar
+# -libraryjars libs/mta-sdk-1.6.2.jar
+# -libraryjars libs/SocialSDK_WeiXin_1.jar
+# -libraryjars libs/SocialSDK_WeiXin_2.jar
+# -libraryjars libs/xUtils-2.6.14.jar
+# -libraryjars libs/open_sdk_r5509.jar
+# -libraryjars libs/SocialSDK_QQZone_3.jar
+# -libraryjars libs/SocialSDK_Sina.jar
+# -libraryjars libs/umeng_social_sdk.jar
+# -libraryjars libs/weiboSDKCore_3.1.4.jar
+# -libraryjars libs/android-support-v4.jar
+# -libraryjars libs/jpush-android-2.0.6.jar
+# -libraryjars libs/armeabi/libjpush206.so
+# -libraryjars libs/armeabi/libweibosdkcore.so
+# -libraryjars libs/mips/libweibosdkcore.so
+# -libraryjars libs/mips64/libweibosdkcore.so
+#-libraryjars libs/arm64-v8a/libjpush206.so
+#-libraryjars libs/arm64-v8a/liblocSDK6a.so
+#-libraryjars libs/arm64-v8a/libweibosdkcore.so
+#-libraryjars libs/armeabi-v7a/libjpush206.so
+#-libraryjars libs/armeabi-v7a/liblocSDK6a.so
+#-libraryjars libs/armeabi-v7a/libweibosdkcore.so
+#-libraryjars libs/x86/liblocSDK6a.so
+#-libraryjars libs/x86/libweibosdkcore.so
+#-libraryjars libs/x86_64/liblocSDK6a.so
+#-libraryjars libs/x86_64/libweibosdkcore.so
+#-libraryjars libs/BaiduLBS_Android.jar
+#-libraryjars libs/AMap3DMap_4.1.2_AMapLocation_3.1.0_20161103.jar
+
+# For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
+# 包含native方法的类名和native方法都不能被混淆，如果native方法未被调用，则被移除。
+# 由于native方法与对应so库中的方法名称对应，方法名被混淆会导致调用出现问题，所以native方法不能被混淆。
+-keepclasseswithmembernames class * {  
+    native <methods>;    
+}  
+
+  # Keep setters in Views so that animations can still work.
+# -keepclassmembers public class * extends android.view.View {
+#   void set*(***);
+#   *** get*();
+#}
+
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+
+-keepclasseswithmembernames class * {  
+    public <init>(android.content.Context, android.util.AttributeSet);  
+}  
+  
+-keepclasseswithmembernames class * {  
+    public <init>(android.content.Context, android.util.AttributeSet, int);  
+}
+
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum * { 
+    public static **[] values();  
+    public static ** valueOf(java.lang.String);  
+}  
+
+# 保留Parcelable序列化类不被混淆
+-keep class * implements android.os.Parcelable {    
+  public static final android.os.Parcelable$Creator *;  
+} 
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+#-keepclassmembers class com.zhongcheng.bengxin.R$* {
+#    public static <fields>;
+#}
+
+-keepclassmembers class com.zjw.apps3pluspro.R$* {
+    public static <fields>;
+}
+-keepclassmembers class android.support.v7.recyclerview.R$* {
+    public static <fields>;
+}
+
+-keep class com.zjw.apps3pluspro.network.entity.**{*; }
+-keep class com.zjw.apps3pluspro.network.javabean.**{*; }
+
+-keep class com.zjw.apps3pluspro.adapter.**{*; }
+-keep class com.zjw.apps3pluspro.application.**{*; }
+-keep class com.zjw.apps3pluspro.base.**{*; }
+-keep class com.zjw.apps3pluspro.bleservice.**{*; }
+-keep class com.zjw.apps3pluspro.data.**{*; }
+-keep class com.zjw.apps3pluspro.db.**{*; }
+-keep class com.zjw.apps3pluspro.eventbus.**{*; }
+-keep class com.zjw.apps3pluspro.module.**{*; }
+-keep class com.zjw.apps3pluspro.sharedpreferences.**{*; }
+-keep class com.zjw.apps3pluspro.sql.**{*; }
+-keep class com.zjw.apps3pluspro.utils.**{*; }
+-keep class com.zjw.apps3pluspro.view.**{*; }
+-keep class com.zjw.apps3pluspro.wxapi.**{*; }
+
+-keep class org.json.** {*;}
+
+-keep class org.achartengine.**{*; }
+
+-keep class android.support.**{*; }
+
+
+
+-keep class cn.sharesdk.tencent.qq.**{*; }
+-keep class com.mob.tools.**{*; }
+-keep class cn.sharesdk.framework.**{*; }
+
+-keep class com.lidroid.xutils.**{*; }
+
+-keep class com.tencent.**{*; }
+
+-keep class org.slf4j.**{*; }
+-keep class org.slf4j.impl.**{*; }
+
+-keep class com.mob.tools.**{*; }
+
+-keep class com.tencent.stat.**{*; }
+
+-keep class cn.sharesdk.sina.weibo.SinaActivity{*; }
+-keep class cn.sharesdk.sina.weibo.**{*; }
+-keep class com.sina.sso.**{*; }
+
+-keep class com.mob.logcollector.**{*; }
+
+-keep class com.google.gson.**{*; }
+
+-keep class org.apache.mina.**{*; }
+-keep class org.apache.mina.proxy.ProxyAuthException{*; }
+
+
+## 微信分享部分
+-keep class com.tencent.mm.sdk.** { *; }
+##新加的
+#-keep class com.tencent.mm.opensdk.** {*;}
+
+#-dontwarn com.baidu.**
+#-keep class com.baidu.**{*; }
+
+
+-dontwarn cn.jpush.**
+-keep class cn.jpush.** { *; }
+
+-dontwarn com.google.**
+-keep class com.google.gson.** {*;}
+
+-dontwarn com.google.**
+-keep class com.google.protobuf.** {*;}
+
+-keep class no.nordicsemi.android.dfu.** { *; }
+
+-keep class com.lowagie.text.** { *; }
+
+#-keep class com.itextpdf.text.** { *; }
+
+
+
+
+-dontshrink
+ -dontoptimize
+ -dontwarn com.google.android.maps.**
+ -dontwarn android.webkit.WebView
+ -dontwarn com.umeng.**
+ -dontwarn com.tencent.weibo.sdk.**
+ -dontwarn com.facebook.**
+ -keep public class javax.**
+ -keep public class android.webkit.**
+ -dontwarn android.support.v4.**
+ -keep enum com.facebook.**
+ -keepattributes Exceptions,InnerClasses,Signature
+ -keepattributes *Annotation*
+ -keepattributes SourceFile,LineNumberTable
+
+ -keep public interface com.facebook.**
+ -keep public interface com.tencent.**
+ -keep public interface com.umeng.socialize.**
+ -keep public interface com.umeng.socialize.sensor.**
+ -keep public interface com.umeng.scrshot.**
+
+ -keep public class com.umeng.socialize.* {*;}
+
+
+ -keep class com.facebook.**
+ -keep class com.facebook.** { *; }
+ -keep class com.umeng.scrshot.**
+ -keep public class com.tencent.** {*;}
+ -keep class com.umeng.socialize.sensor.**
+ -keep class com.umeng.socialize.handler.**
+ -keep class com.umeng.socialize.handler.*
+
+ #新加的
+ -keep class com.umeng.weixin.handler.**
+ -keep class com.umeng.weixin.handler.*
+ -keep class com.umeng.qq.handler.**
+ -keep class com.umeng.qq.handler.*
+  #新加的
+
+ -keep class com.tencent.mm.sdk.modelmsg.WXMediaMessage {*;}
+ -keep class com.tencent.mm.sdk.modelmsg.** implements com.tencent.mm.sdk.modelmsg.WXMediaMessage$IMediaObject {*;}
+ -keep class im.yixin.sdk.api.YXMessage {*;}
+ -keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
+
+ -dontwarn twitter4j.**
+ -keep class twitter4j.** { *; }
+
+ -keep class com.tencent.** {*;}
+ -dontwarn com.tencent.**
+ -keep public class com.umeng.soexample.R$*{
+     public static final int *;
+ }
+ -keep public class com.linkedin.android.mobilesdk.R$*{
+     public static final int *;
+ }
+
+ -keep class com.tencent.open.TDialog$*
+ -keep class com.tencent.open.TDialog$* {*;}
+ -keep class com.tencent.open.PKDialog
+ -keep class com.tencent.open.PKDialog {*;}
+ -keep class com.tencent.open.PKDialog$*
+ -keep class com.tencent.open.PKDialog$* {*;}
+
+ -keep class com.sina.** {*;}
+ -dontwarn com.sina.**
+ -keep class  com.alipay.share.sdk.** {
+    *;
+ }
+ -keepnames class * implements android.os.Parcelable {
+     public static final ** CREATOR;
+ }
+
+ -keep class com.linkedin.** { *; }
+
+
+#  3D 地图 V5.0.0之前：
+#     -keep   class com.amap.api.maps.**{*;}
+#     -keep   class com.autonavi.amap.mapcore.*{*;}
+#     -keep   class com.amap.api.trace.**{*;}
+
+# 3D 地图 V5.0.0之后：
+    -keep   class com.amap.api.maps.**{*;}
+    -keep   class com.autonavi.**{*;}
+    -keep   class com.amap.api.trace.**{*;}
+
+
+
+#     定位
+     -keep class com.amap.api.location.**{*;}
+     -keep class com.amap.api.fence.**{*;}
+     -keep class com.autonavi.aps.amapapi.model.**{*;}
+
+##  语音
+#-dontwarn com.iflytek.speech.**
+#-dontwarn com.iflytek.sunflower.**
+#-keep class com.iflytek.speech.**{*;}
+#-keep class com.iflytek.**{*;}
+
+#下面是数据库混淆代码 数据库需要
+### greenDAO 3
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+
+# If you do not use SQLCipher:
+-dontwarn org.greenrobot.greendao.database.**
+# If you do not use RxJava:
+-dontwarn rx.**
+
+
+#  生理周期-日历控件
+-keep class com.zjw.apps3pluspro.view.cyclecalendarview.SimpleMonthView {
+    public <init>(android.content.Context);
+}
+-keep class com.zjw.apps3pluspro.view.cyclecalendarview.SimpleWeekView {
+    public <init>(android.content.Context);
+}
+
+
+#  日历控件
+-keep class com.zjw.apps3pluspro.view.mycalendar.SimpleMonthView {
+    public <init>(android.content.Context);
+}
+-keep class com.zjw.apps3pluspro.view.mycalendar.SimpleWeekView {
+    public <init>(android.content.Context);
+}
+
+#-keep class  org.bytedeco.javacv.** { *; }
+#
+#-keep class  org.bytedeco.javacpp.** { *; }
+#
+#-keep class  it.sauronsoftware.jave.** { *; }
+
+#-------RTK-DFU---------------混淆
+#====================================================================================
+
+#指定代码的压缩级别(在0~7之间),n 表示proguard对代码进行迭代优化的次数，Android一般为5
+-optimizationpasses 5
+
+#google推荐算法
+#-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*
+
+#不使用大小写混写类名(默认情况下混淆的类名可以包含大小写字符的混合),混合后的类名为小写。
+#-dontusemixedcaseclassnames
+
+#把混淆类中的方法名也混淆了
+#-useuniqueclassmembernames
+
+#预校验: 不做预校验，preverify是proguard的四个步骤之一，Android不需要preverify，去掉这一步能够加快混淆速度。
+#-dontpreverify
+
+#打印混淆详细信息
+#-verbose
+-printmapping map.txt
+
+
+#默认开启，增大反编译难度，类和类成员会被随机命名，除非用keep保护。
+#-dontobfuscate
+#混淆: 将类名、属性名、方法名混淆为难以读懂的字母，比如a,b,c
+-flattenpackagehierarchy
+#优化时允许访问并修改有修饰符的类和类的成员
+-allowaccessmodification
+
+#指定哪个属性不要混淆，可一次指定多个属性
+# 避免混淆Annotation、内部类、泛型、匿名类
+# Preserve some attributes that may be required for reflection.
+-keepattributes *Annotation*,Exceptions,Signature,InnerClasses,EnclosingMethod
+
+# Uncomment this to preserve the line number information for
+# debugging stack traces.
+#抛出异常时保留代码行号
+-keepattributes SourceFile,LineNumberTable
+
+# If you keep the line number information, uncomment this to
+# hide the original source file name.
+#重命名抛出异常时的文件名称
+-renamesourcefileattribute SourceFile
+
+#Note: there were 36 classes trying to access annotations using reflection.
+#You should consider keeping the annotation attributes
+#(using '-keepattributes *Annotation*').
+#(http://proguard.sourceforge.net/manual/troubleshooting.html#attributes)
+-keepattributes *Annotation*
+#Note: there were 46 classes trying to access generic signatures using reflection.
+#You should consider keeping the signature attributes
+#(using '-keepattributes Signature').
+#(http://proguard.sourceforge.net/manual/troubleshooting.html#attributes)
+-keepattributes Signature
+
+#处理support包
+# The support library contains references to newer platform versions.
+# Don't warn about those in case this app is linking against an older
+# platform version.  We know about them, and they are safe.
+# Keep the support library
+#-dontnote选项:指定不去输出打印该类产生的错误或遗漏
+-dontnote android.support.**
+#-dontwarn选项:指定不去warn unresolved references和其他重要的problem
+-dontwarn android.support.**
+-keep class android.support.v4.** { *; }
+-keep interface android.support.v4.** { *; }
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.** { *; }
+
+#-keepattributes Exceptions,InnerClasses
+#不忽略library中的非公共库的类
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
+-ignorewarnings
+
+## -keep: 指定类名不被改变,不进行混淆保持原样
+##保留四大组件，自定义的Application等这些类不被混淆
+#-keep public class * extends android.app.Activity
+#-keep public class * extends android.app.Application
+#-keep public class * extends android.app.Service
+#-keep public class * extends android.content.BroadcastReceiver
+#-keep public class * extends android.content.ContentProvider
+#-keep public class * extends android.app.backup.BackupAgentHelper
+#-keep public class * extends android.preference.Preference
+#-keep public class * extends android.view.View
+#-keep public class com.google.vending.licensing.ILicensingService
+#-keep public class com.android.vending.licensing.ILicensingService
+#-keep public class * extends java.lang.Throwable {*;}
+#-keep public class * extends java.lang.Exception {*;}
+#
+##Fragment不需要在AndroidManifest.xml中注册，需要额外保护下
+#-keep public class * extends android.support.v4.app.Fragment
+#-keep public class * extends android.app.Fragment
+
+# For native methods, see http://proguard.sourceforge.net/manual/examples.html#native
+# 包含native方法的类名和native方法都不能被混淆，如果native方法未被调用，则被移除。
+# 由于native方法与对应so库中的方法名称对应，方法名被混淆会导致调用出现问题，所以native方法不能被混淆。
+#-keepclasseswithmembernames class * {
+#    native <methods>;
+#}
+
+# 保护指定的类和类的成员，但条件是所有指定的类和类成员是要存在
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+# Keep setters in Views so that animations can still work.
+-keepclassmembers public class * extends android.view.View {
+    void set*(***);
+    *** get*();
+}
+# We want to keep methods in Activity that could be used in the XML attribute onClick
+# 保护指定类的成员，如果此类受到保护他们会保护的更好
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+#-keepclassmembers enum * {
+#    public static **[] values();
+#    public static ** valueOf(java.lang.String);
+#}
+# 保留Parcelable序列化类不被混淆
+#-keep class * implements android.os.Parcelable {
+#  public static final android.os.Parcelable$Creator *;
+#}
+
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+#-keep class  org.bytedeco.javacv.** { *; }
+#
+#-keep class  org.bytedeco.javacpp.** { *; }
+#
+#-keep class  it.sauronsoftware.jave.** { *; }
+
+#保留Keep注解的类名和方法
+-keep,allowobfuscation @interface android.support.annotation.Keep
+-keep @android.support.annotation.Keep class *
+-keepclassmembers class * {
+    @android.support.annotation.Keep *;
+}
+
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+-keep class android.support.**{*;}
+
+-keep class jxl.**{*;}
+
+#保持包和子包的类名和里面的内容均不被混淆
+#不混淆某个包所有的类
+-keep class com.realsil.sdk.core.** {
+    public *;
+}
+-keep class com.realsil.sdk.dfu.** {
+    public *;
+}
+-keep class com.realsil.sdk.dfu.support.** {
+    public *;
+}
+-keep class com.realsil.sdk.dfu.quality.** {
+    public *;
+}
+
+
+-keep class com.realsil.sdk.hrp.core.** {
+    public *;
+}
+-keep class com.realsil.sdk.bbpro.** {
+    public *;
+}
+-keep class com.realsil.sdk.bbpro.core.** {
+    public *;
+}
+
+#EventBus 相关=========
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}

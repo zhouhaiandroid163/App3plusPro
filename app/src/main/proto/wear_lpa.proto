@@ -1,0 +1,18 @@
+// wear_lpa.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "LpaProtos";
+
+message Lpa {
+    enum LpaID {
+        COMMAND = 0x00;
+    }
+
+    oneof payload {
+        string data = 1 [(nanopb).type = FT_POINTER];
+    }
+}

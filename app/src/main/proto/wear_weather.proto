@@ -1,0 +1,76 @@
+// wear_weather.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+import "wear_common.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "WeatherProtos";
+
+message Weather {
+    enum WeatherID {
+        LATEST_WEATHER = 0x00;
+        DAILY_FORECAST = 0x01;
+        HOURLY_FORECAST = 0x02;
+        WEAR_REQUEST = 0x03;
+        SET_PRESSURE = 0x04;
+    }
+
+    oneof payload {
+        WeatherLatest latest = 1;
+        WeatherForecast forecast = 2;
+        float pressure = 3;
+    }
+}
+
+message WeatherLatest {
+    required WeatherId id = 1;
+    required uint32 weather = 2 [(nanopb).int_size = IS_16];
+    required KeyValue temperature = 3;
+    required KeyValue humidity = 4;
+    required KeyValue wind_info = 5;
+    required KeyValue uvindex = 6;
+    required KeyValue aqi = 7;
+    required Alerts.List alerts_list = 8;
+    optional float pressure = 9;
+}
+
+message WeatherForecast {
+    required WeatherId id = 1;
+    required Data.List data_list = 2;
+
+    message Data {
+        required KeyValue aqi = 1;
+        optional RangeValue weather = 2;
+        optional RangeValue temperature = 3;
+        optional string temperature_unit = 4 [(nanopb).type = FT_POINTER];
+        optional SunRiseSet sun_rise_set = 5;
+
+        message List {
+            repeated Data list = 1 [(nanopb).type = FT_POINTER];
+        }
+    }
+}
+
+message WeatherId {
+    required string pub_time = 1 [(nanopb).type = FT_POINTER];
+    required string city_name = 2 [(nanopb).type = FT_POINTER];
+    required string location_name = 3 [(nanopb).type = FT_POINTER];
+}
+
+message Alerts {
+    required string type = 1 [(nanopb).type = FT_POINTER];
+    required string level = 2 [(nanopb).type = FT_POINTER];
+    optional string title = 3 [(nanopb).type = FT_POINTER];
+    optional string detail = 4 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated Alerts list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message SunRiseSet {
+    required string sun_rise = 1 [(nanopb).type = FT_POINTER];
+    required string sun_set = 2 [(nanopb).type = FT_POINTER];
+}

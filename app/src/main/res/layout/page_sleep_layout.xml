@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutSleep"
+        style="@style/data_page_constraint_layout">
+
+        <ImageView
+            android:id="@+id/ivTitle"
+            style="@style/data_page_img"
+            android:background="@mipmap/data_sleep"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvSleepTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/title_sleep"
+            android:textColor="#ffffff"
+            android:textSize="24sp"
+            app:layout_constraintLeft_toLeftOf="@+id/ivTitle"
+            app:layout_constraintTop_toBottomOf="@+id/ivTitle" />
+
+        <LinearLayout
+            android:id="@+id/layoutSleepNoData"
+            style="@style/data_page_no_data_layout"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="@+id/tvSleepTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvSleepTitle">
+
+            <TextView
+                style="@style/data_page_sub_title"
+                android:text="@string/no_data" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutSleepData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="@+id/tvSleepTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvSleepTitle">
+
+            <TextView
+                android:id="@+id/tvDeepSleepText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sleep_gang"
+                android:textColor="#ff4c4d58"
+                android:textSize="14sp" />
+
+            <com.zjw.apps3pluspro.view.MultiProgressView
+                android:id="@+id/multiProgressView"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginBottom="10dp"
+                android:background="#088E4CFA" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/layoutDeep"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:background="@drawable/sleep_deep_yuan" />
+
+                    <TextView
+                        android:id="@+id/tvDeepSleep"
+                        style="@style/data_page_sleep_text"
+                        android:text="@string/no_data_default" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutLight"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:background="@drawable/sleep_light_yuan" />
+
+
+                    <TextView
+                        android:id="@+id/tvlightSleep"
+                        style="@style/data_page_sleep_text"
+                        android:text="@string/no_data_default" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/layoutWoke"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:background="@drawable/sleep_sober_yuan" />
+
+
+                    <TextView
+                        android:id="@+id/tvWokeSleep"
+                        style="@style/data_page_sleep_text"
+                        android:text="@string/no_data_default" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

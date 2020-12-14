@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_index_bg"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/public_head" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dip">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="60dip"
+                    android:layout_height="60dip"
+                    android:background="@drawable/img_sport_target" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:gravity="center|bottom">
+
+                <TextView
+                    android:id="@+id/tv_target_steps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10000"
+                    android:textColor="@color/public_text_color1"
+                    android:textSize="40sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dip"
+                    android:text="@string/steps"
+                    android:textColor="@color/public_text_color1"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+            <SeekBar
+                android:id="@+id/sb_sport_target_step"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:max="100"
+                android:maxHeight="10dp"
+                android:minHeight="10dp"
+                android:progress="30"
+                android:progressDrawable="@drawable/seekbar_shape_target"
+                android:splitTrack="false"
+                android:thumb="@drawable/my_img_index_seekbar_target" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/public_text_company2_style"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/section_few" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/my_line_bg_color1" />
+
+                <TextView
+                    style="@style/public_text_company2_style"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/section_fit" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/my_line_bg_color1" />
+
+                <TextView
+                    style="@style/public_text_company2_style"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/section_large" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:background="@drawable/img_sport_walk" />
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_marginLeft="2dip"
+                        android:text="30" />
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:text="@string/minute" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:background="@drawable/img_sport_run" />
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_marginLeft="2dip"
+                        android:text="16" />
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:text="@string/minute" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:background="@drawable/img_sport_riding" />
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_marginLeft="2dip"
+                        android:text="8" />
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:text="@string/minute" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <View
+                android:id="@+id/ecg_module_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginTop="20dip"
+                android:background="@color/my_line_bg_color1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:text="@string/target_steps_tip" />
+
+
+            <Button
+                android:id="@+id/bton_target_step_ok"
+                style="@style/public_button1_style"
+                android:layout_marginTop="30dip"
+                android:text="@string/dialog_yes" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

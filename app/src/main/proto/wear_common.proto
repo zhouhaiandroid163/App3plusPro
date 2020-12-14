@@ -1,0 +1,211 @@
+// wear_common.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "CommonProtos";
+
+enum ErrorCode {
+    NO_ERROR = 0x00;
+    NOT_SUPPORT = 0x01;
+    DEPENDENCY_NOT_READY = 0x02;
+    SET_FAILED = 0x03;
+    PARAM_ERROR = 0x04;
+    UNKNOWN = 0xFF;
+}
+
+enum PrepareStatus {
+    READY = 0x00;
+    BUSY = 0x01;
+    DUPLICATED = 0x02;
+    LOW_STORAGE = 0x03;
+    LOW_BATTERY = 0x04;
+    DOWNGRADE = 0x05;
+}
+
+enum SportType {
+    NONE = 0x00;
+
+    // 常规运动
+    RUN_OUTDOOR = 0x01; // 室外跑步
+    WALK_OUTDOOR = 0x02; // 健走
+    RUN_INDOOR = 0x03; // 室内跑步
+    CLIMBING = 0x04; // 登山
+    CROSS_COUNTRY = 0x05; // 越野
+    RIDE_OUTDOOR = 0x06; // 户外骑行
+    RIDE_INDOOR = 0x07; // 室内单车
+    FREE_TRAINING = 0x08; // 自由训练
+    SWIM_INDOOR = 0x09; // 泳池游泳
+    SWIM_OUTDOOR = 0x0A; // 开放水域
+    ELLIPTICAL_MACHINE = 0x0B; // 椭圆机
+    YOGA = 0x0C; // 瑜伽
+    ROWING_MACHINE = 0x0D; // 划船机
+    ROPE_SKIPPING = 0x0E; // 跳绳
+    HIKING_OUTDOOR = 0x0F; // 户外徒步
+    HIGH_INTERVAL_TRAINING = 0x10; // 高强度间歇
+    TRIATHLON = 0x11; // 铁人三项
+
+    // 水上运动
+    SAILBOAT = 100; // 帆船
+    PADDLE_BOARD = 101; // 桨板
+    WATER_POLO = 102; // 水球
+    AQUATIC_SPORT = 103; // 水上运动
+    SURFING = 104; // 滑水
+    CANOEING = 105; // 皮划艇
+    KAYAK_RAFTING = 106; // 皮艇漂流
+    ROWING = 107; // 划船
+    MOTORBOAT = 108; // 摩托艇
+    WEB_SWIMMING = 109; // 蹼泳
+    DRIVING = 110; // 跳水
+    FANCY_SWIMMING = 111; // 花样游泳
+    SNORKELING = 112; // 浮潜
+    KITE_SURFING = 113; // 风筝冲浪
+
+    // 户外运动
+    ROCK_CLIMBING = 200; // 攀岩
+    SKATE = 201; // 滑板
+    ROLLER_SKATING = 202; // 轮滑
+    PARKOUR = 203; // 跑酷
+    ATV = 204; // 沙滩车
+    PARAGLIDER = 205; // 滑翔伞
+
+    // 有氧无氧训练
+    CLIMBING_MACHINE = 300; // 爬楼机
+    CLIMB_STAIRS = 301; // 爬楼梯
+    STEPPER = 302; // 踏步机
+    CORE_TRAINING = 303; // 核心训练
+    FLEXIBILITY_TRAINING = 304; // 柔韧训练
+    PILATES = 305; // 普拉提
+    GYMNASTICS = 306; // 体操
+    STRETCH = 307; // 拉伸
+    STRENGTH_TRAINING = 308; // 力量训练
+    CROSS_FIT = 309; // 交叉训练
+    AEROBICS = 310; // 健身操
+    PHYSICAL_TRAINING = 311; // 体能训练
+    WALL_BALL = 312; // 墙球
+    DUMBBELL_TRAINING = 313; // 哑铃训练
+    BARBELL_TRAINING = 314; // 杠铃训练
+    WEIGHTLIFTING = 315; // 举重
+    DEADLIFT = 316; // 硬拉
+    BOBBY_JUMP = 317; // 波比跳
+    SIT_UPS = 318; // 仰卧起坐
+    FUNCTIONAL_TRAINING = 319; // 功能性训练
+    UPPER_LIMB_TRAINING = 320; // 上肢训练
+    LOWER_LIMB_TRAINING = 321; // 下肢训练
+    WAIST_TRAINING = 322; // 腰腹训练
+    BACK_TRAINING = 323; // 背部训练
+
+    // 舞蹈
+    SQUARE_DANCE = 400; // 广场舞
+    BELLY_DANCE = 401; // 肚皮舞
+    BALLET = 402; // 芭蕾舞
+    STREET_DANCE = 403; // 街舞
+    ZUMBA = 404; // 尊巴
+    NATIONAL_DANCE = 405; // 民族舞
+    JAZZ = 406; // 爵士舞
+    LATIN_DANCE = 407; // 拉丁舞
+
+    // 搏击
+    BOXING = 500; // 拳击
+    WRESTLING = 501; // 摔跤
+    MARTIAL_ARTS = 502; // 武术
+    TAICHI = 503; // 太极
+    MUAY_THAI = 504; // 泰拳
+    JUDO = 505; // 柔道
+    TAEKWONDO = 506; // 跆拳道
+    KARATE = 507; // 空手道
+    FREE_SPARRING = 508; // 自由搏击
+    SWORDSMANSHIP = 509; // 剑术
+    FENCING = 510; // 击剑
+
+    // 球类
+    FOOTBALL = 600; // 足球
+    BASKETBALL = 601; // 篮球
+    VOLLEYBALL = 602; // 排球
+    BASEBALL = 603; // 棒球
+    SOFTBALL = 604; // 垒球
+    RUGBY = 605; // 橄榄球
+    HOCKEY = 606; // 曲棍球
+    PINGPONG = 607; // 乒乓球
+    BADMINTON = 608; // 羽毛球
+    TENNIS = 609; // 网球
+    CRICKET = 610; // 板球
+    HANDBALL = 611; // 手球
+    BOWLING = 612; // 保龄球
+    SQUASH = 613; // 壁球
+    BILLIARDS = 614; // 台球
+    SHUTTLECOCK = 615; // 毽球
+    BEACH_FOOTBALL = 616; // 沙滩足球
+    BEACH_VOLLEYBALL = 617; // 沙滩排球
+    SEPAK_TAKRAW = 618; // 藤球
+
+    // 冰雪运动
+    OUTDOOR_SKATING = 700; // 户外滑冰
+    CURLING = 701; // 冰壶
+    SNOW_SPORTS = 702; // 雪上运动
+    SNOWMOBILE = 703; // 雪地摩托
+    PUCK = 704; // 冰球
+    SNOW_CAR = 705; // 雪车
+    SLED = 706; // 雪橇
+
+    // 休闲运动
+    ARCHERY = 800; // 射箭
+    DARTS = 801; // 飞镖
+    HORSE_RIDING = 802; // 骑马
+    TUG_OF_WAR = 803; // 拔河
+    HULA_HOOP = 804; // 呼啦圈
+    FLY_KITE = 805; // 放风筝
+    FISHING = 806; // 钓鱼
+    FRISBEE = 807; // 飞盘
+
+    // 其他运动
+    EQUESTTRIAN = 10000; // 马术
+    TRACK_AND_FIELD = 10001; // 田径
+    RACING_CAR = 10002; // 赛车
+}
+
+enum ClockMode {
+    CLOCK_ONCE = 0x00;
+    CLOCK_EVERY_DAY = 0x01;
+    CLOCK_WORKDAY = 0x02;
+    CLOCK_HOLIDAY = 0x03;
+    CLOCK_MONDAY_TO_FRIDAY = 0x04;
+    CLOCK_CUSTOM = 0x05;
+}
+
+message ClockHoliday {
+    required uint32 year = 1 [(nanopb).int_size = IS_16];
+    repeated string free_days = 2 [(nanopb).type = FT_POINTER];
+    repeated string work_days = 3 [(nanopb).type = FT_POINTER];
+}
+
+message Timezone {
+    required sint32 offset = 1 [(nanopb).int_size = IS_8];
+    optional sint32 dst_saving = 2 [(nanopb).int_size = IS_8];
+    optional string id = 3 [(nanopb).type = FT_POINTER];
+}
+
+message Date {
+    required uint32 year = 1 [(nanopb).int_size = IS_16];
+    required uint32 month = 2 [(nanopb).int_size = IS_8];
+    required uint32 day = 3 [(nanopb).int_size = IS_8];
+}
+
+message Time {
+    required uint32 hour = 1 [(nanopb).int_size = IS_8];
+    required uint32 minuter = 2 [(nanopb).int_size = IS_8];
+    optional uint32 second = 3 [(nanopb).int_size = IS_8];
+    optional uint32 millisecond = 4 [(nanopb).int_size = IS_16];
+}
+
+message KeyValue {
+    required string key = 1 [(nanopb).type = FT_POINTER];
+    required sint32 value = 2 [(nanopb).int_size = IS_16];
+}
+
+message RangeValue {
+    required sint32 from = 1 [(nanopb).int_size = IS_16];
+    required sint32 to = 2 [(nanopb).int_size = IS_16];
+}

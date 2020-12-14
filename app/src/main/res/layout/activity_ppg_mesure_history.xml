@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/public_head_white_text" />
+
+        <com.haibin.calendarview.CalendarLayout
+            android:id="@+id/calendarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:calendar_content_view_id="@+id/nestedScrollView"
+            app:calendar_show_mode="both_month_week_view"
+            app:default_status="shrink">
+
+            <com.haibin.calendarview.CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/title_bg_ecg"
+                app:calendar_height="40dp"
+                app:current_day_text_color="#ffffff"
+                app:current_month_lunar_text_color="#000000"
+                app:current_month_text_color="@color/white"
+                app:min_year="2004"
+                app:month_view="com.zjw.apps3pluspro.view.mycalendar.SimpleMonthView"
+                app:other_month_text_color="#5fffffff"
+                app:scheme_text=""
+                app:scheme_text_color="#ffffff"
+                app:scheme_theme_color="#ffffff"
+                app:selected_lunar_text_color="#CFCFCF"
+                app:selected_text_color="@color/title_bg_ecg"
+                app:selected_theme_color="@color/white"
+                app:week_background="@color/title_bg_ecg"
+                app:week_text_color="#ffffff"
+                app:week_view="com.zjw.apps3pluspro.view.mycalendar.SimpleWeekView"
+                app:year_view_day_text_color="@color/year_is_now_no_biaoji_month_text_color"
+                app:year_view_day_text_size="9sp"
+                app:year_view_month_text_color="@color/year_month_text_color"
+                app:year_view_month_text_size="20sp"
+                app:year_view_scheme_color="@color/year_is_now_is_biaoji_month_text_color" />
+
+            <LinearLayout
+                android:id="@+id/nestedScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/base_activity_bg"
+                    android:orientation="vertical"
+                    tools:ignore="KeyboardInaccessibleWidget">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="28dp"
+                        android:background="@color/title_bg_ecg" />
+
+                    <include
+                        android:id="@+id/layoutNoData"
+                        layout="@layout/public_nodata"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutData"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-14dp"
+                        android:orientation="vertical"
+                        android:paddingBottom="24dp">
+
+                        <ListView
+                            android:id="@+id/ppg_mesure_history_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="12dp"
+                            android:layout_weight="1"
+                            android:divider="@color/transparent"
+                            android:dividerHeight="12dip" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </com.haibin.calendarview.CalendarLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:layout_marginBottom="10dip">
+
+            <Button
+                android:id="@+id/ppg_history_to_measure"
+                style="@style/public_button1_style"
+                android:layout_gravity="bottom"
+                android:text="@string/measure_start" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

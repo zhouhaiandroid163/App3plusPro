@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:elg="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ecg_title_gradient"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="12dp"
+                android:paddingTop="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="32dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <com.zjw.apps3pluspro.view.RoundProgressView
+                        android:id="@+id/ppgRoundProgressView"
+                        android:layout_width="160dip"
+                        android:layout_height="160dip"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="10dip"
+                        android:rotation="180" />
+
+                    <LinearLayout
+                        android:layout_width="160dip"
+                        android:layout_height="160dip"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/ecg_details_health_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/sleep_gang"
+                            android:textColor="#ffffff"
+                            android:textSize="40sp" />
+
+                        <TextView
+                            android:id="@+id/ecg_details_health_state"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dip"
+                            android:text="@string/sleep_gang"
+                            android:textColor="#ffffff" />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/white20_bg"
+                        android:gravity="center"
+                        android:padding="12dp">
+
+
+                        <TextView
+                            android:id="@+id/ecg_details_fatigue_index"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dip"
+                            android:layout_marginEnd="4dp"
+                            android:text="@string/sleep_gang"
+                            android:textColor="#ffffffff"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/white20_bg"
+                        android:gravity="center"
+                        android:padding="12dp">
+
+
+                        <TextView
+                            android:id="@+id/ecg_details_cardiac_function"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dip"
+                            android:layout_marginEnd="4dp"
+                            android:text="@string/sleep_gang"
+                            android:textColor="#ffffffff"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/white20_bg"
+                        android:gravity="center"
+                        android:padding="12dp">
+
+
+                        <TextView
+                            android:id="@+id/ecg_details_body_quality"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dip"
+                            android:layout_marginEnd="4dp"
+                            android:text="@string/sleep_gang"
+                            android:textColor="#ffffffff"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/white20_bg"
+                        android:gravity="center"
+                        android:padding="12dp">
+
+
+                        <TextView
+                            android:id="@+id/ecg_details_body_load"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dip"
+                            android:layout_marginEnd="4dp"
+                            android:text="@string/sleep_gang"
+                            android:textColor="#ffffffff"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dip">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/icon_proposal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dip"
+                        android:text="@string/hrv_help_title2"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dip">
+
+                    <TextView
+                        android:id="@+id/health_index_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/fatigue_index_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dip"
+                        android:text=""
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/load_index_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dip"
+                        android:text=""
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/quality_index_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dip"
+                        android:text=""
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/heart_index_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dip"
+                        android:text=""
+                        android:textColor="#ffffff"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="-26dp"
+                android:layout_marginEnd="12dp"
+                android:background="@drawable/selector_white_bg"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true">
+
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center|bottom">
+
+                                <TextView
+                                    android:id="@+id/mesure_history_heart"
+                                    style="@style/public_text_measure_number_style"
+                                    android:text="@string/sleep_gang" />
+
+                                <TextView
+                                    style="@style/public_text_measure_unit_style"
+                                    android:layout_marginLeft="2dip"
+                                    android:text="@string/bpm" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <TextView
+                            style="@style/public_text_measure_str_style"
+                            android:layout_marginTop="2dip"
+                            android:text="@string/heart" />
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:background="#ffe5e5e7" />
+
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/mesure_details_systolic"
+                                style="@style/public_text_measure_number_style"
+                                android:text="@string/sleep_gang" />
+
+                            <TextView
+                                style="@style/public_text_measure_number_style"
+                                android:text="/" />
+
+                            <TextView
+                                android:id="@+id/mesure_details_diastolic"
+                                style="@style/public_text_measure_number_style"
+                                android:text="@string/sleep_gang" />
+
+                            <TextView
+                                style="@style/public_text_measure_unit_style"
+                                android:layout_marginLeft="2dip"
+                                android:text="@string/mmHg" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            style="@style/public_text_measure_str_style"
+                            android:layout_marginTop="2dip"
+                            android:text="@string/blood_pressure" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/r_ecg_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dip"
+                    android:layout_marginTop="20dip"
+                    android:background="#147F8088">
+
+                    <com.zjw.apps3pluspro.view.ecg.ECGView
+                        android:id="@+id/input_ecg_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="3dip"
+                        android:background="@color/ecg_bg_clolor"
+                        elg:BackLineColor="@color/ecg_bg_line_clolor"
+                        elg:PointerLineColor="@color/ecg_line_clolor"
+                        elg:TitleColor="@color/ecg_text_clolor"
+                        elg:TitleSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dip"
+                        android:layout_marginTop="8dip"
+                        android:background="@drawable/ecg_details_yuan_chart_bg"
+                        android:paddingLeft="6dip"
+                        android:paddingRight="6dip"
+                        android:text="ECG"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/r_ppg_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dip"
+                    android:layout_marginTop="15dip"
+                    android:background="#147F8088">
+
+                    <com.zjw.apps3pluspro.view.ecg.ECGView
+                        android:id="@+id/input_ppg_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="3dip"
+                        android:background="@color/ecg_bg_clolor"
+                        elg:BackLineColor="@color/ecg_bg_line_clolor"
+                        elg:PointerLineColor="@color/ecg_line_clolor"
+                        elg:TitleColor="@color/ecg_text_clolor"
+                        elg:TitleSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dip"
+                        android:layout_marginTop="8dip"
+                        android:background="@drawable/ecg_details_yuan_chart_bg"
+                        android:paddingLeft="6dip"
+                        android:paddingRight="6dip"
+                        android:text="PPG"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dip">
+
+                    <LinearLayout
+                        android:id="@+id/ecg_details_start_playback"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip">
+
+                        <ImageView
+                            android:id="@+id/ecg_mesure_start_ecg"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/icon_start_ecg" />
+
+                        <TextView
+                            android:id="@+id/play_ecg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dip"
+                            android:text="@string/play_start"
+                            android:textColor="@color/public_theme_text_color1" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ecg_details_to_presentation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dip">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/icon_ecg_report" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dip"
+                            android:text="@string/hrv_help_see_details"
+                            android:textColor="@color/public_theme_text_color1" />
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/selector_white_bg"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dip"
+                        android:text="@string/ecg_reference"
+                        android:textColor="#ff000011"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dip"
+                        android:layout_margin="10dip"
+                        android:src="@drawable/img_ecg_reference1" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dip"
+                        android:text="@string/ecg_bo_qrs_title"
+                        android:textColor="#da354a" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ecg_bo_qrs_count" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dip"
+                        android:text="@string/ecg_bo_p_title"
+                        android:textColor="#5ec230" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ecg_bo_p_count" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dip"
+                        android:text="@string/ecg_duan_st_title"
+                        android:textColor="#d53290" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ecg_duan_st_count" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dip"
+                        android:text="@string/ecg_bo_t_title"
+                        android:textColor="#007aff" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ecg_bo_t_count" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/ecg_abnormal_reference"
+                        android:textColor="#ff288dfe"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="100dip"
+                                android:background="@drawable/img_ecg_reference_ecg4" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/ecg_abnormal_state4"
+                                android:textColor="#ff7f8088"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="100dip"
+                                android:background="@drawable/img_ecg_reference_ecg1" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/ecg_abnormal_state1"
+                                android:textColor="#ff7f8088"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="100dip"
+                                android:background="@drawable/img_ecg_reference_ecg2" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/ecg_abnormal_state2"
+                                android:textColor="#ff7f8088"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="100dip"
+                                android:background="@drawable/img_ecg_reference_ecg3" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/ecg_abnormal_state3"
+                                android:textColor="#ff7f8088"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dip"></LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

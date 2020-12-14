@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:orientation="vertical">
+
+                <RelativeLayout style="@style/alarm_clock_cycle">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/sunday" />
+
+                    <CheckBox
+                        android:id="@+id/cx_alarm_clock_cycle_7"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false" />
+
+
+                </RelativeLayout>
+
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/alarm_clock_cycle">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/monday" />
+
+                    <CheckBox
+                        android:id="@+id/cx_alarm_clock_cycle_1"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false" />
+
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/alarm_clock_cycle">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/tuesday" />
+
+                    <CheckBox
+                        android:id="@+id/cx_alarm_clock_cycle_2"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false" />
+
+
+                </RelativeLayout>
+
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/alarm_clock_cycle">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/wednesday" />
+
+                    <CheckBox
+                        android:id="@+id/cx_alarm_clock_cycle_3"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false" />
+
+                </RelativeLayout>
+
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/alarm_clock_cycle">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/thursday" />
+
+                    <CheckBox
+                        android:id="@+id/cx_alarm_clock_cycle_4"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false" />
+
+
+                </RelativeLayout>
+
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/alarm_clock_cycle">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/friday" />
+
+                    <CheckBox
+                        android:id="@+id/cx_alarm_clock_cycle_5"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false" />
+
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/alarm_clock_cycle">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/saturday" />
+
+                    <CheckBox
+                        android:id="@+id/cx_alarm_clock_cycle_6"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false" />
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

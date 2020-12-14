@@ -1,0 +1,315 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/loading_dfu_zip"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:layout_marginTop="5dip"
+                android:text="加载固件"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/input_dfu_mode"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:layout_marginTop="5dip"
+                android:text="进入DFU模式"
+                android:visibility="gone" />
+
+
+            <Button
+                android:id="@+id/scanf_dfu_device"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:layout_marginTop="5dip"
+                android:text="扫描DFU设备"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/load_dfu_ble_device"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:layout_marginTop="5dip"
+                android:text="加载蓝牙设备"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/start_dfu_update"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:layout_marginTop="5dip"
+                android:text="开始升级"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dip"
+                android:background="#44ff0000"
+                android:visibility="gone"></View>
+
+
+            <Button
+                android:id="@+id/one_update_device"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:enabled="false"
+                android:text="一键升级"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/one_update_device_file_headle"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:layout_marginTop="5dip"
+                android:text="升级失败重试"
+                android:visibility="gone" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!-- The size of text below must be fixed, therefore dp are used instead of sp -->
+
+                <TextView
+                    android:id="@+id/device_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dip"
+                    android:ellipsize="end"
+                    android:freezesText="true"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textAllCaps="true"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginRight="50dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+
+                        <TableLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dip">
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/dfu_file_name_label" />
+
+                                <TextView
+                                    android:id="@+id/file_name"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_weight="1"
+                                    android:ellipsize="middle"
+                                    android:freezesText="true"
+                                    android:singleLine="true" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone">
+
+
+                                <TextView
+                                    android:id="@+id/file_type"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:freezesText="true" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/dfu_file_size_label" />
+
+                                <TextView
+                                    android:id="@+id/file_size"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:freezesText="true" />
+                            </TableRow>
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/dfu_file_status_label" />
+
+                                <TextView
+                                    android:id="@+id/file_status"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:freezesText="true"
+                                    android:text="@string/dfu_file_status_no_file" />
+                            </TableRow>
+                        </TableLayout>
+
+
+                    </LinearLayout>
+
+                    <!-- DFU section -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="15dip">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/reminder"
+                            android:textColor="@color/white"
+                            android:textSize="20sp" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dip"
+                            android:text="@string/dfu_tishi_text1"
+                            android:textColor="@color/white_50"
+                            android:textSize="15sp" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dfu_tishi_text2"
+                            android:textColor="@color/white_50"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/dfu_pane"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dip"
+                        android:orientation="vertical"
+                        android:paddingLeft="15dip"
+                        android:paddingRight="15dip">
+
+                        <TextView
+                            android:id="@+id/textviewUploading"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:freezesText="true"
+                            android:gravity="center"
+                            android:text=""
+                            android:visibility="invisible" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dip">
+
+                            <ProgressBar
+                                android:id="@+id/progressbar_file"
+                                style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dip"
+                                android:max="100"
+                                android:progressDrawable="@drawable/progressbar_updatadialog"
+                                android:visibility="invisible" />
+
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/textviewProgress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dip"
+                            android:freezesText="true"
+                            android:gravity="center"
+                            android:text="@string/dfu_uploading_percentage_label"
+                            android:visibility="invisible" />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/down_dfu_zip"
+                style="@style/big_button_stytle"
+                android:layout_marginTop="5dip"
+                android:text="@string/dfu_start" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="nor"
+                    android:textColor="#c3c3c3"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

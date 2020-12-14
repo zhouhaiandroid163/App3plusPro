@@ -1,0 +1,51 @@
+// wear_stock.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "StockProtos";
+
+message Stock {
+    enum StockID {
+        SYNC_STOCK_INFO = 0x00;
+        SYNC_STOCK_INFO_LIST = 0x01;
+        DELETE_STOCK = 0x02;
+        SET_STOCK_LIST = 0x03;
+        GET_STOCK_LIST = 0x04;
+        WEAR_REQUEST = 0x05;
+    }
+
+    oneof payload {
+        StockInfo stock_info = 1;
+        StockInfo.List stock_info_list = 2;
+        string symbol = 3 [(nanopb).type = FT_POINTER];
+        StockSymbol.List stock_symbol_list = 4;
+    }
+}
+
+message StockInfo {
+    required string symbol = 1 [(nanopb).type = FT_POINTER];
+    optional string market = 2 [(nanopb).type = FT_POINTER];
+    optional string name = 3 [(nanopb).type = FT_POINTER];
+    required float latest_price = 4;
+    required float pre_close = 5;
+    required uint32 halted = 6 [(nanopb).int_size = IS_8];
+    required uint32 timestamp = 7;
+    required uint32 delay_mintue = 8;
+
+    message List {
+        repeated StockInfo list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message StockSymbol {
+    required string symbol = 1 [(nanopb).type = FT_POINTER];
+    required bool is_widget = 2;
+    required uint32 order = 3 [(nanopb).int_size = IS_8];
+
+    message List {
+        repeated StockSymbol list = 1 [(nanopb).type = FT_POINTER];
+    }
+}

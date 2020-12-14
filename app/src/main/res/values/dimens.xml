@@ -1,0 +1,64 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+
+    <!-- 标题栏 -->
+    <dimen name="public_head_main_height">50dip</dimen>
+    <dimen name="public_head_height">60dp</dimen>
+    <dimen name="public_head_left_width">46dp</dimen>
+    <dimen name="public_head_right_width">60dp</dimen>
+    <dimen name="public_head_text_size">18sp</dimen>
+
+
+    <!-- 健康历史 -->
+    <dimen name="history_list_par">10dip</dimen>
+    <dimen name="history_list_mar_left">5dip</dimen>
+
+    <!-- 底部菜单 -->
+    <dimen name="bootom_menu_height">55dp</dimen>
+    <dimen name="bootom_menu_img_size">25dp</dimen>
+    <dimen name="bootom_menu_text_size">12sp</dimen>
+    <dimen name="bootom_menu_img_mar_text">2dp</dimen>
+
+    <!-- 我的-->
+    <dimen name="my_img_size">20dp</dimen>
+
+    <!-- 登陆 -->
+    <dimen name="login_text1">30dp</dimen>
+    <dimen name="login_line_mar">17dp</dimen>
+    <dimen name="login_edit_par">12dp</dimen>
+    <dimen name="login_text_par">15dp</dimen>
+    <dimen name="login_edit_text_size">16sp</dimen>
+
+
+    <!-- 提醒-->
+    <dimen name="lin2_height">50dp</dimen>
+    <dimen name="lin2_par">15sp</dimen>
+
+
+    <!-- 更多提醒 -->
+    <dimen name="notice_img_size">25dip</dimen>
+    <dimen name="notice_mar_left">32dip</dimen>
+    <dimen name="message_push">0dip</dimen>
+    <dimen name="remind_set">0dip</dimen>
+
+
+    <!--列表小箭头大小-->
+    <dimen name="my_icon_right_img_size">18dip</dimen>
+
+    <!-- 屏保颜色选择器 -->
+    <dimen name="holocolorpicker_max_size1">0dip</dimen><!-- 里面的大圈 -->
+    <dimen name="holocolorpicker_max_size2">0dip</dimen><!-- 里面的大圈背景 -->
+    <dimen name="holocolorpicker_min_size1">7dip</dimen><!-- 外面的小圈 -->
+    <dimen name="holocolorpicker_min_size2">10dip</dimen><!-- 外面的小圈背景 -->
+    <dimen name="holocolorpicker_wai_size1">3dip</dimen><!-- 颜色条大小 -->
+    <dimen name="holocolorpicker_wai_size2">3dip</dimen><!-- 颜色条大小 -->
+
+    <!-- 个人信息录入 -->
+    <dimen name="profile_init_item_height">65dp</dimen>
+    <dimen name="profile_init_img_size">45dp</dimen>
+    <dimen name="profile_init_mar_left_size">60dip</dimen>
+
+
+</resources>

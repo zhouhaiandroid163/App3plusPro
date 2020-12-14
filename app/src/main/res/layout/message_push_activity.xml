@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout style="@style/message_push">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/notice_call" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sbPhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/message_push">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/notices_set_mail"
+
+                        />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sbSms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_qq"
+
+                        />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_qq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_wechat" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_wechat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_linkedin" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_linkedin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_skype" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_skype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_facebook" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_facebook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_twitter" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_twitter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_whatapp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_whatsapp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_viber" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_viber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_line" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_line"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/notiface_lin_type1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_gmail"
+
+                        />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_gmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_outlook" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_outlook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_instagram" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_instagrem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/message_push">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_snapchat"
+
+                        />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_snapchat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout
+                    style="@style/message_push"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_iosmail" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_iosmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/notiface_lin_type3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_zalo"
+
+                        />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_zalo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_telegram"
+
+                        />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_telegram"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_youtube"
+
+                        />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_youtube"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_kakao_talk"
+
+                        />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_kakao_talk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_vk"
+
+                        />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_vk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_ok"
+
+                        />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_ok"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout style="@style/message_push">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/message_push"
+                        android:text="@string/app_icq" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/sb_notice_icq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+</LinearLayout>

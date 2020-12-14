@@ -1,0 +1,43 @@
+// wear_factory.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "FactoryProtos";
+
+message Factory {
+    enum FactoryID {
+        SET_MODE = 0x00;
+        CONFIG_NFC = 0x01;
+        DUMP_FILE = 0x02;
+    }
+
+    oneof payload {
+        FactoryMode mode = 1;
+        NfcInfo.List nfc_list = 2;
+        FileInfo file = 3;
+    }
+}
+
+enum FactoryMode {
+    USER = 0x00;
+    USERDEBUG = 0x01;
+    ENG = 0x02;
+}
+
+message NfcInfo {
+    required string key = 1 [(nanopb).type = FT_POINTER];
+    required bytes value = 2 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated NfcInfo list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message FileInfo {
+    required string name = 1 [(nanopb).type = FT_POINTER];
+    required bool is_append = 2;
+    required bytes data = 3 [(nanopb).type = FT_POINTER];
+}

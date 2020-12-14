@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_init_tip_title"
+                    android:textColor="#333333"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dip"
+                android:text="@string/user_init_tip_content"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+
+            <RelativeLayout
+                android:id="@+id/rl_profile_int_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/profile_init_item_height"
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/edit_profile_int_name"
+                    style="@style/public_text_profile_init_company_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#00000000"
+                    android:hint="@string/enter_your_nickname"
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </RelativeLayout>
+
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#1effffff" />
+
+            <RelativeLayout
+                android:id="@+id/rl_profile_init_sex"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/profile_init_item_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_profile_init_sex"
+                    style="@style/public_text_profile_init_company_style"
+                    android:layout_height="match_parent"
+                    android:hint="@string/enter_sex" />
+
+            </RelativeLayout>
+
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#1effffff" />
+
+
+            <RelativeLayout
+                android:id="@+id/rl_profile_init_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/profile_init_item_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_profile_init_birthday"
+                    style="@style/public_text_profile_init_company_style"
+                    android:hint="@string/enter_birthday" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#1effffff" />
+
+            <RelativeLayout
+                android:id="@+id/rl_profile_init_unit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/profile_init_item_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_profile_init_unit"
+                    style="@style/public_text_profile_init_company_style"
+                    android:hint="@string/enter_user_unit" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#1effffff" />
+
+            <RelativeLayout
+                android:id="@+id/rl_profile_init_height"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/profile_init_item_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_profile_init_height"
+                    style="@style/public_text_profile_init_company_style"
+                    android:hint="@string/enter_user_height" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#1effffff" />
+
+            <RelativeLayout
+                android:id="@+id/rl_profile_init_weight"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/profile_init_item_height"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_profile_init_weight"
+                    style="@style/public_text_profile_init_company_style"
+                    android:hint="@string/enter_user_weight" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#1effffff" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:curveChartView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutHeart"
+        style="@style/data_page_constraint_layout">
+
+        <ImageView
+            android:id="@+id/ivTitle"
+            style="@style/data_page_img"
+            android:background="@mipmap/data_heart"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvHeartTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/heart"
+            android:textColor="#ffffff"
+            android:textSize="24sp"
+            app:layout_constraintLeft_toLeftOf="@+id/ivTitle"
+            app:layout_constraintTop_toBottomOf="@+id/ivTitle" />
+
+        <LinearLayout
+            android:id="@+id/layoutHeartNoData"
+            style="@style/data_page_no_data_layout"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="@+id/tvHeartTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeartTitle">
+
+            <TextView
+                style="@style/data_page_sub_title"
+                android:text="@string/no_data" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutHeartValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="@+id/tvHeartTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeartTitle">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/data_page_sub_title"
+                    android:text="@string/page_heart_max" />
+
+                <TextView
+                    android:id="@+id/tvMax"
+                    style="@style/data_page_number" />
+
+                <TextView
+                    style="@style/data_page_unit"
+                    android:text="@string/bpm" />
+
+                <TextView
+                    style="@style/data_page_sub_title"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/page_heart_min" />
+
+                <TextView
+                    android:id="@+id/tvMin"
+                    style="@style/data_page_number" />
+
+                <TextView
+                    style="@style/data_page_unit"
+                    android:text="@string/bpm" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dip"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/lcHeart"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="12dp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="7dp"
+                        android:text="00:00"
+                        android:textColor="#7F8088"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingRight="8dp"
+                        android:text="06:00"
+                        android:textColor="#7F8088"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:paddingLeft="14dp"
+                        android:text="12:00"
+                        android:textColor="#7F8088"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="4dp"
+                        android:text="18:00"
+                        android:textColor="#7F8088"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:paddingRight="7.5dp"
+                        android:text="23:00"
+                        android:textColor="#7F8088"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <com.zjw.apps3pluspro.view.HeartChartView
+                    android:id="@+id/heartLineChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    curveChartView:curveChartView_LineColor="#FF5C57" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layoutAvg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center|bottom"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="@+id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@+id/ivTitle">
+
+            <TextView
+                android:id="@+id/tvAvg"
+                style="@style/data_page_number" />
+
+            <TextView
+                style="@style/data_page_unit"
+                android:text="@string/bpm" />
+
+            <TextView
+                android:id="@+id/tvAvgMsg"
+                style="@style/data_page_sub_title"
+                android:text="@string/page_heart_avg" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

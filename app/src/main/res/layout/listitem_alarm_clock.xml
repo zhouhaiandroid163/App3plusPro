@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="8dip">
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dip">
+
+        <TextView
+            android:id="@+id/tv_clock_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="07:10"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_clock_set_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_clock_sunday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sunday"
+                android:textColor="@color/white_50"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_clock_monday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dip"
+                android:text="@string/monday"
+                android:textColor="@color/white_50"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_clock_tuesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dip"
+                android:text="@string/tuesday"
+                android:textColor="@color/white_50"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_clock_wednesday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dip"
+                android:text="@string/wednesday"
+                android:textColor="@color/white_50"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_clock_thursday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dip"
+                android:text="@string/thursday"
+                android:textColor="@color/white_50"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_clock_friday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dip"
+                android:text="@string/friday"
+                android:textColor="@color/white_50"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_clock_saturday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dip"
+                android:text="@string/saturday"
+                android:textColor="@color/white_50"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/sb_clcock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="0dp"
+        android:focusable="false" />
+
+
+</LinearLayout>

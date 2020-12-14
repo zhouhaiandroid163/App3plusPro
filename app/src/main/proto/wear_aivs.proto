@@ -1,0 +1,450 @@
+// wear_aivs.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "AivsProtos";
+
+message Aivs {
+    enum AivsID {
+        SYNC_INSTRUCTION_LIST = 0x00;
+    }
+
+    oneof payload {
+        AivsInstruction.List instruction_list = 1;
+    }
+}
+
+message AivsInstruction {
+    required ResultType result_type = 1;
+    required uint32 session_id = 13 [(nanopb).int_size = IS_8];
+
+    optional SpeechRecognizeResult recognize_result = 2;
+    optional TemplateToast template_toast = 3;
+    optional TemplateGeneral template_general = 4;
+    optional TemplateGeneral2 template_general2 = 5;
+    optional TemplateWeather template_weather = 6;
+    optional TemplatePlayInfo template_playinfo = 7;
+    optional TemplateLists template_lists = 8;
+    optional TemplateSwitchPanel template_switchpanel = 9;
+    optional AlertsSetAlert alerts_setalert = 10;
+    optional SpeechSynthesizerSpeak speechsynthesizer_speak = 11;
+    optional LauncherLaunchApp laucher_lauchapp= 14;
+    optional TemplateSwitchPanelList template_switchpanellist = 15;
+    optional BrightnessControllerAjustBrightness brightnesscontroller_ajustbrightness= 16;
+    optional SystemSetProperty system_setproperty= 17;
+    optional ApplicationOperate application_operate = 18;
+    optional AlertsDeliverAlertIntention alerts_deliveralertintention = 19;
+    optional MediaErrorType media_errortype = 20;
+    optional SpeakerSetMute speaker_setmute = 21;
+    optional SpeakerSetVolume speaker_setvolume = 22;
+    optional SpeakerAjustVolume speaker_ajustvolume = 23;
+    optional TemplateDeviceList template_devicelist = 24;
+    optional ExecuteDeviceSkill execute_deviceskill = 25;
+
+    message List {
+        repeated AivsInstruction list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+enum ResultType {
+    START_LISTENING = 0x00;
+    END_LISTENING = 0x01;
+    RECOGNIZE_RESULT = 0x02;
+    STOP_CAPTURE = 0x03;
+    DIALOG_FINISH = 0x04;
+    SYSTEM_TRUNCATIONNOTIFICATION = 0x05;
+
+    ERROR_NETWORK = 0x50;
+    ERROR_AUTH = 0x51;
+    ERROR_TOO_MANY_DEVICES = 0x52;
+    ERROR_CONTENT_TOO_LONG = 0x53;
+    AIVS_ERROR_ASR_TIMEOUT = 0x70;
+    AIVS_ERROR_TTS_TIMEOUT = 0x71;
+
+    TEMPLATE_TOAST = 0x100;
+    TEMPLATE_GENERAL = 0x101;
+    TEMPLATE_GENERAL2 = 0x102;
+    TEMPLATE_WEATHER = 0x103;
+    TEMPLATE_PLAYINFO = 0x104;
+    TEMPLATE_LISTS = 0x105;
+    TEMPLATE_SWITCHPANEL = 0x106;
+    ALERTS_SETALERT = 0x107;
+    SPEECHSYNTHESIZER_SPEAK = 0x108;
+    SPEECHRECOGNIZER_EXPECTSPEECH = 0x109;
+    LAUNCHER_LAUNCHAPP = 0x10A;
+    TEMPLATE_SWITCHPANELLIST = 0x10B;
+    BRIGHTNESSCONTROLLER_ADJUSTBRIGHTNESS = 0x10C;
+    SYSTEM_SETPROPERTY = 0x10D;
+    APPLICATION_OPERATE = 0x10E;
+    ALERTS_DELIVERALERTINTENTION = 0x10F;
+    ALERTS_STOPALERT = 0x110;
+    PLAYBACKCONTROLLER = 0x111; //unsupported playback controller operation
+    PLAYBACKCONTROLLER_STOP = 0x112;
+    PLAYBACKCONTROLLER_PLAY = 0x113;
+    PLAYBACKCONTROLLER_PAUSE = 0x114;
+    PLAYBACKCONTROLLER_NEXT = 0x115;
+    PLAYBACKCONTROLLER_PREV = 0x116;
+    PLAYBACKCONTROLLER_CONTINUEPLAYING = 0x117;
+    SPEAKER_SETMUTE = 0x118;
+    SPEAKER_SETVOLUME = 0x119;
+    SPEAKER_AJUSTVOLUME = 0x11A;
+    TEMPLATE_DEVICELIST = 0x11B;
+    EXECUTE_DEVICESKILL = 0x11C;
+}
+
+message SpeechRecognizeResult {
+    required bool is_final = 1;
+    required SpeechRecognizeResultItem.List results = 2;
+}
+
+message TemplateToast {
+    required string text = 1 [(nanopb).type = FT_POINTER];
+}
+
+message TemplateGeneral {
+    required Title title = 1;
+    required string text = 2 [(nanopb).type = FT_POINTER];
+    optional AbstractItem.List results = 3;
+    required string skill_description = 4 [(nanopb).type = FT_POINTER];
+}
+
+message TemplateGeneral2 {
+    required RichText main_title = 1;
+    required RichText.List sub_titles = 2;
+    required RichText.List texts = 3;
+    required string skill_description = 4 [(nanopb).type = FT_POINTER];
+}
+
+message TemplateWeather {
+    required WeatherItem.List weather = 1;
+    required string skill_description = 2 [(nanopb).type = FT_POINTER];
+}
+
+message TemplatePlayInfo {
+    required PlayInfoItem.List items = 1;
+    required PlayInfoType type = 2;
+    optional string skill_description = 3 [(nanopb).type = FT_POINTER];
+}
+
+message TemplateLists {
+    required string skill_description = 1 [(nanopb).type = FT_POINTER];
+    required ListsItem.List items = 2;
+    optional Title title = 3;
+}
+
+message TemplateSwitchPanel {
+    required Title title = 1;
+    required string skill_description = 2 [(nanopb).type = FT_POINTER];
+    optional string status = 3 [(nanopb).type = FT_POINTER];
+    optional SwitchPanelType type = 4;
+}
+
+message TemplateSwitchPanelList {
+    required SwitchItem.List titles = 1;
+    required string skill_description = 2 [(nanopb).type = FT_POINTER];
+    optional SwitchPanelType type = 3;
+    optional SwitchItem.List items = 4;
+}
+
+message SwitchItem {
+    required Title title = 1;
+    optional string status = 2 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated SwitchItem list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message AlertsSetAlert {
+    required string id = 1 [(nanopb).type = FT_POINTER];
+    required AlertType type = 2;
+    required string datetime = 3 [(nanopb).type = FT_POINTER];
+    optional AlertCircleType circle = 4;
+    optional string circle_extra = 5 [(nanopb).type = FT_POINTER];
+    optional string offset = 6 [(nanopb).type = FT_POINTER];
+}
+
+message AlertsDeliverAlertIntention {
+    required AlertType type = 1;
+    required AlertOperation operation = 2;
+    required bool operate_all = 3;
+    optional AlertCircleType circle = 4;
+    optional string circle_extra = 5 [(nanopb).type = FT_POINTER];
+    optional string event = 6 [(nanopb).type = FT_POINTER];
+    optional AlertFilterType filter_type = 7;
+    optional AlertTimeInfo time = 8;
+}
+
+message SpeechSynthesizerSpeak {
+    required string text = 1 [(nanopb).type = FT_POINTER];
+}
+
+message SpeechRecognizeResultItem {
+    required string text = 1 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated SpeechRecognizeResultItem list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message SystemSetProperty {
+    required string name = 1 [(nanopb).type = FT_POINTER];
+    required string value = 2 [(nanopb).type = FT_POINTER];
+}
+
+message LauncherLaunchApp {
+    required AndroidIntent intent = 1;
+}
+
+message ExecuteDeviceSkill {
+    required AndroidIntent intent = 1;
+}
+
+message BrightnessControllerAjustBrightness {
+    required int32 brightness_delta = 1;
+}
+
+message ApplicationOperate {
+    required ApplictionOp operation = 1;
+    required string keyword = 2 [(nanopb).type = FT_POINTER];
+    required string app_pkg_name = 3 [(nanopb).type = FT_POINTER];
+}
+
+enum ApplictionOp {
+    ApplictionOp_UNKNOWN = -1;
+    ApplictionOp_OPEN = 0;
+    ApplictionOp_INSTALL = 1;
+    ApplictionOp_UNINSTALL = 2;
+    ApplictionOp_CLOSE = 3;
+    ApplictionOp_SEARCH = 4;
+}
+
+message AndroidIntent {
+    required string pkg_name = 1 [(nanopb).type = FT_POINTER];
+    required string uri = 2 [(nanopb).type = FT_POINTER];
+}
+
+message AbstractItem {
+    required string k = 1 [(nanopb).type = FT_POINTER];
+    required string v = 2 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated AbstractItem list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message Title {
+    required string main_title = 1 [(nanopb).type = FT_POINTER];
+    required string sub_title = 2 [(nanopb).type = FT_POINTER];
+}
+
+message RichText {
+    required string text = 1 [(nanopb).type = FT_POINTER];
+    optional string color = 2 [(nanopb).type = FT_POINTER];
+    optional string bg_color = 3 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated RichText list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message WeatherItem {
+    required string date = 1 [(nanopb).type = FT_POINTER];
+    required string location = 2 [(nanopb).type = FT_POINTER];
+    optional string aqi = 3 [(nanopb).type = FT_POINTER];
+    optional string current_temperature = 4 [(nanopb).type = FT_POINTER];
+    optional string high_temperature = 5 [(nanopb).type = FT_POINTER];
+    optional string low_temperature = 6 [(nanopb).type = FT_POINTER];
+    optional string icon_description = 7 [(nanopb).type = FT_POINTER];
+    optional WeatherCode weather_code = 8;
+    optional WeatherWind wind = 9;
+    optional string weekday = 10 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated WeatherItem list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message WeatherCode {
+    optional string current = 1 [(nanopb).type = FT_POINTER];
+    optional string from = 2 [(nanopb).type = FT_POINTER];
+    optional string to = 3 [(nanopb).type = FT_POINTER];
+}
+
+message WeatherWind {
+    optional WeatherWindDirection direction = 1;
+    optional WeatherWindSpeed speed = 2;
+}
+
+message WeatherWindDirection {
+    required string text = 1 [(nanopb).type = FT_POINTER];
+    optional string current = 2 [(nanopb).type = FT_POINTER];
+    optional string from = 3 [(nanopb).type = FT_POINTER];
+    optional string to = 4 [(nanopb).type = FT_POINTER];
+}
+
+message WeatherWindSpeed {
+    required string text = 1 [(nanopb).type = FT_POINTER];
+    optional string current = 2 [(nanopb).type = FT_POINTER];
+    optional string from = 3 [(nanopb).type = FT_POINTER];
+    optional string to = 4 [(nanopb).type = FT_POINTER];
+}
+
+enum PlayInfoType {
+    PIT_UNKNOWN = -1;
+    JOKE = 0;
+    POEM = 1;
+    MUSIC = 2;
+    STATION = 3;
+    VOICE_NEWS = 4;
+    SOUND = 5;
+    TRANSLATION = 6;
+}
+
+message PlayInfoItem {
+    required Title title = 1;
+    optional uint32 duration_in_ms = 2;
+    optional string text = 3 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated PlayInfoItem list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message ListsItem {
+    required Title title = 1;
+    required string text = 2 [(nanopb).type = FT_POINTER];
+    optional string skill_description = 3 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated ListsItem list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message AlertTimeInfo {
+    required AlertTimeType type = 1;
+    required string token = 2 [(nanopb).type = FT_POINTER];
+    optional AlertDateTime datetime = 3;
+    optional AlertDateTime start_datetime = 4;
+    optional AlertDateTime end_datetime = 5;
+}
+
+message AlertDateTime {
+    required string value= 1 [(nanopb).type = FT_POINTER];
+    required sint64 timestamp = 2;
+}
+
+message SpeakerSetMute {
+    required bool mute = 1;
+}
+
+message SpeakerSetVolume {
+    required int32 volume = 1;
+    required SpeakerVolumeType type = 2;
+    required SpeakerUnitDef unit = 3;
+    optional bool once = 4;
+}
+
+message SpeakerAjustVolume {
+    required int32 volume_delta = 1;
+    required SpeakerVolumeType type = 2;
+    required SpeakerUnitDef unit = 3;
+}
+
+message TemplateDeviceList {
+    required DeviceItem.List items = 1;
+    required bool exceed_max_items = 2;
+    required bool show_index = 3;
+}
+
+message DeviceItem {
+    required Title title = 1;
+
+    message List {
+        repeated DeviceItem list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+enum SwitchPanelType {
+    SwitchPanelType_UNKNOWN = -1;
+    DEFAULT = 0;
+    COUNTDOWN = 1;
+}
+
+enum AlertType {
+    AlertType_UNKNOWN = -1;
+    ALARM = 0;
+    REMINDER = 1;
+    TIMER = 2;
+}
+
+enum AlertCircleType {
+    AlertCircleType_UNKNOWN = -1;
+    ONCE = 0;
+    EVERYDAY = 1;
+    WORKDAY = 2;
+    MONDAY_TO_FRIDAY = 3;
+    HOLIDAY = 4;
+    WEEKEND = 5;
+    WEEKLY = 6;
+    MONTHLY = 7;
+    YEARLY = 8;
+}
+
+enum AlertOperation {
+    AlertOperation_UNKNOWN = -1;
+    OPEN = 0;
+    CLOSE = 1;
+    PAUSE = 2;
+    PROCEED = 3;
+    QUERY = 4;
+    DELETE = 5;
+}
+
+enum AlertFilterType {
+    ALERTFILTER_UNKNOWN = -1;
+    ALERTFILTER_RECENTLY_SET = 0;
+    ALERTFILTER_RECENTLY_CALL = 1;
+    ALERTFILTER_ON_STATUS = 2;
+    ALERTFILTER_OFF_STATUS = 3;
+}
+
+enum AlertTimeType {
+    ALERTTIME_UNKNOWN = -1;
+    ALERTTIME_DATETIME = 0;
+    ALERTTIME_DURATION = 1;
+    ALERTTIME_OFFSET = 2;
+    ALERTTIME_INDETER_DATETIME = 3;
+}
+
+enum MediaErrorType {
+    Media_ERROR_OK = 0;
+    Media_ERROR_UNSUPPORT_SYSTEM = 1;
+    Media_ERROR_NO_PERMISSION = 2;
+    Media_ERROR_NO_MUSIC = 3;
+    Media_ERROR_ALREADY_PLAYING_ON_PLAY = 4;
+    Media_ERROR_ALREADY_PAUSED_ON_PAUSE = 5;
+    Media_ERROR_ALREADY_MAX_ON_RAISE_VOLUME = 6;
+    Media_ERROR_ALREADY_MIN_ON_LOWER_VOLUME = 7;
+    Media_ERROR_ALREADY_PAUSED_ON_ADJUST_VOLUME = 8;
+    Media_ERROR_ALREADY_PAUSED_ON_SET_VOLUME = 9;
+    Media_ERROR_ALREADY_PAUSED_ON_SET_MUTE = 10;
+}
+
+enum SpeakerVolumeType {
+    Speaker_VOLUME_UNKNOWN = -1;
+    Speaker_VOLUME_MEDIA = 0;
+    Speaker_VOLUME_RING = 1;
+    Speaker_VOLUME_NOTIFICATION = 2;
+    Speaker_VOLUME_VOICE_ASSISTANT = 3;
+    Speaker_VOLUME_ALARM = 4;
+}
+
+enum SpeakerUnitDef {
+    Speaker_UNIT_UNKNOWN = -1;
+    Speaker_UNIT_PERCENT = 0;
+    Speaker_UNIT_ABSOLUTE = 1;
+}

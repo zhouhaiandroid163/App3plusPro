@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/public_head" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/layoutWeather"
+                    style="@style/device_more_set_style">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/weather_title" />
+
+                    <ImageView
+                        android:layout_width="@dimen/my_icon_right_img_size"
+                        android:layout_height="@dimen/my_icon_right_img_size"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/icon_enter" />
+
+                </RelativeLayout>
+
+                <include
+                    android:id="@+id/weatherIndex"
+                    layout="@layout/line_layout" />
+
+                <RelativeLayout
+                    android:id="@+id/layoutPage"
+                    style="@style/device_more_set_style">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/page_set" />
+
+                    <ImageView
+                        android:layout_width="@dimen/my_icon_right_img_size"
+                        android:layout_height="@dimen/my_icon_right_img_size"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/icon_enter" />
+
+                </RelativeLayout>
+
+                <include
+                    android:id="@+id/indexPage"
+                    layout="@layout/line_layout" />
+
+                <LinearLayout style="@style/device_more_set_style">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="@string/unit_set" />
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:text="@string/Metric"
+                        android:textColor="#ffffffff"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <CheckBox
+                        android:id="@+id/tvUnitGongzhi"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:text="@string/Inch"
+                        android:textColor="#ffffffff"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <CheckBox
+                        android:id="@+id/tvUnitYingzhi"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <LinearLayout style="@style/device_more_set_style">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="@string/format_of_clock" />
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:text="@string/format_of_clock_24"
+                        android:textColor="#ffffffff"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <CheckBox
+                        android:id="@+id/tvClock24"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:text="@string/format_of_clock_12"
+                        android:textColor="#ffffffff"
+                        android:textSize="15sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <CheckBox
+                        android:id="@+id/tvClock12"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <LinearLayout
+                    android:id="@+id/layoutTemperature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout style="@style/device_more_set_style">
+
+                        <TextView
+                            style="@style/public_text_title2_style"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="@string/format_of_temperature" />
+
+                    </LinearLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:text="@string/centigrade"
+                            android:textColor="#ffffffff"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <CheckBox
+                            android:id="@+id/tvCentigrade"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/checkbox_style"
+                            android:button="@null"
+                            android:focusable="false"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="40dp"
+                            android:text="@string/fahrenheit_degree"
+                            android:textColor="#ffffffff"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <CheckBox
+                            android:id="@+id/tvFahrenheitDegree"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/checkbox_style"
+                            android:button="@null"
+                            android:focusable="false"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <include layout="@layout/line_layout" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layoutWearType"
+                    style="@style/device_more_set_style">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/wear_way" />
+
+                    <ImageView
+                        android:layout_width="@dimen/my_icon_right_img_size"
+                        android:layout_height="@dimen/my_icon_right_img_size"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/icon_enter" />
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/device_more_set_style">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/device_name" />
+
+                    <TextView
+                        android:id="@+id/tvDeviceName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/white_50" />
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/device_more_set_style">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/device_power" />
+
+                    <ImageView
+                        android:id="@+id/ivPower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/electricity_50" />
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/device_more_set_style">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/device_version" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tvVersionText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="@string/already_new"
+                            android:textColor="@color/white_50"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/tvVersionName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:gravity="center_vertical"
+                            android:text="(1.1.0)"
+                            android:textColor="@color/white_50"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout style="@style/device_more_set_style">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:text="@string/ble_address" />
+
+                    <TextView
+                        android:id="@+id/tvMacAdress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text="AA:BB:CC:DD:EE:FF"
+                        android:textColor="@color/white_50" />
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/layoutDeviceUpdate"
+                style="@style/big_button_stytle"
+                android:background="@drawable/big_button_stroke"
+                android:text="@string/firmware_update"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/layoutRestoreFactory"
+                style="@style/big_button_stytle"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/big_button_stroke"
+                android:text="@string/restore_factory"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/layoutUnBind"
+                style="@style/big_button_stytle"
+                android:layout_marginTop="24dp"
+                android:text="@string/device_unbind" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

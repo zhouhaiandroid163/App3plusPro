@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/public_head_viewgroup"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/public_head_height"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/public_no_bg_head_back"
+            android:layout_width="@dimen/public_head_left_width"
+            android:layout_height="match_parent"
+            android:gravity="center|left"
+            android:orientation="horizontal"
+            android:paddingLeft="5dip">
+
+            <ImageView
+                android:id="@+id/public_no_bg_head_back_img"
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:background="@mipmap/my_icon_back_black" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/public_no_bg_head_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:textColor="@color/public_text_color1"
+            android:textSize="@dimen/public_head_text_size" />
+
+        <LinearLayout
+            android:id="@+id/public_no_bg_head_add"
+            android:layout_width="@dimen/public_head_left_width"
+            android:layout_height="@dimen/public_head_height"
+            android:layout_alignParentRight="true"
+            android:gravity="center|right"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/icon_add_black" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/public_no_bg_head_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="#00000000"
+            android:paddingLeft="8dip"
+            android:paddingRight="8dip"
+            android:text="@string/device_refresh"
+            android:textColor="@color/public_theme_text_color1"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

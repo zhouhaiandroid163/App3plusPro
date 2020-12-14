@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dip">
+
+        <include layout="@layout/public_line_15" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/login_line_mar"
+        android:layout_marginRight="@dimen/login_line_mar">
+
+        <EditText
+            android:id="@+id/mine_modefine_number_old"
+            style="@style/public_edit_password_style"
+            android:hint="@string/input_old_pass" />
+
+        <CheckBox
+            android:id="@+id/cb_update_pass_old"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:button="@drawable/password_selector"
+            android:checked="false"
+            android:padding="8dip" />
+    </RelativeLayout>
+
+    <include layout="@layout/public_line_15" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/login_line_mar"
+        android:layout_marginRight="@dimen/login_line_mar">
+
+        <EditText
+            android:id="@+id/mine_modefine_number_new"
+            style="@style/public_edit_password_style"
+            android:hint="@string/input_your_pas" />
+
+        <CheckBox
+            android:id="@+id/cb_update_pass_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:button="@drawable/password_selector"
+            android:checked="false"
+            android:padding="8dip" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/public_line_15" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/login_line_mar"
+        android:layout_marginRight="@dimen/login_line_mar">
+
+        <EditText
+            android:id="@+id/mine_modefine_number_newagain"
+            style="@style/public_edit_password_style"
+            android:hint="@string/set_pas_again" />
+
+        <CheckBox
+            android:id="@+id/cb_update_pass_again"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:button="@drawable/password_selector"
+            android:checked="false"
+            android:padding="8dip" />
+    </RelativeLayout>
+
+    <include layout="@layout/public_line_15" />
+
+    <Button
+        android:id="@+id/bt_mine_modefy_pasw_ok"
+        style="@style/big_button_stytle"
+        android:layout_marginTop="65dp"
+        android:text="@string/dialog_yes" />
+
+</LinearLayout>

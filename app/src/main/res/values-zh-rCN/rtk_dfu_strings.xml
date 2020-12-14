@@ -1,0 +1,159 @@
+<resources>
+    <string name="rtk_dfu_action_reset">重置</string>
+    <string name="rtk_dfu_action_disconnect">断开</string>
+    <string name="rtk_dfu_action_submit">提交</string>
+
+    <string name="button_ok">确定</string>
+    <string name="button_stop">停止</string>
+
+    <string name="rtk_dfu_file_size">%d 字节</string>
+    <string name="rtk_dfu_detail_file_info_sub_file_type">类型：</string>
+    <string name="rtk_dfu_detail_file_info_sub_file_version">版本：</string>
+    <string name="rtk_dfu_detail_file_info_sub_file_size">大小：</string>
+    <string name="rtk_dfu_image_section_size">分区大小:</string>
+    <string name="header_title_dfu_file_info">文件详情</string>
+    <string name="rtk_dfu_text_file_path">文件路径</string>
+    <string name="rtk_dfu_text_file_name">文件名称</string>
+    <string name="rtk_dfu_text_file_size">文件大小</string>
+    <string name="rtk_dfu_text_file_type">文件类型</string>
+    <string name="rtk_dfu_text_target_device">设备</string>
+    <string name="rtk_dfu_text_file_upload_content">升级内容</string>
+    <string name="rtk_dfu_text_file_image_size">Image 大小</string>
+    <string name="rtk_dfu_text_file_image_version">Image 版本</string>
+    <string name="rtk_dfu_text_file_status">状态</string>
+    <string name="rtk_dfu_text_file_ic_type">芯片</string>
+    <string name="rtk_dfu_title_device_info">设备信息</string>
+    <string name="rtk_dfu_title_file_content">文件内容</string>
+    <string name="rtk_dfu_title_work_mode">工作模式</string>
+    <string name="rtk_dfu_text_target_name">设备名称</string>
+    <string name="rtk_dfu_text_target_bd_address">蓝牙地址</string>
+    <string name="rtk_dfu_text_battery_level">电量</string>
+    <string name="rtk_dfu_text_target_device_mac">MAC</string>
+    <string name="rtk_dfu_text_target_link_key">Link Key</string>
+    <string name="rtk_dfu_text_target_old_fw_version">对端APP版本</string>
+    <string name="rtk_dfu_text_target_old_patch_version">对端Patch版本</string>
+    <string name="rtk_dfu_text_target_patch_extend_version">对端Extend Patch版本</string>
+    <string name="rtk_dfu_text_target_ic_type">IC 类型</string>
+    <string name="rtk_dfu_text_target_protocol_type">Protocol 类型</string>
+    <string name="rtk_dfu_text_target_update_mechanism">升级机制</string>
+    <string name="rtk_dfu_text_target_bank">当前要升级的Bank区</string>
+    <string name="rtk_dfu_text_target_pactch_bank">当前要升级的Patch Bank区</string>
+    <string name="rtk_dfu_text_target_Aes_Mode">AES加密</string>
+    <string name="rtk_dfu_text_target_buffer_check_mode">Buffer Check</string>
+    <string name="rtk_dfu_text_target_max_buffer_size">最大 Buffer Check 值</string>
+    <string name="rtk_dfu_text_target_appData0_version">当前App Data0 版本</string>
+    <string name="rtk_dfu_text_target_appData1_version">当前App Data1 版本</string>
+    <string name="rtk_dfu_text_target_appData2_version">当前App Data2 版本</string>
+    <string name="rtk_dfu_text_target_appData3_version">当前App Data3 版本</string>
+    <string name="rtk_dfu_file_status_ok">OK</string>
+    <string name="rtk_dfu_file_status_no_file">文件未加载</string>
+    <string name="rtk_dfu_file_version_text_detail">文件详情</string>
+
+    <string name="rtk_dfu_work_mode_normal">普通升级</string>
+    <string name="rtk_dfu_work_mode_extension">外部Flash升级</string>
+    <string name="rtk_dfu_work_mode_slient">静默升级</string>
+    <string name="rtk_dfu_work_mode_silent_no_temp">No Temp</string>
+    <string name="rtk_dfu_work_mode_unknown">未知</string>
+
+    <string name="rtk_dfu_file_type_single">单文件</string>
+    <string name="rtk_dfu_file_type_pack">压缩包</string>
+    <string name="rtk_dfu_file_content_type_full">全部</string>
+    <string name="rtk_dfu_file_type_merge_patch">合并修补程序</string>
+    <string name="rtk_dfu_file_type_merge_app">合并应用程序</string>
+    <string name="rtk_dfu_file_type_merge_user_data">合并用户数据</string>
+    <string name="rtk_dfu_file_type_merge_patch_extension">合并修补程序扩展</string>
+    <string name="rtk_dfu_file_type_merge_config_file">合并配置文件</string>
+    <string name="rtk_dfu_file_type_merge_external_flash_image">合并外部闪存图像</string>
+    <string name="rtk_dfu_file_type_unknown">未知</string>
+
+    <string name="rtk_dfu_unknown_device">未知设备</string>
+    <string name="rtk_dfu_scanner_title">选择一个你想要升级的设备：</string>
+    <string name="rtk_dfu_scanner_empty">未搜索到设备</string>
+    <string name="rtk_dfu_scanner_action_scan">搜索</string>
+    <string name="rtk_dfu_scanner_action_cancel">取消</string>
+    <string name="rtk_dfu_scanner_subtitle_bonded">已配对设备：</string>
+    <string name="rtk_dfu_scanner_subtitle_not_bonded">可用设备：</string>
+    <string name="rtk_dfu_progress_state_origin">准备升级</string>
+
+    <string name="rtk_ota_state_known">未知</string>
+    <string name="rtk_ota_state_oritin">起源</string>
+    <string name="rtk_ota_state_bind_service">绑定服务 ...</string>
+    <string name="rtk_ota_state_init_ok">已初始化</string>
+    <string name="rtk_ota_state_preparing">准备 ...</string>
+    <string name="rtk_ota_state_connecting">连接 ...</string>
+    <string name="rtk_ota_state_process_pair_request">配对请求 ...</string>
+    <string name="rtk_ota_state_pending_discover_service">挂起的发现服务 ...</string>
+    <string name="rtk_ota_state_discover_service">发现服务 ...</string>
+    <string name="rtk_ota_state_read_device_info">读取设备信息 ...</string>
+    <string name="rtk_ota_state_read_image_info">读取图像信息 ...</string>
+    <string name="rtk_ota_state_read_battery_info">读取电池信息 ...</string>
+    <string name="rtk_ota_state_prepared">有联系的.</string>
+    <string name="rtk_ota_state_ota_processing">ota处理 ...</string>
+
+    <string name="rtk_dfu_state_known">未知</string>
+    <string name="rtk_dfu_state_origin">初始化</string>
+    <string name="rtk_dfu_state_initialize">初始化 &#8230;</string>
+    <string name="rtk_dfu_state_start">启动中 &#8230;</string>
+    <string name="rtk_dfu_state_remote_enter_ota">进入升级模式&#8230;</string>
+    <string name="rtk_dfu_state_find_ota_remote">搜索设备&#8230;</string>
+    <string name="rtk_dfu_state_connect_ota_remote">连接设备&#8230;</string>
+    <string name="rtk_dfu_state_prepare_dfu_processing">准备升级环境 &#8230;</string>
+    <string name="rtk_dfu_state_start_ota_processing">正在升级&#8230;</string>
+    <string name="rtk_dfu_state_hand_over_processing">正在HandOver&#8230;</string>
+    <string name="rtk_dfu_state_ota_send_file">正在发送文件 %1$d/%2$d &#8230;</string>
+    <string name="rtk_dfu_state_upgrade_success">升级成功</string>
+    <string name="rtk_dfu_state_pending_active_image">等待激活固件 &#8230;</string>
+    <string name="rtk_dfu_state_start_active_image">固件激活中 &#8230;</string>
+    <string name="rtk_dfu_state_image_active_success">固件激活成功</string>
+    <string name="rtk_dfu_state_abort_processing">等待取消…</string>
+    <string name="rtk_dfu_state_error_processing">处理错误…</string>
+    <string name="rtk_dfu_state_aborted">已取消</string>
+    <string name="rtk_dfu_toast_error_message">错误码：%1$s\n概述：%2$s\n详情：%3$s</string>
+    <string name="rtk_dfu_toast_connection_error_message">初始化连接对端设备异常,\n%s</string>
+    <string name="rtk_dfu_toast_ota_is_processing">正在进行固件升级</string>
+    <string name="rtk_dfu_toast_ota_is_processing_exist">正在进行固件升级，确定要退出吗</string>
+    <string name="rtk_dfu_toast_no_ble">设备不支持BLE</string>
+    <string name="rtk_dfu_toast_bt_enabled">蓝牙已打开</string>
+    <string name="rtk_dfu_toast_bt_not_enabled">蓝牙未打开</string>
+    <string name="rtk_dfu_toast_connect_device">正在与设备：%1$s建立连接，请稍等片刻…</string>
+    <string name="rtk_dfu_toast_operation_failed">操作失败</string>
+    <string name="rtk_dfu_toast_no_device">设备未连接</string>
+    <string name="rtk_dfu_fc_undefined">未定义</string>
+    <string name="rtk_dfu_fc_pack_loss">没有找到可升级的文件</string>
+    <string name="rtk_dfu_fc_pack_loss_empty">打包文件不能为空</string>
+    <string name="rtk_dfu_fc_pack_duplicate_bank">选择文件的bank和当前设备bank区相同</string>
+    <string name="rtk_dfu_fc_pack_loss_ota_header">打包文件没有 OTA Header</string>
+    <string name="rtk_dfu_fc_pack_loss_rom_patch">打包文件没有 Rom Patch</string>
+    <string name="rtk_dfu_fc_pack_loss_app_image">打包文件没有 App Image</string>
+    <string name="rtk_dfu_fc_pack_loss_low_version">固件版本较低，没有可升级文件</string>
+    <string name="rtk_dfu_fc_pack_nt">不支持打包文件</string>
+    <string name="rtk_dfu_fc_pack_nt_ota_header">不支持含有 OTA Header 的打包文件</string>
+    <string name="rtk_dfu_fc_pack_nt_bank_switch">选择的文件不支持bank切换</string>
+    <string name="rtk_dfu_fc_single_nt">选择的文件不是打包文件</string>
+
+    <string name="rtk_dfu_update_mechanism_one_by_one">One By One</string>
+    <string name="rtk_dfu_update_mechanism_all_in_one">All In One</string>
+    <string name="rtk_dfu_update_mechanism_all_in_one_with_buffer">All In One With Buffer</string>
+
+    <string name="rtk_dfu_connection_state_no_device">无设备</string>
+    <string name="rtk_dfu_connection_state_connecting">正在连接…</string>
+    <string name="rtk_dfu_connection_state_disconnected">已断开</string>
+    <string name="rtk_dfu_connection_state_connected">已连接</string>
+    <string name="rtk_dfu_connection_state_discovering_services">查询服务…</string>
+    <string name="rtk_dfu_connection_state_request_mtu">请求 MTU …</string>
+    <string name="rtk_dfu_connection_state_set_perfered_phy">配置 PHY …</string>
+    <string name="rtk_dfu_connection_state_enable_cccd">使能 CCCD …</string>
+    <string name="rtk_dfu_connection_state_not_supported">不支持 </string>
+    <string name="rtk_dfu_connection_state_disconnecting">正在断开…</string>
+
+    <string name="rtk_dfu_no_available_upload_file">没有可升级的文件</string>
+
+    <!--其他-->
+    <string name="rtk_toast_no_device">设备未连接</string>
+    <string name="rtk_toast_operation_failed">操作失败</string>
+    <string name="rtk_dfu_toast_active_image">固件已经下载到对端设备并校验正确，是否激活？</string>
+    <string name="rtkbt_ota_yes">是</string>
+    <string name="rtkbt_ota_no">否</string>
+    <string name="rtkbt_upgrade">升级中 ...</string>
+
+</resources>

@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/gps_sport_lin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/sport_gradient_bg"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layoutIndex"
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="8"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dip"
+                    android:layout_marginTop="10dip"
+                    android:gravity="center"></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="2"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/yundong_distance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.00"
+                            android:textColor="#ffffff"
+                            android:textSize="90dip" />
+
+                        <TextView
+                            android:id="@+id/yundong_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:text="@string/sport_distance_unit"
+                            android:textColor="#ffffff"
+                            android:textSize="25dip" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp">
+
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
+
+                            <ImageView
+
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="@drawable/icon_gps_yundong_time" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dip"
+                                android:text="@string/sport_time"
+                                android:textColor="#ffffff"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/yundong_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dip"
+                            android:text="00:00:00"
+                            android:textColor="#ffffff"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="@drawable/icon_gps_yundong_velocity" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dip"
+                                android:text="@string/sport_pace"
+                                android:textColor="#ffffff"
+                                android:textSize="20sp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/yundong_velocity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dip"
+                            android:text="00`00``"
+                            android:textColor="#ffffff"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:gravity="center"
+                    android:layout_weight="0.5">
+
+                    <ImageView
+                        android:id="@+id/ivShowMap"
+                        android:layout_width="50dip"
+                        android:layout_height="50dip"
+                        android:layout_alignParentStart="true"
+                        android:background="@drawable/my_btn_sport_map" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="110dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <LinearLayout
+                        android:id="@+id/gps_sport_bootom_lin1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="108dp"
+                            android:layout_height="108dp"
+                            android:orientation="vertical">
+
+                            <Button
+                                android:id="@+id/yundong_pause"
+                                android:layout_width="90dip"
+                                android:layout_height="90dip"
+                                android:layout_centerInParent="true"
+                                android:background="@drawable/my_btn_pause"
+                                android:textColor="#00000000" />
+
+                            <com.zjw.apps3pluspro.view.seekbar.CircularSeekBar
+                                android:id="@+id/gps_sport_seekbar"
+                                android:layout_width="108dp"
+                                android:layout_height="108dp"
+                                android:layout_centerInParent="true"
+                                android:visibility="gone"
+                                app:circle_color="#33ed3524"
+                                app:circle_progress_color="#ed3524"
+                                app:circle_stroke_width="5dip"
+                                app:circle_x_radius="100dip"
+                                app:circle_y_radius="100dip"
+                                app:end_angle="270"
+                                app:max="100"
+                                app:pointer_alpha_ontouch="100"
+                                app:pointer_color="#00000000"
+                                app:pointer_halo_border_width="-5dip"
+                                app:pointer_halo_color="#00000000"
+                                app:pointer_halo_width="0dp"
+                                app:progress="0"
+                                app:start_angle="270"
+                                app:use_custom_radii="true" />
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/gps_sport_bootom_lin2"
+                            android:layout_width="match_parent"
+                            android:layout_height="110dp"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:layout_width="0px"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0px"
+                                android:layout_height="match_parent"
+                                android:layout_weight="3"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <Button
+                                    android:id="@+id/yundong_stop"
+                                    android:layout_width="90dip"
+                                    android:layout_height="90dip"
+                                    android:layout_centerInParent="true"
+                                    android:background="@drawable/my_btn_stop" />
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0px"
+                                android:layout_height="match_parent"
+                                android:layout_weight="3"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <Button
+                                    android:id="@+id/yundong_continue"
+                                    android:layout_width="90dip"
+                                    android:layout_height="90dip"
+                                    android:background="@drawable/my_btn_continue"
+                                    android:textColor="#00000000" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0px"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/gps_sport_long"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/long_touch_suspend"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/gps_sport_mapview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.amap.api.maps.MapView
+            android:id="@+id/yundong_map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dip"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/locus_yuan2"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="10dip"
+            android:paddingTop="4dip"
+            android:paddingRight="10dip"
+            android:paddingBottom="4dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dip"
+                android:gravity="center"
+                android:text="GPS"
+                android:textColor="#5a5a5b"
+                android:textSize="14dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/gps_sport_signa"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/my_gps_signal_0" />
+
+                <ImageView
+                    android:id="@+id/gps_sport_signa1"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/my_gps_sport_two_yuan"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/gps_sport_signa2"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/my_gps_sport_two_yuan"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/gps_sport_signa3"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/my_gps_sport_two_yuan"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|bottom"
+            android:paddingRight="20dip"
+            android:paddingBottom="120dip">
+
+            <Button
+                android:id="@+id/gps_sport_lo"
+                android:layout_width="45dip"
+                android:layout_height="45dip"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/my_location_selected" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dip"
+            android:background="@drawable/locus_yuan"
+            android:orientation="vertical"
+            android:paddingTop="20dip"
+            android:paddingBottom="20dip">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center">
+
+
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/map_distance"
+                            style="@style/public_text_title2_style"
+                            android:text="@string/no_data_default"
+                            android:textSize="25sp" />
+
+                        <TextView
+                            android:id="@+id/tvDistanceUnit"
+                            style="@style/public_text_company3_style"
+                            android:text="@string/sport_distance" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/map_duration"
+                            style="@style/public_text_title2_style"
+                            android:text="@string/no_data_default"
+                            android:textSize="25sp" />
+
+                        <TextView
+                            style="@style/public_text_company3_style"
+                            android:text="@string/sport_time" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0px"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/map_speed"
+                            style="@style/public_text_title2_style"
+                            android:text="@string/no_data_default"
+                            android:textSize="25sp" />
+
+                        <TextView
+                            style="@style/public_text_company3_style"
+                            android:text="@string/sport_pace" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dip">
+
+        <ImageView
+            android:id="@+id/gps_sport_img"
+            android:layout_width="50dip"
+            android:layout_height="50dip"
+            android:layout_alignParentStart="true"
+            android:background="@mipmap/gps_back" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/measure_daojishi_line"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gps_bg"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/measure_daojishi_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:textColor="#ffffff"
+            android:textSize="200dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip"
+        android:text="返回值"
+        android:textColor="#ff0000"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/gps_sport_view1"
+        android:layout_width="30dip"
+        android:layout_height="30dip"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dip">
+
+    </View>
+
+
+</RelativeLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    &lt;!&ndash;不可点击效果&ndash;&gt;-->
+<!--    <item android:state_enabled="false">-->
+<!--        <shape android:shape="rectangle">-->
+<!--            <gradient android:angle="0" android:endColor="#FFA531" android:startColor="#FF2439" />-->
+<!--            <corners android:radius="8dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+<!--    &lt;!&ndash;按下去的效果&ndash;&gt;-->
+<!--    <item android:state_pressed="true">-->
+<!--        <shape android:shape="rectangle">-->
+<!--            &lt;!&ndash; 填充的颜色 &ndash;&gt;-->
+<!--            <gradient android:angle="0" android:endColor="#7fFFA531" android:startColor="#7fFF2439" />-->
+<!--            <corners android:radius="8dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+    <!--还没按下去的效果-->
+    <item android:state_pressed="false">
+        <shape android:shape="rectangle">
+            <!-- 填充的颜色 -->
+            <gradient android:angle="0" android:endColor="#FF8F56" android:startColor="#FF6357" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+
+
+</selector>

@@ -1,0 +1,330 @@
+// wear_fitness.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+import "wear_common.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "FitnessProtos";
+
+message Fitness {
+    enum FitnessID {
+        SET_USER_PROFILE = 0x00;
+
+        GET_TODAY_FITNESS_IDS = 0x01;
+        GET_HISTORY_FITNESS_IDS = 0x02;
+        REQUEST_FITNESS_IDS = 0x03;
+        REQUEST_FITNESS_ID = 0x04;
+        CONFIRM_FITNESS_ID = 0x05;
+
+        GET_HEART_RATE_MONITOR = 0x0A;
+        SET_HEART_RATE_MONITOR = 0x0B;
+        GET_SEDENTARY_REMINDER = 0x0C;
+        SET_SEDENTARY_REMINDER = 0x0D;
+
+        SPORT_REQUEST = 0x1A;
+        PHONE_SPORT_DATA = 0x1B;
+        WEAR_SPORT_DATA = 0x1C;
+        GET_SPORT_STATUS = 0x1D;
+
+        ECG_REQUEST = 0x20;
+        REPORT_ECG_DATA = 0x21;
+        REPORT_ECG_STATUS = 0x22;
+
+        REQUEST_WOMEN_HEALTH = 0x25;
+        SYNC_WOMEN_HEALTH = 0x26;
+        SET_WOMEN_HEALTH_FORCAST = 0x27;
+        SET_WOMEN_HEALTH_REMINDER = 0x28;
+
+        REGISTER_BASIC_DATA_REPORT = 0x2D;
+        UNREGISTER_BASIC_DATA_REPORT = 0x2E;
+        REPORT_BASIC_DATA = 0x2F;
+
+        PHONE_SPORT_DATA_V2D = 0x30;
+        PHONE_SPORT_DATA_V2A = 0x31;
+        WEAR_SPORT_DATA_V2A = 0x32;
+    }
+
+    oneof payload {
+        UserProfile user_profile = 1;
+
+        bytes ids = 2 [(nanopb).type = FT_POINTER];
+        bytes id = 3 [(nanopb).type = FT_POINTER];
+
+        HeartRateMonitor heart_rate_monitor = 8;
+        SedentaryReminder sedentary_reminder = 9;
+
+        SportRequest sport_request = 20;
+        SportResponse sport_response = 21;
+        PhoneSportData phone_sport_data = 22;
+        WearSportData wear_sport_data = 23;
+        SportStatus sport_status = 24;
+
+        ECGRequest ecg_request = 27;
+        ECGResponse ecg_response = 28;
+        ECGData ecg_data = 29;
+        ECGStatus ecg_status = 30;
+
+        WomenHealth women_health = 34;
+        bool forcast_on = 35;
+        WomenHealth.Reminder.List reminder_list = 36;
+
+        BasicData basic_data = 39;
+
+        PhoneSportDataV2D phone_sport_data_v2d = 40;
+        PhoneSportDataV2A phone_sport_data_v2a = 41;
+        WearSportDataV2A wear_sport_data_v2a = 42;
+    }
+}
+
+enum Sex {
+    NEUTRAL = 0x00;
+    MALE = 0x01;
+    FEMALE = 0x02;
+}
+
+message UserProfile {
+    optional uint32 height = 1 [(nanopb).int_size = IS_16];
+    optional float weight = 2;
+    optional uint32 birth = 3;
+    optional Sex sex = 4;
+    optional uint32 max_hr = 5 [(nanopb).int_size = IS_16];
+    optional uint32 goal_calorie = 6 [(nanopb).int_size = IS_16];
+    optional uint32 goal_step = 7 [(nanopb).int_size = IS_16];
+    optional float maximal_met = 8;
+}
+
+message HeartRateMonitor {
+    enum Mode {
+        AUTO = 0x00;
+        OFF = 0x01;
+    }
+
+    required Mode mode = 1;
+    required uint32 frequency = 2 [(nanopb).int_size = IS_16];
+    required bool warning = 3;
+    required uint32 warning_value = 4 [(nanopb).int_size = IS_16];
+}
+
+message SedentaryReminder {
+    required bool on = 1;
+    required Time start_time = 2;
+    required Time end_time = 3;
+    required bool no_disturb_in_launch_break = 4;
+}
+
+message BasicData {
+    required uint32 steps = 1;
+    required uint32 calories = 2 [(nanopb).int_size = IS_16];
+    optional uint32 distance = 3; // unit: miles
+    optional uint32 heart_rate = 4 [(nanopb).int_size = IS_8];
+}
+
+enum GpsAccuracy {
+    GPS_LOW = 0x00;
+    GPS_MEDIUM = 0x01;
+    GPS_HIGH = 0x02;
+    GPS_UNKNOWN = 0x0A; // no satellite
+}
+
+message SportStatus {
+    required SportType sport_type = 1; // NONE if no sport running
+    optional uint32 timestamp = 2; // current running sport start timestamp
+    optional Timezone timezone = 3;
+    optional uint32 duration = 4; // current running sport duration, unit: seconds
+    optional bool paused = 5; // current running sport state pause or not
+
+    optional bool standalone = 6; // do not depend on app
+    optional uint32 select_version = 7 [(nanopb).int_size = IS_8];
+    optional bool app_launched = 8; // current running sport launched by app or device if not standalone
+}
+
+message SportRequest {
+    enum State {
+        START = 0x00;
+        PAUSE = 0x01;
+        RESUME = 0x02;
+        STOP = 0x03;
+    }
+
+    required uint32 timestamp = 1;
+    required Timezone timezone = 2;
+    required SportType sport_type = 3;
+    required State state = 4;
+    // only wear request stop needed for V1 and V2(device launch)
+    optional bytes ids = 5 [(nanopb).type = FT_POINTER];
+
+    // eg: 0x03 --- app or device support V1 & V2
+    // 0x00 or blank is considered to be V1
+    optional uint32 support_versions = 6 [(nanopb).int_size = IS_8];
+}
+
+message SportResponse {
+    enum Code {
+        OK = 0x00;
+        BUSY = 0x01; // other sport running
+        TYPE_NOT_MATCH = 0x02; // resume/pause type not match
+        NO_PERMISSION = 0x03; // app: no location permission
+        NOT_SUPPORT = 0x04; // sport not support
+        LACK_OF_ACCURACY = 0x05; // app: accuracy gps off or no gps permission in background
+        CHARGING = 0x06; // device: charging
+        LOW_BATTERY = 0x07; // device: low battery
+        UNKNOWN = 0x0A;
+    }
+
+    required Code code = 1;
+    // only wear response stop needed for V1 and V2(device launch)
+    optional bytes ids = 2 [(nanopb).type = FT_POINTER];
+    // tell app device's running sport when busy
+    optional SportStatus sport_status = 3;
+
+    optional GpsAccuracy gps_accuracy = 4;
+    // eg: 0x02 --- app or device select V2
+    // 0x00 or blank is considered to be V1
+    optional uint32 select_version = 5 [(nanopb).int_size = IS_8];
+}
+
+// V1: phone --> wear
+message PhoneSportData {
+    required uint32 distance = 1; // unit: miles
+    required uint32 pace = 2; // unit: seconds
+    required GpsAccuracy gps_accuracy = 3;
+}
+
+// V1: wear --> phone
+message WearSportData {
+    required uint32 steps = 1;
+    required uint32 calories = 2 [(nanopb).int_size = IS_16];
+    required uint32 heart_rate = 3 [(nanopb).int_size = IS_8];
+    optional uint32 max_heart_rate = 4 [(nanopb).int_size = IS_8];
+    optional uint32 min_heart_rate = 5 [(nanopb).int_size = IS_8];
+}
+
+// V2 for device launch: phone --> wear
+message PhoneSportDataV2D {
+    required GpsAccuracy gps_accuracy = 1;
+    required uint32 timestamp = 2;
+    required double longitude = 3;
+    required double latitude = 4;
+    optional double altitude = 5;
+    optional float speed = 6;
+    optional float bearing = 7;
+    optional float horizontal_accuracy = 8;
+    optional float vertical_accuracy = 9;
+}
+
+// V2 for app launch: phone --> wear
+message PhoneSportDataV2A {
+    required uint32 duration = 1; // unit: seconds
+    required uint32 heart_rate = 2 [(nanopb).int_size = IS_8];
+    required uint32 calories = 3 [(nanopb).int_size = IS_16];
+
+    // except ride indoor & free training
+    optional uint32 distance = 4; // unit: miles
+    optional uint32 current_pace = 5; // unit: seconds
+    optional uint32 average_pace = 6; // unit: seconds
+
+    // except ride indoor & free training & swimming
+    optional uint32 steps = 7;
+    optional uint32 stride = 8 [(nanopb).int_size = IS_16]; // unit: cm
+    optional uint32 stride_frequency = 9 [(nanopb).int_size = IS_16];
+
+    // only for outdoor sport
+    optional float rise = 10;
+    optional float decline = 11;
+
+    // reminder
+    optional uint32 reminder_kilometre_duration = 12;
+    optional uint32 reminder_kilometre_pace = 13; // pace for last whole kilometre
+    optional uint32 reminder_pace = 14; // presupposed pace
+    optional uint32 reminder_heart_rate = 15 [(nanopb).int_size = IS_8]; // presupposed heart rate
+}
+
+// V2 for app launch: wear --> phone
+message WearSportDataV2A {
+    required uint32 heart_rate = 1 [(nanopb).int_size = IS_8];
+    required uint32 calories = 2 [(nanopb).int_size = IS_16];
+    optional uint32 steps = 3; // total steps if needed
+    optional uint32 distance = 4; // total miles if needed
+}
+
+message ECGRequest {
+    enum Type {
+        HANDHELD = 0x00; // in hand
+        FITTING = 0x01; // fit something, such as clothes
+    }
+
+    enum State {
+        START = 0x00;
+        STOP = 0x01;
+    }
+
+    required Type type = 1;
+    required State state = 2;
+    optional uint32 expected_duration = 3 [(nanopb).int_size = IS_8]; // device set timeout according this
+}
+
+message ECGResponse {
+    enum Code {
+        READY = 0x00;
+        BUSY = 0x01; // another measure is running
+        FALL_OFF = 0x02; // away from body
+        IN_SPORT = 0x03; // sport running
+        CHARGING = 0x04; // charging
+        FAIL = 0x0A; // other any reasons
+    }
+
+    required Code code = 1;
+}
+
+message ECGData {
+    required bytes sampling_data = 1 [(nanopb).type = FT_POINTER];
+    optional uint32 heart_rate = 2 [(nanopb).int_size = IS_8];
+}
+
+message ECGStatus {
+    enum Status {
+        FALL_OFF = 0x00; // away from body
+        WEAR_ON = 0x01; // fit with body
+    }
+
+    required Status status = 1;
+}
+
+
+message WomenHealth {
+    enum Type {
+        MENSTRUATION = 0x01;
+        OVULATION = 0x02;
+        EASY_PREGNANCY = 0x03;
+    }
+
+    message Reminder {
+        required Type type = 1;
+        required uint32 advanced_days = 2 [(nanopb).int_size = IS_8];
+
+        message List {
+            repeated Reminder list = 1 [(nanopb).type = FT_POINTER];
+        }
+    }
+
+    message Data {
+        required Type type = 1;
+        required bool forcast = 2; // intelligent prediction or manual recording
+
+        message List {
+            required uint32 timestamp = 1; // current menstruation start timestamp
+            required Timezone timezone = 2;
+            repeated Data list = 3 [(nanopb).type = FT_POINTER];
+            optional uint32 last_timestamp = 4; // last menstruation start timestamp
+            optional uint32 last_days = 5 [(nanopb).int_size = IS_8]; // ast menstruation days
+            optional uint32 next_timestamp = 6; // next menstruation start timestamp
+        }
+    }
+
+    required bool enabled = 1; // women health feature has been initialized
+    optional bool forcast_on = 2; // intelligent prediction on
+    optional Reminder.List reminder_list = 3;
+    optional Data.List data_list = 4;
+}

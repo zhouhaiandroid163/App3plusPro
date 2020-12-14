@@ -1,0 +1,339 @@
+// wear_system.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+import "wear_common.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "SystemProtos";
+
+message System {
+    enum SystemID {
+        RESET = 0x00;
+        GET_DEVICE_STATUS = 0x01;
+        GET_DEVICE_INFO = 0x02;
+        SET_SYSTEM_TIME = 0x03;
+        FORCE_UPGRADE = 0x04;
+        PREPARE_OTA = 0x05;
+        SET_LANGUAGE = 0x06;
+
+        UNLOCK_WATCH = 0x10;
+        FIND_PHONE = 0x11;
+        FIND_WEAR = 0x12;
+        GET_AUTHORIZE_UNLOCK = 0x13;
+        SET_AUTHORIZE_UNLOCK = 0x14;
+
+        GET_QUIET_MODE = 0x16;
+        SET_QUIET_MODE = 0x17;
+        GET_WRIST_SCREEN = 0x18;
+        SET_WRIST_SCREEN = 0x19;
+        SET_WIDGET = 0x1A;
+        SET_WIDGET_LIST = 0x1B;
+        GET_WIDGET_LIST = 0x1C;
+        GET_ORDERED_APP_LIST = 0x1D;
+        SET_ORDERED_APP_LIST = 0x1E;
+
+        SET_SHORTCUT_1 = 0x20;
+        SET_SHORTCUT_2 = 0x21;
+        SET_SHORTCUT_3 = 0x22;
+        GET_SHORTCUT_1 = 0x23;
+        GET_SHORTCUT_2 = 0x24;
+        GET_SHORTCUT_3 = 0x25;
+        GET_SUPPORT_SHORTCUT_LIST = 0x26;
+
+        GET_SPORT_OPTION = 0x27;
+        SET_SPORT_OPTION = 0x28;
+
+        ADD_OR_UPDATE_SMALL_HABIT = 0x30;
+        SYNC_SMALL_HABIT = 0x31;
+        DELETE_SMALL_HABIT = 0x32;
+
+        REPORT_DATA = 0x50;
+    }
+
+    oneof payload {
+        ResetMode reset_mode = 1;
+        DeviceStatus device_status = 2;
+        DeviceInfo device_info = 3;
+        SystemTime system_time = 4;
+
+        FindMode find_mode = 5;
+        ForceUpgrade force_upgrade = 6;
+
+        WristScreen wrist_screen = 7;
+        Widget widget = 8;
+        Widget.List widget_list = 9;
+        App.List app_list = 10;
+
+        // universal timing setting, such as QuietMode
+        TimingSetting timing_setting = 11;
+
+        Shortcut shortcut = 12;
+        Shortcut.List shortcut_list = 13;
+
+        SportOption.List sport_option_list = 14;
+
+        PrepareOta.Request prepare_ota_request = 16;
+        PrepareOta.Response prepare_ota_response = 17;
+
+        Language language = 20;
+        AuthorizeUnlock.List authorize_unlock_list = 21;
+        AuthorizeUnlock authorize_unlock = 22;
+
+        SmallHabit small_habit = 24;
+        SmallHabit.List small_habit_list = 25;
+        SmallHabit.Type small_habit_type = 26;
+        SmallHabit.TypeList small_habit_type_list = 27;
+
+        ReportData report_data = 50;
+    }
+}
+
+enum ResetMode {
+    NO_ERASE = 0;
+    ERASE_ALL = 1;
+}
+
+message DeviceStatus {
+    message Battery {
+        enum ChargeStatus {
+            UNKNOWN = 0x00;
+            CHARGING = 0x01;
+            NOT_CHARGING = 0x02;
+            FULL = 0x03;
+        }
+
+        required uint32 capacity = 1 [(nanopb).int_size = IS_8];
+        optional ChargeStatus charge_status = 2;
+    }
+
+    required Battery battery = 1;
+}
+
+message DeviceInfo {
+    required string serial_number = 1 [(nanopb).type = FT_POINTER];
+    required string firmware_version = 2 [(nanopb).type = FT_POINTER];
+    optional string imei = 3 [(nanopb).type = FT_POINTER];
+    optional string model = 4 [(nanopb).type = FT_POINTER];
+}
+
+message SystemTime {
+    required Date date = 1;
+    required Time time = 2;
+    optional Timezone time_zone = 3;
+    optional bool is_12_hours = 4;
+}
+
+message Language {
+    required string locale = 1 [(nanopb).type = FT_POINTER];
+}
+
+message AuthorizeUnlock {
+    enum Device {
+        UNKNOWN = 0x00;
+        LAPTOP = 0x01;
+        PHONE = 0x02;
+    }
+
+    required Device device = 1;
+    required bool enable = 2;
+
+    message List {
+        repeated AuthorizeUnlock list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+enum FindMode {
+    FIND_START = 0x00;
+    FIND_STOP = 0x01;
+}
+
+enum TimingMode {
+    ALL_DAY_ON = 0x00;
+    TIMED_ON = 0x01;
+    ALL_DAY_OFF = 0x02;
+}
+
+message TimingSetting {
+    required TimingMode timing_mode = 1;
+    optional Time start_time = 2;
+    optional Time end_time = 3;
+}
+
+message WristScreen {
+    required TimingMode timing_mode = 1;
+    optional Time start_time = 2;
+    optional Time end_time = 3;
+}
+
+enum Function {
+    SETTING = 0x01;
+    FITNESS = 0x02;
+    HEART_RATE = 0x03;
+    PRESSURE = 0x04;
+    ENERGY = 0x05;
+    SLEEP = 0x06;
+    BREATH = 0x07;
+    ANAEROBIC_THRESHOLD = 0x08;
+    CALENDAR = 0x09;
+    CLOCK = 0x0A;
+    STOPWATCH = 0x0B;
+    TIME_KEEPING = 0x0C;
+    WEATHER = 0x0D;
+    STOCK = 0x0E;
+    APP_LIST = 0x0F;
+    SPORT_LIST = 0x10;
+    HOME = 0x11;
+    MUSIC_CONTROLLER = 0x12;
+    VOICE_ASSISTANT = 0x13;
+    BLOOD_OXYGEN = 0x14;
+
+    ALIPAY = 0x20;
+    CARD = 0x21;
+    DOOR = 0x22;
+    BUS = 0x23;
+    BANK = 0x24;
+}
+
+enum Order {
+    HEAD_RESIDENT = 0;
+    HIGHEST = 10;
+    LOWEST = 99;
+    RESIDENT = 100;
+}
+
+message Widget {
+    required uint32 function = 1 [(nanopb).int_size = IS_8];
+    required bool enable = 2;
+    optional uint32 order = 3 [(nanopb).int_size = IS_8];
+
+    message List {
+        repeated Widget list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message App {
+    required string id = 1 [(nanopb).type = FT_POINTER]; // "package_name/class_name"
+    optional string name = 2 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated App list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message Shortcut {
+    enum Type {
+        NONE = 0x00;
+        VOICE = 0x01;
+        FUNCTION = 0x02;
+        SPORT = 0x03;
+    }
+
+    required Type type = 1;
+    optional uint32 sub_type = 2 [(nanopb).int_size = IS_8];
+
+    message List {
+        repeated Shortcut list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message SportOption {
+    required SportType sport_type = 1;
+    required bool show = 2;
+
+    message List {
+        repeated SportOption list = 1 [(nanopb).type = FT_POINTER];
+        // provided if a sport selected as a shortcut
+        // SET_SPORT_OPTION should not provide
+        optional SportType shortcut_sport_type = 2;
+    }
+}
+
+message ForceUpgrade {
+    required bool force = 1;
+    required string firmware_version = 2 [(nanopb).type = FT_POINTER];
+}
+
+message PrepareOta {
+    enum Type {
+        ALL = 0x00;
+        ROM = 0x01;
+        RES = 0x02;
+    }
+
+    message Request {
+        required bool force = 1;
+        required Type type = 2;
+        required string firmware_version = 3 [(nanopb).type = FT_POINTER];
+        optional string file_md5 = 4 [(nanopb).type = FT_POINTER];
+    }
+
+    message Response {
+        required PrepareStatus prepare_status = 1;
+    }
+}
+
+message SmallHabit {
+    enum Type {
+        GO_TO_BED_EARLY = 0x00;
+        DO_MORE_EXERCISE = 0x01;
+        DRINK_WATER = 0x02;
+        READING = 0x03;
+        EAT_BREAKFAST = 0x04;
+        CALL_PARENTS = 0x05;
+        EAT_FRUIT = 0x06;
+        ACTIVE_NECK = 0x07;
+        LEARN_TO_CHARGE = 0x08;
+        PRACTICE_A_SKILL = 0x09;
+        CONTACT_FRIEND = 0x0A;
+        SITTING_UPRIGHT = 0x0B;
+        EAT_VEGETABLE = 0x0C;
+        CIVILIZED_LANGUAGE = 0x0D;
+        MEDITATION = 0x0E;
+        BOOK_KEEPING = 0x0F;
+        RECITE_WORDS = 0x10;
+        WALK_AFTER_MEAL = 0x11;
+        GO_OUT_WITH_KEY = 0x12;
+        DAILY_SUMMARY = 0x13;
+        GARGLE_AFTER_MEAL = 0x14;
+        SMILE_MORE = 0x15;
+        TAKE_MEDICINE = 0x16;
+        NOT_HUMPBACK = 0x17;
+        CALLIGRAPHY = 0x18;
+        LUNCH_BREAK = 0x19;
+        DO_EYE_EXERCISES = 0x1A;
+        DO_YOGA = 0x1B;
+        APPLY_FACIAL_MASK = 0x1C;
+        QUIT_SUGAR = 0x1D;
+        SHOVEL_CAT_LITTER = 0x1E;
+        ONLINE_LESSON = 0x1F;
+        WATERING_FLOWERS = 0x20;
+        TAKE_A_PICTURE_ONE_DAY = 0x21;
+    }
+
+    required Type type = 1;
+    repeated Time time = 2 [(nanopb).type = FT_POINTER];
+    required ClockMode clock_mode = 3;
+    optional uint32 week_days = 4 [(nanopb).int_size = IS_8];
+    required bool enable = 5;
+    optional string label = 6 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated SmallHabit list = 1 [(nanopb).type = FT_POINTER];
+    }
+
+    message TypeList {
+        repeated Type type = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message ReportData {
+    enum Type {
+        DEVICE_LOG = 0x01;
+        STATISTICS = 0x02;
+    }
+
+    required Type type = 1;
+    optional string id = 2 [(nanopb).type = FT_POINTER]; // upload url or ...
+}

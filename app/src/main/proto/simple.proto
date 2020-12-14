@@ -1,0 +1,12 @@
+package bledata;
+option java_package = "com.ble.simple";
+option java_outer_classname = "SimpleProtos";
+
+//syntax = "proto2";
+
+message SimpleMessage {
+    required int32 cmd = 1;
+    required string tips = 2;
+    optional bytes data = 3;
+}
+

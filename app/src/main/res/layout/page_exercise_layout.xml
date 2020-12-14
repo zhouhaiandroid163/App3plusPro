@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:stepHistogramView="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutExercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/step_gradient_bg"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
+
+
+        <ImageView
+            android:id="@+id/ivTitle"
+            style="@style/data_page_img"
+            android:layout_marginStart="12dp"
+            android:background="@mipmap/data_exercise2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <LinearLayout
+            android:id="@+id/layoutTempStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center|bottom"
+            app:layout_constraintLeft_toLeftOf="@+id/ivTitle"
+            app:layout_constraintTop_toBottomOf="@+id/ivTitle">
+
+            <TextView
+                android:id="@+id/tvExerciseStep"
+                style="@style/data_page_number"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <TextView
+                style="@style/data_page_unit"
+                android:text="@string/steps"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/tvExerciseStep"
+                app:layout_constraintLeft_toRightOf="@+id/tvExerciseStep" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutExerciseNoData"
+            style="@style/data_page_no_data_layout"
+            android:layout_marginStart="0dp"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="@+id/layoutTempStep"
+            app:layout_constraintTop_toBottomOf="@+id/layoutTempStep">
+
+            <TextView
+                style="@style/data_page_sub_title"
+                android:text="@string/no_data"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutExerciseShowData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="@+id/layoutTempStep"
+            app:layout_constraintTop_toBottomOf="@+id/layoutTempStep">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:gravity="center|bottom"
+                app:layout_constraintLeft_toLeftOf="@+id/layoutTempStep"
+                app:layout_constraintTop_toBottomOf="@+id/layoutTempStep">
+
+                <TextView
+                    style="@style/data_page_number"
+                    android:text="@string/sport_distance"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvExerciseDistance"
+                    style="@style/data_page_number"
+                    android:layout_marginLeft="2dip"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvDistanceUnit"
+                    style="@style/data_page_unit"
+                    android:text="@string/sport_distance_unit"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    style="@style/data_page_number"
+                    android:layout_marginStart="24dp"
+                    android:text="@string/consume"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tvExerciseCal"
+                    style="@style/data_page_number"
+                    android:layout_marginLeft="2dip"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    style="@style/data_page_unit"
+                    android:text="@string/big_calory"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/layoutTempStep"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </LinearLayout>
+
+            <com.zjw.apps3pluspro.view.StepHistogramView
+                android:id="@+id/stepHistogramView"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="12dp"
+                android:background="@color/transparent"
+                stepHistogramView:stepHistogramView_histogram="@color/StepHistogramView"
+                stepHistogramView:stepHistogramView_histogram_bg="@color/StepHistogramView7f"
+                stepHistogramView:stepHistogramView_x_text_color="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/step_gradient_bg"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="7dp"
+                    android:text="00:00"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingRight="8dp"
+                    android:text="06:00"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingLeft="14dp"
+                    android:text="12:00"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingRight="4dp"
+                    android:text="18:00"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingRight="7.5dp"
+                    android:text="23:00"
+                    android:textColor="@color/white"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

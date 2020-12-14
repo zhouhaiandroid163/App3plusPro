@@ -1,0 +1,152 @@
+// wear_watch_face.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+import "wear_common.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "WatchFaceProtos";
+
+message WatchFace {
+    enum WatchFaceID {
+        GET_INSTALLED_LIST = 0x00;
+        SET_WATCH_FACE = 0x01;
+        REMOVE_WATCH_FACE = 0x02;
+        REMOVE_WATCH_FACE_PHOTO = 0x03;
+        PREPARE_INSTALL_WATCH_FACE = 0x04;
+        REPORT_INSTALL_RESULT = 0x05;
+        REMOVE_MULTI_WATCH_FACE = 0x06;
+
+        GET_SUPPORT_DATA = 0x0A;
+        EDIT_WATCH_FACE = 0x0B;
+        BG_IMAGE_RESULT = 0x0C;
+    }
+
+    oneof payload {
+        WatchFaceItem.List watch_face_list = 1;
+        string id = 2 [(nanopb).type = FT_POINTER];
+        string path = 3 [(nanopb).type = FT_POINTER];
+        bool success = 4;
+        PrepareStatus prepare_status = 5;
+        PrepareInfo prepare_info = 6;
+        InstallResult install_result = 7;
+        WatchFaceInfo.List info_list = 8;
+
+        WatchFaceSlot.List support_data_list = 11;
+        EditRequest edit_request = 12;
+        EditResponse edit_response = 13;
+        BgImageResult bg_image_result = 14;
+    }
+}
+
+message WatchFaceSlot {
+    enum Data {
+        EMPTY = 0x00;
+        HEART_RATE = 0x01;
+        PRESSURE = 0x02;
+        SLEEP = 0x03;
+        ENERGY = 0x04;
+        STEP = 0x05;
+        CALORIE = 0x06;
+        VALID_STAND = 0x07;
+        BATTERY = 0x08;
+        DATE = 0x09;
+        WEATHER = 0x0A;
+        AIR_PRESSURE = 0x0B;
+        ALTITUDE = 0x0C;
+        TIMER = 0x0D;
+        CLOCK = 0x0E;
+        AQI = 0x0F;
+        HUMIDITY = 0x10;
+        SPORT_MODE = 0x11;
+        UVI = 0x12;
+        SUNRISE_SUNSET = 0x13;
+        WIND_DIRECTION = 0x14;
+    }
+
+    message List {
+        repeated Data list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message WatchFaceItem {
+    required string id = 1 [(nanopb).type = FT_POINTER];
+    required string name = 2 [(nanopb).type = FT_POINTER];
+    required bool is_current = 3;
+    optional bool can_remove = 4;
+    optional uint64 version_code = 5;
+
+    // only for editable watchface
+    optional bool can_edit = 6;
+    optional string background_color = 7 [(nanopb).type = FT_POINTER]; // eg:"#FFAABBCC"
+    optional string background_image = 8 [(nanopb).type = FT_POINTER]; // md5:match mass data
+    optional string style = 9 [(nanopb).type = FT_POINTER];
+    repeated WatchFaceSlot.Data data_list = 10 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated WatchFaceItem list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message WatchFaceInfo {
+    required string id = 1 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated WatchFaceInfo list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message EditRequest {
+    required string id = 1 [(nanopb).type = FT_POINTER];
+    required bool set_current = 2;
+    optional string background_color = 3 [(nanopb).type = FT_POINTER]; // eg:"#FFAABBCC"
+    optional string background_image = 4 [(nanopb).type = FT_POINTER]; // md5:match mass data
+    optional uint32 background_image_size = 5;
+    optional string style = 6 [(nanopb).type = FT_POINTER];
+    repeated WatchFaceSlot.Data data_list = 7 [(nanopb).type = FT_POINTER];
+}
+
+message EditResponse {
+    enum Code {
+        SUCCESS = 0x00; // all success, ready to accept background_image if have
+        SUCCESS_BUT_LOW_STORAGE = 0x01; // no storage for background_image, but other optional valid, as success
+        FAIL_FOR_LOW_STORAGE = 0x02; // no storage for background_image, as fail directly
+        FAIL_FOR_INVALID_PARAM = 0x03; // background_color or style invalid
+        FAIL = 0x04; // fail for any other reason
+    }
+
+    required string id = 1 [(nanopb).type = FT_POINTER];
+    required Code code = 2;
+}
+
+message BgImageResult {
+    enum Code {
+        SUCCESS = 0x00; // success, ready for display
+        IMAGE_SAVE_FAILED = 0x01; // image save failed for any reason
+        IMAGE_RESOLVE_FAILED = 0x02; // image resolve failed, such as format not support...
+        NO_WATCH_FACE_MATCHED = 0x03; // can not find corresponding watch face
+    }
+
+    required Code code = 1;
+    optional string id = 2 [(nanopb).type = FT_POINTER]; // if success, id is neccessary
+}
+
+message PrepareInfo {
+    required string id = 1 [(nanopb).type = FT_POINTER];
+    required uint32 size = 2;
+    optional uint64 version_code = 3;
+}
+
+message InstallResult {
+    enum Code {
+        VERIFY_FAILED = 0x00;
+        INSTALL_FAILED = 0x01;
+        INSTALL_SUCCESS = 0x02;
+        INSTALL_USED = 0x03;
+    }
+
+    required string id = 1 [(nanopb).type = FT_POINTER];
+    required Code code = 2;
+    optional bool support_edit = 3;
+}

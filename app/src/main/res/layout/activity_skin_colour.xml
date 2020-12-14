@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip">
+
+                    <ImageView
+                        android:layout_width="25dip"
+                        android:layout_height="25dip"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dip"
+                        android:background="@drawable/skin_colour_yuan1"
+                        android:padding="5dip" />
+
+                    <RadioButton
+                        android:id="@+id/ro_skin_colour1"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dip"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_skin_colour1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip">
+
+                    <ImageView
+                        android:layout_width="25dip"
+                        android:layout_height="25dip"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dip"
+                        android:background="@drawable/skin_colour_yuan2"
+                        android:padding="5dip" />
+
+                    <RadioButton
+                        android:id="@+id/ro_skin_colour2"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dip"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_skin_colour2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip">
+
+
+                    <ImageView
+                        android:layout_width="25dip"
+                        android:layout_height="25dip"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dip"
+                        android:background="@drawable/skin_colour_yuan3"
+                        android:padding="5dip" />
+
+                    <RadioButton
+                        android:id="@+id/ro_skin_colour3"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dip"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_skin_colour3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip">
+
+
+                    <ImageView
+                        android:layout_width="25dip"
+                        android:layout_height="25dip"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dip"
+                        android:background="@drawable/skin_colour_yuan4"
+                        android:padding="5dip" />
+
+                    <RadioButton
+                        android:id="@+id/ro_skin_colour4"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dip"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false" />
+
+
+                    <RelativeLayout
+                        android:id="@+id/rl_skin_colour4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip">
+
+                    <ImageView
+                        android:layout_width="25dip"
+                        android:layout_height="25dip"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dip"
+                        android:background="@drawable/skin_colour_yuan5"
+                        android:padding="5dip" />
+
+                    <RadioButton
+                        android:id="@+id/ro_skin_colour5"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dip"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_skin_colour5"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip">
+
+                    <ImageView
+                        android:layout_width="25dip"
+                        android:layout_height="25dip"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dip"
+                        android:background="@drawable/skin_colour_yuan6"
+                        android:padding="5dip" />
+
+                    <RadioButton
+                        android:id="@+id/ro_skin_colour6"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dip"
+                        android:background="@drawable/checkbox_style"
+                        android:button="@null"
+                        android:focusable="false" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_skin_colour6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reminder_str"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/skin_colour_tip"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btn_skin_colour"
+                style="@style/big_button_stytle"
+                android:layout_marginTop="30dip"
+                android:layout_marginBottom="10dip"
+                android:text="@string/complete" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

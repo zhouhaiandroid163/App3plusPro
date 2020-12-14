@@ -1,0 +1,159 @@
+// wear_alexa.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "AlexaProtos";
+
+message Alexa {
+    enum AlexaID {
+        SYNC_INSTRUCTION_LIST = 0x00;
+        SET_CONFIG = 0x01;
+        GET_CONFIG = 0x02;
+        REPORT_QUIET_MODE = 0x03;
+    }
+
+    oneof payload {
+        AlexaInstruction.List instruction_list = 1;
+        AlexaConfig config = 2;
+        AlexaQuietMode quiet_mode = 3;
+    }
+}
+
+message AlexaConfig {
+    required string client_id = 1 [(nanopb).type = FT_POINTER];
+    required string refresh_token = 2 [(nanopb).type = FT_POINTER];
+    optional string language = 3 [(nanopb).type = FT_POINTER];
+}
+
+message AlexaQuietMode {
+    required bool on = 1;
+}
+
+message AlexaInstruction {
+    required AlexaResultType result_type = 1;
+
+    optional AlexaTemplateGeneral template_general = 2;
+    optional AlexaTemplateWeather template_weather = 3;
+    optional AlexaTemplateLists template_lists = 4;
+    optional AlexaAlertsSetAlert alerts_setalert = 5;
+    optional AlexaSpeechSynthesizerSpeak speechsynthesizer_speak = 6;
+    optional AlexaAuthStatus auth_status = 7;
+    optional AlexaAlertsDeleteAlert.List alerts_deletealerts = 12;
+    optional AlexaNotificationsSetIndicator notifications_setindicator = 13;
+
+    message List {
+        repeated AlexaInstruction list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+enum AlexaResultType {
+    ALEXA_START_LISTENING = 0x00;
+    ALEXA_END_LISTENING = 0x01;
+    ALEXA_AUTH_STATUS = 0x03;
+
+    ALEXA_ERROR_NETWORK = 0x50;
+    ALEXA_ERROR_AUTH = 0x51;
+    ALEXA_ERROR_CONTENT_TOO_LONG = 0x52;
+    ALEXA_ERROR_UNRECOGNIZABLE_SPEECH = 0x53;
+    ALEXA_ERROR_UNSUPPORTED_AREA = 0x54;
+    ALEXA_ERROR_IOS_DEVICE_NOT_SUPPORT = 0x55;
+    ALEXA_ERROR_ANDROID_DEVICE_NOT_SUPPORT = 0x56;
+
+    ALEXA_TEMPLATE_GENERAL = 0x101;
+    ALEXA_TEMPLATE_WEATHER = 0x102;
+    ALEXA_TEMPLATE_LISTS = 0x103;
+    ALEXA_ALERTS_SETALERT = 0x104;
+    ALEXA_ALERTS_DELETEALERTS = 0x105;
+    ALEXA_SPEECHSYNTHESIZER_SPEAK = 0x106;
+    ALEXA_SPEECHRECOGNIZER_EXPECTSPEECH = 0x107;
+    ALEXA_NOTIFICATIONS_SETINDICATOR = 0x108;
+    ALEXA_NOTIFICATIONS_CLEARINDICATOR = 0x109;
+}
+
+message AlexaTemplateGeneral {
+    required AlexaTitle title = 1;
+    required string text = 2 [(nanopb).type = FT_POINTER];
+}
+
+message AlexaTemplateWeather {
+    required AlexaTitle title = 1;
+    required string current_weather = 2 [(nanopb).type = FT_POINTER];
+    required string description = 3 [(nanopb).type = FT_POINTER];
+    required string high_temperature = 4 [(nanopb).type = FT_POINTER];
+    required string low_temperature = 5 [(nanopb).type = FT_POINTER];
+    required string image = 6 [(nanopb).type = FT_POINTER];
+    required AlexaWeatherItem.List weatherForecast = 7;
+    required int32 weather_code = 8;
+}
+
+message AlexaWeatherItem {
+    required string date = 1 [(nanopb).type = FT_POINTER];
+    required string weekday = 2 [(nanopb).type = FT_POINTER];
+    required string high_temperature = 3 [(nanopb).type = FT_POINTER];
+    required string low_temperature = 4 [(nanopb).type = FT_POINTER];
+    required string image = 5 [(nanopb).type = FT_POINTER];
+    required int32 weather_code = 6;
+
+    message List {
+        repeated AlexaWeatherItem list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message AlexaTemplateLists {
+    required AlexaTitle title = 1;
+    required AlexaListsItem.List items = 2;
+    required bool exceed_max_items = 3;
+}
+
+message AlexaListsItem {
+    required string left = 1 [(nanopb).type = FT_POINTER];
+    required string right = 2 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated AlexaListsItem list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message AlexaAlertsSetAlert {
+    required string token = 1 [(nanopb).type = FT_POINTER];
+    required AlexaAlertType type = 2;
+    required string scheduledTime = 3 [(nanopb).type = FT_POINTER];
+    optional string label = 4 [(nanopb).type = FT_POINTER];
+}
+
+message AlexaAlertsDeleteAlert {
+    required string token = 1 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated AlexaAlertsDeleteAlert list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+enum AlexaAlertType {
+    ALEXA_AlertType_UNKNOWN = -1;
+    ALEXA_ALARM = 0;
+    ALEXA_REMINDER = 1;
+    ALEXA_TIMER = 2;
+}
+
+message AlexaSpeechSynthesizerSpeak {
+    required string text = 1 [(nanopb).type = FT_POINTER];
+}
+
+message AlexaTitle {
+    required string main_title = 1 [(nanopb).type = FT_POINTER];
+    required string sub_title = 2 [(nanopb).type = FT_POINTER];
+}
+
+enum AlexaAuthStatus {
+    ALEXA_AUTH = 0;
+    ALEXA_NO_AUTH = 1;
+}
+
+message AlexaNotificationsSetIndicator {
+    required bool playAudioIndicator = 1;
+    required bool persistVisualIndicator = 2;
+}

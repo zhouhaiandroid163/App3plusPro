@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/public_no_data_img"
+        android:layout_width="140dip"
+        android:layout_height="140dip"
+        android:background="@mipmap/no_data_bg" />
+
+    <TextView
+        android:id="@+id/public_no_data_text"
+        style="@style/public_text_company2_style"
+        android:text="@string/no_data"
+        android:textSize="18sp" />
+
+
+</LinearLayout>

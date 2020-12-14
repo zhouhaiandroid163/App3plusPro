@@ -1,0 +1,53 @@
+// wear_media.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "MediaProtos";
+
+message Media {
+    enum MediaID {
+        WEAR_REQUEST = 0x00;
+        SYNC_PLAYER_INFO = 0x01;
+        CONTROL_PLAYER = 0x02;
+    }
+
+    oneof payload {
+        PlayerInfo player_info = 1;
+        PlayerControl player_control = 2;
+    }
+}
+
+message PlayerInfo {
+    enum State {
+        NONE = 0x00;
+        PLAYING = 0x01;
+        PAUSE = 0x02;
+        STOP = 0x03;
+    }
+
+    required State state = 1;
+    optional uint32 volume = 2 [(nanopb).int_size = IS_8];
+    optional string player_name = 3 [(nanopb).type = FT_POINTER];
+    optional string song_title = 4 [(nanopb).type = FT_POINTER];
+    optional string song_artist = 5 [(nanopb).type = FT_POINTER];
+    optional uint32 current_position = 6 [(nanopb).int_size = IS_16];
+    optional uint32 duration = 7 [(nanopb).int_size = IS_16];
+}
+
+message PlayerControl {
+    enum Command {
+        PLAY = 0x00;
+        PAUSE = 0x01;
+        STOP = 0x02;
+        PREV = 0x03;
+        NEXT = 0x04;
+        ADJUST_VOLUME = 0x05;
+    }
+
+    required Command command = 1;
+    // only ADJUST_VOLUME needed
+    optional uint32 volume = 2 [(nanopb).int_size = IS_8];
+}

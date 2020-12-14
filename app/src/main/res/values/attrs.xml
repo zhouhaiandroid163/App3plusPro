@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension|reference" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+    </declare-styleable>
+    <declare-styleable name="chart">
+        <attr name="lineColor" format="color" />
+        <attr name="line_Height" format="integer" />
+        <attr name="lineStyle">
+            <enum name="line" value="0" />
+            <enum name="dot" value="1" />
+        </attr>
+        <attr name="linePositon">
+            <enum name="top" value="1" />
+            <enum name="bottom" value="3" />
+        </attr>
+        <attr name="dotWidth" format="integer" />
+        <attr name="specWidth" format="integer" />
+        <attr name="border_thickness" format="dimension" />
+        <attr name="border_inside_color" format="color" />
+        <attr name="border_outside_color" format="color" />
+        <attr name="itemCount" format="integer" />
+        <attr name="roundColor" format="color" />
+        <attr name="roundProgressColor" format="color" />
+        <attr name="roundWidth" format="dimension" />
+        <attr name="max" format="integer" />
+        <attr name="style">
+            <enum name="STROKE" value="0" />
+            <enum name="FILL" value="1" />
+        </attr>
+        <attr name="xLablesCount" format="integer" />
+        <attr name="paddingLeft" format="dimension" />
+        <attr name="paddingRight" format="dimension" />
+        <attr name="paddingTop" format="dimension" />
+        <attr name="paddingBottom" format="dimension" />
+        <attr name="xMin" format="integer" />
+        <attr name="xMax" format="integer" />
+        <attr name="yMin" format="integer" />
+        <attr name="yMax" format="integer" />
+        <attr name="barWidth" format="float" />
+        <attr name="barColor" format="color" />
+        <attr name="axisColor" format="color" />
+        <attr name="yLabelWithDatas" format="boolean" />
+        <attr name="numberPickerStyle" format="reference" />
+        <attr name="solidColor" format="reference|color" />
+        <attr name="selectionDivider" format="reference" />
+        <attr name="selectionDividerHeight" format="dimension" />
+        <attr name="selectionDividersDistance" format="dimension" />
+        <attr name="internalMinHeight" format="dimension" />
+        <attr name="internalMaxHeight" format="dimension" />
+        <attr name="internalMinWidth" format="dimension" />
+        <attr name="internalMaxWidth" format="dimension" />
+        <attr name="internalLayout" format="reference" />
+        <attr name="virtualButtonPressedDrawable" format="reference" />
+    </declare-styleable>
+
+
+    <!-- 心电动画 -->
+    <declare-styleable name="elg">
+        <attr name="BackLineColor" format="color" />
+        <attr name="TitleColor" format="color" />
+        <attr name="PointerLineColor" format="color" />
+        <attr name="TitleSize" format="dimension" />
+        <attr name="XYTextSize" format="dimension" />
+    </declare-styleable>
+
+    <!-- 圆形进度条 -->
+    <declare-styleable name="CircularSeekBar">
+        <attr name="progress" format="integer"></attr>
+        <attr name="seekbar_max" format="integer"></attr>
+        <attr name="move_outside_circle" format="boolean"></attr>
+        <attr name="maintain_equal_circle" format="boolean"></attr>
+        <attr name="use_custom_radii" format="boolean"></attr>
+        <attr name="lock_enabled" format="boolean"></attr>
+        <attr name="circle_x_radius" format="dimension" />
+        <attr name="circle_y_radius" format="dimension" />
+        <!-- 圆环宽度-->
+        <attr name="circle_stroke_width" format="dimension" />
+        <attr name="pointer_radius" format="dimension" />
+        <attr name="pointer_halo_width" format="dimension" />
+        <attr name="pointer_halo_border_width" format="dimension"></attr>
+        <attr name="circle_color" format="color"></attr>
+        <attr name="circle_progress_color" format="color"></attr>
+        <attr name="pointer_color" format="color"></attr>
+        <attr name="pointer_halo_color" format="color"></attr>
+        <attr name="pointer_halo_color_ontouch" format="color"></attr>
+        <attr name="pointer_alpha_ontouch" format="integer"></attr>
+        <attr name="start_angle" format="float"></attr>
+        <attr name="end_angle" format="float"></attr>
+        <attr name="circle_fill" format="color"></attr>
+    </declare-styleable>
+
+
+    <!-- 圆形SeekBar -->
+    <declare-styleable name="cs_CircularSeekBar">
+        <attr name="cs_circle_style">
+            <enum name="butt" value="0" />
+            <enum name="round" value="1" />
+            <enum name="square" value="2" />
+        </attr>
+        <!--值-->
+        <attr name="cs_progress" format="integer" />
+        <attr name="cs_max" format="integer" />
+        <attr name="cs_negative_enabled" format="boolean" />
+        <attr name="cs_move_outside_circle" format="boolean" />
+        <attr name="cs_maintain_equal_circle" format="boolean" />
+        <attr name="cs_use_custom_radii" format="boolean" />
+        <attr name="cs_lock_enabled" format="boolean" />
+        <attr name="cs_circle_x_radius" format="dimension" />
+        <attr name="cs_circle_y_radius" format="dimension" />
+        <attr name="cs_circle_stroke_width" format="dimension" />
+        <attr name="cs_disable_pointer" format="boolean" />
+        <attr name="cs_pointer_stroke_width" format="dimension" />
+        <attr name="cs_pointer_halo_width" format="dimension" />
+        <attr name="cs_pointer_halo_border_width" format="dimension" />
+        <!--填充颜色-->
+        <attr name="cs_circle_fill" format="color" />
+        <!--圆环底色-->
+        <attr name="cs_circle_color" format="color" />
+        <!--圆环填充色-->
+        <attr name="cs_circle_progress_color" format="color" />
+        <!--滑动块颜色-->
+        <attr name="cs_pointer_color" format="color" />
+        <attr name="cs_pointer_halo_color" format="color" />
+        <!--触摸式光影颜色-->
+        <attr name="cs_pointer_halo_color_ontouch" format="color" />
+        <attr name="cs_pointer_alpha_ontouch" format="integer" />
+        <attr name="cs_pointer_angle" format="float" />
+        <attr name="cs_start_angle" format="float" />
+        <attr name="cs_end_angle" format="float" />
+        <!--是否禁用光影效果-->
+        <attr name="cs_disable_progress_glow" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="colorRoundAttr">
+        <attr name="bgColor" format="color" />
+        <attr name="ringColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="curveChartView">
+        <attr name="curveChartView_LineColor" format="color" />
+        <attr name="gradientColorStart" format="color" />
+        <attr name="gradientColorEnd" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="stepHistogramView">
+        <attr name="stepHistogramView_histogram_bg" format="color" />
+        <attr name="stepHistogramView_histogram" format="color" />
+        <attr name="stepHistogramView_histogram_touch" format="color" />
+        <attr name="stepHistogramView_x_text_color" format="color" />
+        <attr name="stepHistogramView_isDrawX0" format="boolean" />
+    </declare-styleable>
+
+
+</resources>

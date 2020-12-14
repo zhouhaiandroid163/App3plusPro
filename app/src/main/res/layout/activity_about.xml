@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_about_feedback"
+            style="@style/device_more_set_style">
+
+            <TextView
+                style="@style/public_text_title2_style"
+                android:layout_centerVertical="true"
+                android:text="@string/title_feedback" />
+
+            <ImageView
+                android:layout_width="@dimen/my_icon_right_img_size"
+                android:layout_height="@dimen/my_icon_right_img_size"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@mipmap/icon_enter" />
+
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/view_wechat"
+            layout="@layout/line_layout" />
+
+        <RelativeLayout
+            android:id="@+id/rl_wechat"
+            style="@style/device_more_set_style">
+
+
+            <TextView
+                style="@style/public_text_title2_style"
+                android:layout_centerVertical="true"
+                android:text="@string/title_weixin" />
+
+            <ImageView
+                android:layout_width="@dimen/my_icon_right_img_size"
+                android:layout_height="@dimen/my_icon_right_img_size"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@mipmap/icon_enter" />
+
+
+        </RelativeLayout>
+
+        <include layout="@layout/line_layout" />
+
+        <LinearLayout
+            android:id="@+id/rl_about_upload"
+            style="@style/device_more_set_style"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvUpdateTitle"
+                style="@style/public_text_title2_style"
+                android:layout_weight="1"
+                android:text="@string/app_verson_update" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="4dp"
+                android:gravity="center_vertical|end">
+
+                <TextView
+                    android:id="@+id/tv_app_upload_version_state"
+                    style="@style/public_text_company2_style"
+                    android:text="@string/already_new"
+                    android:textColor="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dip"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_app_upload_version_name"
+                        style="@style/public_text_company2_style"
+                        android:text=""
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_app_upload_base_version_name"
+                        style="@style/public_text_company2_style"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/my_icon_right_img_size"
+                    android:layout_height="@dimen/my_icon_right_img_size"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="2dip"
+                    android:background="@mipmap/icon_enter" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <include layout="@layout/line_layout" />
+
+        <RelativeLayout
+            android:id="@+id/rl_about_privacy"
+            style="@style/device_more_set_style"
+            android:visibility="visible">
+
+            <TextView
+                style="@style/public_text_title2_style"
+                android:layout_centerVertical="true"
+                android:text="@string/about_privacy_protocol_title" />
+
+            <ImageView
+                android:layout_width="@dimen/my_icon_right_img_size"
+                android:layout_height="@dimen/my_icon_right_img_size"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@mipmap/icon_enter" />
+        </RelativeLayout>
+
+        <include layout="@layout/line_layout" />
+
+        <RelativeLayout
+            android:id="@+id/rl_user_protocol"
+            style="@style/device_more_set_style"
+            android:visibility="visible">
+
+            <TextView
+                style="@style/public_text_title2_style"
+                android:layout_centerVertical="true"
+                android:text="@string/about_user_protocol_title" />
+
+            <ImageView
+                android:layout_width="@dimen/my_icon_right_img_size"
+                android:layout_height="@dimen/my_icon_right_img_size"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@mipmap/icon_enter" />
+        </RelativeLayout>
+
+        <include layout="@layout/line_layout" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

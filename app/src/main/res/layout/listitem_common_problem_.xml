@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:clickable="true"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/contactName"
+        style="@style/public_text_title1_style"
+        android:layout_marginBottom="7dip"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dip"
+        android:paddingTop="5dip"
+        android:paddingRight="10dip"
+        android:paddingBottom="5dip"
+        android:text="Contact name" />
+
+    <LinearLayout
+        android:id="@+id/list_lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginBottom="7dip"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/infos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123"
+            android:textColor="@color/white_50"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

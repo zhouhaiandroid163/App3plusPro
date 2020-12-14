@@ -1,0 +1,9 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/my_color_view_poheart_details_color5"/>
+            <corners android:topLeftRadius="0dp" android:bottomLeftRadius="0dp"
+                android:topRightRadius="15dp" android:bottomRightRadius="15dp"/>
+        </shape>
+    </item>
+</selector>

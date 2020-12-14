@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 透明 -->
+    <color name="transparent">#00000000</color>
+    <!-- 白色 -->
+    <color name="white">#ffffff</color>
+    <color name="color_66e1e1e1">#66e1e1e1</color>
+    <!-- =======蓝色主题======= -->
+    <!--状态栏-->
+    <color name="public_theme_index_state">#57FFB5</color>
+    <!--标题栏-->
+    <color name="public_theme_index_title">#57FFB5</color>
+    <!--选中颜色-->
+    <color name="public_theme_index_enable">#57FFB5</color>
+
+    <!-- =======白色主题======= -->
+    <!--状态栏-->
+    <color name="public_theme_white_state">#ffffff</color>
+    <!--标题栏-->
+    <color name="public_theme_white_title">#ffffff</color>
+    <!--选中颜色-->
+    <color name="public_theme_white_enable">#007aff</color>
+
+    <!-- =======青色主题======= -->
+    <!--状态栏-->
+    <color name="public_theme_cyan_state">#a8e6ff</color>
+    <!--标题栏-->
+    <color name="public_theme_cyan_title">#a8e6ff</color>
+    <!--选中颜色-->
+    <color name="public_theme_cyan_enable">#007aff</color>
+
+
+    <!--  主要的背景颜色 -->
+    <color name="my_index_bg">#ffffff</color>
+    <!--  主要的背景颜色 -->
+    <color name="my_bg_color1">#eeeeee</color>
+    <!-- 灰色线条-分隔符 -->
+    <color name="my_line_bg_color1">#eeeeee</color>
+
+    <!--淡绿色的图表背景-->
+    <color name="public_chart_bg_color">#f2f6fa</color>
+    <color name="public_chart_text_color">#cdcdcd</color>
+
+    <!-- 字体-主题色 -->
+    <color name="public_theme_text_color1">#007aff</color>
+    <!-- 黑色字体颜色 -->
+    <color name="public_text_color1">#000011</color>
+    <!-- 灰色字体颜色 -->
+    <color name="public_text_color2">#7F8088</color>
+    <!--白色字体颜色-->
+    <color name="public_text_color_white">#ffffff</color>
+    <!-- 输入框-提示字体颜色 -->
+    <color name="my_input_hint_text">#d8d8d8</color>
+    <!--不可以点击字体颜色-->
+    <color name="public_unenable_text_color1">#dfdfdf</color>
+
+
+    <!-- 自定义对话框字体颜色 -->
+    <color name="my_dialog_text_color">#232323</color>
+    <!-- 自定义对话框按钮字体颜色 -->
+    <color name="my_dialog_button_text_color">#007aff</color>
+    <!-- 自定义对话框线条颜色 -->
+    <color name="my_dialog_line_color">#eeeeee</color>
+
+
+    <!-- 主页底部菜单栏 背景颜色 -->
+    <color name="bootom_menu_bg">#38404B</color>
+    <!-- 底部颜色变化 -->
+    <color name="bootom_color_on">#ffffff</color>
+    <color name="bootom_color_off">#C8CACD</color>
+
+    <!-- 我的界面-智能提醒下面的两个点 -->
+    <color name="my_circle_bg_spot_on_bg">#ffffff</color>
+    <color name="my_circle_bg_spot_on_line">#007aff</color>
+    <color name="my_circle_bg_spot_off_bg">#bcbcbc</color>
+    <color name="my_circle_bg_spot_off_line">#bcbcbc</color>
+
+    <!--新的单位样式 -->
+    <color name="my_unit_color_on">#57FFB5</color>
+    <color name="my_unit_color_off">#ffffff</color>
+
+    <!--个人信息头像背景颜色-->
+    <color name="my_user_head_bg">#007aff</color>
+
+    <!-- 心电图 -->
+    <color name="ecg_bg_clolor">#147F8088</color>
+    <color name="ecg_bg_line_clolor">#88b5b5b5</color>
+    <color name="ecg_line_clolor">#58af47</color>
+    <color name="ecg_text_clolor">#00000000</color>
+
+    <!--天血压-->
+    <color name="bp_day_state1">#00000000</color>
+    <color name="bp_day_state2">#47cf63</color>
+    <color name="bp_day_state3">#eb5b53</color>
+
+    <!--周睡眠-->
+    <color name="sleep_week_state1">#8E4CFA</color>
+    <color name="sleep_week_state2">#EF48FE</color>
+    <color name="sleep_week_state3">#FFB81E</color>
+
+    <!--周心率-->
+    <color name="heart_week_state1">#ffa070</color>
+    <color name="heart_week_state2">#c86df4</color>
+
+    <!--周血压-->
+    <color name="bp_week_state1">#ffa070</color>
+    <color name="bp_week_state2">#ff5151</color>
+    <color name="bp_week_state3">#01dca0</color>
+
+
+    <!-- 健康值颜色条 -->
+    <color name="my_color_view_color1">#fbce4d</color>
+    <color name="my_color_view_color2">#ff9e08</color>
+    <color name="my_color_view_color3">#23ae38</color>
+    <color name="my_color_view_color4">#079cfb</color>
+    <color name="my_color_index_bg">#ffffff</color>
+
+    <!-- 整点心率颜色条颜色 -->
+    <color name="my_poheart_color_view_color1">#079cfb</color>
+    <color name="my_poheart_color_view_color2">#23ae38</color>
+    <color name="my_poheart_color_view_color3">#fbce4d</color>
+    <color name="my_poheart_color_view_color4">#ff9e08</color>
+    <color name="my_poheart_color_view_color5">#ee5069</color>
+
+    <!-- 圆环字体颜色 -->
+    <color name="my_color_yuanhuan_text">#ffffff</color>
+    <!-- 圆环底色 -->
+    <color name="my_color_yuanhuan_bg">#29ffffff</color>
+    <!-- 圆环填充色 -->
+    <color name="my_color_yuanhuan_color">#aaffffff</color>
+
+    <!-- 离线心电同步View 的背景颜色 -->
+    <color name="main_off_line_sync_view_bg">#ccF8F8F8</color>
+    <color name="main_off_line_sync_view_text_color">#ff7f8088</color>
+
+    <!-- 折线图颜色-->
+    <color name="my_exercise_line_chart_color">#208bff</color>
+    <color name="my_sleep_line_chart_color">#1e84ff</color>
+    <color name="my_heart_line_chart_color">#1e84ff</color>
+
+    <!-- 蓝牙搜索列表颜色 -->
+    <color name="send_ble_top_bg">#007aff</color>
+
+    <!-- 主页-数据也-天周月选择 -->
+    <color name="public_date_switch_text_color1">#ffffff</color>
+    <color name="public_date_switch_text_color2">#ffffff</color>
+
+    <!-- 心电状态-正常-异常之类的 -->
+    <color name="my_circle_bg_one_bg">#ffffff</color>
+    <color name="my_circle_bg_two_1_bg">#ff9999</color>
+    <color name="my_circle_bg_two_2_bg">#40ca69</color>
+    <color name="my_circle_bg_two_3_bg">#ff0000</color>
+
+    <!--主页颜色1-->
+    <color name="my_index_text_color_1">#171830</color>
+    <!--主页颜色2-->
+    <color name="my_index_text_color_2">#a8abac</color>
+
+    <!-- 圆环字体颜色 -->
+    <!-- 圆环底色 -->
+    <color name="my_color_yuanhuan_sport_bg">#29ffffff</color>
+    <!-- 圆环填充色 -->
+    <color name="my_color_yuanhuan_sport_color">#aaffffff</color>
+
+
+    <!-- 生理周期-日历 -->
+
+    <!--年视图-弹出视图-->
+    <!--当前月下面的小字颜色(是标记的)-->
+    <color name="year_is_now_is_biaoji_month_text_color">#f17706</color>
+    <!--当前月下面的小字颜色(不是标记的)-->
+    <color name="year_is_now_no_biaoji_month_text_color">#333333</color>
+    <!--上面月份的大字体颜色-->
+    <color name="year_month_text_color">#f17706</color>
+
+    <!--月视图-展开视图-->
+    <!--不是当月的字体颜色??-->
+    <!--<color name="month_no_now_text_color">#CFCFCF</color>-->
+    <!--是当月的字体颜色-->
+    <color name="month_is_now_text_color">#b1b1b1</color>
+    <!--选中的字体颜色-->
+    <color name="month_now_text_color">#99ff0000</color>
+    <!--整个月份背景-->
+    <color name="month_calendar_bg">#99EFEFEF</color>
+    <!--上面星期背景-->
+    <color name="month_week_bg">#EFEFEF</color>
+
+    <!--周视图-收起来视图-->
+    <!--选中的背景颜色-->
+    <color name="week_now_bg_color">#991531</color>
+    <!--是当月的字体颜色-->
+    <color name="week_is_now_text_color">#b1b1b1</color>
+
+    <!--月视图-周视图-->
+    <!--被标记的字体颜色-->
+    <color name="all_biaoji_text_color">#5a5a5b</color>
+
+    <!--周期颜色值-->
+    <!--周期颜色值 默认-->
+    <color name="cycle_color_type0_text">#FFFFFF</color>
+    <color name="cycle_color_type0_bg">#FFFFFF</color>
+    <!--周期颜色值 月经期-->
+    <color name="cycle_color_type1_text">#FFFFFF</color>
+    <color name="cycle_color_type1_bg">#FF428A</color>
+    <!--周期颜色值 安全期-->
+    <color name="cycle_color_type2_text">#39CE6D</color>
+    <color name="cycle_color_type2_bg">#FFFFFF</color>
+    <!--周期颜色值 危险期-->
+    <color name="cycle_color_type3_text">#FF6631</color>
+    <color name="cycle_color_type3_bg">#FFFFFF</color>
+
+
+    <!-- 按钮1 不可点击颜色-->
+    <color name="my_button_color3">#aa696969</color>
+
+
+    <!-- 获取验证码按钮 -->
+    <color name="get_code_button_on">#077aff</color>
+    <color name="get_code_button_off">#85b5ff</color>
+
+    <!-- 个人信息录入 -->
+    <color name="profile_init_text_color1">#000000</color>
+    <color name="profile_init_text_color2">#c7c7c7</color>
+
+
+    <!-- 肤色选择 -->
+    <color name="skin_1_color">#fffbf7</color>
+    <color name="skin_1_line">#ffe7cc</color>
+    <color name="skin_2_color">#ffe7cc</color>
+    <color name="skin_2_line">#f5da9f</color>
+    <color name="skin_3_color">#f5da9f</color>
+    <color name="skin_3_line">#c99751</color>
+    <color name="skin_4_color">#c99751</color>
+    <color name="skin_4_line">#624422</color>
+    <color name="skin_5_color">#624422</color>
+    <color name="skin_5_line">#42280b</color>
+    <color name="skin_6_color">#42280b</color>
+    <color name="skin_6_line">#130b01</color>
+
+    <!-- 好友详情 -->
+    <color name="fined_top_left_ecg">#f74358</color>
+    <color name="fined_top_left_sport">#fa944e</color>
+    <color name="fined_top_left_sleep">#b85ce6</color>
+    <color name="fined_top_left_hr">#f45f58</color>
+    <color name="fined_top_left_bp">#4fd36f</color>
+
+    <!-- 标题栏 -->
+    <color name="base_activity_bg">#313841</color>
+    <color name="title_bg_step">#FF6631</color>
+    <color name="title_bg_heart">#FC4D4D</color>
+    <color name="title_bg_sleep">#8E4CFA</color>
+    <color name="title_bg_ecg">#288DFE</color>
+    <color name="title_bg_cycle">#FF428A</color>
+    <color name="title_bg_temp">#288DFE</color>
+    <color name="title_bg_spo2">#FC4D4D</color>
+    <color name="title_bg_gps">#0C2A4C</color>
+    <!-- 标题栏 -->
+    <color name="public_styles_them_bg">#077aff</color>
+
+    <!-- 按钮1 -->
+    <color name="my_button1_on">#077aff</color>
+    <color name="my_button1_off">#d5077aff</color>
+
+    <!-- 按钮2 -->
+    <color name="my_button2_on">#ee5c42</color>
+    <color name="my_button2_off">#d5ee5c42</color>
+
+    <!-- 按钮3 -->
+    <color name="my_button3_on">#eeeeee</color>
+    <color name="my_button3_off">#d5eeeeee</color>
+
+    <!--列表点击效果-->
+    <color name="my_item1_on">#ffffff</color>
+    <color name="my_item1_off">#f9f9f9</color>
+    <color name="my_item1_no_enable">#ffffff</color>
+
+    <!-- 数据页面顶部背景 -->
+    <color name="data_top_bg">#077aff</color>
+
+    <!-- PPG历史颜色值 -->
+    <color name="my_color_view_ppg_details_color1">#288DFE</color>
+    <color name="my_color_view_ppg_details_color2">#39CE6D</color>
+    <color name="my_color_view_ppg_details_color3">#F7D72C</color>
+    <color name="my_color_view_ppg_details_color4">#FF952D</color>
+
+    <color name="ppg_details_sbp_color">#feac2e</color>
+    <color name="ppg_details_dbp_color">#7ded43</color>
+
+
+    <!-- 整点心率历史 -->
+    <color name="my_color_view_poheart_details_color1">#75b5f3</color>
+    <color name="my_color_view_poheart_details_color2">#7ded43</color>
+    <color name="my_color_view_poheart_details_color3">#f7d82b</color>
+    <color name="my_color_view_poheart_details_color4">#fdac2c</color>
+    <color name="my_color_view_poheart_details_color5">#f0778d</color>
+
+
+    <!--睡眠状态 -->
+    <color name="sleep_state0">#727F8E</color>
+    <color name="sleep_state1">#727F8E</color>
+    <color name="sleep_state2">#C5F2DF</color>
+    <color name="sleep_state3">#57FFB5</color>
+    <color name="sleep_state4">#727F8E</color>
+    <color name="sleep_state_null">#00000000</color>
+
+    <!--校准对话框 -->
+    <color name="dalog_calibratio_choice_bg_line">#57FFB5</color>
+    <color name="dalog_calibratio_choice_bg_bg">#f2f6fa</color>
+
+
+    <!-- 身高体重对话框，按钮字体颜色 -->
+    <color name="public_dialog_text_color1">#0479FE</color>
+    <!-- 身高体重对话框，按钮字体颜色 -->
+    <color name="public_dialog_text_company1">#888888</color>
+
+
+    <color name="color_7f8088">#7F8088</color>
+    <color name="color_000111">#000111</color>
+    <color name="color_288dfe">#288DFE</color>
+    <color name="color_b2b2b7">#b2b2b7</color>
+    <color name="StepHistogramView">#ffffff</color>
+    <color name="StepHistogramView7f">#7fffffff</color>
+    <color name="StepHistogramView_text">#7F8088</color>
+
+
+    <color name="multiProgressView1">#727F8E</color>
+    <color name="multiProgressView2">#C5F2DF</color>
+    <color name="multiProgressView3">#57FFB5</color>
+    <color name="multiProgressView4">#eeeeee</color>
+
+    <color name="round_progress_bg">#19ffffff</color>
+    <color name="round_progress">#CCffffff</color>
+
+
+    <color name="CurveChartView1">#7fffffff</color>
+    <color name="CurveChartView2">#288DFE</color>
+    <color name="CurveChartView3">#FC4D4D</color>
+    <color name="color_7f7f8088">#7f7F8088</color>
+    <color name="color_DDDDDD">#DDDDDD</color>
+    <color name="color_FFA383">#FFA383</color>
+    <color name="color_278DFD">#278DFD</color>
+
+    <color name="device_sport_heart1">#FC4D4D</color>
+    <color name="device_sport_heart2">#FF952D</color>
+    <color name="device_sport_heart3">#F7D72C</color>
+    <color name="device_sport_heart4">#39CE6D</color>
+    <color name="device_sport_heart5">#288DFE</color>
+
+    <color name="theme_color1">#288DFE</color>
+    <color name="theme_color2">#568DFE</color>
+    <color name="theme_color3">#25678E</color>
+    <color name="theme_color4">#cf2563</color>
+    <color name="theme_color5">#25cd88</color>
+    <color name="theme_color6">#99ccff</color>
+    <color name="theme_color7">#78aacc</color>
+    <color name="theme_color8">#ccff89</color>
+    <color name="theme_color9">#123456</color>
+    <color name="theme_color10">#eee789</color>
+
+    // app 定制
+    <color name="top_bar">#07B8F3</color>
+    <color name="top_bar_base">#2F353E</color>
+    <color name="white_50">#7fffffff</color>
+    <color name="white_12">#0Cffffff</color>
+    <color name="code_color">#57FFB5</color>
+    <color name="bt_text_color">#565E67</color>
+    <color name="dialog_bg">#464E58</color>
+</resources>

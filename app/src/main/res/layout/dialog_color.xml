@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ColorBars="http://schemas.android.com/apk/res-auto"
+    xmlns:ColorPicker="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:id="@+id/rl_height_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#f3f3f3"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_color_cancel"
+            style="@style/public_text_dialog_style"
+            android:layout_alignParentLeft="true"
+            android:text="@string/dialog_no" />
+
+        <TextView
+            android:id="@+id/tv_color_ok"
+            style="@style/public_text_dialog_style"
+            android:layout_alignParentRight="true"
+            android:text="@string/dialog_yes" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_height_title"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dip">
+
+
+        <com.larswerkman.holocolorpicker.ColorPicker
+            android:id="@+id/picker"
+            android:layout_width="200dip"
+            android:layout_height="200dip"
+            ColorPicker:color_center_halo_radius="@dimen/holocolorpicker_max_size2"
+            ColorPicker:color_center_radius="@dimen/holocolorpicker_max_size1"
+            ColorPicker:color_pointer_halo_radius="@dimen/holocolorpicker_min_size2"
+            ColorPicker:color_pointer_radius="@dimen/holocolorpicker_min_size1"
+            ColorPicker:color_wheel_thickness="@dimen/holocolorpicker_wai_size1" />
+
+        <com.larswerkman.holocolorpicker.OpacityBar
+            android:id="@+id/opacitybar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+
+        <com.larswerkman.holocolorpicker.SVBar
+            android:id="@+id/svbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dip"
+            ColorBars:bar_pointer_halo_radius="@dimen/holocolorpicker_min_size2"
+            ColorBars:bar_pointer_radius="@dimen/holocolorpicker_min_size1"
+            ColorBars:bar_thickness="@dimen/holocolorpicker_wai_size2" />
+
+        <com.larswerkman.holocolorpicker.SaturationBar
+            android:id="@+id/saturationbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:visibility="gone"
+            ColorBars:bar_pointer_halo_radius="@dimen/holocolorpicker_min_size2"
+            ColorBars:bar_pointer_radius="@dimen/holocolorpicker_min_size1"
+            ColorBars:bar_thickness="@dimen/holocolorpicker_wai_size2" />
+
+        <com.larswerkman.holocolorpicker.ValueBar
+            android:id="@+id/valuebar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="10dip"
+            android:visibility="gone"
+            ColorBars:bar_pointer_halo_radius="@dimen/holocolorpicker_min_size2"
+            ColorBars:bar_pointer_radius="@dimen/holocolorpicker_min_size1"
+            ColorBars:bar_thickness="@dimen/holocolorpicker_wai_size2" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

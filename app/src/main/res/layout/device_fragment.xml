@@ -1,0 +1,876 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/no_device_layout"
+        android:visibility="gone" />
+
+    <include layout="@layout/home_title" />
+
+    <ScrollView
+        android:id="@+id/svHasDevice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
+
+            <LinearLayout
+                android:id="@+id/layoutDialMarket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_dial_center_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:background="@mipmap/icon_enter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/v1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="#EEEEEE"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="6dip"
+                        android:layout_marginBottom="6dip"
+                        android:background="@drawable/list_my_theme_bg2"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dip"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/v1">
+
+                        <ImageView
+                            android:id="@+id/ivTheme1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@mipmap/device_watch" />
+
+                        <ImageView
+                            android:id="@+id/ivCover1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@mipmap/cover_bg" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="6dip"
+                        android:layout_marginBottom="6dip"
+                        android:background="@drawable/list_my_theme_bg2"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dip"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/v1">
+
+                        <ImageView
+                            android:id="@+id/ivTheme2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@mipmap/device_watch" />
+
+                        <ImageView
+                            android:id="@+id/ivCover2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@mipmap/cover_bg" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="6dip"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="6dip"
+                        android:background="@drawable/list_my_theme_bg2"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dip"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/v1">
+
+                        <ImageView
+                            android:id="@+id/ivTheme3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@mipmap/device_watch" />
+
+                        <ImageView
+                            android:id="@+id/ivCover3"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@mipmap/cover_bg" />
+                    </RelativeLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+
+            <androidx.appcompat.widget.SwitchCompat
+                style="@style/switchCompatImage"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/layoutScreensaver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvScreensaverTitle"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_screensaver_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_screensaver_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvScreensaverTitle" />
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:background="@mipmap/icon_enter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvContactTitle"
+                        style="@style/device_fragment_title"
+                        android:text="@string/my_mail_list_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/my_mail_list_count"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvContactTitle" />
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:background="@mipmap/icon_enter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvTitle1"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_message_notification_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_message_notification_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle1" />
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:background="@mipmap/icon_enter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutRemind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvTitle2"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_remind_set_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_remind_set_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle2" />
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:background="@mipmap/icon_enter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutNotRemind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvNotRemindTitle"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_remind_not_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_remind_not_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvNotRemindTitle" />
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:background="@mipmap/icon_enter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutHourlyHeart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvHourlyHeartTitle"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_hourly_heart_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.512" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_hourly_measure"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvHourlyHeartTitle" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/scHourlyHeart"
+                        style="@style/switchCompatImage"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutContinuousHeart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvContinuousHeart"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_continuity_heart_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_continuity_measure"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvContinuousHeart" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/scContinuousHeart"
+                        style="@style/switchCompatImage"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutContinuousTemp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvTitle4"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_continuity_temp_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_continuity_measure"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle4" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/scTemperature"
+                        style="@style/switchCompatImage"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutContinuousSpo2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvSpo2Title"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_continuity_spo2_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_continuity_measure"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSpo2Title" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/scSpo2"
+                        style="@style/switchCompatImage"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvTitle5"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_wrist_lift_screen_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_wrist_lift_screen_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle5" />
+
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/scRaiseHandLightScreen"
+                        style="@style/switchCompatImage"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutSwather"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvTitle6"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_weather_info_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_weather_info_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle6" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/scWeather"
+                        style="@style/switchCompatImage"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutGoogleFit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvGoogleFitTitle"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_google_fit_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_google_fit_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvGoogleFitTitle" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/scGoogleFit"
+                        style="@style/switchCompatImage"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutFindDevice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvTitle7"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_find_device_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_find_device_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle7" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutPhotograph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvTitle8"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_shake_photo_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_shake_photo_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle8" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvThemeTitle"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_theme_set_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_theme_set_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvThemeTitle" />
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:background="@mipmap/icon_enter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutScreenSet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvScreenSetTitle"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_screen_set_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_screen_set_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvScreenSetTitle" />
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:background="@mipmap/icon_enter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutCardSorting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvTitle9"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_card_sorting_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_card_sorting_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle9" />
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:background="@mipmap/icon_enter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutMoreSetting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvTitle10"
+                        style="@style/device_fragment_title"
+                        android:text="@string/device_more_set_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_more_set_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle10" />
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:background="@mipmap/icon_enter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutUseGuide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvTitle11"
+                        style="@style/device_fragment_title"
+                        android:layout_width="wrap_content"
+                        android:text="@string/device_use_guide_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_use_guide_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle11" />
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:background="@mipmap/icon_enter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutRunningPermission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    style="@style/device_fragment_constraint_layout"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tvTitle12"
+                        style="@style/device_fragment_title"
+                        android:layout_width="wrap_content"
+                        android:text="@string/running_permission_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/running_permission_title"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle12" />
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:background="@mipmap/icon_enter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvUnbind"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/unbind_bg"
+                android:gravity="center"
+                android:text="@string/device_unbind"
+                android:textColor="#ff4c4d58"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

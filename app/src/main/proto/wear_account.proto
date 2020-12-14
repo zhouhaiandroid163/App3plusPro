@@ -1,0 +1,149 @@
+// wear_account.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "AccountProtos";
+
+message Account {
+    enum AccountID {
+        BIND_STATUS = 0x00;
+        BIND_START = 0x01;
+        BIND_RESULT = 0x02;
+        LOGIN_STATUS = 0x03;
+        LOGIN_START = 0x04;
+        ACCOUNT_VERIFY = 0x05;
+
+        BIND_START_V2 = 0x11;
+        BIND_VERIFY_V2 = 0x12;
+        BIND_OOB_V2 = 0x13;
+        BIND_RESULT_V2 = 0x14;
+        CONNECT_VERIFY_V2 = 0x15;
+        CONNECT_CONFIRM_V2 = 0x16;
+    }
+
+    enum ErrorCode {
+        NO_ERROR = 0;
+        HAVE_BOUND = 1;
+        INFO_MISSING = 2;
+        INVALID_PARAM = 3;
+        NO_BOUND = 4;
+        SERVER_ERROR = 5;
+        CANCEL = 6;
+        VERIFY_ERROR = 7;
+        UNKNOWN = 100;
+    }
+
+    oneof payload {
+        bool bind_status = 1;
+        string bind_key = 2 [(nanopb).type = FT_POINTER];
+        ErrorCode error_code = 3;
+        BindInfo bind_info = 4;
+        BindResult bind_result = 5;
+        bool login_status = 6;
+        string verify_key = 7 [(nanopb).type = FT_POINTER];
+        bool verify_result = 8;
+
+        BindInfoV2 bind_info_v2 = 11;
+        BindVerifyRequestV2 bind_verify_request_v2 = 12;
+        BindVerifyResponseV2 bind_verify_response_v2 = 13;
+        BindOOBRequestV2 bind_oob_request_v2 = 15;
+        BindOOBResponseV2 bind_oob_response_v2 = 16;
+        BindResultV2 bind_result_v2 = 17;
+
+        ConnectVerifyRequestV2 connect_verify_request_v2 = 18;
+        ConnectVerifyResponseV2 connect_verify_response_v2 = 19;
+        ConnectConfirmRequestV2 connect_confirm_request_v2 = 20;
+        ConnectConfirmResponseV2 connect_confirm_response_v2 = 21;
+    }
+}
+
+enum VerifyMode {
+    PSK_TWO_WAY_VERIFY = 0x01;
+    ROOT_CERT_ONE_WAY_VERIFY = 0x02;
+    SECONDARY_CERT_CHAIN_TWO_WAY_VERIFY = 0x03;
+}
+
+enum OOBMode {
+    NUMERIC_COMPARISON = 0x01;
+}
+
+message BindInfoV2 {
+    required VerifyMode verify_mode = 1;
+    required string serial_number = 2 [(nanopb).type = FT_POINTER];
+    required string mac = 3 [(nanopb).type = FT_POINTER];
+    required string model = 4 [(nanopb).type = FT_POINTER];
+    required OOBMode oob_mode = 5;
+    required bytes random_dev = 6 [(nanopb).type = FT_POINTER];
+    optional string did = 7 [(nanopb).type = FT_POINTER];
+}
+
+message BindVerifyRequestV2 {
+    required bytes public_key_server = 1 [(nanopb).type = FT_POINTER];
+    required bytes sign_server = 2 [(nanopb).type = FT_POINTER];
+    required bytes random_server = 3 [(nanopb).type = FT_POINTER];
+}
+
+message BindVerifyResponseV2 {
+    required bytes public_key_dev = 1 [(nanopb).type = FT_POINTER];
+    required bytes sign_dev = 2 [(nanopb).type = FT_POINTER];
+    required bytes encrypt_key = 3 [(nanopb).type = FT_POINTER];
+}
+
+message BindOOBRequestV2 {
+    required bytes encrypt_oob_code = 1 [(nanopb).type = FT_POINTER];
+    required string bind_key = 2 [(nanopb).type = FT_POINTER];
+}
+
+message BindOOBResponseV2 {
+    required bytes bind_sign = 1 [(nanopb).type = FT_POINTER];
+}
+
+message BindResultV2 {
+    required string user_id = 1 [(nanopb).type = FT_POINTER];
+    optional CompanionDevice companion_device = 2;
+}
+
+message ConnectVerifyRequestV2 {
+    required bytes random_app = 1 [(nanopb).type = FT_POINTER];
+}
+
+message ConnectVerifyResponseV2 {
+    required bytes random_dev = 1 [(nanopb).type = FT_POINTER];
+    required bytes sign_dev = 2 [(nanopb).type = FT_POINTER];
+}
+
+message ConnectConfirmRequestV2 {
+    required bytes sign_app = 1 [(nanopb).type = FT_POINTER];
+}
+
+message ConnectConfirmResponseV2 {
+    required bool confirm_result = 1;
+}
+
+message BindInfo {
+    required string bind_key = 1 [(nanopb).type = FT_POINTER];
+    required string did = 2 [(nanopb).type = FT_POINTER];
+    required string model = 3 [(nanopb).type = FT_POINTER];
+    required string mac = 4 [(nanopb).type = FT_POINTER];
+    required string sign = 5 [(nanopb).type = FT_POINTER];
+    optional string serial_number = 6 [(nanopb).type = FT_POINTER];
+}
+
+message BindResult {
+    required string user_id = 1 [(nanopb).type = FT_POINTER];
+    required string token = 2 [(nanopb).type = FT_POINTER];
+    optional CompanionDevice companion_device = 3;
+}
+
+message CompanionDevice {
+    enum DeviceType {
+        ANDROID = 0x00;
+        IOS = 0x01;
+    };
+
+    required DeviceType device_type = 1;
+    optional float system_version = 2;
+}

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_index_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/img_top_bg_mail_list"
+        android:orientation="vertical">
+
+        <include layout="@layout/public_no_bg_head" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/send_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.7"
+                android:text="同步数据"
+                />
+
+            <TextView
+                style="@style/public_text_reminde_title1_style"
+                android:text="@string/my_mail_list_title" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f0f0f0"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/rl_alarm_add"
+            android:layout_width="match_parent"
+            android:layout_height="40dip">
+
+            <LinearLayout
+                android:id="@+id/lin_alarm_clock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="right|bottom"
+                android:paddingRight="20dip">
+
+                <TextView
+                    style="@style/public_text_company3_style"
+                    android:text="@string/already_added" />
+
+                <TextView
+                    android:id="@+id/alarm_clock_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:text="0"
+                    android:textColor="@color/public_theme_text_color1"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    android:textColor="@color/public_text_color2"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="40"
+                    android:textColor="@color/public_text_color2"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/alarm_clock_delete"
+                    style="@style/public_text_company2_style"
+                    android:layout_margin="10dip"
+                    android:layout_marginBottom="30dip"
+                    android:text="@string/is_delete_mail_list_tip" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/my_mail_list_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

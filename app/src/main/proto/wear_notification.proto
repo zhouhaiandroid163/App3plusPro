@@ -1,0 +1,80 @@
+// wear_notification.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "NotificationProtos";
+
+message Notification {
+    enum NotificationID {
+        ADD_NOTIFY = 0x00;
+        REMOVE_NOTIFY = 0x01;
+        HANG_UP = 0x02;
+        INCOMING_CALL_MUTE = 0x05;
+
+        GET_APP_LIST = 0x03;
+        SET_APP = 0x04;
+    }
+
+    oneof payload {
+        NotifyData data = 1;
+        NotifyId id = 2;
+        NotifyData.List data_list = 3;
+        NotifyId.List id_list = 4;
+
+        AppInfo.List app_info_list = 6;
+        AppInfo app_info = 5;
+    }
+}
+
+message NotifyData {
+    required string app_id = 1 [(nanopb).type = FT_POINTER];
+    required string app_name = 2 [(nanopb).type = FT_POINTER];
+    required string title = 3 [(nanopb).type = FT_POINTER];
+    required string sub_title = 4 [(nanopb).type = FT_POINTER];
+    required string text = 5 [(nanopb).type = FT_POINTER];
+    required string date = 6 [(nanopb).type = FT_POINTER];
+    required uint32 uid = 7;
+    optional CallType call_type = 8;
+    optional string app_group = 9 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated NotifyData list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+message NotifyId {
+    required uint32 uid = 1;
+    optional string app_id = 2 [(nanopb).type = FT_POINTER];
+    optional string app_group = 3 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated NotifyId list = 1 [(nanopb).type = FT_POINTER];
+    }
+}
+
+enum CallType {
+    NOTHING = 0x00;
+    INCOMING_CALL = 0x01;
+    MISSED_CALL = 0x02;
+}
+
+message AppInfo {
+    enum Type {
+        NOTIFICATION = 0x00;
+        CALL = 0x01;
+        WECHAT = 0x02;
+        QQ = 0x03;
+        ALIPAY = 0x04;
+        OTHER = 0x05;
+    }
+
+    required uint32 app_type = 1 [(nanopb).int_size = IS_8];
+    required bool enable = 2;
+
+    message List {
+        repeated AppInfo list = 1 [(nanopb).type = FT_POINTER];
+    }
+}

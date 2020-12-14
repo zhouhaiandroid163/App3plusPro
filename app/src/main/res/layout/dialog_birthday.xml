@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:id="@+id/rl_birthday_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#f3f3f3"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_birthday_cancel"
+            style="@style/public_text_dialog_style"
+            android:layout_alignParentLeft="true"
+            android:text="@string/dialog_no" />
+
+        <TextView
+            android:id="@+id/tv_birthday_ok"
+            style="@style/public_text_dialog_style"
+            android:layout_alignParentRight="true"
+            android:text="@string/dialog_yes" />
+    </RelativeLayout>
+
+    <DatePicker
+        android:id="@+id/dp_birthday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_birthday_title"
+        android:layout_centerHorizontal="true"
+        android:calendarViewShown="false" />
+
+</RelativeLayout>

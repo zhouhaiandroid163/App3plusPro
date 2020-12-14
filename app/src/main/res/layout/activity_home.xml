@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_index_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/main_off_line_sync_view"
+            android:layout_width="match_parent"
+            android:layout_height="35dip"
+            android:background="@color/main_off_line_sync_view_bg"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:gravity="center">
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvSyncData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:gravity="center"
+                android:text="@string/synchronizing_offline_data"
+                android:textColor="@color/main_off_line_sync_view_text_color" />
+
+
+        </LinearLayout>
+
+
+        <com.zjw.apps3pluspro.view.pager.MyViewPager
+            android:id="@+id/home_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1.0" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:id="@+id/main_radio"
+                android:layout_width="match_parent"
+                android:layout_height="54dip"
+                android:layout_gravity="bottom"
+                android:background="@color/bootom_menu_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radio_today"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:textColor="@color/bottom_text_color"
+                    android:textSize="10sp" />
+
+
+                <RadioButton
+                    android:id="@+id/radio_data"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:textColor="@color/bottom_text_color"
+                    android:textSize="10sp"
+                    android:visibility="gone" />
+
+                <RadioButton
+                    android:id="@+id/radio_care"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:textColor="@color/bottom_text_color"
+                    android:textSize="10sp" />
+
+                <RadioButton
+                    android:id="@+id/rbDevice"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:textColor="@color/bottom_text_color"
+                    android:textSize="10sp" />
+
+                <RadioButton
+                    android:id="@+id/rodio_mine"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:textColor="@color/bottom_text_color"
+                    android:textSize="10sp" />
+            </RadioGroup>
+
+            <include
+                layout="@layout/bootom_menu"
+                android:layout_width="match_parent"
+                android:layout_height="54dip" />
+
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/get_error_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="获取Log"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/set_error_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置Log"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/simulationData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="模拟输入数据"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/queryData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查询数据"
+            android:visibility="gone" />
+
+
+        <Button
+            android:id="@+id/updateData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上传数据"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btnClearConnectCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="清空" />
+
+            <TextView
+                android:id="@+id/tvConnectCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ff0000"
+                android:padding="5dip"
+                android:text="连接次数初始化"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btGetSport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="获取Sport"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxxxxxxxxxxx"
+                android:textColor="@android:color/holo_red_dark" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

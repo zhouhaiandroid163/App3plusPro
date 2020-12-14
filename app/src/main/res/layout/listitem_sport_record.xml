@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="12dip"
+            android:paddingTop="12dip">
+
+            <TextView
+                android:id="@+id/record_dis_heart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:text="0.00"
+                android:textColor="#535353"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/record_dis_heart_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sport_distance_unit"
+                android:layout_marginLeft="2dip"
+                android:textColor="#9198A7"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/record_dis_heart_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dip"
+                    android:maxLength="16"
+                    android:singleLine="true"
+                    android:text="2017-08-31 18:24"
+                    android:textColor="#9198A7"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right">
+
+
+                    <TextView
+                        android:id="@+id/record_dis_heart_describe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sport_calorie"
+                        android:textColor="#9198A7"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_marginLeft="3dip"
+                        android:id="@+id/record_dis_heart_calory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLength="11"
+                        android:singleLine="true"
+                        android:text="123"
+                        android:textColor="#535353"
+                        android:textSize="18sp" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_marginLeft="3dip"
+                android:id="@+id/iv_arrow_right"
+                android:layout_width="12dip"
+                android:layout_height="12dip"
+                android:background="@mipmap/icon_enter" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

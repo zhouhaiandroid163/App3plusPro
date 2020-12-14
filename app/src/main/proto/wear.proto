@@ -1,0 +1,73 @@
+// wear.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+import "wear_common.proto";
+import "wear_account.proto";
+import "wear_system.proto";
+import "wear_watch_face.proto";
+import "wear_nfc.proto";
+import "wear_notification.proto";
+import "wear_fitness.proto";
+import "wear_lpa.proto";
+import "wear_weather.proto";
+import "wear_stock.proto";
+import "wear_calendar.proto";
+import "wear_factory.proto";
+import "wear_aivs.proto";
+import "wear_market.proto";
+import "wear_gnss.proto";
+import "wear_clock.proto";
+import "wear_media.proto";
+import "wear_alexa.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "WearProtos";
+
+message WearPacket {
+    enum Type {
+        OTHER = 0x00;
+        ACCOUNT = 0x01;
+        SYSTEM = 0x02;
+        WATCH_FACE = 0x04;
+        NFC = 0x05;
+        NOTIFICATION = 0x07;
+        FITNESS = 0x08;
+        LPA = 0x09;
+        WEATHER = 0x0A;
+        STOCK = 0x0B;
+        CALENDAR = 0x0C;
+        FACTORY = 0x0D;
+        AIVS = 0x0E;
+        MARKET = 0x0F;
+        GNSS = 0x10;
+        CLOCK = 0x11;
+        MEDIA = 0x12;
+        ALEXA = 0x13;
+    }
+
+    required Type type = 1;
+    required uint32 id = 2 [(nanopb).int_size = IS_8];
+
+    oneof payload {
+        Account account = 3;
+        System system = 4;
+        WatchFace watch_face = 6;
+        Nfc nfc = 7;
+        Notification notification = 9;
+        Fitness fitness = 10;
+        Lpa lpa = 11;
+        Weather weather = 12;
+        Stock stock = 13;
+        Calendar calendar = 14;
+        Factory factory = 15;
+        Aivs aivs = 16;
+        Market market = 17;
+        Gnss gnss = 18;
+        Clock clock = 19;
+        Media media = 20;
+        Alexa alexa = 21;
+        ErrorCode error_code = 100;
+    }
+}

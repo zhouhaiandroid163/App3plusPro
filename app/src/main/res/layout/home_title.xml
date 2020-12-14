@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutCurDevice"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@mipmap/title_bar_bg"
+    android:paddingBottom="5dp">
+
+
+    <ImageView
+        android:id="@+id/ivDeviceIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="12dp"
+        android:background="@mipmap/device_fragment_device"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitleTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:text="@string/tilte_data"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivDeviceIcon"
+        app:layout_constraintLeft_toRightOf="@+id/ivDeviceIcon"
+        app:layout_constraintTop_toTopOf="@+id/ivDeviceIcon" />
+
+    <LinearLayout
+        android:id="@+id/layoutSync"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/ivDeviceIcon"
+        app:layout_constraintRight_toLeftOf="@+id/layoutPen"
+        app:layout_constraintTop_toTopOf="@+id/ivDeviceIcon">
+
+        <ImageView
+            android:id="@+id/ivSync"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:background="@mipmap/sync_image_white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutPen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/layoutSync"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/layoutSync">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/pen" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvDeviceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/no_data_default"
+        android:textColor="#000011"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivDeviceIcon" />
+
+
+    <LinearLayout
+        android:id="@+id/layoutBattery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="@+id/tvDeviceName"
+        app:layout_constraintTop_toBottomOf="@+id/tvDeviceName">
+
+        <ImageView
+            android:id="@+id/ivBattery"
+            android:layout_width="18dp"
+            android:layout_height="10dp"
+            android:background="@mipmap/electricity_100" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="6dip"
+            android:layout_marginTop="3dip"
+            android:layout_marginRight="6dip"
+            android:layout_marginBottom="3dip"
+            android:background="#DDDDDD" />
+
+        <TextView
+            android:id="@+id/tvSyncState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_data_default"
+            android:textColor="#4C4D58"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

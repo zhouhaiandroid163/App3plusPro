@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                style="@style/public_text_title1_style"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="10dip"
+                android:gravity="center_vertical"
+                android:text="@string/screen_brightness" />
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dip"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_screen_brightness"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="2"
+                        android:textColor="@color/public_text_color1"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/tv_screen_brightness"
+                        android:layout_marginLeft="5dip"
+                        android:layout_toRightOf="@+id/tv_screen_brightness"
+                        android:text="@string/level"
+                        android:textColor="@color/public_text_color1"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dip"
+                    android:background="@drawable/about_rect_gray_little"
+                    android:paddingLeft="5dip"
+                    android:paddingTop="12dip"
+                    android:paddingRight="5dip"
+                    android:paddingBottom="12dip">
+
+                    <SeekBar
+                        android:id="@+id/seek_screen_brightness"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+
+                        />
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/public_text_title1_style"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="30dip"
+                android:gravity="center_vertical"
+                android:text="@string/brightness_time" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_brightness_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="5"
+                        android:textColor="@color/public_text_color1"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/tv_brightness_time"
+                        android:layout_marginLeft="5dip"
+                        android:layout_toRightOf="@+id/tv_brightness_time"
+                        android:text="@string/seconds"
+                        android:textColor="@color/public_text_color1"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dip"
+                    android:background="@drawable/about_rect_gray_little"
+                    android:paddingLeft="5dip"
+                    android:paddingTop="12dip"
+                    android:paddingRight="5dip"
+                    android:paddingBottom="12dip">
+
+                    <SeekBar
+                        android:id="@+id/seek_brightness_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true" />
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/button_screen_save"
+                style="@style/public_button1_style"
+                android:layout_marginTop="15dip"
+                android:layout_marginBottom="15dip"
+                android:text="@string/dialog_yes"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

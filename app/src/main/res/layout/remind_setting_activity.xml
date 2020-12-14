@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/more_notice_rl_not"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    style="@style/remind_setting">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/remind_set"
+                        android:text="@string/do_not_disturb" />
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_more_notice_not"
+                            style="@style/public_text_title2_style"
+                            android:text="@string/notices_unopened"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="5dip"
+                            android:background="@mipmap/icon_enter" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/more_notice_rl_sit"
+                    style="@style/remind_setting">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/remind_set"
+                        android:text="@string/long_sit_title" />
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_more_notice_sit"
+                            style="@style/public_text_title2_style"
+                            android:text="@string/notices_unopened"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="5dip"
+                            android:background="@mipmap/icon_enter" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout
+
+                    android:id="@+id/more_notice_rl_water"
+                    style="@style/remind_setting">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/remind_set"
+                        android:text="@string/drink_water_title" />
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_more_notice_water"
+                            style="@style/public_text_title2_style"
+                            android:text="@string/notices_unopened"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="5dip"
+                            android:background="@mipmap/icon_enter" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout
+                    android:id="@+id/more_notice_rl_alarm_clock"
+                    style="@style/remind_setting">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/remind_set"
+                        android:text="@string/colok_title" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_more_notice_alarm_clock"
+                            style="@style/public_text_title2_style"
+                            android:text="@string/notices_unopened"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="5dip"
+                            android:background="@mipmap/icon_enter" />
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+                <RelativeLayout
+                    android:id="@+id/more_notice_rl_drug"
+                    style="@style/remind_setting">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/remind_set"
+                        android:text="@string/medicine_title" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_more_notice_drug"
+                            style="@style/public_text_title2_style"
+                            android:text="@string/notices_unopened"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="5dip"
+                            android:background="@mipmap/icon_enter" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+
+                <RelativeLayout
+                    android:id="@+id/more_notice_rl_meeting"
+                    style="@style/remind_setting">
+
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/remind_set"
+                        android:text="@string/metting_title" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_more_notice_meeting"
+                            style="@style/public_text_title2_style"
+                            android:text="@string/notices_unopened"
+                            android:visibility="gone" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="5dip"
+                            android:background="@mipmap/icon_enter" />
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <include layout="@layout/line_layout" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

@@ -1,0 +1,100 @@
+// wear_nfc.proto
+
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.xiaomi.wear.protobuf";
+option java_outer_classname = "NfcProtos";
+
+message Nfc {
+    enum NfcID {
+        COMMAND = 0x00;
+        ISSUE_CARD = 0x01;
+        ADD_CARD = 0x02;
+        DEL_CARD = 0x03;
+        SYNC_CARD_LIST = 0x04;
+        SET_DEFAULT_CARD = 0x05;
+        GET_DEFAULT_CARD = 0x06;
+        SET_BALANCE = 0x07;
+        GET_BALANCE = 0x08;
+        SET_CONFIG = 0x09;
+        CAPABILITY_SET = 0x0A;
+        COMMAND_BATCH = 0x10;
+    }
+
+    oneof payload {
+        bytes command = 1 [(nanopb).type = FT_POINTER];
+        IssueCard issue_card = 2;
+        CardData card_data = 3;
+        CardInfo card_info = 4;
+        CardInfo.List card_info_list = 5;
+        string aid = 6 [(nanopb).type = FT_POINTER];
+        BalanceInfo balance_info = 7;
+        string config = 8 [(nanopb).type = FT_POINTER];
+        CommandInfo.List command_info_list = 9;
+        uint32 capability = 10;
+    }
+}
+
+message IssueCard {
+    required IssueCardStatus status = 1;
+    optional IssueCardType type = 2;
+    optional bool need_read_card = 3;
+    optional string icon_url = 4 [(nanopb).type = FT_POINTER];
+    optional string sid = 5 [(nanopb).type = FT_POINTER];
+}
+
+enum IssueCardStatus {
+    START = 0x00;
+    SUCCESS = 0x01;
+    FAILURE = 0x02;
+}
+
+enum IssueCardType {
+    DOOR_CARD = 0x00;
+    BUS_CARD = 0x01;
+    BANK_CARD = 0x02;
+    CLOUD_CARD = 0x03;
+}
+
+message CardData {
+    required bytes uid = 1 [(nanopb).type = FT_POINTER];
+    required uint32 sak = 2 [(nanopb).int_size = IS_16];
+    required bytes atqa = 3 [(nanopb).type = FT_POINTER];
+    required uint32 size = 4;
+    required string content = 5 [(nanopb).type = FT_POINTER];
+}
+
+message CardInfo {
+    required IssueCardType type = 1;
+    required string aid = 2 [(nanopb).type = FT_POINTER];
+    required string name = 3 [(nanopb).type = FT_POINTER];
+    optional string icon_url = 4 [(nanopb).type = FT_POINTER];
+    optional string sid = 5 [(nanopb).type = FT_POINTER];
+    optional uint32 balance = 6;
+    optional bool support_hci = 7;
+    optional uint32 trade_length = 8;
+    optional uint32 trade_offset = 9;
+    optional uint32 balance_offset = 10;
+    repeated string balance_command = 12 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated CardInfo list = 1 [(nanopb).type = FT_POINTER];
+        optional bool full = 2;
+    }
+}
+
+message BalanceInfo {
+    required string aid = 1 [(nanopb).type = FT_POINTER];
+    required uint32 balance = 2;
+}
+
+message CommandInfo {
+    required bytes data = 1 [(nanopb).type = FT_POINTER];
+    required string expect_status = 2 [(nanopb).type = FT_POINTER];
+
+    message List {
+        repeated CommandInfo list = 1 [(nanopb).type = FT_POINTER];
+    }
+}

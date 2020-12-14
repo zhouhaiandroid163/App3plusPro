@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layoutCity"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/dialog_bg"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp">
+
+    <TextView
+        android:id="@+id/tvCityName"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:gravity="center_vertical"
+        android:text="湖南"
+        android:textColor="#ffffff"
+        android:textSize="15sp" />
+
+    <include layout="@layout/line_layout"/>
+
+</LinearLayout>

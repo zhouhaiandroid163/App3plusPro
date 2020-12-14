@@ -1,0 +1,155 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.protobuf'
+
+android {
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    signingConfigs {
+        mydebug {
+            keyAlias 'wear_heart'
+            keyPassword 'zhan15019434605'
+            storeFile file('D:/Work/Android/Project/key/zjw.jks')
+            storePassword 'zhan15019434605'
+        }
+    }
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
+    defaultConfig {
+        applicationId "com.zjw.apps3pluspro"
+        apply plugin: 'org.greenrobot.greendao' // 数据库需要
+        minSdkVersion 21
+        targetSdkVersion 29
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true// 数据库需要
+        signingConfig signingConfigs.mydebug
+    }
+    dexOptions {
+        javaMaxHeapSize '4g'
+    }
+    buildTypes {
+        release {
+            //不混淆
+            minifyEnabled false
+//            shrinkResources true//去掉不用资源
+            proguardFiles 'proguard-project.txt'
+        }
+        debug {
+            signingConfig signingConfigs.mydebug
+        }
+    }
+
+    //Add the following configuration
+    lintOptions {
+        //  true--所有正式版构建执行规则生成崩溃的lint检查，如果有崩溃问题将停止构建
+        checkReleaseBuilds false
+        // true--错误发生后停止gradle构建
+        abortOnError false
+    }
+
+    productFlavors {
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+// 数据库需要
+greendao {
+//    schemaVersion 1//数据库版本号-修改数据库的时候要
+//    schemaVersion 2//添加一张表，常用联系人
+//    schemaVersion 3//添加四张表，连续血氧，连续体温，单次测量离线血氧，单次测量离线体温
+//    schemaVersion 4//给每张表添加新字段
+//    schemaVersion 5    //多运动
+    schemaVersion 6    //多运动
+    daoPackage 'com.zjw.apps3pluspro.sql.gen'
+    targetGenDir 'src/main/java'
+}
+
+//AAR
+repositories {
+    flatDir {
+        dirs 'libs' //this way we can find the .aar file in libs folder
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')//会影响RTK固件升级
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testImplementation 'junit:junit:4.12'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.appcompat:appcompat:1.3.0-alpha01'
+
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.8@aar'
+    implementation 'com.prolificinteractive:material-calendarview:1.4.2'
+
+    api project(':mycamera')
+
+    implementation 'org.greenrobot:greendao:3.2.2'  // 数据库需要
+
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    kapt 'com.jakewharton:butterknife-compiler:10.0.0'
+
+    implementation 'com.android.support:multidex:1.0.3'//兼容Android5.0以下
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    implementation 'com.larswerkman:HoloColorPicker:1.5'//颜色选择器
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    //日历选择器
+    implementation 'com.haibin:calendarview:3.6.9'
+    //二维码
+    implementation 'com.google.zxing:core:3.3.0'
+    //联系人列表控件
+    implementation 'org.kymjs.kjframe:kjframe:2.4.6.2'
+//    implementation(name: 'zhbracelet-sdk-1.1_fit', ext: 'aar')
+    //Google Fit
+    implementation 'com.google.android.gms:play-services-fitness:16.0.1'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    //okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+
+    //nordic
+    implementation 'no.nordicsemi.android:dfu:1.10.0'
+    // nordics scan
+    implementation 'no.nordicsemi.android.support.v18:scanner:1.4.3'
+
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    implementation 'com.google.protobuf:protobuf-java:3.5.1'
+
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:okhttp-integration:1.3.1'
+
+    implementation 'com.hjq:xxpermissions:1.5'
+}
+protobuf {
+    //配置protoc编译器
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.5.1'
+    }
+    //这里配置生成目录，编译后会在build的目录下生成对应的java文件
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                remove java
+            }
+            task.builtins {
+                java {}
+            }
+        }
+    }
+}

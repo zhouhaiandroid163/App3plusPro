@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head_white_text" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+
+            <TextView
+                style="@style/public_text_company2_style"
+                android:layout_marginTop="25dip"
+                android:text="@string/cycle_init_jingqi_lenght" />
+
+
+            <RelativeLayout
+                android:id="@+id/lin_cycle_init_cycle"
+                style="@style/cycle_item"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="5dip">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_weight="1"
+                        android:text="@string/cycle_jingqi_lenght" />
+
+                    <TextView
+                        android:id="@+id/text_cycle_init_lenght"
+                        style="@style/public_text_company3_style"
+                        android:layout_marginLeft="2dip" />
+
+
+                    <ImageView
+                        android:id="@+id/iv_cycle_init_cycle_right"
+                        android:layout_width="@dimen/my_icon_right_img_size"
+                        android:layout_height="@dimen/my_icon_right_img_size"
+                        android:layout_marginLeft="2dip"
+                        android:background="@mipmap/icon_enter" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/public_text_company2_style"
+                android:layout_marginTop="25dip"
+                android:text="@string/cycle_init_lenght" />
+
+            <RelativeLayout
+                android:id="@+id/lin_cycle_init_lenght"
+                style="@style/cycle_item"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="5dip">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_weight="1"
+                        android:text="@string/cycle_lenght" />
+
+                    <TextView
+                        android:id="@+id/text_cycle_init_cycle"
+                        style="@style/public_text_company3_style"
+                        android:layout_marginLeft="2dip" />
+
+
+                    <ImageView
+                        android:id="@+id/iv_cycle_init_lenght_right"
+                        android:layout_width="@dimen/my_icon_right_img_size"
+                        android:layout_height="@dimen/my_icon_right_img_size"
+                        android:layout_marginLeft="2dip"
+                        android:background="@mipmap/icon_enter" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                style="@style/public_text_company2_style"
+                android:layout_marginTop="25dip"
+                android:text="@string/cycle_init_lately_one" />
+
+            <RelativeLayout
+                android:id="@+id/lin_cycle_init_time"
+                style="@style/cycle_item"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="5dip">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        style="@style/public_text_title2_style"
+                        android:layout_weight="1"
+                        android:text="@string/cycle_lately_one" />
+
+                    <TextView
+                        android:id="@+id/text_cycle_init_date"
+                        style="@style/public_text_company3_style"
+                        android:layout_marginLeft="2dip" />
+
+
+                    <ImageView
+                        android:id="@+id/iv_cycle_init_data_right"
+                        android:layout_width="@dimen/my_icon_right_img_size"
+                        android:layout_height="@dimen/my_icon_right_img_size"
+                        android:layout_marginLeft="2dip"
+                        android:background="@mipmap/icon_enter" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/button_cycle_int_save"
+                style="@style/public_button1_style"
+                android:layout_marginTop="30dip"
+                android:background="@drawable/my_button4_selector"
+                android:text="@string/save" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

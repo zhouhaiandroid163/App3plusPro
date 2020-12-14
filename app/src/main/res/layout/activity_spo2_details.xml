@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:curveChartView="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical"
+    tools:context=".module.home.temp.TempDetailsActivity">
+
+    <include layout="@layout/public_head_white_text" />
+
+    <com.haibin.calendarview.CalendarLayout
+        android:id="@+id/calendarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:calendar_content_view_id="@+id/nestedScrollView"
+        app:calendar_show_mode="both_month_week_view"
+        app:default_status="shrink">
+
+        <com.haibin.calendarview.CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/title_bg_spo2"
+            app:calendar_height="40dp"
+            app:current_day_text_color="#ffffff"
+            app:current_month_lunar_text_color="#000000"
+            app:current_month_text_color="@color/white"
+            app:min_year="2004"
+            app:month_view="com.zjw.apps3pluspro.view.mycalendar.SimpleMonthView"
+            app:other_month_text_color="#5fffffff"
+            app:scheme_text=""
+            app:scheme_text_color="#ffffff"
+            app:scheme_theme_color="#ffffff"
+            app:selected_lunar_text_color="#CFCFCF"
+            app:selected_text_color="@color/title_bg_spo2"
+            app:selected_theme_color="@color/white"
+            app:week_background="@color/title_bg_spo2"
+            app:week_text_color="#ffffff"
+            app:week_view="com.zjw.apps3pluspro.view.mycalendar.SimpleWeekView"
+            app:year_view_day_text_color="@color/year_is_now_no_biaoji_month_text_color"
+            app:year_view_day_text_size="9sp"
+            app:year_view_month_text_color="@color/year_month_text_color"
+            app:year_view_month_text_size="20sp"
+            app:year_view_scheme_color="@color/year_is_now_is_biaoji_month_text_color" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/base_activity_bg"
+                android:orientation="vertical"
+                tools:ignore="KeyboardInaccessibleWidget">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="28dp"
+                    android:background="@color/title_bg_spo2" />
+
+                <include
+                    android:id="@+id/layoutNoData"
+                    layout="@layout/public_nodata"
+                    android:visibility="gone" />
+
+                <LinearLayout
+
+                    android:id="@+id/layoutData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-14dp"
+                    android:orientation="vertical"
+                    android:paddingBottom="24dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/selector_white_bg"
+                        android:gravity="center"
+                        android:minHeight="100dp"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <LinearLayout
+                            android:id="@+id/layoutTempStep"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center|bottom">
+
+                            <TextView
+                                android:id="@+id/tv_spo2_last_value"
+                                style="@style/data_page_number"
+                                android:text="@string/sleep_gang"
+                                android:textColor="#000011"
+                                android:textSize="32sp" />
+
+                            <TextView
+                                style="@style/data_page_unit"
+                                android:text="%"
+                                android:textColor="#000011" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|bottom"
+                            app:layout_constraintLeft_toLeftOf="@+id/layoutTempStep"
+                            app:layout_constraintTop_toBottomOf="@+id/layoutTempStep">
+
+                            <TextView
+                                style="@style/public_text_count1_style"
+                                android:text="@string/page_heart_max" />
+
+                            <TextView
+                                android:id="@+id/tv_spo2_max_value"
+                                style="@style/data_page_number"
+                                android:textColor="#000011" />
+
+                            <TextView
+                                android:id="@+id/tvUnit1"
+                                style="@style/data_page_unit"
+                                android:text="%"
+                                android:textColor="#000011" />
+
+
+                            <TextView
+                                style="@style/public_text_count1_style"
+                                android:layout_marginStart="12dp"
+                                android:text="@string/page_heart_min" />
+
+                            <TextView
+                                android:id="@+id/tv_spo2_min_value"
+                                style="@style/data_page_number"
+                                android:textColor="#000011" />
+
+                            <TextView
+                                style="@style/data_page_unit"
+                                android:text="%"
+                                android:textColor="#000011"
+                                app:layout_constraintBottom_toBottomOf="@+id/layoutTempStep"
+                                app:layout_constraintRight_toRightOf="parent" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvSlidingValue"
+                            style="@style/data_page_number"
+                            android:layout_margin="4dp"
+                            android:background="@drawable/data_bg"
+                            android:paddingLeft="8dp"
+                            android:paddingTop="4dp"
+                            android:paddingRight="8dp"
+                            android:paddingBottom="4dp"
+                            android:text=""
+                            android:textColor="#000011"
+                            android:textSize="12sp" />
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/spo2_record_barchart"
+                            android:layout_width="match_parent"
+                            android:layout_height="160dp"
+                            android:background="@color/transparent"
+                            android:visibility="gone" />
+
+                        <com.zjw.apps3pluspro.view.CurveChartView
+                            android:id="@+id/mCurveChartView"
+                            android:layout_width="match_parent"
+                            android:layout_height="160dp"
+                            android:background="@color/transparent"
+                            android:visibility="visible"
+                            curveChartView:curveChartView_LineColor="@color/title_bg_spo2"
+                            curveChartView:gradientColorEnd="@color/CurveChartView1"
+                            curveChartView:gradientColorStart="@color/CurveChartView3" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="12dip"
+                            android:paddingRight="12dip"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:text="00:00"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="12:00"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:text="23:59"
+                                android:textSize="12sp" />
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/rl_spo2_measure_history"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/selector_white_bg"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/measure_record"
+                                android:textColor="#ff000011"
+                                android:textSize="18sp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="right">
+
+                                <ImageView
+                                    style="@style/device_fragment_right_image"
+                                    android:background="@mipmap/icon_enter" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/selector_white_bg"
+                        android:orientation="vertical"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/spo2_str"
+                            android:textColor="#ff000011"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dip"
+                            android:text="@string/blood_oxygen_tip1"
+                            android:textColor="#ff7f8088"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </com.haibin.calendarview.CalendarLayout>
+
+</LinearLayout>

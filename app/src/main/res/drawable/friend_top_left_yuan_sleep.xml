@@ -1,0 +1,12 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <stroke android:color="@color/fined_top_left_sleep" android:width="1dp"/>
+            <solid android:color="@color/fined_top_left_sleep"/>
+            <corners android:topLeftRadius="8dp"
+                android:bottomLeftRadius="0dp"
+                android:topRightRadius="0dp"
+                android:bottomRightRadius="0dp"/>
+        </shape>
+    </item>
+</selector>

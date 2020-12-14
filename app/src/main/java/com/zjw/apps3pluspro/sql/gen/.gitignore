@@ -1,0 +1,11 @@
+*.java
+/ContinuitySpo2InfoDao.java
+/ContinuityTempInfoDao.java
+/DaoSession.java
+/HealthInfoDao.java
+/HeartInfoDao.java
+/MeasureSpo2InfoDao.java
+/MeasureTempInfoDao.java
+/MovementInfoDao.java
+/PhoneInfoDao.java
+/SleepInfoDao.java

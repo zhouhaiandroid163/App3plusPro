@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.zjw.apps3pluspro"
+    android:versionCode="1"
+    android:versionName="1.0.0">
+    <!-- 监听通话 -->
+    <!-- 用于读取手机当前的状态 -->
+    <!-- 读取电话状态 = 来电提醒 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission
+        android:name="android.permission.MODIFY_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" /> <!-- 允许程序监视，修改或放弃播出电话 = 移除 -->
+    <!-- <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" /> -->
+    <!-- 读取通话记录 = 移除 -->
+    <uses-permission android:name="android.permission.READ_CALL_LOG" /> <!-- 允许程序写入（但是不能读）用户的联系人数据 = 移除 -->
+    <!-- <uses-permission android:name="android.permission.WRITE_CALL_LOG" /> -->
+    <!-- 好像用不到？？？ 移除 333 -->
+    <!-- <uses-permission android:name="android.permission.USE_SIP" /> -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!-- 请求网络 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许程序访问联系人通讯录信息 = 来电提醒 移除 222 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- 高德 3.2.0版本增加 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 高德 3.2.0版本增加 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读取缓存数据 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 不是SDK需要的权限，是示例中的后台唤醒定位需要的权限 -->
+    <!-- 允许程序在手机屏幕关闭后后台进程仍然运行 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- 允许程序访问摄像头进行拍照 -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 允许程序从非系统拨号器里拨打电话 222 试着上架看看 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- 允许程序获取网络信息状态，如当前的网络连接是否有效 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 允许程序获取当前WiFi接入的状态以及WLAN热点的信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" /> <!-- 允许程序读取或写入系统设置 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" /> <!-- BugTags 配置的权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" /> <!-- 用于提高GPS定位速度 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 音乐控制 -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" /> <!-- Android10.0 挂电话 将活动探知（Activity Recognition）设为危险的运行时权限 -->
+    <!-- 定位相关 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
+    <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
+    <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" /> <!-- 未知应用来源 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- 9.0 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:name=".application.BaseApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
+        android:theme="@style/AppTheme"
+        tools:replace="icon,label,theme">
+        <activity
+            android:name=".module.device.weather.WeatherCitySearchActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.ScanDeviceTypeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.weather.WeatherHelpActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.weather.WeatherMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeRemind" />
+        <activity
+            android:name=".module.device.clockdial.ThemeUploadActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" />
+        <activity
+            android:name=".module.device.clockdial.ThemeMarketStyleActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.clockdial.ThemeMarketActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.home.sport.DeviceSportDetailsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.home.sport.MoreSportActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.mine.app.HtmlContentActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.mine.app.CommonProblem3Activity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.mine.app.CommonProblem2Activity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.home.sleep.SleepHistoryActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.home.heart.ContinuousHeartHistoryActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.home.heart.PerHourOneHeartHistoryActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.home.exercise.StepHistoryActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.backgroundpermission.PhoneOtherActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.backgroundpermission.PowerConsumptionActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.backgroundpermission.PowerManagementActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.backgroundpermission.LockingActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.backgroundpermission.BootCompletedActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.backgroundpermission.UnlimitedActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.backgroundpermission.PowerSavingActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.device.backgroundpermission.BackgroundPermissionMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <activity
+            android:name=".SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@style/TranslucentTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".bleservice.MyNotificationsListenerService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter android:priority="1000">
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service> <!-- 主页 -->
+        <activity
+            android:name=".HomeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeHome" /> <!-- 登录 -->
+        <activity
+            android:name=".module.mine.user.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite"
+            tools:ignore="LockedOrientationActivity" /> <!-- 注册 -->
+        <activity
+            android:name=".module.mine.user.RegistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 忘记密码-找回密码 -->
+        <activity
+            android:name=".module.mine.user.ForgetPswActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 新用户个人信息录入 -->
+        <activity
+            android:name=".module.mine.user.ProfileInitActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" /> <!-- 个人信息设置 -->
+        <activity
+            android:name=".module.mine.user.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" /> <!-- 步数目标设置 -->
+        <activity
+            android:name=".module.mine.user.TargetStepActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 睡眠目标 -->
+        <activity
+            android:name=".module.mine.user.TargetSleepActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 修改密码 -->
+        <activity
+            android:name=".module.mine.user.UpdatePasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 隐私协议 -->
+        <activity
+            android:name=".module.mine.user.PrivacyProtocolActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 隐私协议 -->
+        <activity
+            android:name=".module.mine.user.UserProtocolActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 检查隐私协议 -->
+        <activity android:name=".CheckAgreementActivity" /> <!-- 用户使用帮助 -->
+        <activity
+            android:name=".module.mine.user.UserHelpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 整点心率详情 -->
+        <!-- 连续心率详情 -->
+        <!-- 心电测量 -->
+        <activity
+            android:name=".module.home.ecg.EcgMeasureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 心电测量历史页面 -->
+        <activity
+            android:name=".module.home.ecg.EcgMesureHistoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 心电测量详细页面 -->
+        <activity
+            android:name=".module.home.ecg.EcgMesureDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 心电帮助 -->
+        <activity
+            android:name=".module.home.ecg.EcgMesureHelpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 心电报告 -->
+        <activity
+            android:name=".module.home.ecg.EcgReportActivity"
+            android:configChanges="screenSize|keyboardHidden|orientation"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppThemeWhite" /> <!-- HRV健康指数帮助 -->
+        <activity
+            android:name=".module.home.ecg.HrvIndexHelpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- PPG心率测量 -->
+        <activity
+            android:name=".module.home.ppg.PpgMeasureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- PPG心率测量历史 -->
+        <activity
+            android:name=".module.home.ppg.PpgMesureHistoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- PPG心率测量详情 -->
+        <activity
+            android:name=".module.home.ppg.PpgMesureDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 好友详情 -->
+        <activity
+            android:name=".module.friend.FriendRankInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 处理好友信息 -->
+        <activity
+            android:name=".module.friend.FriendInfoHandleActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 修改好友备注 -->
+        <activity
+            android:name=".module.friend.FriendInfoRemarksActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 搜索好友 -->
+        <activity
+            android:name=".module.friend.SearchFriendActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 添加好友 -->
+        <activity
+            android:name=".module.friend.AddFriendActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 新的好友 -->
+        <activity
+            android:name=".module.friend.NewFriendActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 设备管理 -->
+        <!-- 搜索设备 -->
+        <activity
+            android:name=".module.device.ScanDeviceActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeRemind" /> <!-- 设备帮助 -->
+        <activity
+            android:name=".module.device.DeviceHelpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeRemind" /> <!-- 肤色选择 -->
+        <activity
+            android:name=".module.device.SkinColourActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme1" /> <!-- 手环风格主题 -->
+        <activity
+            android:name=".module.device.DeviceThemeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 屏幕设置 -->
+        <activity
+            android:name=".module.device.ScreenSettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 蓝牙连接说明 -->
+        <activity
+            android:name=".module.device.BleConnectProblemActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 微信运动 -->
+        <activity
+            android:name=".module.device.WeixinActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 屏保 -->
+        <activity
+            android:name=".module.device.SendBleActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" /> <!-- 免打扰 -->
+        <activity
+            android:name=".module.device.reminde.DisturbActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeRemind" /> <!-- 心率预警 -->
+        <activity
+            android:name=".module.device.reminde.HeartWarnActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeRemind" /> <!-- 更多设置 -->
+        <activity
+            android:name=".module.device.reminde.RemindSettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 闹钟设置 -->
+        <activity
+            android:name=".module.device.reminde.AlarmClockActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeHome" /> <!-- 添加闹钟 编辑闹钟 -->
+        <activity
+            android:name=".module.device.reminde.AddAlarmClockActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 修改周期闹钟周期 -->
+        <activity
+            android:name=".module.device.reminde.AlarmClockCycleActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 手环推送 -->
+        <activity
+            android:name=".module.device.reminde.MessagePushActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 吃药提醒 -->
+        <activity
+            android:name=".module.device.reminde.DurgNoticeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeRemind" /> <!-- 会议提醒 -->
+        <activity
+            android:name=".module.device.reminde.MeetingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeMeeting" /> <!-- 久坐提醒 -->
+        <activity
+            android:name=".module.device.reminde.SitANoticetivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeRemind" /> <!-- 喝水提醒 -->
+        <activity
+            android:name=".module.device.reminde.WaterNoticeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeRemind" /> <!-- 喝水提醒 -->
+        <activity
+            android:name=".module.device.WearTypeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeHome" /> <!-- 固件升级 Nordic -->
+        <activity
+            android:name=".module.device.dfu.BleDfuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeHome" /> <!-- 固件升级 RTK -->
+        <activity
+            android:name=".module.device.dfu.ProtobufActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 固件升级 RTK -->
+        <activity
+            android:name=".module.device.dfurtk.RtkDfuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 固件升级 RTK 本地升级 -->
+        <activity
+            android:name=".module.device.dfurtk.RtkLocalDfuActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 我的主题 -->
+        <activity
+            android:name=".module.device.clockdial.MyThemeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 表盘 -->
+        <activity
+            android:name=".module.device.clockdial.ClockDialActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" />
+        <activity
+            android:name=".module.device.clockdial.ClockDialSendDataActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" />
+        <activity
+            android:name=".module.device.MyMusicActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" />
+        <activity
+            android:name=".module.device.ContactListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeRemind" />
+        <activity
+            android:name=".module.device.AddMyMailListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 推送 -->
+        <activity
+            android:name=".module.device.dfu.NotificationActivity"
+            android:screenOrientation="portrait" /> <!-- 运动模式历史 -->
+        <activity
+            android:name=".module.home.sport.SportPatternHistoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" /> <!-- 手环运动模式详情 -->
+        <activity
+            android:name=".module.home.sport.SportPatternDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" /> <!-- 高德地图运动 -->
+        <activity
+            android:name=".module.home.sport.amap.AmapGpsSportActivity"
+            android:screenOrientation="portrait" /> <!-- 高德地图轨迹 -->
+        <activity
+            android:name=".module.home.sport.amap.AmapLocusActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 谷歌地图运动 -->
+        <activity
+            android:name=".module.home.sport.google.GoogleGpsSportActivity"
+            android:screenOrientation="portrait" /> <!-- 谷歌地图轨迹 -->
+        <activity
+            android:name=".module.home.sport.google.GoogleLocusActivity"
+            android:screenOrientation="portrait" /> <!-- 生理周期主页 -->
+        <activity
+            android:name=".module.home.cycle.CycleActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 生理周期设置 -->
+        <activity
+            android:name=".module.home.cycle.CycleInitActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 生理周期名词解释 -->
+        <activity
+            android:name=".module.home.cycle.CycleInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 血氧详情 -->
+        <activity
+            android:name=".module.home.spo2.Spo2DetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 血压测量历史 -->
+        <activity
+            android:name=".module.home.spo2.Spo2MesureHistoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 体温详情 -->
+        <activity
+            android:name=".module.home.temp.TempDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 体温测量历史 -->
+        <activity
+            android:name=".module.home.temp.TempHistoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 关于 -->
+        <activity
+            android:name=".module.mine.app.AboutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 意见反馈 -->
+        <activity
+            android:name=".module.mine.app.FeedBackActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- 使用说明 -->
+        <activity
+            android:name=".module.mine.app.CommonProblemActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" /> <!-- =======服务相关======= -->
+        <activity
+            android:name=".module.mine.app.RunningPermissionActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite"
+            tools:ignore="LockedOrientationActivity" /> <!-- 注册 -->
+        <activity
+            android:name=".module.device.DeviceMoreSetActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".module.mine.user.TargetSettingActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".module.home.PageManagementActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite"
+            tools:ignore="LockedOrientationActivity" /> <!-- 注册 -->
+        <!-- 蓝牙服务 -->
+        <service
+            android:name=".bleservice.BleService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name=".bleservice.BleService" />
+            </intent-filter>
+        </service> <!-- 固件升级服务 -->
+        <service
+            android:name=".module.device.dfu.DfuService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="no.nordicsemi.android.action.DFU_UPLOAD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service> <!-- 相机相关 -->
+        <!-- ======= 相机相关======= -->
+        <!-- 远程拍照 -->
+        <activity
+            android:name="com.android.mycamera.CameraActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:icon="@mipmap/ic_launcher_camera"
+            android:label="@string/app_name"
+            android:logo="@drawable/my_icon_app_icon"
+            android:taskAffinity=".HomeActivity"
+            android:theme="@style/Theme.Camera"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name="com.android.mycamera.SecureCameraActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:icon="@mipmap/ic_launcher_camera"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Camera"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+            <intent-filter>
+                <action android:name="android.media.action.STILL_IMAGE_CAMERA_SECURE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.media.action.IMAGE_CAPTURE_SECURE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <meta-data
+                android:name="com.android.keyguard.layout"
+                android:resource="@layout/keyguard_widget" />
+        </activity>
+        <activity
+            android:name="com.android.mycamera.crop.CropActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/crop_action"
+            android:theme="@style/Theme.Crop" />
+
+        <receiver android:name=".DisableCameraReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.android.mycamera.MediaSaveService" /> <!-- 第三方相关 -->
+        <!-- 高德地图 设置key -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="40c6728e4a8b63124e5fa7a39233a146" /> <!-- Google地图 设置key -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyB_ogrXjaG7UZ3dn7PH48RKD0uANQREx9g" /> <!-- 定位需要的服务 -->
+        <service android:name="com.amap.api.location.APSService" /> <!-- 友盟 -->
+        <!-- QQ -->
+        <activity
+            android:name="com.umeng.qq.tencent.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1109282640" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.umeng.qq.tencent.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- 微信 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- twitter -->
+        <activity
+            android:name="com.umeng.socialize.handler.TwitterWebActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- facebook -->
+        <activity
+            android:name="com.umeng.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <provider
+            android:name="com.umeng.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider132119704064836080123"
+            android:exported="true" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" /> <!-- 友盟 umengAppKey，replace to yours -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5cfdc8d74ca3573f8200030b" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Umeng" /> <!-- android:process=":RTKDFU dfu" -->
+        <service
+            android:name="com.realsil.sdk.dfu.DfuService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.zjw.apps3pluspro.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+    </application>
+
+</manifest>
