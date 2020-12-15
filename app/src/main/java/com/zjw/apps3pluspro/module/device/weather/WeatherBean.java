@@ -126,9 +126,9 @@ public class WeatherBean {
         int day = 1;
         int air = 15;
         int type = 31;
-        int now = 255;
-        int high = 255;
-        int low = 255;
+        int now = 128;
+        int high = 128;
+        int low = 128;
 
         if (weatherModle.get_c_date() != null && !weatherModle.get_c_date().equals("")) {
             String time[] = weatherModle.get_c_date().split("-");

@@ -27,6 +27,7 @@ import kotlinx.android.synthetic.main.public_head_white_text.*
 import kotlinx.android.synthetic.main.sleep_history_activity.*
 import kotlinx.android.synthetic.main.sleep_history_layout.*
 import org.json.JSONObject
+import java.text.DecimalFormat
 import java.util.*
 
 class SleepHistoryActivity : BaseActivity() {
@@ -174,6 +175,9 @@ class SleepHistoryActivity : BaseActivity() {
             tvDeepSleep.text = MyTime.getHoursInt(deep_time)
             tvLightSleep.text = MyTime.getHoursInt(light_time)
             tvAwakeSleep.text = MyTime.getHoursInt(sober_time)
+
+            val caloriesFmt = DecimalFormat(",##0.0")
+            tvDeepSleep.text = caloriesFmt.format(tvSleepHour.text.toString().toDouble() - tvLightSleep.text.toString().toDouble())
 
 //            tvDeepSleepProgress.text = "$deep_proportion%"
 //            tvLightSleepProgress.text = "$light_proportion%"
