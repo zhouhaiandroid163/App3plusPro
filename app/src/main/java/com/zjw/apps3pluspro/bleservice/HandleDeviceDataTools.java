@@ -677,7 +677,6 @@ public class HandleDeviceDataTools {
             MyLog.i(TAG, "固件返回值 = 校验方式 (无效)= 老规则");
 //            mBleDeviceTools.setSupportNewDeviceCrc(false);
         }
-
         if (deviceParams10[7] == 1) {
             MyLog.i(TAG, "固件返回值 = 小版本号 = 支持");
             mBleDeviceTools.setSupporDeviceSubVersion(true);
@@ -686,24 +685,69 @@ public class HandleDeviceDataTools {
             mBleDeviceTools.setSupporDeviceSubVersion(false);
         }
 
-
         int[] deviceParams14 = MyUtils.BinstrToIntArray(data[26]); // 参数14
         //支持proto
         if (deviceParams14[0] == 1) {
             MyLog.i(TAG, "固件返回值 = protobuf = 支持");
             mBleDeviceTools.setIsSupportProtobuf(true);
+
+            //支持打点运动
+            if (deviceParams14[1] == 1) {
+                MyLog.i(TAG, "固件返回值 = 打点多运动 = 支持");
+                mBleDeviceTools.setPointExercise(true);
+            } else {
+                MyLog.i(TAG, "固件返回值 = 打点多运动 = 不支持");
+                mBleDeviceTools.setPointExercise(false);
+            }
+
+            if(deviceParams14[3] == 1){
+                MyLog.i(TAG, "固件返回值 = 卡片排序 = 支持");
+                mBleDeviceTools.setIsSupportPageDevice(true);
+            } else {
+                MyLog.i(TAG, "固件返回值 = 卡片排序 = 不支持");
+                mBleDeviceTools.setIsSupportPageDevice(false);
+            }
+
+            if(deviceParams14[4] == 1){
+                MyLog.i(TAG, "固件返回值 = GPS运动 = 支持");
+                mBleDeviceTools.setIsSupportGpsSport(true);
+            } else {
+                MyLog.i(TAG, "固件返回值 = GPS运动 = 不支持");
+                mBleDeviceTools.setIsSupportGpsSport(false);
+            }
+            if(deviceParams14[5] == 1){
+                MyLog.i(TAG, "固件返回值 = GPS传感器 = 支持");
+                mBleDeviceTools.setIsGpsSensor(true);
+            } else {
+                MyLog.i(TAG, "固件返回值 = GPS传感器 = 不支持");
+                mBleDeviceTools.setIsGpsSensor(false);
+            }
+            if(deviceParams14[6] == 1){
+                MyLog.i(TAG, "固件返回值 = 内置表盘选择 = 支持");
+                mBleDeviceTools.setIsSupportBuiltDialSelection(true);
+            } else {
+                MyLog.i(TAG, "固件返回值 = 内置表盘选择 = 不支持");
+                mBleDeviceTools.setIsSupportBuiltDialSelection(false);
+            }
+
         } else {
-            MyLog.i(TAG, "固件返回值 = protobuf = 不支持");
+            MyLog.i(TAG, "固件返回值 = protobuf = 不支持 2");
             mBleDeviceTools.setIsSupportProtobuf(false);
 
-        }
-        //支持打点运动
-        if (deviceParams14[1] == 1) {
-            MyLog.i(TAG, "固件返回值 = 打点多运动 = 支持");
-            mBleDeviceTools.setPointExercise(true);
-        } else {
-            MyLog.i(TAG, "固件返回值 = 打点多运动 = 不支持");
+            MyLog.i(TAG, "固件返回值 = 打点多运动 = 不支持 2");
             mBleDeviceTools.setPointExercise(false);
+
+            MyLog.i(TAG, "固件返回值 = 卡片排序 = 不支持 2");
+            mBleDeviceTools.setIsSupportPageDevice(false);
+
+            MyLog.i(TAG, "固件返回值 = GPS运动 = 不支持 2");
+            mBleDeviceTools.setIsSupportGpsSport(false);
+
+            MyLog.i(TAG, "固件返回值 = GPS传感器 = 不支持 2");
+            mBleDeviceTools.setIsGpsSensor(false);
+
+            MyLog.i(TAG, "固件返回值 = 内置表盘选择 = 不支持 2");
+            mBleDeviceTools.setIsSupportBuiltDialSelection(false);
 
         }
         //升级方式
@@ -713,13 +757,6 @@ public class HandleDeviceDataTools {
         } else {
             MyLog.i(TAG, "固件返回值 = 升级方式 = 官方（默认）");
             mBleDeviceTools.setDeviceUpdateType(false);
-        }
-
-        if(deviceParams14[0] == 1 && deviceParams14[3] == 1){
-            MyLog.i(TAG, "固件返回值 = 支持卡片排序");
-            mBleDeviceTools.setIsSupportPageDevice(true);
-        } else {
-            mBleDeviceTools.setIsSupportPageDevice(false);
         }
 
         int deviceParams15 = data[27] & 0xff; // 参数15

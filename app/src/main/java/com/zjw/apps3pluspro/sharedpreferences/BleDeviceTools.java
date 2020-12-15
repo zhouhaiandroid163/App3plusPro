@@ -2046,18 +2046,57 @@ public class BleDeviceTools {
         return settin.getBoolean("DeviceUpdateType", false);
     }
 
+    //直达卡片排序
     public void setIsSupportPageDevice(boolean DeviceUpdateType) {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
         editor.putBoolean("setIsSupportPageDevice", DeviceUpdateType);
         editor.apply();
     }
-
+    //直达卡片排序
     public boolean getIsSupportPageDevice() {
         SharedPreferences settin = getSharedPreferencesCommon();
         return settin.getBoolean("setIsSupportPageDevice", false);
     }
 
+    //GPS运动
+    public void setIsSupportGpsSport(boolean IsSupportGpsSport) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportGpsSport", IsSupportGpsSport);
+        editor.apply();
+    }
+
+    public boolean getIsSupportGpsSport() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportGpsSport", false);
+    }
+
+    //GPS传感器
+    public void setIsGpsSensor(boolean IsGpsSensor) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsGpsSensor", IsGpsSensor);
+        editor.apply();
+    }
+
+    public boolean getIsGpsSensor() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsGpsSensor", false);
+    }
+
+    //内置表盘选择
+    public boolean getIsSupportBuiltDialSelection() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportBuiltDialSelection", false);
+    }
+
+    public void setIsSupportBuiltDialSelection(boolean IsSupportBuiltDialSelection) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportBuiltDialSelection", IsSupportBuiltDialSelection);
+        editor.apply();
+    }
     /**
      * 体温测量间隔
      *

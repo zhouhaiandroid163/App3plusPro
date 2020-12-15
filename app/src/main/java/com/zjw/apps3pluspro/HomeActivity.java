@@ -796,6 +796,7 @@ public class HomeActivity extends BaseActivity {
                                 //delete today over
                                 Log.w("ble", " delete today over");
                                 syncDeviceSportOver();
+                                getDeviceGpsSportStatus();
                             } else {
                                 deleteDeviceSport(DELETE_DEVICE_SPORT_TODAY);
                             }
@@ -1032,9 +1033,11 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void getDeviceGpsSportStatus() {
-        // 询问gps运动结果
-        curCmd = APP_REQUEST_GPS_SPORT_STATE;
-        sendAppStart(BtSerializeation.appStartCmd(1));
+        if(mBleDeviceTools.getIsSupportGpsSport()){
+            // 询问gps运动结果
+            curCmd = APP_REQUEST_GPS_SPORT_STATE;
+            sendAppStart(BtSerializeation.appStartCmd(1));
+        }
     }
 
     void updateUi(int item) {
