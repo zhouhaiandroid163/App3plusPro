@@ -166,19 +166,23 @@ class StepHistoryActivity : BaseActivity() {
                 layoutData.visibility = View.VISIBLE
                 layoutNoData.visibility = View.GONE
             } else {
-                val progress = FloatArray(24)
-                stepHistogramView.start(progress, 100f, 1, null, null, false)
-
-                tvExerciseStep.text = resources.getString(R.string.sleep_gang)
-                tvExerciseDistance.text = resources.getString(R.string.sleep_gang)
-                tvExerciseCal.text = resources.getString(R.string.sleep_gang)
-                tvComplete.text = resources.getString(R.string.sleep_gang) + "%"
-                targetProgress.progress = 0;
-
-                layoutNoData.visibility = View.VISIBLE
-                layoutData.visibility = View.GONE
+                noData()
             }
         }
+    }
+
+    private fun noData() {
+        val progress = FloatArray(24)
+        stepHistogramView.start(progress, 100f, 1, null, null, false)
+
+        tvExerciseStep.text = resources.getString(R.string.sleep_gang)
+        tvExerciseDistance.text = resources.getString(R.string.sleep_gang)
+        tvExerciseCal.text = resources.getString(R.string.sleep_gang)
+        tvComplete.text = resources.getString(R.string.sleep_gang) + "%"
+        targetProgress.progress = 0;
+
+        layoutNoData.visibility = View.VISIBLE
+        layoutData.visibility = View.GONE
     }
 
     override fun initDatas() {
@@ -199,21 +203,25 @@ class StepHistoryActivity : BaseActivity() {
 
     fun getSportWeek(is_cycle: Boolean) {
         MyLog.i(TAG, "getSportWeek()")
-        val week_list = NewTimeUtils.GetLastWeektDate(registTime, selectionDate)
-        val start_date = week_list[0]
-        val end_date = week_list[week_list.size - 1]
-        MyLog.i(TAG, "待处理 开始时间 = $start_date")
-        MyLog.i(TAG, "待处理 结束时间 = $end_date")
-        val movementInfo_list: List<MovementInfo> = mMovementInfoUtils.MyQueryToPeriodTime(BaseApplication.getUserId(), start_date, end_date)
-        if (movementInfo_list.size >= week_list.size) {
-            MyLog.i(TAG, "满足条件 更新UI")
-            MyLog.i(TAG, "movementInfo_list = $movementInfo_list")
-            updateUi()
-        } else {
-            MyLog.i(TAG, "不满足条件，请求后台 is_cycle = $is_cycle")
-            if (is_cycle) {
-                requestSportData(week_list, start_date, end_date)
+        try {
+            val week_list = NewTimeUtils.GetLastWeektDate(registTime, selectionDate)
+            val start_date = week_list[0]
+            val end_date = week_list[week_list.size - 1]
+            MyLog.i(TAG, "待处理 开始时间 = $start_date")
+            MyLog.i(TAG, "待处理 结束时间 = $end_date")
+            val movementInfo_list: List<MovementInfo> = mMovementInfoUtils.MyQueryToPeriodTime(BaseApplication.getUserId(), start_date, end_date)
+            if (movementInfo_list.size >= week_list.size) {
+                MyLog.i(TAG, "满足条件 更新UI")
+                MyLog.i(TAG, "movementInfo_list = $movementInfo_list")
+                updateUi()
+            } else {
+                MyLog.i(TAG, "不满足条件，请求后台 is_cycle = $is_cycle")
+                if (is_cycle) {
+                    requestSportData(week_list, start_date, end_date)
+                }
             }
+        } catch (e: Exception) {
+            noData()
         }
     }
 

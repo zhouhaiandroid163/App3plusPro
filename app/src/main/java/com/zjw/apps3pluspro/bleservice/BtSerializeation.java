@@ -110,7 +110,7 @@ public class BtSerializeation {
         resultCmd[0] = (byte) 0xAB;  // 固定cmd ，app -> device
         resultCmd[1] = (byte) 0x00;  // 2 bit	1 bit	1 bit	4 bit (version)
 
-        int l1Length = resultCmdLength - 8;               // L2长度
+        int l1Length = resultCmdLength - 8;               // L1长度
         resultCmd[2] = (byte) ((l1Length >> 8) & 0xff);
         resultCmd[3] = (byte) (l1Length & 0xff);
 
@@ -312,15 +312,16 @@ public class BtSerializeation {
             isMale = 1;
         }
 
-        byte[] userInfo = new byte[16];
+        byte[] userInfo = new byte[17];
         userInfo[0] = (byte) 0xab;
-        userInfo[3] = 8;//L1长度
+        userInfo[3] = 9;//L1长度
         userInfo[8] = 1;
         userInfo[10] = KEY_USER_PROFILE;
         userInfo[12] = 4;
         userInfo[13] = (byte) ((isMale << 7) | age);
         userInfo[14] = (byte) hight;
         userInfo[15] = (byte) weight;
+        userInfo[16] = (byte) 0;
 
         return userInfo;
     }
@@ -331,7 +332,7 @@ public class BtSerializeation {
      *
      * @return
      */
-    public static byte[] setReboot() {
+    public static byte[] resetFactory() {
         byte[] bind = new byte[13];
         bind[0] = (byte) 0xab;
         bind[3] = 5;//L1长度

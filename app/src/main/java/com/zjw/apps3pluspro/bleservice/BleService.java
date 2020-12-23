@@ -598,6 +598,7 @@ public class BleService extends Service {
      */
     private void initReceiver() {
         IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_LOCALE_CHANGED);
         intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
         intentFilter.addAction(BroadcastTools.ACTION_NOTIFICATION_SEND_DATA);
         intentFilter.addAction(BroadcastTools.ACTION_NOTIFICATION_SEND_SET_USER_INFO);
@@ -1748,17 +1749,17 @@ public class BleService extends Service {
                     byte[] mydata = characteristic.getValue();
                     String my_hexString = BleTools.bytes2HexString(mydata);
                     //解析心电数据
-    //                if (characteristic.getUuid().equals(BleConstant.UUID_ECG_READ)) {
-    //                    SysUtils.logContentI(TAG, "onCharacteristicChanged = Ecg = " + my_hexString);
-    //                } else if (characteristic.getUuid().equals(BleConstant.UUID_PPG_READ)) {
-    //                    SysUtils.logContentI(TAG, "onCharacteristicChanged = Ppg = " + my_hexString);
-    //                } else if (characteristic.getUuid().equals(BleConstant.UUID_BASE_READ)) {
-    //                    SysUtils.logContentI(TAG, "onCharacteristicChanged = System = " + my_hexString);
-    //                } else if (characteristic.getUuid().equals(BleConstant.UUID_THEME_READ)) {
-    //                    SysUtils.logContentI(TAG, "onCharacteristicChanged = theme = " + my_hexString);
-    //                } else if (characteristic.getUuid().equals(BleConstant.UUID_LOG_READ)) {
-    //                    SysUtils.logContentI(TAG, "onCharacteristicChanged = Log = " + my_hexString);
-    //                }
+                    //                if (characteristic.getUuid().equals(BleConstant.UUID_ECG_READ)) {
+                    //                    SysUtils.logContentI(TAG, "onCharacteristicChanged = Ecg = " + my_hexString);
+                    //                } else if (characteristic.getUuid().equals(BleConstant.UUID_PPG_READ)) {
+                    //                    SysUtils.logContentI(TAG, "onCharacteristicChanged = Ppg = " + my_hexString);
+                    //                } else if (characteristic.getUuid().equals(BleConstant.UUID_BASE_READ)) {
+                    //                    SysUtils.logContentI(TAG, "onCharacteristicChanged = System = " + my_hexString);
+                    //                } else if (characteristic.getUuid().equals(BleConstant.UUID_THEME_READ)) {
+                    //                    SysUtils.logContentI(TAG, "onCharacteristicChanged = theme = " + my_hexString);
+                    //                } else if (characteristic.getUuid().equals(BleConstant.UUID_LOG_READ)) {
+                    //                    SysUtils.logContentI(TAG, "onCharacteristicChanged = Log = " + my_hexString);
+                    //                }
 
                     SysUtils.logContentI(TAG, "onCharacteristicChanged  uuid = " + characteristic.getUuid() + " data = " + my_hexString);
                     if (mydata != null && mydata.length > 0) {
@@ -2263,6 +2264,15 @@ public class BleService extends Service {
             } else if (ACTION_DATA_AVAILABLE4.equals(action)) {
                 lastDisplayTime = System.currentTimeMillis();
                 displayData4(intent.getStringExtra(EXTRA_DATA));
+            } else if(Intent.ACTION_LOCALE_CHANGED.equals(action)) {
+                MyLog.i(TAG, " Language change");
+                boolean connectState = ISBlueToothConnect();
+                if (connectState && !syncState) {
+                    MyLog.i(TAG, " send Language cmd because Language change");
+                    int country = AppUtils.getCountry(BleService.this);
+                    final byte[] init_language = BtSerializeation.SendNewInitDevice(country);
+                    writeRXCharacteristic(init_language);
+                }
             }
         }
     }
@@ -2317,7 +2327,7 @@ public class BleService extends Service {
 
     //恢复出厂设置
     public void restore_factory() {
-        writeRXCharacteristic(BtSerializeation.setReboot());
+        writeRXCharacteristic(BtSerializeation.resetFactory());
     }
 
 
@@ -2780,8 +2790,8 @@ public class BleService extends Service {
             case TelephonyManager.CALL_STATE_IDLE:
                 if (phoneNumber != null) {
                     if ((System.currentTimeMillis() - IDLE_LAST_TIME > 2000)) {
-                            MyLog.i(TAG, "来电测试 = 通话结束");
-                            writeRXCharacteristic(BtSerializeation.sendCloseCall());
+                        MyLog.i(TAG, "来电测试 = 通话结束");
+                        writeRXCharacteristic(BtSerializeation.sendCloseCall());
                     }
                     IDLE_LAST_TIME = System.currentTimeMillis();
                 }
@@ -2791,8 +2801,8 @@ public class BleService extends Service {
             case TelephonyManager.CALL_STATE_OFFHOOK:
                 if (phoneNumber != null) {
                     if ((System.currentTimeMillis() - OFFHOOK_LAST_TIME > 2000)) {
-                            MyLog.i(TAG, "来电测试 = 接电话");
-                            writeRXCharacteristic(BtSerializeation.sendCloseCall());
+                        MyLog.i(TAG, "来电测试 = 接电话");
+                        writeRXCharacteristic(BtSerializeation.sendCloseCall());
                     }
                     OFFHOOK_LAST_TIME = System.currentTimeMillis();
                 }
@@ -3705,6 +3715,7 @@ public class BleService extends Service {
             }
         }
     };
+
     private void initDeviceParameter() {
         mBleDeviceTools.setSupportNewDeviceCrc(false);
         mBleBaseProtocol.setRcvDataState(0);

@@ -211,35 +211,39 @@ class SleepHistoryActivity : BaseActivity() {
             layoutData.visibility = View.VISIBLE
 
         } else {
-            sleep_details_lin_data_yes.visibility = View.GONE
-            sleep_details_seek_data_yes.visibility = View.GONE
+            noData()
+        }
+    }
 
-            layoutNoData.visibility = View.VISIBLE
-            layoutData.visibility = View.GONE
+    private fun noData() {
+        sleep_details_lin_data_yes.visibility = View.GONE
+        sleep_details_seek_data_yes.visibility = View.GONE
 
-            targetProgress.progress = 0
-            tvSleepHour.text = resources.getString(R.string.sleep_gang)
-            tvSleepMinute.text = resources.getString(R.string.sleep_gang)
+        layoutNoData.visibility = View.VISIBLE
+        layoutData.visibility = View.GONE
 
-            tv_sleep_start_time.text = resources.getString(R.string.sleep_gang)
-            tv_sleep_end_time.text = resources.getString(R.string.sleep_gang)
+        targetProgress.progress = 0
+        tvSleepHour.text = resources.getString(R.string.sleep_gang)
+        tvSleepMinute.text = resources.getString(R.string.sleep_gang)
+
+        tv_sleep_start_time.text = resources.getString(R.string.sleep_gang)
+        tv_sleep_end_time.text = resources.getString(R.string.sleep_gang)
 
 //            tvDeepSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour) + resources.getString(R.string.sleep_gang) + resources.getString(R.string.minute)
 //            tvLightSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour) + resources.getString(R.string.sleep_gang) + resources.getString(R.string.minute)
 //            tvAwakeSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour) + resources.getString(R.string.sleep_gang) + resources.getString(R.string.minute)
-            tvDeepSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour)
-            tvLightSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour)
-            tvAwakeSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour)
+        tvDeepSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour)
+        tvLightSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour)
+        tvAwakeSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour)
 
 //            tvDeepSleepProgress.text = """${resources.getString(R.string.sleep_gang)}%"""
 //            tvLightSleepProgress.text = """${resources.getString(R.string.sleep_gang)}%"""
 //            tvAwakeSleepProgress.text = """${resources.getString(R.string.sleep_gang)}%"""
 
-            tvComplete.text = """${resources.getString(R.string.sleep_gang)}%"""
-            tvSleepProgress.text = """${resources.getString(R.string.sleep_gang)}%"""
+        tvComplete.text = """${resources.getString(R.string.sleep_gang)}%"""
+        tvSleepProgress.text = """${resources.getString(R.string.sleep_gang)}%"""
 
-            multiProgressView.start(0, 0, 0)
-        }
+        multiProgressView.start(0, 0, 0)
     }
 
     override fun initDatas() {
@@ -261,20 +265,24 @@ class SleepHistoryActivity : BaseActivity() {
 
     fun getSleepWeek(is_cycle: Boolean) {
         MyLog.i(TAG, "getSleepWeek()")
-        val week_list = NewTimeUtils.GetLastWeektDate(registTime, selectionDate)
-        val start_date = week_list[0]
-        val end_date = week_list[week_list.size - 1]
-        MyLog.i(TAG, "待处理 开始时间 = $start_date")
-        MyLog.i(TAG, "待处理 结束时间 = $end_date")
-        val sleepInfo_list: List<SleepInfo> = mSleepInfoUtils.MyQueryToPeriodTime(BaseApplication.getUserId(), start_date, end_date)
-        if (sleepInfo_list.size >= week_list.size) {
-            MyLog.i(TAG, "待处理 数据够了 = 更新UI")
-            updateUi(sleepInfo_list)
-        } else {
-            MyLog.i(TAG, "待处理 数据不够 = 获取数据")
-            if (is_cycle) {
-                requestSleepData(week_list, start_date, end_date)
+        try {
+            val week_list = NewTimeUtils.GetLastWeektDate(registTime, selectionDate)
+            val start_date = week_list[0]
+            val end_date = week_list[week_list.size - 1]
+            MyLog.i(TAG, "待处理 开始时间 = $start_date")
+            MyLog.i(TAG, "待处理 结束时间 = $end_date")
+            val sleepInfo_list: List<SleepInfo> = mSleepInfoUtils.MyQueryToPeriodTime(BaseApplication.getUserId(), start_date, end_date)
+            if (sleepInfo_list.size >= week_list.size) {
+                MyLog.i(TAG, "待处理 数据够了 = 更新UI")
+                updateUi(sleepInfo_list)
+            } else {
+                MyLog.i(TAG, "待处理 数据不够 = 获取数据")
+                if (is_cycle) {
+                    requestSleepData(week_list, start_date, end_date)
+                }
             }
+        } catch (e: Exception) {
+            noData()
         }
     }
 
