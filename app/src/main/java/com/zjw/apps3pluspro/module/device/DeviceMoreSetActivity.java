@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -46,6 +47,7 @@ import com.zjw.apps3pluspro.utils.log.MyLog;
 import com.zjw.apps3pluspro.view.dialog.WaitDialog;
 
 import org.json.JSONObject;
+
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -468,8 +470,11 @@ public class DeviceMoreSetActivity extends BaseActivity {
 
     private void unBindDevice() {
         restore_factory();
-        disconnect();
-        BleTools.unBind(this);
-        finish();
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(() -> {
+            disconnect();
+            BleTools.unBind(context);
+            finish();
+        },2000);
     }
 }
