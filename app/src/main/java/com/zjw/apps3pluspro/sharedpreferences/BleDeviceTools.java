@@ -2269,10 +2269,10 @@ public class BleDeviceTools {
     }
 
     // 当前
-    public void setWeatherArea(String gsp) {
+    public void setWeatherArea(String gps) {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
-        editor.putString("setWeatherArea", gsp);
+        editor.putString("setWeatherArea", gps);
         editor.apply();
     }
     public String getWeatherArea() {
@@ -2280,4 +2280,82 @@ public class BleDeviceTools {
         return settin.getString("setWeatherArea", "");
     }
 
+    public boolean getIsSupportDrinkWater() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportDrinkWater", false);
+    }
+
+    public void setIsSupportDrinkWater(boolean IsCoronaNotiface) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportDrinkWater", IsCoronaNotiface);
+        editor.apply();
+    }
+    public boolean getIsSupportLongSit() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportLongSit", false);
+    }
+
+    public void setIsSupportLongSit(boolean IsCoronaNotiface) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportLongSit", IsCoronaNotiface);
+        editor.apply();
+    }
+    public boolean getIsSupportMeeting() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportMeeting", false);
+    }
+
+    public void setIsSupportMeeting(boolean IsCoronaNotiface) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportMeeting", IsCoronaNotiface);
+        editor.apply();
+    }
+    public boolean getIsSupportDrug() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportDrug", false);
+    }
+
+    public void setIsSupportDrug(boolean IsCoronaNotiface) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportDrug", IsCoronaNotiface);
+        editor.apply();
+    }
+    public boolean getIsSupportAlarmClock() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportAlarmClock", false);
+    }
+
+    public void setIsSupportAlarmClock(boolean IsCoronaNotiface) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportAlarmClock", IsCoronaNotiface);
+        editor.apply();
+    }
+    public boolean getIsSupportTakePicture() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportTakePicture", false);
+    }
+
+    public void setIsSupportTakePicture(boolean IsCoronaNotiface) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportTakePicture", IsCoronaNotiface);
+        editor.apply();
+    }
+
+    public boolean getIsSupportRaiseWristBrightenScreen() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportRaiseWristBrightenScreen", false);
+    }
+
+    public void setIsSupportRaiseWristBrightenScreen(boolean IsCoronaNotiface) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportRaiseWristBrightenScreen", IsCoronaNotiface);
+        editor.apply();
+    }
 }

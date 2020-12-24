@@ -781,6 +781,60 @@ public class HandleDeviceDataTools {
             mBleDeviceTools.setIsCoronaNotiface(false);
         }
 
+        int[] deviceParams17 = MyUtils.BinstrToIntArray(data[29]); // 参数16
+        if (deviceParams17[0] == 0) {
+            MyLog.i(TAG, "固件返回值 =喝水 = 支持");
+            mBleDeviceTools.setIsSupportDrinkWater(true);
+        } else {
+            MyLog.i(TAG, "固件返回值 = 喝水 = 不支持");
+            mBleDeviceTools.setIsSupportDrinkWater(false);
+        }
+        if (deviceParams17[1] == 0) {
+            MyLog.i(TAG, "固件返回值 =久坐 = 支持");
+            mBleDeviceTools.setIsSupportLongSit(true);
+        } else {
+            MyLog.i(TAG, "固件返回值 = 久坐 = 不支持");
+            mBleDeviceTools.setIsSupportLongSit(false);
+        }
+        if (deviceParams17[2] == 0) {
+            MyLog.i(TAG, "固件返回值 =会议 = 支持");
+            mBleDeviceTools.setIsSupportMeeting(true);
+        } else {
+            MyLog.i(TAG, "固件返回值 = 会议 = 不支持");
+            mBleDeviceTools.setIsSupportMeeting(false);
+        }
+        if (deviceParams17[3] == 0) {
+            MyLog.i(TAG, "固件返回值 =吃药 = 支持");
+            mBleDeviceTools.setIsSupportDrug(true);
+        } else {
+            MyLog.i(TAG, "固件返回值 = 吃药 = 不支持");
+            mBleDeviceTools.setIsSupportDrug(false);
+        }
+        if (deviceParams17[4] == 0) {
+            MyLog.i(TAG, "固件返回值 =闹钟 = 支持");
+            mBleDeviceTools.setIsSupportAlarmClock(true);
+        } else {
+            MyLog.i(TAG, "固件返回值 = 闹钟 = 不支持");
+            mBleDeviceTools.setIsSupportAlarmClock(false);
+        }
+        if (deviceParams17[5] == 0) {
+            MyLog.i(TAG, "固件返回值 =摇一摇拍照 = 支持");
+            mBleDeviceTools.setIsSupportTakePicture(true);
+        } else {
+            MyLog.i(TAG, "固件返回值 = 摇一摇拍照 = 不支持");
+            mBleDeviceTools.setIsSupportTakePicture(false);
+        }
+        if (deviceParams17[6] == 0) {
+            MyLog.i(TAG, "固件返回值 =抬腕亮屏 = 支持");
+            mBleDeviceTools.setIsSupportRaiseWristBrightenScreen(true);
+        } else {
+            MyLog.i(TAG, "固件返回值 = 抬腕亮屏 = 不支持");
+            mBleDeviceTools.setIsSupportRaiseWristBrightenScreen(false);
+        }
+
+
+
+
         MyLog.i(TAG, "固件返回值 = DeviceName = " + DeviceName);
         MyLog.i(TAG, "固件返回值 = DeviceMac = " + DeviceMac);
         MyLog.i(TAG, "固件返回值 = DevicePower = " + DevicePower);

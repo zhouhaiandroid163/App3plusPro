@@ -23,7 +23,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvMenuMarket"
+                    android:id="@+id/tvLeft"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -58,7 +58,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvMenuCustom"
+                    android:id="@+id/tvRight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -74,6 +74,7 @@
                 android:layout_height="3dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="2dip"
+
                 android:background="@mipmap/clock_index_bg" />
 
         </RelativeLayout>

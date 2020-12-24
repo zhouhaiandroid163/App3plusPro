@@ -979,12 +979,18 @@
     <string name="saturday">Sat</string>
     <string name="sunday">Sun</string>
 
-    <string name="summary">简介</string>
-    <string name="style">样式</string>
-    <string name="text_color">字体颜色</string>
-    <string name="customize_color">自定义颜色</string>
-    <string name="custom_photo">相片</string>
-
+    <!-- 表盘 -->
+    <string name="summary">Summary</string>
+    <string name="style">Type</string>
+    <string name="text_color">font color</string>
+    <string name="customize_color">Custom color</string>
+    <string name="custom_photo">Photograph</string>
+    <string name="theme_market_my">My watch face</string>
+    <string name="theme_market_center">Dial center</string>
+    <string name="theme_market_use">use</string>
+    <string name="theme_market_delete">delete</string>
+    <string name="theme_market_title">dial peace</string>
+    <!-- 卡片 -->
     <string name="page_set">直达卡片管理</string>
     <string name="page_device_setting">设置</string>
     <string name="page_device_fitness">运动健身</string>
@@ -1028,26 +1034,32 @@
     <string name="page_device_tool_list">工具</string>
     <string name="page_device_qr_code_download">二维码</string>
     <string name="page_device_temperature">体温</string>
+    <!-- 天气 -->
+    <string name="weather_title">Weather settings</string>
+    <string name="weather_sync">Weather synchronization</string>
+    <string name="weather_city">City</string>
+    <string name="weather_help">View help</string>
+    <string name="weather_help_tip">The watch cannot synchronize weather information, which may be caused by the following reasons:</string>
+    <string name="weather_help_1">1. Permission to obtain location information without opening the APP</string>
+    <string name="weather_help_2">2. The system location service is not turned on</string>
+    <string name="weather_help_3">3. Both location information permission and location service have been turned on, please re-synchronize the data on the application device page</string>
+    <string name="weather_positioning">Getting information...</string>
+    <string name="weather_send_over">Send success</string>
+    <string name="weather_search_city">Search city</string>
+    <string name="weather_cur_city">Current location</string>
+    <string name="weather_location_ing">Positioning...</string>
+    <string name="weather_location_error">Positioning failed</string>
+    <string name="device_gps_sport1">Device GPS movement</string>
+    <string name="message_push_screen_on">Notify only when the phone is locked</string>
+    <string name="gps_switch_close">The system location switch is not turned on</string>
 
-    <string name="weather_title">天气设置</string>
-    <string name="weather_sync">天气同步</string>
-    <string name="weather_city">城市</string>
-    <string name="weather_help">查看帮助</string>
-    <string name="weather_help_tip">手表无法同步天气信息，可能是以下原因导致：</string>
-    <string name="weather_help_1">1.未开启APP的位置信息获取权限</string>
-    <string name="weather_help_2">2.未开启系统位置服务</string>
-    <string name="weather_help_3">3.位置信息权限和定位服务都已打开，请在应用设备页重新同步数据</string>
-    <string name="weather_positioning">获取信息中...</string>
-    <string name="weather_send_over">发送成功</string>
-    <string name="weather_search_city">搜索城市</string>
-    <string name="weather_cur_city">当前定位</string>
-    <string name="weather_location_ing">定位中...</string>
-    <string name="weather_location_error">定位失败</string>
-
-    <string name="device_name">设备名称</string>
-    <string name="device_power">设备电量</string>
-    <string name="device_version">设备版本号</string>
-    <string name="device_get_version">读取版本号中...</string>
-    <string name="device_gps_sport1">设备GPS运动</string>
-    <string name="gps_switch_close">未开启系统定位开关</string>
+    <string name="device_name">Equipment name</string>
+    <string name="device_power">Equipment power</string>
+    <string name="device_version">Device version number</string>
+    <string name="device_get_version">Reading version number...</string>
+    <string name="qr_code">Please use the phone camera to scan the QR code on the watch to bind</string>
+    <string name="qr_code_next">Next step</string>
+    <string name="qr_code_title">QR code</string>
+    <string name="qr_code_manual">manual control</string>
+    <string name="scan_title">Please use the phone camera to aim at the QR code of the watch</string>
 </resources>

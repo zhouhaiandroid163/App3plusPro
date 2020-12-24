@@ -48,7 +48,7 @@
         android:layout_height="wrap_content">
 
         <RadioGroup
-            android:id="@+id/rgClockDial"
+            android:id="@+id/rgTitle"
             android:layout_width="match_parent"
             android:layout_height="54dip"
             android:layout_gravity="bottom"
@@ -56,7 +56,7 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/rbMarket"
+                android:id="@+id/rbLeft"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -69,7 +69,7 @@
 
 
             <RadioButton
-                android:id="@+id/rbCustom"
+                android:id="@+id/rbRight"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"

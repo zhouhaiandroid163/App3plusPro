@@ -44,6 +44,7 @@ public class BleConstant {
     static final int Key_OffMeasureTemp = 0x28;//离线体温
     static final int Key_UserBehavior = 0x29;//用户行为
     static final int Key_DeviceBasicInfo = 0x31;//设备信息
+    static final int Key_DeviceSendUnbind = 0x33;//设备发出解绑命令
     static final int KEY_DEVICE_ANSWER = 0xac;
 
 

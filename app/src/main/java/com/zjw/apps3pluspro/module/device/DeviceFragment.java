@@ -107,6 +107,8 @@ public class DeviceFragment extends BaseFragment {
     TextView tvTitle8;
     @BindView(R.id.layoutPhotograph)
     LinearLayout layoutPhotograph;
+    @BindView(R.id.layoutRaiseWristBrightenScreen)
+    LinearLayout layoutRaiseWristBrightenScreen;
     @BindView(R.id.tvTitle9)
     TextView tvTitle9;
     @BindView(R.id.tvTitle10)
@@ -218,6 +220,19 @@ public class DeviceFragment extends BaseFragment {
 
     @Override
     public void initData() {
+        if(mBleDeviceTools.getIsSupportTakePicture()){
+            layoutPhotograph.setVisibility(View.VISIBLE);
+        } else {
+            layoutPhotograph.setVisibility(View.GONE);
+        }
+
+        if(mBleDeviceTools.getIsSupportRaiseWristBrightenScreen()){
+            layoutRaiseWristBrightenScreen.setVisibility(View.VISIBLE);
+        } else {
+            layoutRaiseWristBrightenScreen.setVisibility(View.GONE);
+        }
+
+
         initDeviceView();
         initSwitchCompat();
         initDialMarket();
@@ -256,12 +271,7 @@ public class DeviceFragment extends BaseFragment {
         int device_height = mBleDeviceTools.get_device_theme_resolving_power_height();
         if (device_width > 0 && device_height > 0) {
             if (DialMarketManager.getInstance().dialMarketList.size() == 0) {
-                DialMarketManager.getInstance().getPageList(new DialMarketManager.GetListOnFinishListen() {
-                    @Override
-                    public void success() {
-                        initTheme();
-                    }
-                });
+                DialMarketManager.getInstance().getPageList(() -> initTheme());
             } else {
                 initTheme();
             }

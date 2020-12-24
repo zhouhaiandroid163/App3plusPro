@@ -1,8 +1,6 @@
 package com.zjw.apps3pluspro.module.device;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +11,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,11 +22,9 @@ import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.base.BaseActivity;
 import com.zjw.apps3pluspro.bleservice.BleConstant;
-import com.zjw.apps3pluspro.bleservice.BleService;
 import com.zjw.apps3pluspro.bleservice.BleTools;
 import com.zjw.apps3pluspro.bleservice.BroadcastTools;
 import com.zjw.apps3pluspro.bleservice.BtSerializeation;
-import com.zjw.apps3pluspro.bleservice.requestServerTools;
 import com.zjw.apps3pluspro.module.device.dfu.BleDfuActivity;
 import com.zjw.apps3pluspro.module.device.dfu.ProtobufActivity;
 import com.zjw.apps3pluspro.module.device.dfurtk.RtkDfuActivity;
@@ -44,11 +39,9 @@ import com.zjw.apps3pluspro.network.javabean.DeviceBean;
 import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
 import com.zjw.apps3pluspro.sharedpreferences.UserSetTools;
 import com.zjw.apps3pluspro.utils.AppUtils;
-import com.zjw.apps3pluspro.utils.DialMarketManager;
 import com.zjw.apps3pluspro.utils.DialogUtils;
 import com.zjw.apps3pluspro.utils.GoogleFitManager;
 import com.zjw.apps3pluspro.utils.JavaUtil;
-import com.zjw.apps3pluspro.utils.PageManager;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 import com.zjw.apps3pluspro.view.dialog.WaitDialog;
 
@@ -147,17 +140,17 @@ public class DeviceMoreSetActivity extends BaseActivity {
         tvCentigrade.setChecked(false);
         tvFahrenheitDegree.setChecked(false);
 
-        if(mBleDeviceTools.get_device_unit() == 0){
+        if (mBleDeviceTools.get_device_unit() == 0) {
             tvUnitYingzhi.setChecked(true);
         } else {
             tvUnitGongzhi.setChecked(true);
         }
-        if(mBleDeviceTools.get_colock_type() == 0){
+        if (mBleDeviceTools.get_colock_type() == 0) {
             tvClock12.setChecked(true);
         } else {
             tvClock24.setChecked(true);
         }
-        if(mBleDeviceTools.getTemperatureType() == 0){
+        if (mBleDeviceTools.getTemperatureType() == 0) {
             tvCentigrade.setChecked(true);
         } else {
             tvFahrenheitDegree.setChecked(true);
@@ -207,8 +200,9 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 new DialogUtils.DialogClickListener() {
                     @Override
                     public void OnOK() {
-                        restore_factory();
+                        unBindDevice();
                     }
+
                     @Override
                     public void OnCancel() {
                     }
@@ -223,7 +217,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
 
     @OnClick({R.id.layoutDeviceUpdate, R.id.layoutWearType, R.id.layoutPage,
             R.id.tvUnitGongzhi, R.id.tvUnitYingzhi,
-            R.id.tvClock24, R.id.tvClock12,R.id.layoutUnBind,
+            R.id.tvClock24, R.id.tvClock12, R.id.layoutUnBind,
             R.id.tvCentigrade, R.id.tvFahrenheitDegree, R.id.layoutWeather,
             R.id.layoutRestoreFactory})
     public void onViewClicked(View view) {
@@ -453,6 +447,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
             AppUtils.showToast(context, R.string.no_connection_notification);
         }
     }
+
     private void UnableBindDeviceDialog() {
         DialogUtils.BaseDialog(context,
                 context.getResources().getString(R.string.dialog_prompt),
@@ -461,28 +456,20 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 new DialogUtils.DialogClickListener() {
                     @Override
                     public void OnOK() {
-                        mBleDeviceTools.setWeatherSyncTime(0);
-                        mBleDeviceTools.setLastUploadDataServiceTime(0);
-                        mBleDeviceTools.setLastSyncTime(0);
-                        mBleDeviceTools.setLastDeviceSportSyncTime(0);
-                        requestServerTools.uploadUnDeviceData(context.getApplicationContext());
-                        disconnect();
-                        mBleDeviceTools.set_ble_mac("");
-                        mBleDeviceTools.set_call_ble_mac("");
-                        mBleDeviceTools.set_ble_name("");
-                        mBleDeviceTools.set_call_ble_name("");
-                        mUserSetTools.set_service_upload_device_info("");
-                        mBleDeviceTools.set_device_theme_resolving_power_height(0);
-                        mBleDeviceTools.set_device_theme_resolving_power_width(0);
-                        BleService.setBlueToothStatus(BleConstant.STATE_DISCONNECTED);
-                        DialMarketManager.getInstance().clearList();
-                        PageManager.getInstance().cleanList();
-                        finish();
+                        unBindDevice();
                     }
+
                     @Override
                     public void OnCancel() {
                     }
                 }
         );
+    }
+
+    private void unBindDevice() {
+        restore_factory();
+        disconnect();
+        BleTools.unBind(this);
+        finish();
     }
 }

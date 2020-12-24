@@ -18,8 +18,7 @@
     <!-- <uses-permission android:name="android.permission.WRITE_CALL_LOG" /> -->
     <!-- 好像用不到？？？ 移除 333 -->
     <!-- <uses-permission android:name="android.permission.USE_SIP" /> -->
-    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-    <!-- 请求网络 -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" /> <!-- 请求网络 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许程序访问联系人通讯录信息 = 来电提醒 移除 222 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- 高德 3.2.0版本增加 -->
     <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 高德 3.2.0版本增加 -->
@@ -81,6 +80,8 @@
         android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme"
         tools:replace="icon,label,theme">
+        <activity android:name=".module.device.ScanQrCodeActivity"></activity>
+        <activity android:name=".zxing.activity.CaptureActivity"/>
         <activity
             android:name=".module.device.weather.WeatherCitySearchActivity"
             android:launchMode="singleTask"

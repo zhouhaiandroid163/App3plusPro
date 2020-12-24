@@ -137,24 +137,25 @@ public class ClockDialActivity extends BaseActivity {
 
     private void initView() {
 
-        tvMenuMarket = (TextView) findViewById(R.id.tvMenuMarket);
-        tvMenuCustom = (TextView) findViewById(R.id.tvMenuCustom);
+        tvMenuMarket = (TextView) findViewById(R.id.tvLeft);
+        tvMenuCustom = (TextView) findViewById(R.id.tvRight);
+        tvMenuMarket.setText("");
 
         viewLeft = findViewById(R.id.viewLeft);
         viewRight = findViewById(R.id.viewRight);
 
-        rgClockDial = (RadioGroup) findViewById(R.id.rgClockDial);
+        rgClockDial = (RadioGroup) findViewById(R.id.rgTitle);
         rgClockDial.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     //表盘市场
-                    case R.id.rbMarket:
+                    case R.id.rbLeft:
                         vpMenu.setCurrentItem(0, false);
                         updateUi(0);
                         break;
                     //自定义表盘
-                    case R.id.rbCustom:
+                    case R.id.rbRight:
                         vpMenu.setCurrentItem(1, false);
                         updateUi(1);
                         break;
@@ -196,7 +197,7 @@ public class ClockDialActivity extends BaseActivity {
 
         vpMenu.setCurrentItem(0, false);
 
-        rgClockDial.check(R.id.rbMarket);
+        rgClockDial.check(R.id.rbLeft);
 
         updateUi(0);
 

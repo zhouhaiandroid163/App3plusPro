@@ -1,5 +1,6 @@
 package com.zjw.apps3pluspro.bleservice;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.zjw.apps3pluspro.application.BaseApplication;
@@ -11,9 +12,11 @@ import com.zjw.apps3pluspro.sql.entity.SleepInfo;
 import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.utils.DefaultVale;
+import com.zjw.apps3pluspro.utils.DialMarketManager;
 import com.zjw.apps3pluspro.utils.JavaUtil;
 import com.zjw.apps3pluspro.utils.MyTime;
 import com.zjw.apps3pluspro.utils.NewTimeUtils;
+import com.zjw.apps3pluspro.utils.PageManager;
 import com.zjw.apps3pluspro.utils.ThemeUtils;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 
@@ -757,4 +760,23 @@ public class BleTools {
     }
 
 
+    public static void unBind(Context context){
+        UserSetTools mUserSetTools = BaseApplication.getUserSetTools();
+        BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
+        mBleDeviceTools.setWeatherSyncTime(0);
+        mBleDeviceTools.setLastUploadDataServiceTime(0);
+        mBleDeviceTools.setLastSyncTime(0);
+        mBleDeviceTools.setLastDeviceSportSyncTime(0);
+        requestServerTools.uploadUnDeviceData(context.getApplicationContext());
+        mBleDeviceTools.set_ble_mac("");
+        mBleDeviceTools.set_call_ble_mac("");
+        mBleDeviceTools.set_ble_name("");
+        mBleDeviceTools.set_call_ble_name("");
+        mUserSetTools.set_service_upload_device_info("");
+        mBleDeviceTools.set_device_theme_resolving_power_height(0);
+        mBleDeviceTools.set_device_theme_resolving_power_width(0);
+        BleService.setBlueToothStatus(BleConstant.STATE_DISCONNECTED);
+        DialMarketManager.getInstance().clearList();
+        PageManager.getInstance().cleanList();
+    }
 }

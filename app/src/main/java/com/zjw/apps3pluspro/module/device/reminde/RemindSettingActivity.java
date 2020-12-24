@@ -75,6 +75,42 @@ public class RemindSettingActivity extends BaseActivity implements View.OnClickL
 
         findViewById(R.id.more_notice_rl_alarm_clock).setOnClickListener(this);
         findViewById(R.id.more_notice_rl_not).setOnClickListener(this);
+
+        LinearLayout layoutDrinkWater = findViewById(R.id.layoutDrinkWater);
+        if(mBleDeviceTools.getIsSupportDrinkWater()){
+            layoutDrinkWater.setVisibility(View.VISIBLE);
+        } else {
+            layoutDrinkWater.setVisibility(View.GONE);
+        }
+
+        LinearLayout layoutLongSit = findViewById(R.id.layoutLongSit);
+        if(mBleDeviceTools.getIsSupportLongSit()){
+            layoutLongSit.setVisibility(View.VISIBLE);
+        } else {
+            layoutLongSit.setVisibility(View.GONE);
+        }
+
+        LinearLayout layoutMeeting = findViewById(R.id.layoutMeeting);
+        if(mBleDeviceTools.getIsSupportMeeting()){
+            layoutMeeting.setVisibility(View.VISIBLE);
+        } else {
+            layoutMeeting.setVisibility(View.GONE);
+        }
+
+        LinearLayout layoutDrug = findViewById(R.id.layoutDrug);
+        if(mBleDeviceTools.getIsSupportDrug()){
+            layoutDrug.setVisibility(View.VISIBLE);
+        } else {
+            layoutDrug.setVisibility(View.GONE);
+        }
+
+        LinearLayout layoutAlarmClock = findViewById(R.id.layoutAlarmClock);
+        if(mBleDeviceTools.getIsSupportAlarmClock()){
+            layoutAlarmClock.setVisibility(View.VISIBLE);
+        } else {
+            layoutAlarmClock.setVisibility(View.GONE);
+        }
+
     }
 
 

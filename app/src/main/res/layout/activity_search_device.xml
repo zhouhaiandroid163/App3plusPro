@@ -4,12 +4,17 @@
     android:background="@color/base_activity_bg"
     android:orientation="vertical">
 
-    <include layout="@layout/public_head" />
+    <include layout="@layout/clock_dial_title" />
+
+    <include layout="@layout/scan_qr_code" />
 
     <LinearLayout
+        android:id="@+id/layoutScan"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
+
         <LinearLayout
             android:id="@+id/llScanfDevice"
             android:layout_width="match_parent"
@@ -140,6 +145,5 @@
 
 
     </LinearLayout>
-
 
 </LinearLayout>

@@ -60,11 +60,13 @@ import com.zjw.apps3pluspro.sql.entity.HealthInfo;
 import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.utils.DefaultVale;
+import com.zjw.apps3pluspro.utils.DialMarketManager;
 import com.zjw.apps3pluspro.utils.FileUtil;
 import com.zjw.apps3pluspro.utils.JavaUtil;
 import com.zjw.apps3pluspro.utils.MusicSyncManager;
 import com.zjw.apps3pluspro.utils.MyTime;
 import com.zjw.apps3pluspro.utils.NotificationUtils;
+import com.zjw.apps3pluspro.utils.PageManager;
 import com.zjw.apps3pluspro.utils.PhoneUtil;
 import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.utils.ThemeManager;
@@ -2125,7 +2127,6 @@ public class BleService extends Service {
                     MyLog.i(TAG, "KEY_DEVICE_ANSWER device is answer key = " + key + " status = " + status);
                     isSending = false;
                     break;
-
                 //设备基本参数
                 case BleConstant.Key_DeviceBasicInfo:
                     MyLog.i(TAG, "蓝牙回调 = 设备基本参数");
@@ -2133,6 +2134,11 @@ public class BleService extends Service {
                     if (isSupportBigMtu) {
                         currentMtu = mtu;
                     }
+                    break;
+                case BleConstant.Key_DeviceSendUnbind:
+                    MyLog.i(TAG, "Key_DeviceSendUnbind = device send unbind ");
+                    disconnect();
+                    BleTools.unBind(this);
                     break;
             }
         } catch (Exception e) {
@@ -2264,7 +2270,7 @@ public class BleService extends Service {
             } else if (ACTION_DATA_AVAILABLE4.equals(action)) {
                 lastDisplayTime = System.currentTimeMillis();
                 displayData4(intent.getStringExtra(EXTRA_DATA));
-            } else if(Intent.ACTION_LOCALE_CHANGED.equals(action)) {
+            } else if (Intent.ACTION_LOCALE_CHANGED.equals(action)) {
                 MyLog.i(TAG, " Language change");
                 boolean connectState = ISBlueToothConnect();
                 if (connectState && !syncState) {

@@ -568,8 +568,8 @@ public class FitnessTools {
                     Log.i(TAG, " dataNumber = " + dataNumber + " time = " + time);
                 }
 
-            } else if (sportType == 7 || sportType == 8) {
-                //室内单车/自由训练
+            } else if (sportType == 7 || sportType == 8 || sportType == 9 || sportType == 10 || sportType == 11 || sportType == 12) {
+                //室内单车/自由训练/ 各种打球
                 // data description 2 byte  index 7 8
                 sportModleInfo.setRecordPointEncryption(Integer.parseInt(sportData[7], 16));
                 sportModleInfo.setRecordPointDataValid1(Integer.parseInt(sportData[8], 16));
