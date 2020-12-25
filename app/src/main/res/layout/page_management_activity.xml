@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="@string/card_hide_top_tip"
-        android:textColor="#ff7f8088"
+        android:textColor="@color/white_50"
         android:textSize="14sp" />
 
     <LinearLayout
