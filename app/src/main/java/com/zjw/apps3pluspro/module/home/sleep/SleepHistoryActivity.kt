@@ -90,8 +90,8 @@ class SleepHistoryActivity : BaseActivity() {
         })
 
         tvTarget.setText("(" + MyTime.getSleepTime_H(mUserSetTools._user_sleep_target, resources.getString(R.string.sleep_gang))
-                + resources.getString(R.string.hour) + MyTime.getSleepTime_M(mUserSetTools._user_sleep_target, resources.getString(R.string.sleep_gang))
-                + resources.getString(R.string.minute) + ")")
+                + "H" + MyTime.getSleepTime_M(mUserSetTools._user_sleep_target, resources.getString(R.string.sleep_gang))
+                + "M" + ")")
 
         try {
             targetProgress.max = mUserSetTools._user_sleep_target.toInt()
@@ -165,19 +165,16 @@ class SleepHistoryActivity : BaseActivity() {
                 sober_proportion = progress3 * 100 / total
             }
             targetProgress.progress = sleep_total_time.toInt()
-//            tvSleepHour.text = MyTime.getSleepTime_H(sleep_total_time, resources.getString(R.string.sleep_gang))
-            tvSleepHour.text = MyTime.getHoursInt(sleep_total_time)
+            tvSleepHour.text = MyTime.getSleepTime_H(sleep_total_time, resources.getString(R.string.sleep_gang))
+//            tvSleepHour.text = MyTime.getHoursInt(sleep_total_time)
             tvSleepMinute.text = MyTime.getSleepTime_M(sleep_total_time, resources.getString(R.string.sleep_gang))
 
-//            tvDeepSleep.text = MyTime.getSleepTime_H(deep_time, resources.getString(R.string.sleep_gang)) + resources.getString(R.string.hour) + MyTime.getSleepTime_M(deep_time, resources.getString(R.string.sleep_gang)) + resources.getString(R.string.minute)
-//            tvLightSleep.text = MyTime.getSleepTime_H(light_time, resources.getString(R.string.sleep_gang)) + resources.getString(R.string.hour) + MyTime.getSleepTime_M(light_time, resources.getString(R.string.sleep_gang)) + resources.getString(R.string.minute)
-//            tvAwakeSleep.text = MyTime.getSleepTime_H(sober_time, resources.getString(R.string.sleep_gang)) + resources.getString(R.string.hour) + MyTime.getSleepTime_M(sober_time, resources.getString(R.string.sleep_gang)) + resources.getString(R.string.minute)
-            tvDeepSleep.text = MyTime.getHoursInt(deep_time)
-            tvLightSleep.text = MyTime.getHoursInt(light_time)
-            tvAwakeSleep.text = MyTime.getHoursInt(sober_time)
-
-            val caloriesFmt = DecimalFormat(",##0.0")
-            tvDeepSleep.text = caloriesFmt.format(tvSleepHour.text.toString().toDouble() - tvLightSleep.text.toString().toDouble())
+            tvDeepSleep.text = MyTime.getSleepTime_H(deep_time, resources.getString(R.string.sleep_gang)) + "H" + MyTime.getSleepTime_M(deep_time, resources.getString(R.string.sleep_gang)) + "M"
+            tvLightSleep.text = MyTime.getSleepTime_H(light_time, resources.getString(R.string.sleep_gang)) + "H" + MyTime.getSleepTime_M(light_time, resources.getString(R.string.sleep_gang)) + "M"
+            tvAwakeSleep.text = MyTime.getSleepTime_H(sober_time, resources.getString(R.string.sleep_gang)) + "H" + MyTime.getSleepTime_M(sober_time, resources.getString(R.string.sleep_gang)) + "M"
+//            tvDeepSleep.text = MyTime.getHoursInt(deep_time)
+//            tvLightSleep.text = MyTime.getHoursInt(light_time)
+//            tvAwakeSleep.text = MyTime.getHoursInt(sober_time)
 
 //            tvDeepSleepProgress.text = "$deep_proportion%"
 //            tvLightSleepProgress.text = "$light_proportion%"
@@ -229,12 +226,9 @@ class SleepHistoryActivity : BaseActivity() {
         tv_sleep_start_time.text = resources.getString(R.string.sleep_gang)
         tv_sleep_end_time.text = resources.getString(R.string.sleep_gang)
 
-//            tvDeepSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour) + resources.getString(R.string.sleep_gang) + resources.getString(R.string.minute)
-//            tvLightSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour) + resources.getString(R.string.sleep_gang) + resources.getString(R.string.minute)
-//            tvAwakeSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour) + resources.getString(R.string.sleep_gang) + resources.getString(R.string.minute)
-        tvDeepSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour)
-        tvLightSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour)
-        tvAwakeSleep.text = resources.getString(R.string.sleep_gang) + resources.getString(R.string.hour)
+        tvDeepSleep.text = resources.getString(R.string.sleep_gang) + "H" + resources.getString(R.string.sleep_gang) + "M"
+        tvLightSleep.text = resources.getString(R.string.sleep_gang) + "H" + resources.getString(R.string.sleep_gang) + "M"
+        tvAwakeSleep.text = resources.getString(R.string.sleep_gang) + "H" + resources.getString(R.string.sleep_gang) + "M"
 
 //            tvDeepSleepProgress.text = """${resources.getString(R.string.sleep_gang)}%"""
 //            tvLightSleepProgress.text = """${resources.getString(R.string.sleep_gang)}%"""

@@ -363,9 +363,9 @@ class ThemeUploadActivity : BaseActivity() {
         dialog.show()
     }
 
-    private var color_r = 0
-    private var color_g = 0
-    private var color_b = 0
+    private var color_r = 255
+    private var color_g = 255
+    private var color_b = 255
 
     private var oldTextBitmap: Bitmap? = null
     private var newTextBitmap: Bitmap? = null
@@ -1191,6 +1191,7 @@ class ThemeUploadActivity : BaseActivity() {
         if (my_bitmap.width == mBleDeviceTools._device_theme_resolving_power_width && my_bitmap.height == mBleDeviceTools._device_theme_resolving_power_height) {
             newBgBitmap = my_bitmap
             ivThemeMain.setImageBitmap(newBgBitmap) // 用ImageView显示出来
+            setColor(color_r, color_g, color_b)
         } else {
             newBgBitmap = oldBgBitmap
             ivThemeMain.setImageBitmap(newBgBitmap)

@@ -47,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hour"
+                android:text="H"
                 android:textColor="@color/white_50"
                 android:textSize="16sp" />
 
@@ -57,16 +57,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sleep_gang"
                 android:textColor="@color/white"
-                android:textSize="34sp"
-                android:visibility="gone" />
+                android:textSize="34sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/minute"
+                android:text="M"
                 android:textColor="@color/white_50"
-                android:textSize="16sp"
-                android:visibility="gone" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -167,8 +165,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7">
 
 
         <com.zjw.apps3pluspro.view.RoundProgress2View

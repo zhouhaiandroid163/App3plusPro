@@ -57,6 +57,7 @@ class RoundProgress2View(context: Context?, attrs: AttributeSet?) : View(context
         this.angleProgress1 = angleProgress1
         this.angleProgress2 = angleProgress2
         this.angleProgress3 = angleProgress3
+        invalidate()
     }
 
     private fun dp2px(value: Int): Int {

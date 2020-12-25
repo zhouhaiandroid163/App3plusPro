@@ -49,7 +49,7 @@ class DeviceSportDetailsActivity : BaseActivity(),OnMapReadyCallback{
     var sportModleInfo: SportModleInfo? = null
     var caloriesFmt = DecimalFormat(",##0.00")
     override fun setLayoutId(): Int {
-        bgColor = R.color.color_278DFD
+//        bgColor = R.color.color_278DFD
         isTextDark = false
         return R.layout.device_sport_details_activity
     }
@@ -588,8 +588,8 @@ class DeviceSportDetailsActivity : BaseActivity(),OnMapReadyCallback{
     var lon: Double = 0.0
 
     private fun loadMap() {
-        sportModleInfo?.reportGpsValid1 = 1
-        sportModleInfo?.map_data = "113.828761,22.653576;113.829565,22.653664;113.829812,22.653314;113.830248,22.652784;113.830248,22.652784;113.829727,22.652017;113.829727,22.652017"
+//        sportModleInfo?.reportGpsValid1 = 1
+//        sportModleInfo?.map_data = "113.828761,22.653576;113.829565,22.653664;113.829812,22.653314;113.830248,22.652784;113.830248,22.652784;113.829727,22.652017;113.829727,22.652017"
 
         if (sportModleInfo?.reportGpsValid1 == 0) {
             layoutMap.visibility = View.GONE
