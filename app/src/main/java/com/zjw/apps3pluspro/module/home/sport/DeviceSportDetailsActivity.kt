@@ -49,7 +49,6 @@ class DeviceSportDetailsActivity : BaseActivity(),OnMapReadyCallback{
     var sportModleInfo: SportModleInfo? = null
     var caloriesFmt = DecimalFormat(",##0.00")
     override fun setLayoutId(): Int {
-//        bgColor = R.color.color_278DFD
         isTextDark = false
         return R.layout.device_sport_details_activity
     }
@@ -59,7 +58,6 @@ class DeviceSportDetailsActivity : BaseActivity(),OnMapReadyCallback{
     override fun initViews() {
         super.initViews()
         sportModleInfo = MoreSportActivity.sportModleInfo
-        layoutTitle.background = ContextCompat.getDrawable(this, R.color.color_278DFD)
         ivRight.background = ContextCompat.getDrawable(this, R.mipmap.device_sport_share)
         ivTitleType.visibility = View.GONE
         layoutCalendar.visibility = View.GONE

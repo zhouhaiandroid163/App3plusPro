@@ -62,9 +62,18 @@ public class SportModleUtils {
                 result = context.getString(R.string.sport_modle_type8);
                 break;
 
-            //游泳
             case "9":
                 result = context.getString(R.string.sport_modle_type9);
+                break;
+
+            //室内骑行
+            case "10":
+                result = context.getString(R.string.more_sport_7);
+                break;
+
+            //户外骑行
+            case "11":
+                result = context.getString(R.string.more_sport_6);
                 break;
 
             //GPS
@@ -86,30 +95,34 @@ public class SportModleUtils {
     public static Drawable getSportTypeImg(Context context, String my_type) {
         Resources resources = context.getResources();
 
-        Drawable imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img100); //图片在drawable文件夹下
+        Drawable imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img100);
 
         if (my_type.equals("0")) {
-            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img0); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img0);
         } else if (my_type.equals("1")) {
-            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img1); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img1);
         } else if (my_type.equals("2")) {
-            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img2); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img2);
         } else if (my_type.equals("3")) {
-            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img3); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img3);
         } else if (my_type.equals("4")) {
-            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img4); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img4);
         } else if (my_type.equals("5")) {
-            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img5); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img5);
         } else if (my_type.equals("6")) {
-            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img6); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img6);
         } else if (my_type.equals("7")) {
-            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img7); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img7);
         } else if (my_type.equals("8")) {
-            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img8); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img8);
         } else if (my_type.equals("9")) {
-            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img9); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img9);
+        } else if (my_type.equals("10")) {
+            imageDrawable = resources.getDrawable(R.mipmap.more_sport_7);
+        } else if (my_type.equals("11")) {
+            imageDrawable = resources.getDrawable(R.mipmap.more_sport_6);
         } else {
-            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img100); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.icon_sport_type_img100);
         }
 
         return imageDrawable;
@@ -119,47 +132,47 @@ public class SportModleUtils {
     public static Drawable getSportTypeTopImg(Context context, String my_type) {
         Resources resources = context.getResources();
 
-        Drawable imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top0); //图片在drawable文件夹下
+        Drawable imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top0);
 
         //跑步
         if (my_type.equals("0")) {
-            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top0); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top0);
         }
         //健走
         else if (my_type.equals("1")) {
-            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top1); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top1);
         }
         //爬山
         else if (my_type.equals("2")) {
-            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top2); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top2);
         }
         //骑行
         else if (my_type.equals("3")) {
-            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top3); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top3);
         }
         //乒乓球
         else if (my_type.equals("4")) {
-            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top4); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top4);
         }
         //篮球
         else if (my_type.equals("5")) {
-            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top5); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top5);
         }
         //羽毛球
         else if (my_type.equals("6")) {
-            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top6); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top6);
         }
         //足球
         else if (my_type.equals("7")) {
-            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top7); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top7);
         }
         //游泳
         else if (my_type.equals("8")) {
-            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top8); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top8);
         }
         //室内运动
         else if (my_type.equals("9")) {
-            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top9); //图片在drawable文件夹下
+            imageDrawable = resources.getDrawable(R.drawable.img_sport_type_top9);
         }
 
         return imageDrawable;

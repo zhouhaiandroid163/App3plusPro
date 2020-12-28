@@ -316,6 +316,7 @@
 
 
     <color name="color_7f8088">#7F8088</color>
+    <color name="color_878B90">#878B90</color>
     <color name="color_000111">#000111</color>
     <color name="color_288dfe">#288DFE</color>
     <color name="color_b2b2b7">#b2b2b7</color>
@@ -362,6 +363,7 @@
     <color name="top_bar">#07B8F3</color>
     <color name="top_bar_base">#2F353E</color>
     <color name="white_50">#7fffffff</color>
+    <color name="white_70">#B2ffffff</color>
     <color name="white_12">#0Cffffff</color>
     <color name="code_color">#57FFB5</color>
     <color name="bt_text_color">#565E67</color>

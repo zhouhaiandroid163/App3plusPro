@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="15dp"
-    android:background="@color/white"
+    android:background="@color/dialog_bg"
     android:orientation="vertical"
     android:paddingStart="12dp"
     android:paddingEnd="12dp"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:text="@string/sport_locus"
-            android:textColor="#ff000011"
+            android:textColor="#ffffffff"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -43,6 +43,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@drawable/white"
             android:text="没有运动轨迹，您是拯救世界去了吗？" />
 
     </LinearLayout>

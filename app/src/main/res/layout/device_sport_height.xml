@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:curveChartView="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutHeight"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="15dp"
-    android:id="@+id/layoutHeight"
-    xmlns:curveChartView="http://schemas.android.com/apk/res-auto"
-    android:background="@color/base_activity_bg"
+    android:background="@color/dialog_bg"
     android:paddingStart="12dp"
     android:paddingEnd="12dp">
 
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="12dp"
-        android:background="#E5E5E7"
+        android:background="#7f989CA0"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
 
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/device_sport_rise"
-                android:textColor="@color/white"
+                android:textColor="#878B90"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/device_sport_decline"
-                android:textColor="@color/white"
+                android:textColor="#878B90"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -142,8 +142,8 @@
         android:layout_height="160dp"
         android:background="@color/transparent"
         app:layout_constraintTop_toBottomOf="@+id/layoutHeart"
-        curveChartView:curveChartView_LineColor="#288EFE"
-        curveChartView:gradientColorEnd="@color/CurveChartView1"
-        curveChartView:gradientColorStart="#D5E9FF" />
+        curveChartView:curveChartView_LineColor="#57FFB5"
+        curveChartView:gradientColorEnd="#0057FFB5"
+        curveChartView:gradientColorStart="#7f57FFB5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

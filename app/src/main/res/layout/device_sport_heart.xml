@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="15dp"
-    android:background="@color/base_activity_bg"
+    android:background="@color/dialog_bg"
     android:paddingStart="12dp"
     android:paddingEnd="12dp">
 
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="12dp"
-        android:background="#E5E5E7"
+        android:background="#7f989CA0"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
 
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/average_heart"
-                android:textColor="@color/white"
+                android:textColor="#878B90"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -129,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/sleep_max_heart"
-                android:textColor="@color/white"
+                android:textColor="#878B90"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -171,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="@string/sleep_min_heart"
-                android:textColor="@color/white"
+                android:textColor="#878B90"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -184,9 +184,9 @@
         android:layout_height="160dp"
         android:background="@color/transparent"
         app:layout_constraintTop_toBottomOf="@+id/layoutHeart"
-        curveChartView:curveChartView_LineColor="#FC4E4E"
-        curveChartView:gradientColorEnd="@color/CurveChartView1"
-        curveChartView:gradientColorStart="#FEDCDC" />
+        curveChartView:curveChartView_LineColor="#FC4D4D"
+        curveChartView:gradientColorEnd="#00464E58"
+        curveChartView:gradientColorStart="#7fFF6457" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -242,7 +242,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="@string/no_data_default"
-                android:textColor="@color/white"
+                android:textColor="@color/white_50"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/title1"
                 app:layout_constraintLeft_toRightOf="@+id/title1" />
@@ -283,7 +283,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="@string/no_data_default"
-                android:textColor="@color/white"
+                android:textColor="@color/white_50"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/title2"
                 app:layout_constraintLeft_toRightOf="@+id/title2" />
@@ -324,7 +324,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="@string/no_data_default"
-                android:textColor="@color/white"
+                android:textColor="@color/white_50"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/title3"
                 app:layout_constraintLeft_toRightOf="@+id/title3" />
@@ -365,7 +365,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="@string/no_data_default"
-                android:textColor="@color/white"
+                android:textColor="@color/white_50"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/title4"
                 app:layout_constraintLeft_toRightOf="@+id/title4" />
@@ -406,7 +406,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="@string/no_data_default"
-                android:textColor="@color/white"
+                android:textColor="@color/white_50"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@+id/title5"
                 app:layout_constraintLeft_toRightOf="@+id/title5" />

@@ -15,10 +15,15 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zjw.apps3pluspro.R;
+import com.zjw.apps3pluspro.application.BaseApplication;
+import com.zjw.apps3pluspro.bleservice.BleTools;
 import com.zjw.apps3pluspro.module.home.sport.SportModleUtils;
+import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
 import com.zjw.apps3pluspro.sql.entity.SportModleInfo;
+import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.NewTimeUtils;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,7 +31,7 @@ import butterknife.ButterKnife;
 
 
 public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements View.OnClickListener {
-
+    private BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
     private List<SportModleInfo> mList;
     private Callback mCallback;
     private Context context;
@@ -48,12 +53,16 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
         return new ItemHolder(v);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "DefaultLocale"})
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         final ItemHolder itemHolder = (ItemHolder) holder;
 
         SportModleInfo mSportModleInfo = mList.get(position);
+
+        itemHolder.layoutData1.setVisibility(View.VISIBLE);
+        itemHolder.layoutData4.setVisibility(View.GONE);
+        itemHolder.layoutData5.setVisibility(View.GONE);
 
         if (mSportModleInfo.getDataSourceType() == 0) {
             itemHolder.tvSportName.setText(SportModleUtils.getSportTypeStr(context, mSportModleInfo.getSport_type()));
@@ -84,9 +93,9 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
 
         String sport_type = "100";
         String ui_type = "100";
-        String step = "";
-        String kcal = "";
-        String duration = "";
+        String step = "0";
+        String kcal = "0";
+        String duration = "0";
         String speed = "";
         String date = "";
         if (mSportModleInfo.getUi_type() != null && !mSportModleInfo.getUi_type().equals("")) {
@@ -121,19 +130,80 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
         }
 
         if (mSportModleInfo.getDataSourceType() == 0) {
-            if (ui_type.equals("0")) {
-                itemHolder.tvValue1.setText(step + "");
-                itemHolder.tvValue2.setText(context.getResources().getString(R.string.steps) + "，" + context.getResources().getString(R.string.sport_time) + " " +
-                        NewTimeUtils.getTimeString(Long.parseLong(duration)));
-            } else if (ui_type.equals("1")) {
+            switch (ui_type) {
+                case "0":
+                    itemHolder.tvValue1.setText(step + "");
+                    itemHolder.tvValue2.setText(context.getResources().getString(R.string.steps) + "，" + context.getResources().getString(R.string.sport_time) + " " + NewTimeUtils.getTimeString(Long.parseLong(duration)));
+                    break;
+                case "1":
+                    itemHolder.tvValue1.setText(kcal + "");
+                    itemHolder.tvValue2.setText(context.getResources().getString(R.string.big_calory) + "，" + context.getResources().getString(R.string.sport_time) + " " + NewTimeUtils.getTimeString(Long.parseLong(duration)));
+                    break;
+                case "4":
+                case "5":
+                    if (ui_type.equalsIgnoreCase("4")) {
+                        itemHolder.layoutSpeed.setVisibility(View.GONE);
 
-                itemHolder.tvValue1.setText(kcal + "");
-                itemHolder.tvValue2.setText(context.getResources().getString(R.string.big_calory) + "，" + context.getResources().getString(R.string.sport_time) + " " +
-                        NewTimeUtils.getTimeString(Long.parseLong(duration)));
-            } else {
-                itemHolder.tvValue1.setText(kcal + "");
-                itemHolder.tvValue2.setText(context.getResources().getString(R.string.big_calory) + "，" + context.getResources().getString(R.string.sport_time) + " " +
-                        NewTimeUtils.getTimeString(Long.parseLong(duration)));
+                        itemHolder.layoutData1.setVisibility(View.GONE);
+                        itemHolder.layoutData4.setVisibility(View.VISIBLE);
+                        itemHolder.layoutData5.setVisibility(View.GONE);
+                    } else if (ui_type.equalsIgnoreCase("5")) {
+                        itemHolder.layoutData1.setVisibility(View.GONE);
+                        itemHolder.layoutData4.setVisibility(View.GONE);
+                        itemHolder.layoutData5.setVisibility(View.VISIBLE);
+                    }
+
+                    itemHolder.tvDuration.setText(NewTimeUtils.getTimeString(Long.parseLong(duration)));
+                    itemHolder.tvSteps.setText(step);
+                    itemHolder.tvCal.setText(kcal);
+
+                    itemHolder.tvDuration5.setText(NewTimeUtils.getTimeString(Long.parseLong(duration)));
+                    itemHolder.tvCal5.setText(kcal);
+
+                    String my_distance = mSportModleInfo.getDisance();
+                    if (my_distance != null && !my_distance.equals("")) {
+                        my_distance = my_distance.replace(",", ".");
+
+                        long duration11 = Long.parseLong(duration);
+                        long distance = Long.parseLong(my_distance);
+
+                        double pace = 0;
+                        if(distance != 0){
+                            pace = duration11 / (distance / 1000f);
+                        }
+
+                        String formatPace = String.format("%1$02d'%2$02d\"", (int)(pace / 60), (int)(pace % 60));
+                        itemHolder.tvPace.setText(formatPace);
+                        itemHolder.tvPace5.setText(formatPace);
+
+                        if (mBleDeviceTools.get_device_unit() == 1) {
+                            my_distance = AppUtils.GetFormat(2, Float.valueOf(my_distance) / 1000 + 0.005f);
+                            itemHolder.tvDistanceUnit.setText(context.getResources().getString(R.string.sport_distance_unit));
+                            itemHolder.tvSpeedUnit.setText("km/h");
+
+                            itemHolder.tvDistanceUnit5.setText(context.getResources().getString(R.string.sport_distance_unit));
+                            itemHolder.tvSpeedUnit5.setText("km/h");
+                        } else {
+                            my_distance = AppUtils.GetFormat(2, Float.valueOf(my_distance) / 1000 / 1.61f);
+                            itemHolder.tvDistanceUnit.setText(context.getResources().getString(R.string.unit_mi));
+                            itemHolder.tvSpeedUnit.setText("mi/h");
+
+                            itemHolder.tvDistanceUnit5.setText(context.getResources().getString(R.string.unit_mi));
+                            itemHolder.tvSpeedUnit5.setText("mi/h");
+                        }
+                        itemHolder.tvDistance.setText(my_distance);
+                        itemHolder.tvDistance5.setText(my_distance);
+
+                        DecimalFormat decimalFormat = new DecimalFormat(",##0.00");
+                        itemHolder.tvSpeed.setText(decimalFormat.format(Float.parseFloat(my_distance) / (duration11 / 3600f)));
+                        itemHolder.tvSpeed5.setText(decimalFormat.format(Float.parseFloat(my_distance) / (duration11 / 3600f)));
+                    }
+
+                    break;
+                default:
+                    itemHolder.tvValue1.setText(kcal + "");
+                    itemHolder.tvValue2.setText(context.getResources().getString(R.string.big_calory) + "，" + context.getResources().getString(R.string.sport_time) + " " + NewTimeUtils.getTimeString(Long.parseLong(duration)));
+                    break;
             }
         }
         itemHolder.layoutParent.setOnClickListener(v -> {
@@ -159,6 +229,47 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
         TextView tvValue1;
         @BindView(R.id.tvValue2)
         TextView tvValue2;
+        @BindView(R.id.layoutSpeed)
+        LinearLayout layoutSpeed;
+
+        @BindView(R.id.layoutData1)
+        ConstraintLayout layoutData1;
+        @BindView(R.id.layoutData4)
+        ConstraintLayout layoutData4;
+        @BindView(R.id.layoutData5)
+        ConstraintLayout layoutData5;
+
+        @BindView(R.id.tvDuration)
+        TextView tvDuration;
+        @BindView(R.id.tvSteps)
+        TextView tvSteps;
+        @BindView(R.id.tvCal)
+        TextView tvCal;
+        @BindView(R.id.tvDistance)
+        TextView tvDistance;
+        @BindView(R.id.tvDistanceUnit)
+        TextView tvDistanceUnit;
+        @BindView(R.id.tvPace)
+        TextView tvPace;
+        @BindView(R.id.tvSpeed)
+        TextView tvSpeed;
+        @BindView(R.id.tvSpeedUnit)
+        TextView tvSpeedUnit;
+
+        @BindView(R.id.tvDuration5)
+        TextView tvDuration5;
+        @BindView(R.id.tvCal5)
+        TextView tvCal5;
+        @BindView(R.id.tvDistance5)
+        TextView tvDistance5;
+        @BindView(R.id.tvDistanceUnit5)
+        TextView tvDistanceUnit5;
+        @BindView(R.id.tvPace5)
+        TextView tvPace5;
+        @BindView(R.id.tvSpeed5)
+        TextView tvSpeed5;
+        @BindView(R.id.tvSpeedUnit5)
+        TextView tvSpeedUnit5;
 
 
         ItemHolder(View itemView) {

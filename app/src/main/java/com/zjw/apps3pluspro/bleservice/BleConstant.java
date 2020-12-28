@@ -46,8 +46,6 @@ public class BleConstant {
     static final int Key_DeviceBasicInfo = 0x31;//设备信息
     static final int Key_DeviceSendUnbind = 0x33;//设备发出解绑命令
     static final int KEY_DEVICE_ANSWER = 0xac;
-
-
     //推送Key
     public static final int NotifaceMsgPhone = 0x01;
     public static final int NotifaceMsgQq = 0x02;

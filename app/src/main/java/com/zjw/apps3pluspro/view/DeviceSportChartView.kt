@@ -51,14 +51,14 @@ class DeviceSportChartView(context: Context?, attrs: AttributeSet?) : View(conte
         paintText.strokeWidth = dp2px(2).toFloat()
         paintText.isAntiAlias = true
         paintText.style = Paint.Style.FILL
-        paintText.color = ContextCompat.getColor(context!!, R.color.color_7f8088);
+        paintText.color = ContextCompat.getColor(context!!, R.color.color_878B90);
         paintText.textSize = sp2px(10).toFloat()
 
         paintStandardLine = Paint()
         paintStandardLine.strokeWidth = dp2px(1).toFloat()
         paintStandardLine.isAntiAlias = true
         paintStandardLine.style = Paint.Style.FILL
-        paintStandardLine.color = ContextCompat.getColor(context!!, R.color.color_DDDDDD);
+        paintStandardLine.color = ContextCompat.getColor(context!!, R.color.color_DDDDDD)
         paintStandardLine.textSize = sp2px(10).toFloat()
 
         padding = dp2px(6)
@@ -86,7 +86,6 @@ class DeviceSportChartView(context: Context?, attrs: AttributeSet?) : View(conte
         } else {
             spacing = (endX - startX) / xData.size
         }
-
 
         val spaceingY = (height - textHeight - 2 * padding) / 4
         canvas.drawLine(startX, padding + 0 * spaceingY, endX, padding + 0 * spaceingY, paintStandardLine)
