@@ -540,6 +540,7 @@ public class DataFragment extends BaseFragment {
     }
 
 
+    @SuppressLint("StringFormatInvalid")
     private void initViewState() {
         if (JavaUtil.checkIsNull(mBleDeviceTools.get_ble_mac())) {
             layoutNoDevice.setVisibility(View.GONE);

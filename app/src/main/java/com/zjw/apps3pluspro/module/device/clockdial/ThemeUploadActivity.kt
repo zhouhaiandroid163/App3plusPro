@@ -14,6 +14,7 @@ import android.net.Uri
 import android.os.Handler
 import android.os.Message
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -391,6 +392,7 @@ class ThemeUploadActivity : BaseActivity() {
     private var curPieceSendPack = 0
     private var type = ""
     private var curCmd: String? = ""
+    private var protoHandler: Handler? = null
     private fun startSendThemeDataByProto(byte: ByteArray?) {
         val intentFilter = IntentFilter()
         intentFilter.addAction(ThemeManager.ACTION_CMD_APP_START)
@@ -400,12 +402,14 @@ class ThemeUploadActivity : BaseActivity() {
         intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK)
         registerReceiver(receiver, intentFilter)
 
+        protoHandler = Handler()
+
         DialMarketManager.getInstance().uploadDialDownloadRecording(themeDetails.dialId, DialMarketManager.uploadDialDownloadRecordingType2_transport, this)
         curPiece = 0
         type = "watch"
         ThemeManager.getInstance().initUpload(this@ThemeUploadActivity, type, byte)
-        startUploadThemePiece()
 
+        startUploadThemePiece()
         initLoadingdialog()
     }
 
@@ -417,7 +421,24 @@ class ThemeUploadActivity : BaseActivity() {
         } else {
             ThemeManager.getInstance().dataPieceEndPack
         }
+
+        if (protoHandler == null) {
+            protoHandler = Handler()
+        }
+        protoHandler?.removeCallbacksAndMessages(null)
+        protoHandler?.postDelayed(uploadProtoThemeTimeOut, 30 * 1000)
+
         sendProtoUpdateData(BleCmdManager.getInstance().appStartCmd(curPieceSendPack))
+    }
+
+    private var uploadProtoThemeTimeOut = Runnable {
+        Log.w("ble", " uploadProtoTheme Time Out")
+        Toast.makeText(this@ThemeUploadActivity, resources.getText(R.string.send_fail), Toast.LENGTH_SHORT).show()
+        unregisterReceiver(receiver)
+        if (loading_dialog != null && loading_dialog!!.isShowing) {
+            loading_dialog!!.dismiss()
+        }
+        finish()
     }
 
     @SuppressLint("SetTextI18n")
@@ -448,6 +469,9 @@ class ThemeUploadActivity : BaseActivity() {
                         DialMarketManager.getInstance().uploadDialDownloadRecording(themeDetails.dialId, DialMarketManager.uploadDialDownloadRecordingType3_success, this@ThemeUploadActivity)
                         Toast.makeText(this@ThemeUploadActivity, resources.getText(R.string.send_success), Toast.LENGTH_SHORT).show()
                         unregisterReceiver(this)
+                        if (loading_dialog != null && loading_dialog!!.isShowing) {
+                            loading_dialog!!.dismiss()
+                        }
                         finish()
                     } else {
                         startUploadThemePiece()
@@ -1206,6 +1230,7 @@ class ThemeUploadActivity : BaseActivity() {
         TimerThreeHandler?.removeCallbacksAndMessages(null)
         TimerFourHandler?.removeCallbacksAndMessages(null)
         TimerFiveHandler?.removeCallbacksAndMessages(null)
+        protoHandler?.removeCallbacksAndMessages(null)
         super.onDestroy()
     }
 }
