@@ -20,6 +20,7 @@ import com.zjw.apps3pluspro.sql.dbmanager.SportModleInfoUtils;
 import com.zjw.apps3pluspro.sql.entity.SportModleInfo;
 import com.zjw.apps3pluspro.utils.CrcUtils;
 import com.zjw.apps3pluspro.utils.GpsSportManager;
+import com.zjw.apps3pluspro.utils.log.MyLog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -248,7 +249,7 @@ public class FitnessTools {
 
                 Log.i(TAG, "sportType=" + sportType + " state=" + state + " time=" + time + " timeZone=" + timeZone + " versions=" + versions + " idString=" + idString);
 
-                Toast.makeText(HomeActivity.homeActivity, "idString.length() + =" + idString.length(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(HomeActivity.homeActivity, "idString.length() + =" + idString.length(), Toast.LENGTH_LONG).show();
 
                 EventBus.getDefault().post(new GpsSportDeviceStartEvent(state));
                 break;
@@ -276,6 +277,25 @@ public class FitnessTools {
                 break;
         }
         return result_str;
+    }
+
+    public static byte[] getDeviceGpsState() {
+        MyLog.i(TAG, "getDeviceGpsState");
+        FitnessProtos.Fitness.Builder builder = FitnessProtos.Fitness.newBuilder();
+
+        WearProtos.WearPacket.Builder wear1 = WearProtos.WearPacket.newBuilder()
+                .setType(WearProtos.WearPacket.Type.FITNESS)
+                .setId(FitnessProtos.Fitness.FitnessID.GET_SPORT_STATUS.getNumber())
+                .setFitness(builder);
+
+        try {
+            WearProtos.WearPacket wear = WearProtos.WearPacket.parseFrom(wear1.build().toByteArray());
+            FitnessTools.analysisFitness(wear);
+        } catch (InvalidProtocolBufferException e) {
+            e.printStackTrace();
+        }
+
+        return wear1.build().toByteArray();
     }
 
 

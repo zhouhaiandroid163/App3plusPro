@@ -438,6 +438,14 @@
                 android:textColor="@color/white" />
 
             <Button
+                android:id="@+id/layoutUpdateAGpsDate"
+                style="@style/big_button_stytle"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/big_button_stroke"
+                android:text="@string/update_AGPS_date"
+                android:textColor="@color/white" />
+
+            <Button
                 android:id="@+id/layoutRestoreFactory"
                 style="@style/big_button_stytle"
                 android:layout_marginTop="24dp"

@@ -29,7 +29,7 @@
                 android:layout_width="100dp"
                 android:layout_height="165dp"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/list_my_theme_bg1"
+                android:background="@drawable/theme_bg_black"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="10dip"
@@ -53,7 +53,7 @@
                 android:layout_width="135dp"
                 android:layout_height="135dp"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/list_my_theme_bg1"
+                android:background="@drawable/theme_bg_black"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="12dip">

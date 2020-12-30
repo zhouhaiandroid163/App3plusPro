@@ -2053,6 +2053,7 @@ public class BleDeviceTools {
         editor.putBoolean("setIsSupportPageDevice", DeviceUpdateType);
         editor.apply();
     }
+
     //直达卡片排序
     public boolean getIsSupportPageDevice() {
         SharedPreferences settin = getSharedPreferencesCommon();
@@ -2097,6 +2098,7 @@ public class BleDeviceTools {
         editor.putBoolean("IsSupportBuiltDialSelection", IsSupportBuiltDialSelection);
         editor.apply();
     }
+
     /**
      * 体温测量间隔
      *
@@ -2234,6 +2236,7 @@ public class BleDeviceTools {
         editor.putString("setWeatherCity", cityName);
         editor.apply();
     }
+
     public String getWeatherCityID() {
         SharedPreferences settin = getSharedPreferencesCommon();
         return settin.getString("setWeatherCityID", "");
@@ -2245,6 +2248,7 @@ public class BleDeviceTools {
         editor.putString("setWeatherCityID", cityName);
         editor.apply();
     }
+
     // lat, lon
     public void setWeatherGps(String gsp) {
         SharedPreferences settin = getSharedPreferencesCommon();
@@ -2252,10 +2256,12 @@ public class BleDeviceTools {
         editor.putString("setWeatherGps", gsp);
         editor.apply();
     }
+
     public String getWeatherGps() {
         SharedPreferences settin = getSharedPreferencesCommon();
         return settin.getString("setWeatherGps", "");
     }
+
     // weather json 一周天气
     public void setWeatherForecast(String gsp) {
         SharedPreferences settin = getSharedPreferencesCommon();
@@ -2263,6 +2269,7 @@ public class BleDeviceTools {
         editor.putString("setWeatherForecast", gsp);
         editor.apply();
     }
+
     public String getWeatherForecast() {
         SharedPreferences settin = getSharedPreferencesCommon();
         return settin.getString("setWeatherForecast", "");
@@ -2275,6 +2282,7 @@ public class BleDeviceTools {
         editor.putString("setWeatherArea", gps);
         editor.apply();
     }
+
     public String getWeatherArea() {
         SharedPreferences settin = getSharedPreferencesCommon();
         return settin.getString("setWeatherArea", "");
@@ -2291,6 +2299,7 @@ public class BleDeviceTools {
         editor.putBoolean("IsSupportDrinkWater", IsCoronaNotiface);
         editor.apply();
     }
+
     public boolean getIsSupportLongSit() {
         SharedPreferences settin = getSharedPreferencesCommon();
         return settin.getBoolean("IsSupportLongSit", false);
@@ -2302,6 +2311,7 @@ public class BleDeviceTools {
         editor.putBoolean("IsSupportLongSit", IsCoronaNotiface);
         editor.apply();
     }
+
     public boolean getIsSupportMeeting() {
         SharedPreferences settin = getSharedPreferencesCommon();
         return settin.getBoolean("IsSupportMeeting", false);
@@ -2313,6 +2323,7 @@ public class BleDeviceTools {
         editor.putBoolean("IsSupportMeeting", IsCoronaNotiface);
         editor.apply();
     }
+
     public boolean getIsSupportDrug() {
         SharedPreferences settin = getSharedPreferencesCommon();
         return settin.getBoolean("IsSupportDrug", false);
@@ -2324,6 +2335,7 @@ public class BleDeviceTools {
         editor.putBoolean("IsSupportDrug", IsCoronaNotiface);
         editor.apply();
     }
+
     public boolean getIsSupportAlarmClock() {
         SharedPreferences settin = getSharedPreferencesCommon();
         return settin.getBoolean("IsSupportAlarmClock", false);
@@ -2335,6 +2347,7 @@ public class BleDeviceTools {
         editor.putBoolean("IsSupportAlarmClock", IsCoronaNotiface);
         editor.apply();
     }
+
     public boolean getIsSupportTakePicture() {
         SharedPreferences settin = getSharedPreferencesCommon();
         return settin.getBoolean("IsSupportTakePicture", false);
@@ -2356,6 +2369,19 @@ public class BleDeviceTools {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
         editor.putBoolean("IsSupportRaiseWristBrightenScreen", IsCoronaNotiface);
+        editor.apply();
+    }
+
+    //设备是否支持获取状态，判断是或否可以升级ota表盘电量足够
+    public boolean getIsSupportGetDeviceProtoStatus() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("getIsSupportGetDeviceProtoStatus", false);
+    }
+
+    public void setIsSupportGetDeviceProtoStatus(boolean IsCoronaNotiface) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("getIsSupportGetDeviceProtoStatus", IsCoronaNotiface);
         editor.apply();
     }
 }

@@ -63,6 +63,10 @@ public class ThemeManager {
         if ("watch".equalsIgnoreCase(type)) {
             fileByte = fileName;//299455
             valueByte1[1] = (byte) 0x10;  //类型
+        } else if ("lto".equalsIgnoreCase(type)) {
+            String SDCARD = Constants.UPDATE_DEVICE_FILE + "lto.brm";
+            fileByte = getBytes(SDCARD);//299455
+            valueByte1[1] = (byte) 0x01;  //类型
         } else {
             String SDCARD = Constants.UPDATE_DEVICE_FILE + "ota.bin";
             fileByte = getBytes(SDCARD);//299455

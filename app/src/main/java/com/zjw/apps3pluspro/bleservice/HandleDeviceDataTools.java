@@ -700,7 +700,7 @@ public class HandleDeviceDataTools {
                 mBleDeviceTools.setPointExercise(false);
             }
 
-            if(deviceParams14[3] == 1){
+            if (deviceParams14[3] == 1) {
                 MyLog.i(TAG, "固件返回值 = 卡片排序 = 支持");
                 mBleDeviceTools.setIsSupportPageDevice(true);
             } else {
@@ -708,26 +708,34 @@ public class HandleDeviceDataTools {
                 mBleDeviceTools.setIsSupportPageDevice(false);
             }
 
-            if(deviceParams14[4] == 1){
+            if (deviceParams14[4] == 1) {
                 MyLog.i(TAG, "固件返回值 = GPS运动 = 支持");
                 mBleDeviceTools.setIsSupportGpsSport(true);
             } else {
                 MyLog.i(TAG, "固件返回值 = GPS运动 = 不支持");
                 mBleDeviceTools.setIsSupportGpsSport(false);
             }
-            if(deviceParams14[5] == 1){
+            if (deviceParams14[5] == 1) {
                 MyLog.i(TAG, "固件返回值 = GPS传感器 = 支持");
                 mBleDeviceTools.setIsGpsSensor(true);
             } else {
                 MyLog.i(TAG, "固件返回值 = GPS传感器 = 不支持");
                 mBleDeviceTools.setIsGpsSensor(false);
             }
-            if(deviceParams14[6] == 1){
+            if (deviceParams14[6] == 1) {
                 MyLog.i(TAG, "固件返回值 = 内置表盘选择 = 支持");
                 mBleDeviceTools.setIsSupportBuiltDialSelection(true);
             } else {
                 MyLog.i(TAG, "固件返回值 = 内置表盘选择 = 不支持");
                 mBleDeviceTools.setIsSupportBuiltDialSelection(false);
+            }
+
+            if (deviceParams14[7] == 1) {
+                MyLog.i(TAG, "固件返回值 = 获取设备 proto 状态 不支持");
+                mBleDeviceTools.setIsSupportGetDeviceProtoStatus(true);
+            } else {
+                MyLog.i(TAG, "固件返回值 = 获取设备 proto 状态 不支持");
+                mBleDeviceTools.setIsSupportGetDeviceProtoStatus(false);
             }
 
         } else {
@@ -749,6 +757,8 @@ public class HandleDeviceDataTools {
             MyLog.i(TAG, "固件返回值 = 内置表盘选择 = 不支持 2");
             mBleDeviceTools.setIsSupportBuiltDialSelection(false);
 
+            MyLog.i(TAG, "固件返回值 = 获取设备 proto 状态 不支持");
+            mBleDeviceTools.setIsSupportGetDeviceProtoStatus(false);
         }
         //升级方式
         if (deviceParams14[2] == 1) {
@@ -831,8 +841,6 @@ public class HandleDeviceDataTools {
             MyLog.i(TAG, "固件返回值 = 抬腕亮屏 = 不支持");
             mBleDeviceTools.setIsSupportRaiseWristBrightenScreen(false);
         }
-
-
 
 
         MyLog.i(TAG, "固件返回值 = DeviceName = " + DeviceName);

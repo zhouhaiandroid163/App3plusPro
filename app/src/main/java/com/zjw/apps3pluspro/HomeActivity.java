@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -36,7 +35,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -63,6 +61,8 @@ import com.zjw.apps3pluspro.eventbus.DataSyncCompleteEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceInfoEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceSportStatusEvent;
 import com.zjw.apps3pluspro.eventbus.DialInfoCompleteEvent;
+import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusEvent;
+import com.zjw.apps3pluspro.eventbus.GetDeviceProtoWatchFacePrepareStatusEvent;
 import com.zjw.apps3pluspro.eventbus.GpsSportDeviceStartEvent;
 import com.zjw.apps3pluspro.eventbus.OffEcgSyncStateEvent;
 import com.zjw.apps3pluspro.eventbus.PageDeviceSetEvent;
@@ -770,6 +770,16 @@ public class HomeActivity extends BaseActivity {
                         case APP_SEND_GPS:
                             sendAppStart(BtSerializeation.getGpsByte(gpsInfo));
                             break;
+                        case APP_REQUEST_GPS_SPORT_STATE:
+                            sendAppStart(BtSerializeation.getRequestGpsStateByte());
+                            break;
+                        case APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL:
+                            sendAppStart(BtSerializeation.getDeviceWatchFacePrepareStatus(themeId, themeSize));
+                            break;
+                        case APP_REQUEST_DEVICE_OTA_PREPARE:
+                            sendAppStart(BtSerializeation.getDeviceOtaPrepareStatus(isForce, version, md5));
+                            break;
+
                     }
                     break;
                 case BroadcastTools.ACTION_CMD_DEVICE_START:
@@ -884,6 +894,32 @@ public class HomeActivity extends BaseActivity {
     private final String APP_GPS_READY = "APP_GPS_READY";
     private final String APP_SEND_GPS = "APP_SEND_GPS";
     private final String APP_REQUEST_GPS_SPORT_STATE = "APP_REQUEST_GPS_SPORT_STATE";
+    private final String APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL = "APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL";
+    private final String APP_REQUEST_DEVICE_OTA_PREPARE = "APP_REQUEST_DEVICE_OTA_PREPARE";
+
+    boolean isForce;
+    String version;
+    String md5;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getDeviceProtoOtaPrepareStatusEvent(GetDeviceProtoOtaPrepareStatusEvent event) {
+        isForce = event.isForce;
+        version = event.version;
+        md5 = event.md5;
+        curCmd = APP_REQUEST_DEVICE_OTA_PREPARE;
+        sendAppStart(BtSerializeation.appStartCmd(1));
+    }
+
+    private String themeId = "0";
+    private int themeSize = 0;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getDeviceProtoStatusEvent(GetDeviceProtoWatchFacePrepareStatusEvent event) {
+        curCmd = APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL;
+        themeId = event.themeId;
+        themeSize = event.themeSize;
+        sendAppStart(BtSerializeation.appStartCmd(1));
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void pageDeviceSyncEvent(PageDeviceSyncEvent event) {
@@ -1033,7 +1069,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void getDeviceGpsSportStatus() {
-        if(mBleDeviceTools.getIsSupportGpsSport()){
+        if (mBleDeviceTools.getIsSupportGpsSport()) {
             // 询问gps运动结果
             curCmd = APP_REQUEST_GPS_SPORT_STATE;
             sendAppStart(BtSerializeation.appStartCmd(1));
@@ -1341,12 +1377,21 @@ public class HomeActivity extends BaseActivity {
                 .setPositiveButton(getString(R.string.dialog_yes), new DialogInterface.OnClickListener() {//添加确定按钮
 
                     public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
-                        //电量大于等于25
-                        if (mBleDeviceTools.get_ble_device_power() >= 25) {
-                            if (mBleDeviceTools.getIsSupportProtobuf() && mBleDeviceTools.getDeviceUpdateType()) {
+
+                        if (mBleDeviceTools.getIsSupportProtobuf() && mBleDeviceTools.getDeviceUpdateType()) {
+                            if (mBleDeviceTools.getIsSupportGetDeviceProtoStatus()) {
                                 Intent intent = new Intent(mContext, ProtobufActivity.class);
                                 startActivity(intent);
                             } else {
+                                if (mBleDeviceTools.get_ble_device_power() >= 25) {
+                                    Intent intent = new Intent(mContext, ProtobufActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    AppUtils.showToast(mContext, R.string.dfu_error_low_power);
+                                }
+                            }
+                        } else {
+                            if (mBleDeviceTools.get_ble_device_power() >= 25) {
                                 if (mBleDeviceTools.get_device_platform_type() == 0) {
                                     Intent intent = new Intent(mContext, BleDfuActivity.class);
                                     startActivityForResult(intent, REQUEST_DFU);//此处的requestCode应与下面结果处理函中调用的requestCode一致
@@ -1354,9 +1399,9 @@ public class HomeActivity extends BaseActivity {
                                     Intent intent = new Intent(mContext, RtkDfuActivity.class);
                                     startActivityForResult(intent, REQUEST_DFU);//此处的requestCode应与下面结果处理函中调用的requestCode一致
                                 }
+                            } else {
+                                AppUtils.showToast(mContext, R.string.dfu_error_low_power);
                             }
-                        } else {
-                            AppUtils.showToast(mContext, R.string.dfu_error_low_power);
                         }
                     }
                 }).setNegativeButton(getString(R.string.dialog_no), new DialogInterface.OnClickListener() {//添加返回按钮

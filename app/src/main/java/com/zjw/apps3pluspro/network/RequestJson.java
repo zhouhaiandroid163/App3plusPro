@@ -168,11 +168,13 @@ public class RequestJson {
     public static final String getMoreDialPageList = requestUrl + "ffit/dial/moreDialPageList";
     public static final String getDialDetails = requestUrl + "ffit/dial/info";
     public static final String uploadDialDownloadRecording = requestUrl + "ffit/dial/downloadDialLog";
-
     // 天气
     public static final String getWeatherCity = requestUrl + "ffit/heFengApi/lookupCity";
     public static final String getWeatherArea = requestUrl + "ffit/heFengApi/nowWeather";
     public static final String getWeatherForecast = requestUrl + "ffit/heFengApi/forecast7dWeather";
+    //
+    public static final String getLto = requestUrl + "ffit/bream/downloadLto";
+
 
 
     //====================================检查服务器============================================
@@ -2043,5 +2045,9 @@ public class RequestJson {
         return new RequestInfo(request_json, getWeatherCity);
     }
 
+    public static RequestInfo getLto() {
+        JSONObject request_json = new JSONObject();
+        return new RequestInfo(request_json, getLto);
+    }
 }
 

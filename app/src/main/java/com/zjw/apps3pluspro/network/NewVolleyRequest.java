@@ -31,6 +31,12 @@ public class NewVolleyRequest {
 
         vif.loadingListener();
         vif.errorListener();
-        MyOkHttpClient.getInstance().asynCall(postObject, vif, mRequestInfo.getRequestUrl());
+        MyOkHttpClient.getInstance().asynPostCall(postObject, vif, mRequestInfo.getRequestUrl());
+    }
+
+    public static void RequestGet(RequestInfo mRequestInfo, String tag, VolleyInterface vif) {
+        vif.loadingListener();
+        vif.errorListener();
+        MyOkHttpClient.getInstance().asynGetCall(vif, mRequestInfo.getRequestUrl());
     }
 }

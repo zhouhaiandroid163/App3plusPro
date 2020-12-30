@@ -7,10 +7,12 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.xiaomi.wear.protobuf.CommonProtos;
 import com.xiaomi.wear.protobuf.SystemProtos;
 import com.xiaomi.wear.protobuf.WearProtos;
+import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusSuccessEvent;
 import com.zjw.apps3pluspro.eventbus.PageDeviceSyncOverEvent;
 import com.zjw.apps3pluspro.module.home.entity.PageItem;
 import com.zjw.apps3pluspro.utils.NewTimeUtils;
 import com.zjw.apps3pluspro.utils.PageManager;
+import com.zjw.apps3pluspro.utils.log.MyLog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -171,15 +173,6 @@ public class SystemTools {
                 result_str += "system" + "/SystemTime/TimeZone======" + "\n";
                 result_str += CommonTools.getTimezone(system_time.getTimeZone());
 
-
-//                SystemProtos.SystemTime system_time = system.getSystemTime();
-//                System.out.println("数据封装 = " + "system" + "/device_info/serial_number = " + device_info.getSerialNumber());
-//                System.out.println("数据封装 = " + "system" + "/device_info/firmware_version = " + device_info.getFirmwareVersion());
-//                System.out.println("数据封装 = " + "system" + "/device_info/imei = " + device_info.getImei());
-//
-//                result_str += "system" + "/device_info/serial_number = " + device_info.getSerialNumber() + "\n";
-//                result_str += "system" + "/device_info/firmware_version = " + device_info.getFirmwareVersion() + "\n";
-//                result_str += "system" + "/device_info/imei = " + device_info.getImei() + "\n";
                 break;
 
             case FindMode:
@@ -260,6 +253,11 @@ public class SystemTools {
 
                 break;
             case RaiseWristBrightScreen:
+                break;
+            case 17:
+                SystemProtos.PrepareOta.Response otaResponse = system.getPrepareOtaResponse();
+                MyLog.i(TAG, "watch face PrepareStatus = " + otaResponse.getPrepareStatus().getNumber());
+                EventBus.getDefault().post(new GetDeviceProtoOtaPrepareStatusSuccessEvent(otaResponse.getPrepareStatus().getNumber()));
                 break;
 
         }
@@ -505,5 +503,23 @@ public class SystemTools {
         }
         return wear1.build().toByteArray();
     }
+
+    public static byte[] getDeviceOtaPrepareStatus(boolean isForce, String version, String md5) {
+        MyLog.i(TAG, "getDeviceOtaPrepareStatus");
+        SystemProtos.PrepareOta.Request.Builder otaRequest = SystemProtos.PrepareOta.Request.newBuilder();
+        otaRequest.setForce(isForce);
+        otaRequest.setType(SystemProtos.PrepareOta.Type.ALL);
+        otaRequest.setFirmwareVersion(version);
+        otaRequest.setFileMd5(md5);
+
+        SystemProtos.System.Builder system = SystemProtos.System.newBuilder();
+        system.setPrepareOtaRequest(otaRequest);
+        WearProtos.WearPacket.Builder wear = WearProtos.WearPacket.newBuilder()
+                .setType(WearProtos.WearPacket.Type.SYSTEM)
+                .setId((byte) SystemProtos.System.SystemID.PREPARE_OTA.getNumber())
+                .setSystem(system);
+        return wear.build().toByteArray();
+    }
+
 
 }

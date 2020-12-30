@@ -98,13 +98,24 @@ public class MyOkHttpClient {
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private static CommonJsonCallback jsonCallback;
 
-    public void asynCall(JSONObject postObject, VolleyInterface vif, String url) {
+    public void asynPostCall(JSONObject postObject, VolleyInterface vif, String url) {
         RequestBody body = RequestBody.create(JSON, postObject.toString());
 
         Request request = new Request.Builder()
                 .addHeader("content-type", "application/json")
                 .addHeader("cache-control", "no-cache")
                 .url(url).post(body).build();
+
+        Call call = mOkHttpClient.newCall(request);
+        jsonCallback = new CommonJsonCallback(vif);
+        call.enqueue(jsonCallback);
+    }
+
+    public void asynGetCall( VolleyInterface vif, String url) {
+        Request request = new Request.Builder()
+                .addHeader("content-type", "application/json")
+                .addHeader("cache-control", "no-cache")
+                .url(url).get().build();
 
         Call call = mOkHttpClient.newCall(request);
         jsonCallback = new CommonJsonCallback(vif);

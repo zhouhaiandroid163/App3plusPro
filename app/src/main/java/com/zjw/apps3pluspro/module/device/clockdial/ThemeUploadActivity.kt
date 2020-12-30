@@ -27,7 +27,11 @@ import com.zjw.apps3pluspro.HomeActivity
 import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.application.BaseApplication
 import com.zjw.apps3pluspro.base.BaseActivity
+import com.zjw.apps3pluspro.bleservice.BleConstant
 import com.zjw.apps3pluspro.bleservice.BroadcastTools
+import com.zjw.apps3pluspro.eventbus.GetDeviceProtoWatchFacePrepareStatusEvent
+import com.zjw.apps3pluspro.eventbus.GetDeviceProtoWatchFacePrepareStatusSuccessEvent
+import com.zjw.apps3pluspro.eventbus.tools.EventTools
 import com.zjw.apps3pluspro.module.device.clockdial.custom.CustomClockDialNewUtils
 import com.zjw.apps3pluspro.module.device.clockdial.custom.MyCustomClockUtils
 import com.zjw.apps3pluspro.module.device.entity.ThemeDetails
@@ -41,6 +45,9 @@ import com.zjw.apps3pluspro.view.ColorRoundView
 import com.zjw.apps3pluspro.view.dialog.WaitDialog
 import kotlinx.android.synthetic.main.public_head.*
 import kotlinx.android.synthetic.main.theme_upload_activity.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.*
@@ -68,9 +75,11 @@ class ThemeUploadActivity : BaseActivity() {
     lateinit var handler: Handler
     override fun initViews() {
         super.initViews()
+        EventTools.SafeRegisterEventBus(this)
         public_head_title.text = resources.getText(R.string.custom_sync)
         layountInflater = LayoutInflater.from(context)
         handler = Handler()
+        protoHandler = Handler()
         waitDialog = WaitDialog(context)
         val filter = IntentFilter()
         filter.addAction(BroadcastTools.ACTION_DOWN_CLOCK_FILE_STATE_SUCCESS)
@@ -258,7 +267,17 @@ class ThemeUploadActivity : BaseActivity() {
                 showSelectColor()
             }
             R.id.tvThemeUpload -> {
-                uploadTheme()
+                if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
+                    uploadTheme()
+                } else {
+                    waitDialog!!.show(getString(R.string.index_tip_no_connect1))
+
+                    val handle = Handler()
+                    handle.postDelayed({
+                        waitDialog?.close()
+                        finish()
+                    }, 2000)
+                }
             }
             R.id.layoutSelectPicture -> {
                 if (AuthorityManagement.verifyStoragePermissions(this)) {
@@ -320,21 +339,71 @@ class ThemeUploadActivity : BaseActivity() {
         }
     }
 
+    lateinit var byteTheme: ByteArray
     private fun initSendData() {
-        val byte: ByteArray?
         if (isCustom) {
 //            byte = CustomClockDialUtils.getCustonClockDialDataByFile(this@ThemeUploadActivity, curThemeName, color_r, color_g, color_b, newBgBitmap)
-            byte = CustomClockDialNewUtils.getNewCustomClockDialData(curThemeName, color_r, color_g, color_b, newBgBitmap, newTextBitmap);
+            byteTheme = CustomClockDialNewUtils.getNewCustomClockDialData(curThemeName, color_r, color_g, color_b, newBgBitmap, newTextBitmap);
         } else {
-            byte = ThemeUtils.getBytes(Constants.DOWN_THEME_FILE + curThemeName)
+            byteTheme = ThemeUtils.getBytes(Constants.DOWN_THEME_FILE + curThemeName)
         }
-        MyLog.i(TAG, "数据大小 Bytes = 文件已存在 Bytes len = " + byte.size)
+        MyLog.i(TAG, "数据大小 Bytes = 文件已存在 Bytes len = " + byteTheme.size)
         if (mBleDeviceTools.isSupportProtobuf && mBleDeviceTools.deviceUpdateType) {
-            startSendThemeDataByProto(byte)
+            //检测设备状态状态
+            if (mBleDeviceTools.isSupportGetDeviceProtoStatus) {
+                waitDialog!!.show(getString(R.string.ignored))
+                protoHandler?.removeCallbacksAndMessages(null)
+                protoHandler?.postDelayed(getDeviceStatusTimeOut, 10 * 1000)
+                EventBus.getDefault().post(GetDeviceProtoWatchFacePrepareStatusEvent(themeDetails.dialId.toString(), byteTheme.size))
+            } else {
+                startSendThemeDataByProto(byteTheme)
+            }
         } else {
-            startSendThemeData(byte)
+            startSendThemeData(byteTheme)
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun getDeviceProtoWatchFacePrepareStatusSuccessEvent(event: GetDeviceProtoWatchFacePrepareStatusSuccessEvent) {
+        protoHandler?.removeCallbacksAndMessages(null)
+        when (event.status) {
+            0 -> {
+                waitDialog?.close()
+                startSendThemeDataByProto(byteTheme)
+            }
+            1 -> {
+                finishActivity(resources.getString(R.string.device_prepare1))
+            }
+            2 -> {
+                finishActivity(resources.getString(R.string.device_prepare2))
+            }
+            3 -> {
+                finishActivity(resources.getString(R.string.device_prepare2))
+            }
+            4 -> {
+                finishActivity(resources.getString(R.string.device_prepare4))
+            }
+            5 -> {
+                finishActivity(resources.getString(R.string.device_prepare2))
+            }
+        }
+    }
+
+    fun finishActivity(text: String) {
+        waitDialog!!.show(text)
+        val handle = Handler()
+        handle.postDelayed({
+            waitDialog?.close()
+            finish()
+        }, Constants.FINISH_ACTIVITY_DELAY_TIME.toLong())
+    }
+
+    private var getDeviceStatusTimeOut = Runnable {
+        Log.w("ble", " getDeviceStatusTimeOut Time Out")
+        protoHandler?.removeCallbacksAndMessages(null)
+        finishActivity(resources.getString(R.string.device_prepare2))
+    }
+
     // 弹框的信息
     private lateinit var dialog: Dialog
 
@@ -401,8 +470,6 @@ class ThemeUploadActivity : BaseActivity() {
         intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_CONFIRM)
         intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK)
         registerReceiver(receiver, intentFilter)
-
-        protoHandler = Handler()
 
         DialMarketManager.getInstance().uploadDialDownloadRecording(themeDetails.dialId, DialMarketManager.uploadDialDownloadRecordingType2_transport, this)
         curPiece = 0
@@ -1224,6 +1291,7 @@ class ThemeUploadActivity : BaseActivity() {
     }
 
     override fun onDestroy() {
+        EventTools.SafeUnregisterEventBus(this)
         unregisterReceiver(broadcastReceiver)
         unregisterReceiver(broadcastReceiverTheme)
         TimerTwoHandler?.removeCallbacksAndMessages(null)

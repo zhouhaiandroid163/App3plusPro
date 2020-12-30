@@ -368,4 +368,6 @@
     <color name="code_color">#57FFB5</color>
     <color name="bt_text_color">#565E67</color>
     <color name="dialog_bg">#464E58</color>
+    <color name="text_color">#989CA0</color>
+
 </resources>

@@ -2,6 +2,7 @@ package com.zjw.apps3pluspro.bleservice.anaylsis;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.xiaomi.wear.protobuf.WearProtos;
+import com.zjw.apps3pluspro.utils.log.MyLog;
 
 /**
  * Created by android
@@ -9,6 +10,7 @@ import com.xiaomi.wear.protobuf.WearProtos;
  */
 public class AnalysisProtoData {
     private static AnalysisProtoData analysisProtoData;
+    private static final String TAG = AnalysisProtoData.class.getSimpleName();
 
     public static AnalysisProtoData getInstance() {
         if (analysisProtoData == null) {
@@ -29,8 +31,8 @@ public class AnalysisProtoData {
     }
     private String analysisDataToWear(WearProtos.WearPacket wear) {
         String result_str = "";
-        System.out.println("数据封装 = wear.getType() = " + wear.getType());
-        System.out.println("数据封装 = wear.getId() = " + wear.getId());
+        MyLog.i(TAG, "AnalysisProtoData Type = " + wear.getType());
+        MyLog.i(TAG, "AnalysisProtoData id = " + wear.getId());
         switch (wear.getType()) {
             case ACCOUNT:
                 result_str = AccountTools.analysisAccount(wear);
@@ -61,6 +63,12 @@ public class AnalysisProtoData {
                 break;
             case AIVS:
                 result_str = AivsTools.analysisAivs(wear);
+                break;
+            case WATCH_FACE:
+                result_str = WatchFaceTools.analysisWatchFace(wear);
+                break;
+            case GNSS:
+                result_str = GnssTools.analysisGnss(wear);
                 break;
         }
         return result_str;

@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import com.zjw.apps3pluspro.bleservice.anaylsis.FitnessTools;
 import com.zjw.apps3pluspro.bleservice.anaylsis.SystemTools;
+import com.zjw.apps3pluspro.bleservice.anaylsis.WatchFaceTools;
 import com.zjw.apps3pluspro.module.device.entity.AlarmClockModel;
 import com.zjw.apps3pluspro.module.device.entity.DurgModel;
 import com.zjw.apps3pluspro.module.device.entity.MettingModel;
@@ -91,6 +92,8 @@ public class BtSerializeation {
     public static final int KEY_SET_TIMEZONE = 0x69;//时区
     private static final byte KEY_SET_DEVICE_ERROR_LOG = (byte) 0xee;
     private static final byte KEY_GET_DEVICE_ERROR_LOG = (byte) 0xef;
+
+    public static final byte KEY_AGPS = (byte) 0x6b;
 
     //大数据传输通道。
     private static final byte KEY_SEND_THEME_HEAD = (byte) 0x01;
@@ -1843,82 +1846,67 @@ public class BtSerializeation {
 
     // 0 今天  1 历史
     public static byte[] GetSportIds(int type) {
-        byte[] valueByte1 = new byte[2];
-        valueByte1[0] = (byte) 1;
-        valueByte1[1] = (byte) 0;
-        byte[] valueByte = FitnessTools.getSportIds(type);
-        byte[] byte_3 = new byte[valueByte1.length + valueByte.length];
-        System.arraycopy(valueByte1, 0, byte_3, 0, valueByte1.length);
-        System.arraycopy(valueByte, 0, byte_3, valueByte1.length, valueByte.length);
-        return byte_3;
+        return getProtoByte(FitnessTools.getSportIds(type));
     }
 
     public static byte[] requestFitnessId() {
+        return getProtoByte(FitnessTools.requestFitnessId());
+    }
+
+    public static byte[] deleteSportId() {
+        return getProtoByte(FitnessTools.deleteSportId());
+    }
+
+    public static byte[] getPageDevice() {
+        return getProtoByte(SystemTools.getPageDevice());
+    }
+
+    public static byte[] getPageDeviceSet() {
+        return getProtoByte(SystemTools.getPageDeviceSet());
+    }
+
+    public static byte[] getGpsReady(GpsSportManager.GpsInfo gpsInfo) {
+        return getProtoByte(FitnessTools.getGpsReady(gpsInfo));
+    }
+
+    public static byte[] getGpsByte(GpsSportManager.GpsInfo gpsInfo) {
+        return getProtoByte(FitnessTools.getGpsByte(gpsInfo));
+    }
+
+    public static byte[] getRequestGpsStateByte() {
+        return getProtoByte(FitnessTools.getDeviceGpsState());
+    }
+
+    public static byte[] getDeviceWatchFaceListByte() {
+        return getProtoByte(WatchFaceTools.getDeviceWatchFaceList());
+    }
+
+    public static byte[] setDeviceWatchFaceByte(String id) {
+        return getProtoByte(WatchFaceTools.setDeviceWatchFace(id));
+    }
+
+    public static byte[] deleteDeviceWatchFaceByte(String id) {
+        return getProtoByte(WatchFaceTools.deleteDeviceWatchFace(id));
+    }
+
+    public static byte[] getDeviceWatchFacePrepareStatus(String themeId, int themeSize) {
+        return getProtoByte(WatchFaceTools.getDeviceWatchFacePrepareStatus(themeId, themeSize));
+    }
+    public static byte[] getDeviceOtaPrepareStatus(boolean isForce, String version, String md5) {
+        return getProtoByte(SystemTools.getDeviceOtaPrepareStatus(isForce, version, md5));
+    }
+
+
+    private static byte[] getProtoByte(byte[] valueByte) {
         byte[] valueByte1 = new byte[2];
         valueByte1[0] = (byte) 1;
-        valueByte1[1] = (byte) 0;
-
-        byte[] valueByte = FitnessTools.requestFitnessId();
         if (valueByte == null) {
-            return null;
+            return valueByte1;
         }
         byte[] byte_3 = new byte[valueByte1.length + valueByte.length];
         System.arraycopy(valueByte1, 0, byte_3, 0, valueByte1.length);
         System.arraycopy(valueByte, 0, byte_3, valueByte1.length, valueByte.length);
         return byte_3;
     }
-
-    public static byte[] deleteSportId() {
-        byte[] valueByte1 = new byte[2];
-        valueByte1[0] = (byte) 1;
-        valueByte1[1] = (byte) 0;
-        byte[] valueByte = FitnessTools.deleteSportId();
-        byte[] byte_3 = new byte[valueByte1.length + valueByte.length];
-        System.arraycopy(valueByte1, 0, byte_3, 0, valueByte1.length);
-        System.arraycopy(valueByte, 0, byte_3, valueByte1.length, valueByte.length);
-        return byte_3;
-    }
-
-    public static byte[] getPageDevice() {
-        byte[] valueByte1 = new byte[2];
-        valueByte1[0] = (byte) 1;
-        valueByte1[1] = (byte) 0;
-        byte[] valueByte = SystemTools.getPageDevice();
-        byte[] byte_3 = new byte[valueByte1.length + valueByte.length];
-        System.arraycopy(valueByte1, 0, byte_3, 0, valueByte1.length);
-        System.arraycopy(valueByte, 0, byte_3, valueByte1.length, valueByte.length);
-        return byte_3;
-    }
-    public static byte[] getPageDeviceSet() {
-        byte[] valueByte1 = new byte[2];
-        valueByte1[0] = (byte) 1;
-        valueByte1[1] = (byte) 0;
-        byte[] valueByte = SystemTools.getPageDeviceSet();
-        byte[] byte_3 = new byte[valueByte1.length + valueByte.length];
-        System.arraycopy(valueByte1, 0, byte_3, 0, valueByte1.length);
-        System.arraycopy(valueByte, 0, byte_3, valueByte1.length, valueByte.length);
-        return byte_3;
-    }
-    public static byte[] getGpsReady(GpsSportManager.GpsInfo gpsInfo) {
-        byte[] valueByte1 = new byte[2];
-        valueByte1[0] = (byte) 1;
-        valueByte1[1] = (byte) 0;
-        byte[] valueByte = FitnessTools.getGpsReady(gpsInfo);
-        byte[] byte_3 = new byte[valueByte1.length + valueByte.length];
-        System.arraycopy(valueByte1, 0, byte_3, 0, valueByte1.length);
-        System.arraycopy(valueByte, 0, byte_3, valueByte1.length, valueByte.length);
-        return byte_3;
-    }
-    public static byte[] getGpsByte(GpsSportManager.GpsInfo gpsInfo) {
-        byte[] valueByte1 = new byte[2];
-        valueByte1[0] = (byte) 1;
-        valueByte1[1] = (byte) 0;
-        byte[] valueByte = FitnessTools.getGpsByte(gpsInfo);
-        byte[] byte_3 = new byte[valueByte1.length + valueByte.length];
-        System.arraycopy(valueByte1, 0, byte_3, 0, valueByte1.length);
-        System.arraycopy(valueByte, 0, byte_3, valueByte1.length, valueByte.length);
-        return byte_3;
-    }
-
 
 }

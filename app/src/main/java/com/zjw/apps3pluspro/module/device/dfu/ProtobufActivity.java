@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -29,6 +30,8 @@ import com.zjw.apps3pluspro.bleservice.BroadcastTools;
 import com.zjw.apps3pluspro.bleservice.UpdateInfoService;
 import com.zjw.apps3pluspro.eventbus.AppConfirmEvent;
 import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent;
+import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusEvent;
+import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusSuccessEvent;
 import com.zjw.apps3pluspro.eventbus.tools.EventTools;
 import com.zjw.apps3pluspro.network.NewVolleyRequest;
 import com.zjw.apps3pluspro.network.RequestJson;
@@ -43,11 +46,16 @@ import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.utils.DialogUtils;
 import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.utils.ThemeManager;
+import com.zjw.apps3pluspro.utils.ThemeUtils;
 import com.zjw.apps3pluspro.utils.log.MyLog;
+import com.zjw.apps3pluspro.view.dialog.WaitDialog;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -68,7 +76,7 @@ public class ProtobufActivity extends BaseActivity {
     @Override
     protected void initViews() {
         super.initViews();
-
+        waitDialog = new WaitDialog(this);
         ((TextView) findViewById(R.id.public_head_title)).setText(getString(R.string.firmware_update));
 
         EventTools.SafeRegisterEventBus(this);
@@ -240,7 +248,7 @@ public class ProtobufActivity extends BaseActivity {
     }
 
     private JSONObject versionObject;
-    private String version, downloadAddress, downloadContentEN,
+    private String downloadAddress, downloadContentEN,
             downloadContentZH, isNeedUpdate;
 
     private void getNetDeviceVersion(int model, int c_upgrade_version, int device_platform_type) {
@@ -264,6 +272,10 @@ public class ProtobufActivity extends BaseActivity {
                                     downloadContentEN = "";
                                     downloadContentZH = "";
                                     isNeedUpdate = "";
+
+                                    isForce = true;
+                                    version = mDeviceBean.getData().getVersionAfter();
+
                                     ForceUpdate();
                                 } else {
                                     AppUtils.showToast(mContext, R.string.already_new);
@@ -351,6 +363,7 @@ public class ProtobufActivity extends BaseActivity {
         registerReceiver(broadcastReceiver, filter);
     }
 
+    private Handler protoHandler;
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @SuppressWarnings({"unused", "unused"})
         @SuppressLint("NewApi")
@@ -360,11 +373,69 @@ public class ProtobufActivity extends BaseActivity {
             switch (action) {
                 case BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_SUCCESS:
                     MyLog.i(TAG, "DFU 收到下载固件成功！");
-                    startDfu();
+                    // send cmd get device status
+                    if (mBleDeviceTools.getIsSupportGetDeviceProtoStatus()) {
+                        waitDialog.show(getResources().getString(R.string.ignored));
+                        protoHandler = new Handler();
+                        protoHandler.postDelayed(getDeviceStatusTimeOut, 10 * 1000);
+
+                        File file = new File(Constants.UPDATE_DEVICE_FILE + "ota.bin");
+                        md5 = ThemeUtils.getFileMD5(file);
+                        EventBus.getDefault().post(new GetDeviceProtoOtaPrepareStatusEvent(isForce, version, md5));
+                    } else {
+                        startDfu();
+                    }
                     break;
             }
         }
     };
+    boolean isForce;
+    String version;
+    String md5;
+    private WaitDialog waitDialog;
+    Runnable getDeviceStatusTimeOut = () -> {
+        Log.w(TAG, " getDeviceStatusTimeOut Time Out");
+        waitDialog.show(getResources().getString(R.string.device_prepare2));
+        protoHandler.removeCallbacksAndMessages(null);
+        protoHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                waitDialog.close();
+                finish();
+            }
+        }, Constants.FINISH_ACTIVITY_DELAY_TIME);
+    };
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getDeviceProtoOtaPrepareStatusSuccessEvent(GetDeviceProtoOtaPrepareStatusSuccessEvent event) {
+        protoHandler.removeCallbacksAndMessages(null);
+        switch (event.status) {
+            case 0:
+                waitDialog.close();
+                startDfu();
+                break;
+            case 1:
+                finishActivity(getResources().getString(R.string.device_prepare1));
+                break;
+            case 2:
+            case 5:
+            case 3:
+                finishActivity(getResources().getString(R.string.device_prepare2));
+                break;
+            case 4:
+                finishActivity(getResources().getString(R.string.device_prepare4));
+                break;
+        }
+    }
+
+    private void finishActivity(String text) {
+        waitDialog.show(text);
+        Handler handle = new Handler();
+        handle.postDelayed(() -> {
+            waitDialog.close();
+            finish();
+        }, Constants.FINISH_ACTIVITY_DELAY_TIME);
+    }
 
     private void startDfu() {
         curPiece = 0;

@@ -38,6 +38,7 @@ import com.zjw.apps3pluspro.module.device.backgroundpermission.BackgroundPermiss
 import com.zjw.apps3pluspro.module.device.clockdial.ClockDialActivity;
 import com.zjw.apps3pluspro.module.device.clockdial.CustomClockDialUtils;
 import com.zjw.apps3pluspro.module.device.clockdial.MyThemeActivity;
+import com.zjw.apps3pluspro.module.device.clockdial.ThemeMarketActivity;
 import com.zjw.apps3pluspro.module.device.reminde.MessagePushActivity;
 import com.zjw.apps3pluspro.module.device.reminde.DisturbActivity;
 import com.zjw.apps3pluspro.module.device.reminde.RemindSettingActivity;
@@ -220,13 +221,13 @@ public class DeviceFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        if(mBleDeviceTools.getIsSupportTakePicture()){
+        if (mBleDeviceTools.getIsSupportTakePicture()) {
             layoutPhotograph.setVisibility(View.VISIBLE);
         } else {
             layoutPhotograph.setVisibility(View.GONE);
         }
 
-        if(mBleDeviceTools.getIsSupportRaiseWristBrightenScreen()){
+        if (mBleDeviceTools.getIsSupportRaiseWristBrightenScreen()) {
             layoutRaiseWristBrightenScreen.setVisibility(View.VISIBLE);
         } else {
             layoutRaiseWristBrightenScreen.setVisibility(View.GONE);
@@ -426,6 +427,7 @@ public class DeviceFragment extends BaseFragment {
         tvSyncState.setText(getResources().getString(R.string.sync_data_success));
     }
 
+    @SuppressLint("StringFormatInvalid")
     private void initViewState() {
         if (JavaUtil.checkIsNull(mBleDeviceTools.get_ble_mac())) {
             layoutNoDevice.setVisibility(View.GONE);
@@ -806,21 +808,32 @@ public class DeviceFragment extends BaseFragment {
             //表盘市场
             case R.id.layoutDialMarket:
                 if (homeActivity.DeviceIsConnect()) {
-                    if (mBleDeviceTools.get_ble_device_power() >= 20) {
-                        //是否支持自定义表盘
-                        if (CustomClockDialUtils.checkIsNewClockDial()) {
-                            startActivity(new Intent(context, ClockDialActivity.class));
+                    if (mBleDeviceTools.getClockDialGenerationMode() == 0 && mBleDeviceTools.getClockDialTransmissionMode() == 0) {
+                        if (mBleDeviceTools.get_ble_device_power() >= 50) {
+                            // 旧接口
+                            if (CustomClockDialUtils.checkIsNewClockDial()) {
+                                startActivity(new Intent(context, ClockDialActivity.class)); // 自定义
+                            } else {
+                                startActivity(new Intent(context, MyThemeActivity.class));
+                            }
                         } else {
-                            startActivity(new Intent(context, MyThemeActivity.class));
+                            AppUtils.showToast(context, R.string.send_imge_error_low_power);
                         }
                     } else {
-                        AppUtils.showToast(context, R.string.send_imge_error_low_power);
+                        // 新接口表盘分类
+                        if (mBleDeviceTools.getIsSupportGetDeviceProtoStatus()) {
+                            startActivity(new Intent(context, ThemeMarketActivity.class));
+                        } else {
+                            if (mBleDeviceTools.get_ble_device_power() >= 50) {
+                                startActivity(new Intent(context, ThemeMarketActivity.class));
+                            } else {
+                                AppUtils.showToast(context, R.string.send_imge_error_low_power);
+                            }
+                        }
                     }
                 } else {
                     AppUtils.showToast(context, R.string.no_connection_notification);
                 }
-//                startActivity(new Intent(context, MyThemeActivity.class));
-//                startActivity(new Intent(context, ThemeMarketActivity.class));
                 break;
             case R.id.layoutMessage:
                 if (homeActivity.DeviceIsConnect()) {
