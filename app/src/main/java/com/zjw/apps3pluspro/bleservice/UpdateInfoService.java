@@ -348,4 +348,65 @@ public class UpdateInfoService {
         }.start();
     }
 
+    public void downLoadFileBase(final String url, final Dialog pDialog, Handler h, final String file_name, String action) {
+        ProgressBar progressBar = pDialog.findViewById(R.id.progress);
+        handler = h;
+        new Thread() {
+            public void run() {
+
+                HttpURLConnection httpURLConnection = null;
+                try {
+
+                    URL connectUrl = new URL(url);
+                    httpURLConnection = (HttpURLConnection) connectUrl.openConnection();
+                    int length = httpURLConnection.getContentLength(); // 获取文件大小
+                    progressBar.setMax(length); // 设置进度条的总长度
+//					InputStream is = entity.getContent();
+                    InputStream is = httpURLConnection.getInputStream();
+                    FileOutputStream fileOutputStream = null;
+                    DecimalFormat format = new DecimalFormat("0.0");
+                    if (is != null) {
+                        //DFU需要这里下载路径
+                        File file = new File(Constants.UPDATE_DEVICE_FILE, file_name);
+
+                        fileOutputStream = new FileOutputStream(file);
+                        // 这个是缓冲区，即一次读取10个比特，我弄的小了点，因为在本地，所以数值太大一下就下载完了,
+                        // 看不出progressbar的效果。
+                        byte[] buf = new byte[10];
+                        int ch = -1;
+                        int process = 0;
+                        while ((ch = is.read(buf)) != -1) {
+                            fileOutputStream.write(buf, 0, ch);
+                            process += ch;
+                            progressBar.setProgress(process); // 这里就是关键的实时更新进度了！
+                            float all = (float) ((length / 10.0) / 10);
+                            float percent = (float) ((process / 10.0) / 10);
+//                            progressDialog.setProgressNumberFormat(String.format("%.1fK/%.1fK", percent / 10, all / 10));
+
+                        }
+
+                    }
+                    fileOutputStream.flush();
+                    if (fileOutputStream != null) {
+                        fileOutputStream.close();
+                    }
+//					down();
+                    pDialog.dismiss();
+                    Intent intent = new Intent();
+                    intent.setAction(action);
+                    context.sendBroadcast(intent);
+                    MyLog.i(TAG, "文件下载 下好了");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        }.start();
+
+    }
+
 }

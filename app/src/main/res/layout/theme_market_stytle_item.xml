@@ -37,7 +37,7 @@
             android:ellipsize="end"
             android:lines="1"
             android:text="简约表盘1"
-            android:textColor="#646464"
+            android:textColor="#ffffff"
             android:textSize="14sp" />
     </LinearLayout>
 

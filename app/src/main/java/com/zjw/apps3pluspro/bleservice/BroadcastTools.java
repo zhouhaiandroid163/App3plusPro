@@ -123,6 +123,9 @@ public class BroadcastTools {
     //DFU升级成功广播
     public static final String ACTION_UPDATE_DEVICE_FILE_STATE_SUCCESS = APP_NAME + "_" + "TAG_UPDATE_DEVICE_FILE_STATE_SUCCESS";
 
+    //LTO升级成功广播
+    public static final String ACTION_UPDATE_LTO_SUCCESS = APP_NAME + "_" + "ACTION_UPDATE_LTO_SUCCESS";
+
     //表盘文件下载成功广播
     public static final String ACTION_DOWN_CLOCK_FILE_STATE_SUCCESS = APP_NAME + "_" + "TAG_DOWN_Clock_FILE_STATE_SUCCESS";
 

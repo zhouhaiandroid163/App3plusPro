@@ -214,16 +214,9 @@ public class DeviceMoreSetActivity extends BaseActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(BroadcastTools.ACTION_GATT_DEVICE_COMPLETE);
         filter.addAction(BroadcastTools.TAG_CLOSE_PHOTO_ACTION);
-
-        filter.addAction(BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_SUCCESS);
-        filter.addAction(ThemeManager.ACTION_CMD_APP_START);
-        filter.addAction(ThemeManager.ACTION_CMD_DEVICE_START);
-        filter.addAction(ThemeManager.ACTION_CMD_APP_CONFIRM);
-        filter.addAction(ThemeManager.ACTION_CMD_DEVICE_CONFIRM);
-        filter.addAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK);
-
         filter.setPriority(1000);
         registerReceiver(broadcastReceiver, filter);
+
         if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
             getDeviceInfo();
         }
@@ -273,6 +266,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 startActivity(intent2);
                 break;
             case R.id.layoutDeviceUpdate:
+                unregisterReceiverLto();
                 String version_name = BleTools.getDeviceVersionName(mBleDeviceTools);
                 if (!JavaUtil.checkIsNull(version_name)) {
                     tvVersionName.setText(version_name);
@@ -345,6 +339,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
             case R.id.layoutUpdateAGpsDate:
                 SysUtils.makeRootDirectory(Constants.UPDATE_DEVICE_FILE);
                 if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
+                    initBroadcastReceiverLto();
                     waitDialog.show(getResources().getString(R.string.ignored));
                     protoHandler = new Handler();
                     protoHandler.postDelayed(getDeviceStatusTimeOut, 10 * 1000);
@@ -379,8 +374,81 @@ public class DeviceMoreSetActivity extends BaseActivity {
     protected void onDestroy() {
         EventTools.SafeUnregisterEventBus(this);
         unregisterReceiver(broadcastReceiver);
+        unregisterReceiverLto();
         super.onDestroy();
     }
+
+    private void initBroadcastReceiverLto() {
+        IntentFilter filter = new IntentFilter();
+
+        filter.addAction(BroadcastTools.ACTION_UPDATE_LTO_SUCCESS);
+        filter.addAction(ThemeManager.ACTION_CMD_APP_START);
+        filter.addAction(ThemeManager.ACTION_CMD_DEVICE_START);
+        filter.addAction(ThemeManager.ACTION_CMD_APP_CONFIRM);
+        filter.addAction(ThemeManager.ACTION_CMD_DEVICE_CONFIRM);
+        filter.addAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK);
+
+        filter.setPriority(1000);
+        registerReceiver(broadcastReceiverLto, filter);
+    }
+
+    private void unregisterReceiverLto() {
+        try {
+            unregisterReceiver(broadcastReceiverLto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private BroadcastReceiver broadcastReceiverLto = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            switch (intent.getAction()) {
+                case BroadcastTools.ACTION_UPDATE_LTO_SUCCESS:
+                    MyLog.i(TAG, "lto 收到下载固件成功！");
+                    startDfu();
+                    break;
+                case ThemeManager.ACTION_CMD_APP_START:
+                    switch (curCmd) {
+                        case "btUploadTheme":
+                            uploadDataPiece();
+                            break;
+                    }
+                    break;
+                case ThemeManager.ACTION_CMD_DEVICE_CONFIRM:
+                    switch (curCmd) {
+                        case "btUploadTheme":
+                            if (curPiece == ThemeManager.getInstance().dataPackTotalPieceLength) {
+                                if ("watch".equalsIgnoreCase(type)) {
+                                    tvDeviceUpdateProgress.setText("上传主题");
+                                } else {
+                                    tvDeviceUpdateProgress.setText("固件升级");
+                                }
+                                Toast.makeText(DeviceMoreSetActivity.this, getResources().getString(R.string.send_success), Toast.LENGTH_SHORT).show();
+                                if (progressDialog != null && progressDialog.isShowing()) {
+                                    progressDialog.dismiss();
+                                }
+
+                            } else {
+                                startUploadThemePiece();
+                            }
+                            break;
+                    }
+                    break;
+                case ThemeManager.ACTION_CMD_DEVICE_START:
+                    sendProtoUpdateData(BleCmdManager.getInstance().deviceStartCmd());
+                    break;
+                case ThemeManager.ACTION_CMD_APP_CONFIRM:
+                    sendProtoUpdateData(BleCmdManager.getInstance().appConfirm());
+                    break;
+                case ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK:
+                    int pageNum = intent.getIntExtra("packNum", 0);
+                    sendProtoUpdateData(BleCmdManager.getInstance().sendThemePiece(pageNum, curPiece));
+                    break;
+            }
+        }
+    };
+
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
@@ -398,7 +466,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
 //                        getNetDeviceVersion(mBleDeviceTools.get_ble_device_type(), mBleDeviceTools.get_ble_device_version(), mBleDeviceTools.get_device_platform_type());
                     }
                     break;
-                case BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_SUCCESS:
+                case BroadcastTools.ACTION_UPDATE_LTO_SUCCESS:
                     MyLog.i(TAG, "lto 收到下载固件成功！");
                     startDfu();
                     break;
@@ -622,7 +690,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                                         context.getResources().getString(R.string.loading0),
                                         context.getDrawable(R.drawable.black_corner_bg)
                                 );
-                                updateInfoService.downLoadFile2(dataUrl, progressDialogDownFile, protoHandler, "lto.brm");
+                                updateInfoService.downLoadFileBase(dataUrl, progressDialogDownFile, protoHandler, "lto.brm", BroadcastTools.ACTION_UPDATE_LTO_SUCCESS);
                             } else {
                                 AppUtils.showToast(context, R.string.sd_card);
                             }
@@ -654,7 +722,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
         progressDialog.setCancelable(false);
     }
 
-    private String curCmd;
+    private String curCmd = "";
     private int curPiece = 0;
     private int curPieceSendPack = 0;
     private String type = "";
