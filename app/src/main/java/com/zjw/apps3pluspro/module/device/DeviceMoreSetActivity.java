@@ -58,6 +58,7 @@ import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.utils.DialogUtils;
 import com.zjw.apps3pluspro.utils.GoogleFitManager;
 import com.zjw.apps3pluspro.utils.JavaUtil;
+import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.utils.ThemeManager;
 import com.zjw.apps3pluspro.utils.ThemeUtils;
 import com.zjw.apps3pluspro.utils.log.MyLog;
@@ -342,6 +343,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 }
                 break;
             case R.id.layoutUpdateAGpsDate:
+                SysUtils.makeRootDirectory(Constants.UPDATE_DEVICE_FILE);
                 if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
                     waitDialog.show(getResources().getString(R.string.ignored));
                     protoHandler = new Handler();
