@@ -648,7 +648,7 @@
     <string name="connect_timeout">A conexão expirou</string>
     <string name="connect_message">Volte a ligar o dispositivo</string>
     <!--表盘相关-->
-    <string name="custom_title">Customizar </string>
+    <string name="custom_title">Customizar</string>
     <string name="custom_sync">Sincronizar</string>
     <!--新交互-->
     <!--数据-->
@@ -761,17 +761,17 @@
     <string name="power_saving1">1. Abra as configurações e clique em "Bateria e desempenho"</string>
     <string name="power_saving2">2. Desligue o "modo de economia de energia" e "super economia de energia";</string>
     <string name="power_saving3">3. Clique em "Tarefa automática" e escolha fechar todos os cenários de tarefas automáticas.</string>
-    <string name="unlimited1">1. Abra as configurações e clique em "Configurações do aplicativo"> ​​"Gerenciamento de aplicativos";</string>
+    <string name="unlimited1">1. Abra as configurações e clique em "Configurações do aplicativo">​​"Gerenciamento de aplicativos";</string>
     <string name="unlimited2">2. Encontre o F Fit APP e clique para entrar;</string>
     <string name="unlimited3">3. Clique em "Estratégia de economia de energia" e selecione "Ilimitado" depois de entrar.</string>
-    <string name="boot_completed_xiaomi1">1. Abra as configurações e clique em "Configurações do aplicativo"> ​​"Gerenciamento de aplicativos";</string>
+    <string name="boot_completed_xiaomi1">1. Abra as configurações e clique em "Configurações do aplicativo">​​"Gerenciamento de aplicativos";</string>
     <string name="boot_completed_xiaomi2">2. Encontre o F Fit APP e clique para entrar;</string>
     <string name="boot_completed_xiaomi3">3. Selecione "Inicialização automática" para ativá-lo.</string>
     <string name="boot_completed_huawei1">1. Abra o gerenciador do telefone, selecione "gerenciamento de inicialização do aplicativo" e clique para entrar;</string>
     <string name="boot_completed_huawei2">2. Localize F Fit e desligue o interruptor; ao mesmo tempo, na janela pop-up de gerenciamento manual que é exibida, verifique todas as atividades de início automático, início associado e plano de fundo.</string>
     <string name="boot_completed_huawei3">Se você não pode configurá-lo de acordo com o método acima, tente configurá-lo de acordo com as seguintes etapas:</string>
     <string name="boot_completed_huawei4">1. Abra as configurações do sistema do telefone;</string>
-    <string name="boot_completed_huawei5">2. Selecione Aplicativo> Gerenciamento de inicialização do aplicativo;</string>
+    <string name="boot_completed_huawei5">2. Selecione Aplicativo>Gerenciamento de inicialização do aplicativo;</string>
     <string name="boot_completed_huawei6">3. Localize F Fit e ajuste o interruptor para o estado desligado; ao mesmo tempo, na janela pop-up de gerenciamento manual que é exibida, verifique todas as atividades de início automático, início associado e plano de fundo.</string>
     <string name="boot_completed_oppo1">1. Abra o gerenciador do celular e encontre a privacidade da permissão no gerenciador do celular;</string>
     <string name="boot_completed_oppo2">2. Encontre o gerenciamento de início automático na privacidade da permissão, clique para entrar;</string>
@@ -884,6 +884,84 @@
     <string name="device_gps_sport1">Movimento GPS do dispositivo</string>
     <string name="message_push_screen_on">Notificar apenas quando o telefone estiver bloqueado</string>
     <string name="gps_switch_close">A chave de localização do sistema não está ligada</string>
-
+    <!--    打点多运动-->
+    <string name="more_sport_1">corrida ao ar livre</string>
+    <string name="more_sport_2">caminhada ao ar livre</string>
+    <string name="more_sport_3">Corrida interna</string>
+    <string name="more_sport_4">montanhismo</string>
+    <string name="more_sport_5">off-road</string>
+    <string name="more_sport_6">passeios ao ar livre</string>
+    <string name="more_sport_7">Hipismo indoor</string>
+    <string name="more_sport_8">Treinamento gratuito</string>
+    <string name="more_sport_9">Basquete</string>
+    <string name="more_sport_10">Futebol</string>
+    <string name="more_sport_11">tênis de mesa</string>
+    <string name="more_sport_12">badminton</string>
+    <string name="device_sport_summary">resumo</string>
+    <string name="device_sport_title1">duração do exercício</string>
+    <string name="device_sport_title2">período esportivo</string>
+    <string name="device_sport_title3">distância do movimento</string>
+    <string name="device_sport_title4">Calorias da atividade</string>
+    <string name="device_sport_title5">ritmo médio</string>
+    <string name="device_sport_title6">velocidade média</string>
+    <string name="device_sport_title7">frequência cardíaca média</string>
+    <string name="device_sport_title8">freqüência cardíaca máxima</string>
+    <string name="device_sport_title9">número de etapas</string>
+    <string name="device_sport_title10">frequência de passos</string>
+    <string name="device_sport_title11">escalada cumulativa</string>
+    <string name="device_sport_title12">declínio cumulativo</string>
+    <string name="device_sport_effect">desempenho esportivo</string>
+    <string name="device_sport_effect1">efeito de treinamento:</string>
+    <string name="device_sport_effect_rank_1">quantidade de rastreamento</string>
+    <string name="device_sport_effect_rank_2">restaurar</string>
+    <string name="device_sport_effect_rank_3">manter</string>
+    <string name="device_sport_effect_rank_4">melhorar</string>
+    <string name="device_sport_effect_rank_5">promova</string>
+    <string name="device_sport_effect_rank_6">excesso</string>
+    <string name="device_sport_maxOxygenIntake">consumo máximo de oxigênio</string>
+    <string name="device_sport_maxOxygenIntake_unit">ml / kg / min</string>
+    <string name="device_sport_recoveryTime">tempo de recuperação</string>
+    <string name="device_sport_heart_limit">limite</string>
+    <string name="device_sport_heart_anaerobic">anaeróbico</string>
+    <string name="device_sport_heart_Aerobic">aeróbico</string>
+    <string name="device_sport_heart_fat_burning">queima de gordura</string>
+    <string name="device_sport_heart_warm_up">aquecimento</string>
+    <string name="device_sport_heart_distributedView">intervalo de distribuição da frequência cardíaca</string>
+    <string name="device_sport_pace">ritmo</string>
+    <string name="device_sport_avg_pace">ritmo médio</string>
+    <string name="device_sport_max_pace">ritmo mais alto</string>
+    <string name="device_sport_min_pace">ritmo mínimo</string>
+    <string name="device_sport_step_speed_title">etapa</string>
+    <string name="device_sport_step_speed_unit">etapa / minuto</string>
+    <string name="device_sport_step_speed_unit2">cm</string>
+    <string name="device_sport_step_speed_avg">frequência média de passos</string>
+    <string name="device_sport_step_speed_max">frequência de passos mais alta</string>
+    <string name="device_sport_step_speed_step_length">comprimento médio da etapa</string>
+    <string name="device_sport_cal_avg">calorias médias</string>
+    <string name="device_sport_cal_activity">calorias de atividade</string>
+    <string name="device_sport_cal_unit">kcal / min</string>
+    <string name="device_sport_speed">velocidade</string>
+    <string name="device_sport_speed_avg">velocidade média</string>
+    <string name="device_sport_speed_max">velocidade máxima</string>
+    <string name="device_sport_speed_unit">quilômetros / hora</string>
+    <string name="device_sport_height">altura</string>
+    <string name="device_sport_rise">escalada cumulativa</string>
+    <string name="device_sport_decline">declínio cumulativo</string>
+    <string name="device_sport_unit">metros</string>
+    <!--以下定制app翻译-->
+    <string name="device_name">nome do dispositivo</string>
+    <string name="device_power">energia do dispositivo</string>
+    <string name="device_version">número da versão do dispositivo</string>
+    <string name="device_get_version">leia o número da versão ...</string>
+    <string name="qr_code">Use a câmera do celular para escanear o código QR no relógio para vinculação</string>
+    <string name="qr_code_next">Próxima etapa</string>
+    <string name="qr_code_title">código QR</string>
+    <string name="qr_code_manual">manual</string>
+    <string name="scan_title">Use a câmera do celular para mirar no código QR do relógio</string>
+    <string name="device_prepare1">O dispositivo está ocupado ...</string>
+    <string name="device_prepare2">A solicitação falhou</string>
+    <string name="device_prepare4">equipamento de baixa potência ...</string>
+    <string name="update_AGPS_date">atualizar dados AGPS</string>
+    <string name="update_AGPS_date_no">não precisa atualizar os dados AGPS</string>
     <!-- 葡萄牙 -->
 </resources>

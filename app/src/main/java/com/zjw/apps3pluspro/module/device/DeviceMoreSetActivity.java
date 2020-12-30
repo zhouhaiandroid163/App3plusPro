@@ -103,22 +103,20 @@ public class DeviceMoreSetActivity extends BaseActivity {
     TextView tvVersionName;
     @BindView(R.id.layoutDeviceUpdate)
     Button layoutDeviceUpdate;
-
     @BindView(R.id.layoutPage)
     RelativeLayout layoutPage;
     @BindView(R.id.indexPage)
     View indexPage;
-
     @BindView(R.id.layoutWeather)
     RelativeLayout layoutWeather;
     @BindView(R.id.weatherIndex)
     View weatherIndex;
-
     @BindView(R.id.tvDeviceName)
     TextView tvDeviceName;
     @BindView(R.id.ivPower)
     ImageView ivPower;
-
+    @BindView(R.id.layoutUpdateAGpsDate)
+    Button layoutUpdateAGpsDate;
 
     private UserSetTools mUserSetTools = BaseApplication.getUserSetTools();
     private BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
@@ -201,6 +199,12 @@ public class DeviceMoreSetActivity extends BaseActivity {
 //            layoutWeather.setVisibility(View.GONE);
 //            weatherIndex.setVisibility(View.GONE);
 //        }
+
+        if (mBleDeviceTools.getIsGpsSensor()) {
+            layoutUpdateAGpsDate.setVisibility(View.VISIBLE);
+        } else {
+            layoutUpdateAGpsDate.setVisibility(View.GONE);
+        }
     }
 
     @Override

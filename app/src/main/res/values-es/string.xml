@@ -761,17 +761,17 @@
     <string name="power_saving1">1. Abra la configuración y haga clic en "Batería y rendimiento"</string>
     <string name="power_saving2">2. Desactive el "modo de ahorro de energía" y el "super ahorro de energía";</string>
     <string name="power_saving3">3. Haga clic en "Tarea automática" y luego elija cerrar todos los escenarios de tareas automáticas.</string>
-    <string name="unlimited1">1. Abra la configuración y haga clic en "Configuración de la aplicación"> "Administración de la aplicación";</string>
+    <string name="unlimited1">1. Abra la configuración y haga clic en "Configuración de la aplicación">"Administración de la aplicación";</string>
     <string name="unlimited2">2. Busque la aplicación F Fit y haga clic para ingresar;</string>
     <string name="unlimited3">3. Haga clic en "Estrategia de ahorro de energía" y seleccione "Ilimitado" después de ingresar.</string>
-    <string name="boot_completed_xiaomi1">1. Abra la configuración y haga clic en "Configuración de la aplicación"> "Administración de la aplicación";</string>
+    <string name="boot_completed_xiaomi1">1. Abra la configuración y haga clic en "Configuración de la aplicación">"Administración de la aplicación";</string>
     <string name="boot_completed_xiaomi2">2. Busque la aplicación F Fit y haga clic para ingresar;</string>
     <string name="boot_completed_xiaomi3">3. Seleccione "Inicio automático" para activarlo.</string>
     <string name="boot_completed_huawei1">1. Abra el administrador del teléfono, seleccione "gestión de inicio de aplicaciones" y haga clic para ingresar;</string>
     <string name="boot_completed_huawei2">2. Busque F Fit y desactive el interruptor, al mismo tiempo, en la ventana emergente de administración manual que aparece, verifique todas las actividades de inicio automático, inicio asociado y fondo.</string>
     <string name="boot_completed_huawei3">Si no puede configurarlo de acuerdo con el método anterior, intente configurarlo de acuerdo con los siguientes pasos:</string>
     <string name="boot_completed_huawei4">1. Abra la configuración del sistema del teléfono;</string>
-    <string name="boot_completed_huawei5">2. Seleccione Aplicación> Gestión de inicio de aplicaciones;</string>
+    <string name="boot_completed_huawei5">2. Seleccione Aplicación>Gestión de inicio de aplicaciones;</string>
     <string name="boot_completed_huawei6">3. Busque F Fit y configure el interruptor en el estado apagado; al mismo tiempo, en la ventana emergente de administración manual que aparece, verifique todas las actividades de inicio automático, inicio asociado y fondo.</string>
     <string name="boot_completed_oppo1">1. Abra el administrador de teléfonos móviles y encuentre la privacidad de permisos en el administrador de teléfonos móviles;</string>
     <string name="boot_completed_oppo2">2. Busque la administración de inicio automático en la privacidad del permiso, haga clic para ingresar;</string>
@@ -948,15 +948,20 @@
     <string name="device_sport_rise">ascenso acumulativo</string>
     <string name="device_sport_decline">disminución acumulativa</string>
     <string name="device_sport_unit">metros</string>
-
+    <!--以下定制app翻译-->
     <string name="device_name">nombre del dispositivo</string>
     <string name="device_power">alimentación del dispositivo</string>
     <string name="device_version">número de versión del dispositivo</string>
     <string name="device_get_version">leer el número de versión ...</string>
-    <string name="qr_code">Utilice la cámara del teléfono móvil para escanear el código QR en el reloj para el enlace</string>
+    <string name="qr_code">Utilice la cámara del teléfono móvil para escanear el código QR en el reloj para vincularlo</string>
     <string name="qr_code_next">Siguiente paso</string>
     <string name="qr_code_title">código QR</string>
     <string name="qr_code_manual">manual</string>
     <string name="scan_title">Utilice la cámara del teléfono móvil para apuntar al código QR del reloj</string>
+    <string name="device_prepare1">El dispositivo está ocupado ...</string>
+    <string name="device_prepare2">Error en la solicitud</string>
+    <string name="device_prepare4">equipo de bajo consumo ...</string>
+    <string name="update_AGPS_date">actualizar datos AGPS</string>
+    <string name="update_AGPS_date_no">no es necesario actualizar los datos de AGPS</string>
     <!-- 西班牙 -->
 </resources>

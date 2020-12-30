@@ -979,7 +979,7 @@
     <string name="device_sport_rise">累计爬升</string>
     <string name="device_sport_decline">累计下降</string>
     <string name="device_sport_unit">米</string>
-
+    <!--以下定制app翻译-->
     <string name="device_name">设备名称</string>
     <string name="device_power">设备电量</string>
     <string name="device_version">设备版本号</string>
@@ -989,8 +989,10 @@
     <string name="qr_code_title">二维码</string>
     <string name="qr_code_manual">手动</string>
     <string name="scan_title">请使用手机摄像头对准手表二维码</string>
-
-
-
+    <string name="device_prepare1">设备忙碌中...</string>
+    <string name="device_prepare2">请求失败</string>
+    <string name="device_prepare4">设备电量低...</string>
+    <string name="update_AGPS_date">更新AGPS数据</string>
+    <string name="update_AGPS_date_no">不需要更新AGPS数据</string>
 
 </resources>
