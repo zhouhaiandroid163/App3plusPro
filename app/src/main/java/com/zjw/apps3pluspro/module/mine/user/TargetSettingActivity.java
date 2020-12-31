@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.base.BaseActivity;
+import com.zjw.apps3pluspro.bleservice.BroadcastTools;
 import com.zjw.apps3pluspro.network.NewVolleyRequest;
 import com.zjw.apps3pluspro.network.RequestJson;
 import com.zjw.apps3pluspro.network.ResultJson;
@@ -144,6 +145,8 @@ public class TargetSettingActivity extends BaseActivity {
     }
 
     private void uploadStep() {
+        BroadcastTools.sendBleTargetStepData(context);
+
         CalibrationData mCalibrationData = new CalibrationData();
         mCalibrationData.setSportTarget(mUserSetTools.get_user_exercise_target());
 
