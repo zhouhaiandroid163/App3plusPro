@@ -156,7 +156,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
             tvVersionName.setText(version_name);
         }
 
-//        layoutDeviceUpdate.setEnabled(false);
+        layoutDeviceUpdate.setEnabled(false);
 
         tvUnitYingzhi.setChecked(false);
         tvUnitGongzhi.setChecked(false);
