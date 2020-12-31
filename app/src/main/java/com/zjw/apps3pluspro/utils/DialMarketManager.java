@@ -108,6 +108,10 @@ public class DialMarketManager {
 
     public interface GetListOnFinishListen {
         void success();
+
+        void fail();
+
+        void error();
     }
 
     public ArrayList<ThemeMarketItem> themeMarketItems = new ArrayList<>();
@@ -138,15 +142,25 @@ public class DialMarketManager {
                         if (getListOnFinishListen != null) {
                             getListOnFinishListen.success();
                         }
+                    } else {
+                        if (getListOnFinishListen != null) {
+                            getListOnFinishListen.fail();
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    if (getListOnFinishListen != null) {
+                        getListOnFinishListen.fail();
+                    }
                 }
             }
 
             @Override
             public void onMyError(VolleyError arg0) {
                 MyLog.i(TAG, "getMainDialList arg0 = " + arg0);
+                if (getListOnFinishListen != null) {
+                    getListOnFinishListen.error();
+                }
             }
         });
     }
@@ -177,15 +191,25 @@ public class DialMarketManager {
                         if (getListOnFinishListen != null) {
                             getListOnFinishListen.success();
                         }
+                    } else {
+                        if (getListOnFinishListen != null) {
+                            getListOnFinishListen.error();
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    if (getListOnFinishListen != null) {
+                        getListOnFinishListen.error();
+                    }
                 }
             }
 
             @Override
             public void onMyError(VolleyError arg0) {
                 MyLog.i(TAG, "getMoreDialPageList arg0 = " + arg0);
+                if (getListOnFinishListen != null) {
+                    getListOnFinishListen.error();
+                }
             }
         });
     }

@@ -4,6 +4,7 @@ import android.content.Intent
 import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.adapter.ThemeMarketStyleAdapter
 import com.zjw.apps3pluspro.base.BaseActivity
+import com.zjw.apps3pluspro.utils.AppUtils
 import com.zjw.apps3pluspro.utils.AutoLoadListener
 import com.zjw.apps3pluspro.utils.AutoLoadListener.AutoLoadCallBack
 import com.zjw.apps3pluspro.utils.DialMarketManager
@@ -34,9 +35,17 @@ class ThemeMarketStyleActivity : BaseActivity() {
     override fun initDatas() {
         super.initDatas()
 
-        DialMarketManager.getInstance().getMoreDialPageList({
-            loadData()
-        },pageNum, dialTypeId)
+        DialMarketManager.getInstance().getMoreDialPageList(object : DialMarketManager.GetListOnFinishListen {
+            override fun success() {
+                loadData()
+            }
+            override fun fail() {
+                AppUtils.showToast(context, R.string.server_try_again_code0)
+            }
+            override fun error() {
+                AppUtils.showToast(context, R.string.net_worse_try_again)
+            }
+        }, pageNum, dialTypeId)
     }
 
     private fun loadData() {

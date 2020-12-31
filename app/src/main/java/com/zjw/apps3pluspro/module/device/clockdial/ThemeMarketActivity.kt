@@ -6,6 +6,7 @@ import com.zjw.apps3pluspro.adapter.ThemeMarketRecyclerAdapter
 import com.zjw.apps3pluspro.application.BaseApplication
 import com.zjw.apps3pluspro.base.BaseActivity
 import com.zjw.apps3pluspro.module.device.entity.ThemeMarketItem
+import com.zjw.apps3pluspro.utils.AppUtils
 import com.zjw.apps3pluspro.utils.DialMarketManager
 import kotlinx.android.synthetic.main.public_head.*
 import kotlinx.android.synthetic.main.theme_market_activity.*
@@ -33,9 +34,19 @@ class ThemeMarketActivity : BaseActivity() {
 //        mBleDeviceTools.setClockDialDataFormat(1);
 //        mBleDeviceTools.setClockDialGenerationMode(1);
 
-        DialMarketManager.getInstance().getMainDialList {
-            loadData()
-        }
+        DialMarketManager.getInstance().getMainDialList(object : DialMarketManager.GetListOnFinishListen {
+            override fun success() {
+                loadData()
+            }
+
+            override fun fail() {
+                AppUtils.showToast(context, R.string.server_try_again_code0)
+            }
+
+            override fun error() {
+                AppUtils.showToast(context, R.string.net_worse_try_again)
+            }
+        })
 //        if (DialMarketManager.getInstance().themeMarketItems.size > 0) {
 //            loadData()
 //        } else {

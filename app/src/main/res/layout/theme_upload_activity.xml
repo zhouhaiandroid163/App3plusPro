@@ -61,11 +61,11 @@
 
                 <TextView
                     android:id="@+id/tvThemeName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="164dp"
+                    android:layout_marginEnd="12dp"
                     android:ellipsize="end"
-                    android:lines="1"
                     android:text="@string/sleep_gang"
                     android:textColor="@color/white"
                     android:textSize="18sp"
@@ -113,9 +113,11 @@
 
                 <TextView
                     android:id="@+id/tvSummaryContent"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:layout_marginTop="6dp"
+                    android:layout_marginEnd="12dp"
                     android:text="@string/sleep_gang"
                     android:textColor="@color/text_color"
                     android:textSize="14sp"
