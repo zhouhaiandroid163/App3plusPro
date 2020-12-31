@@ -272,7 +272,18 @@ public class DeviceFragment extends BaseFragment {
         int device_height = mBleDeviceTools.get_device_theme_resolving_power_height();
         if (device_width > 0 && device_height > 0) {
             if (DialMarketManager.getInstance().dialMarketList.size() == 0) {
-                DialMarketManager.getInstance().getPageList(() -> initTheme());
+                DialMarketManager.getInstance().getPageList(new DialMarketManager.GetListOnFinishListen() {
+                    @Override
+                    public void success() {
+                        initTheme();
+                    }
+
+                    public void fail() {
+                    }
+
+                    public void error() {
+                    }
+                });
             } else {
                 initTheme();
             }
