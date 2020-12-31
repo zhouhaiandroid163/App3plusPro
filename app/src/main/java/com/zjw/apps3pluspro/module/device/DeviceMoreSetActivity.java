@@ -371,6 +371,9 @@ public class DeviceMoreSetActivity extends BaseActivity {
         EventTools.SafeUnregisterEventBus(this);
         unregisterReceiver(broadcastReceiver);
         unregisterReceiverLto();
+        if(protoHandler != null){
+            protoHandler.removeCallbacksAndMessages(null);
+        }
         super.onDestroy();
     }
 

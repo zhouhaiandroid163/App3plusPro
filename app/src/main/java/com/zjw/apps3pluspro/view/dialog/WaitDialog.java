@@ -66,9 +66,13 @@ public class WaitDialog {
 
     private void closeDialog() {
 
-        if (mDialog != null) {
-            mDialog.dismiss();
-            mDialog = null;
+        try {
+            if (mDialog != null) {
+                mDialog.dismiss();
+                mDialog = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -99,19 +103,23 @@ public class WaitDialog {
     }
 
     private void openDialog(String prompt) {
-        closeDialog();
-        mDialog = new Dialog(mActivity, android.R.style.Theme_Light_NoTitleBar);
-        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
-        mDialog.setContentView(R.layout.popup_waitdialog);
-        mDialog.setCancelable(true);
-        mDialog.setCanceledOnTouchOutside(false);
-        mDialog.show();
+        try {
+            closeDialog();
+            mDialog = new Dialog(mActivity, android.R.style.Theme_Light_NoTitleBar);
+            mDialog.getWindow().setBackgroundDrawable(new ColorDrawable());
+            mDialog.setContentView(R.layout.popup_waitdialog);
+            mDialog.setCancelable(true);
+            mDialog.setCanceledOnTouchOutside(false);
+            mDialog.show();
 
-        TextView tv = (TextView) mDialog.findViewById(R.id.waitdialog_text);
-        if (prompt == null || prompt.length() == 0)
-            tv.setVisibility(View.GONE);
-        else
-            tv.setText(prompt);
+            TextView tv = (TextView) mDialog.findViewById(R.id.waitdialog_text);
+            if (prompt == null || prompt.length() == 0)
+                tv.setVisibility(View.GONE);
+            else
+                tv.setText(prompt);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
