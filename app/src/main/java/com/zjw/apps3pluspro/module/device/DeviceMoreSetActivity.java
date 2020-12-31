@@ -35,6 +35,7 @@ import com.zjw.apps3pluspro.bleservice.BleTools;
 import com.zjw.apps3pluspro.bleservice.BroadcastTools;
 import com.zjw.apps3pluspro.bleservice.BtSerializeation;
 import com.zjw.apps3pluspro.bleservice.UpdateInfoService;
+import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoAGpsPrepareStatusSuccessEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusSuccessEvent;
@@ -267,17 +268,10 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 break;
             case R.id.layoutDeviceUpdate:
                 unregisterReceiverLto();
-                String version_name = BleTools.getDeviceVersionName(mBleDeviceTools);
-                if (!JavaUtil.checkIsNull(version_name)) {
-                    tvVersionName.setText(version_name);
-                    getNetDeviceVersion(mBleDeviceTools.get_ble_device_type(), mBleDeviceTools.get_ble_device_version(), mBleDeviceTools.get_device_platform_type());
+                if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
+                    update();
                 } else {
-                    if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
-                        AppUtils.showToast(context, R.string.device_get_version);
-                        getDeviceInfo();
-                    } else {
-                        AppUtils.showToast(context, R.string.no_connection_notification);
-                    }
+                    AppUtils.showToast(context, R.string.no_connection_notification);
                 }
                 break;
             case R.id.layoutRestoreFactory:
@@ -344,6 +338,8 @@ public class DeviceMoreSetActivity extends BaseActivity {
                     protoHandler = new Handler();
                     protoHandler.postDelayed(getDeviceStatusTimeOut, 10 * 1000);
                     writeRXCharacteristic(BtSerializeation.getBleData(null, BtSerializeation.CMD_01, BtSerializeation.KEY_AGPS));
+                } else {
+                    AppUtils.showToast(context, R.string.no_connection_notification);
                 }
                 break;
         }
@@ -463,7 +459,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                     String version_name = BleTools.getDeviceVersionName(mBleDeviceTools);
                     if (!JavaUtil.checkIsNull(version_name)) {
                         tvVersionName.setText(version_name);
-//                        getNetDeviceVersion(mBleDeviceTools.get_ble_device_type(), mBleDeviceTools.get_ble_device_version(), mBleDeviceTools.get_device_platform_type());
+                        getNetDeviceVersion(mBleDeviceTools.get_ble_device_type(), mBleDeviceTools.get_ble_device_version(), mBleDeviceTools.get_device_platform_type());
                     }
                     break;
                 case BroadcastTools.ACTION_UPDATE_LTO_SUCCESS:
@@ -545,7 +541,6 @@ public class DeviceMoreSetActivity extends BaseActivity {
                             tvVersionText.setText(getString(R.string.device_new_version));
                             tvVersionText.setTextColor(Color.RED);
                             layoutDeviceUpdate.setEnabled(true);
-                            update();
                         } else {
                             tvVersionText.setText(getString(R.string.already_new));
                             layoutDeviceUpdate.setEnabled(false);
@@ -784,6 +779,24 @@ public class DeviceMoreSetActivity extends BaseActivity {
 
         progressDialog.setOnDismissListener(dialog -> {
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void blueToothStateEvent(BlueToothStateEvent event) {
+        switch (event.state) {
+            case BleConstant.STATE_CONNECTING:
+                break;
+            case BleConstant.STATE_DISCONNECTED:
+                AppUtils.showToast(context, R.string.no_connection_notification);
+                finish();
+                break;
+            case BleConstant.STATE_CONNECTED_TIMEOUT:
+                break;
+            case BleConstant.STATE_CONNECTED:
+                break;
+            default:
+                break;
+        }
     }
 
 }
