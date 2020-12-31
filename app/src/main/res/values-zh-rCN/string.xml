@@ -811,37 +811,6 @@
     <string name="tourist_login">游客登录</string>
     <string name="consume">消耗</string>
     <string name="read_contacts_permission">请打开应用设置开启获取联系人权限</string>
-
-    <!-- 中文简体 -->
-
-    <!-- ========================其他======================== -->
-    <!-- 第三方APP名称 -->
-    <string name="app_wechat">微信</string>
-    <string name="app_linkedin">领英</string>
-    <string name="privilege_grant_failed">授权失败</string>
-    <string name="authorization_cancel">授权取消</string>
-    <string name="authorized_success">授权成功</string>
-    <string name="title_weixin">微信运动</string>
-    <string name="weixin_bingding">绑定</string>
-    <string name="weixin_bingding_ok">已绑定</string>
-    <string name="weixin_bingding_seccuss">绑定成功</string>
-    <string name="weixin_bingding_fail">绑定失败</string>
-    <string name="weixin_step0">点击下方“绑定”按钮，绑定设备。绑定成功后，状态会更改为“已绑定”，则进行下一步</string>
-    <string name="weixin_step1">在APP的“设备”页面，点击“解除绑定”</string>
-    <string name="weixin_step2">打开“微信”，搜索进入“微信运动”公众号，点击右上角“图标”</string>
-    <string name="weixin_step3">点击“数据来源”</string>
-    <string name="weixin_step4">点击“添加数据来源”</string>
-    <string name="weixin_step5">在搜索结果中，点击“运动健康生态圈”添加设备</string>
-    <string name="weixin_step6">设备添加成功，“数据来源”会显示“运动健康生态圈”，则数据会自动同步至微信运动</string>
-    <!-- 日历相关 -->
-    <string name="monday">一</string>
-    <string name="tuesday">二</string>
-    <string name="wednesday">三</string>
-    <string name="thursday">四</string>
-    <string name="friday">五</string>
-    <string name="saturday">六</string>
-    <string name="sunday">日</string>
-
     <!-- 表盘 -->
     <string name="summary">简介</string>
     <string name="style">样式</string>
@@ -994,5 +963,33 @@
     <string name="device_prepare4">设备电量低...</string>
     <string name="update_AGPS_date">更新AGPS数据</string>
     <string name="update_AGPS_date_no">不需要更新AGPS数据</string>
+    <!-- 中文简体 -->
 
+    <!-- ========================其他======================== -->
+    <!-- 第三方APP名称 -->
+    <string name="app_wechat">微信</string>
+    <string name="app_linkedin">领英</string>
+    <string name="privilege_grant_failed">授权失败</string>
+    <string name="authorization_cancel">授权取消</string>
+    <string name="authorized_success">授权成功</string>
+    <string name="title_weixin">微信运动</string>
+    <string name="weixin_bingding">绑定</string>
+    <string name="weixin_bingding_ok">已绑定</string>
+    <string name="weixin_bingding_seccuss">绑定成功</string>
+    <string name="weixin_bingding_fail">绑定失败</string>
+    <string name="weixin_step0">点击下方“绑定”按钮，绑定设备。绑定成功后，状态会更改为“已绑定”，则进行下一步</string>
+    <string name="weixin_step1">在APP的“设备”页面，点击“解除绑定”</string>
+    <string name="weixin_step2">打开“微信”，搜索进入“微信运动”公众号，点击右上角“图标”</string>
+    <string name="weixin_step3">点击“数据来源”</string>
+    <string name="weixin_step4">点击“添加数据来源”</string>
+    <string name="weixin_step5">在搜索结果中，点击“运动健康生态圈”添加设备</string>
+    <string name="weixin_step6">设备添加成功，“数据来源”会显示“运动健康生态圈”，则数据会自动同步至微信运动</string>
+    <!-- 日历相关 -->
+    <string name="monday">一</string>
+    <string name="tuesday">二</string>
+    <string name="wednesday">三</string>
+    <string name="thursday">四</string>
+    <string name="friday">五</string>
+    <string name="saturday">六</string>
+    <string name="sunday">日</string>
 </resources>

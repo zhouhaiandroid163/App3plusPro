@@ -811,110 +811,6 @@
     <string name="tourist_login">visitor login</string>
     <string name="consume">consumption</string>
     <string name="read_contacts_permission"> Please open the application settings to enable access to contact permissions</string>
-    <!-- 默认英文 -->
-
-    <!-- ========================其他======================== -->
-    <!-- 不需要翻译的 -->
-    <string name="app_name">3+ PRO</string>
-    <string name="sleep_gang">- -</string>
-    <string name="device_new_version">New</string>
-    <string name="format_of_clock_24">24h</string>
-    <string name="format_of_clock_12">12h</string>
-    <string name="app_user_uid">ID:</string>
-    <string name="sport_met">MET-min</string>
-    <string name="centigrade">℃</string>
-    <string name="fahrenheit_degree">℉</string>
-    <string name="no_data_default">- -</string>
-    <string name="pace_unit">min/km</string>
-    <string name="speed_unit">km/h</string>
-    <string name="crash_log_tip">Sorry,there is something wrong with the program. We are about to exit</string>
-    <!-- y友盟相关 -->
-    <string name="umeng_socialize_female">女</string>
-    <string name="umeng_socialize_male">男</string>
-    <string name="facebook_app_id">132119704064836080123</string>
-    <!-- dfu 相关-->
-    <string name="dfu_uploading_percentage_label">0%</string>
-    <string name="dfu_uploading_percentage">%d%%</string>
-    <string name="dfu_file_status_ok">OK</string>
-    <string name="dfu_file_size_text">%d bytes</string>
-    <string name="dfu_not_available">n/a</string>
-    <!-- 单位 相关-->
-    <string name="bpm">bpm</string>
-    <string name="mmHg">mmHg</string>
-    <string name="centimeter">cm</string>
-    <string name="kg">Kg</string>
-    <string name="big_calory">Kcal</string>
-    <string name="sport_distance_unit">km</string>
-    <string name="unit_in">In</string><!--  英尺-对应厘米-->
-    <string name="unit_lb">Lb</string><!--  英镑-对应公斤-->
-    <string name="unit_mi">Mi</string><!--  英里-对应千米-->
-    <string name="unit_spo2">SpO2</string><!--  英里-对应千米-->
-    <!-- 第三方APP名称 -->
-    <string name="app_wechat">WeChat</string>
-    <string name="app_linkedin">Linkedin</string>
-    <string name="app_twitter">Twitter</string>
-    <string name="app_viber">Viber</string>
-    <string name="app_line">Line</string>
-    <string name="app_qq">QQ</string>
-    <string name="app_skype">Skype</string>
-    <string name="app_facebook">Facebook Messenger</string>
-    <string name="app_whatapp">WhatsApp</string>
-    <string name="app_gmail">Gmail</string>
-    <string name="app_outlook">Outlook</string>
-    <string name="app_instagram">Instagram</string>
-    <string name="app_snapchat">Snapchat</string>
-    <string name="app_iosmail">Iosmail</string>
-    <string name="app_zalo">Zalo</string>
-    <string name="app_telegram">Telegram</string>
-    <string name="app_youtube">YouTube</string>
-    <string name="app_kakao_talk">KakaoTalk</string>
-    <string name="app_vk">VK</string>
-    <string name="app_ok">OK</string>
-    <string name="app_icq">ICQ</string>
-    <string name="notiface_wx_no_prompt1">“微信”正在运行</string>
-    <string name="notiface_wx_no_prompt2">触摸即可了解详情或停止应用</string>
-    <string name="notiface_wx_no_prompt3">点击了解详情或停止应用</string>
-    <!-- 检查服务器地址 -->
-    <string name="check_reques_url_msg">Informal server</string>
-    <!-- 推送屏蔽内容-->
-    <string name="notiface_no_prompt1">QQ正在后台运行</string>
-    <string name="notiface_no_prompt2">了解详情或停止应用</string>
-    <string name="notiface_skype_no_prompt1">Skype:未接通</string>
-    <string name="notiface_skype_no_prompt2">Skype:在线</string>
-    <string name="notiface_skype_no_prompt3">Skype:無法接通</string>
-    <string name="notiface_skype_no_prompt4">Skype:上線</string>
-    <string name="notiface_skype_no_prompt5">Skype:Not connected</string>
-    <string name="notiface_skype_no_prompt6">Skype:Available</string>
-    <string name="notiface_facebook_no_prompt1">浮动聊天头像使用中</string>
-    <string name="notiface_facebook_no_prompt2">聊天大頭貼使用中</string>
-    <string name="notiface_facebook_no_prompt3">Chat heads active</string>
-    <string name="notiface_snapchat_no_prompt1">Running...</string>
-    <string name="notiface_snapchat_no_prompt2">Running…</string>
-    <!-- 只翻译中英文-->
-    <string name="privilege_grant_failed">Authorization failure</string>
-    <string name="authorization_cancel">Authorization to cancel</string>
-    <string name="authorized_success">Authorization success</string>
-    <string name="title_weixin">WeRun</string>
-    <string name="weixin_bingding">Bind</string>
-    <string name="weixin_bingding_ok">Bound</string>
-    <string name="weixin_bingding_seccuss">Binding success</string>
-    <string name="weixin_bingding_fail">Bindings failure</string>
-    <string name="weixin_step0">Click on the \"Bind\" button below to bind the device. After the binding is successful, the status changes to \"Bound\", then proceed to the next step</string>
-    <string name="weixin_step1">On the "Device Management" page of APP, click "Disconnect Device"</string>
-    <string name="weixin_step2">Open \"WeChat\", search into the \"WeRun\" public number, click on the upper right corner \"icon\"</string>
-    <string name="weixin_step3">Click \"Record Fitness Data\"</string>
-    <string name="weixin_step4">Click \"Add data source\"</string>
-    <string name="weixin_step5">In the search results, click on\"运动健康生态圈\" to add device</string>
-    <string name="weixin_step6">After the device is added successfully, \"Record Fitness Data\" will display \"运动健康生态圈\", the data will be automatically synchronized to WeChat Sports</string>
-    <!-- 日历相关 -->
-    <string name="monday">Mon</string>
-    <string name="tuesday">Tue</string>
-    <string name="wednesday">Wed</string>
-    <string name="thursday">Thu</string>
-    <string name="friday">Fri</string>
-    <string name="saturday">Sat</string>
-    <string name="sunday">Sun</string>
-
     <!-- 表盘 -->
     <string name="summary">Summary</string>
     <string name="style">Type</string>
@@ -1067,5 +963,107 @@
     <string name="device_prepare4">The battery is low...</string>
     <string name="update_AGPS_date">Update AGPS data</string>
     <string name="update_AGPS_date_no">No need to update AGPS data</string>
+    <!-- 默认英文 -->
 
+    <!-- ========================其他======================== -->
+    <!-- 不需要翻译的 -->
+    <string name="app_name">3+ PRO</string>
+    <string name="sleep_gang">- -</string>
+    <string name="device_new_version">New</string>
+    <string name="format_of_clock_24">24h</string>
+    <string name="format_of_clock_12">12h</string>
+    <string name="app_user_uid">ID:</string>
+    <string name="sport_met">MET-min</string>
+    <string name="centigrade">℃</string>
+    <string name="fahrenheit_degree">℉</string>
+    <string name="no_data_default">- -</string>
+    <string name="pace_unit">min/km</string>
+    <string name="speed_unit">km/h</string>
+    <string name="crash_log_tip">Sorry,there is something wrong with the program. We are about to exit</string>
+    <!-- y友盟相关 -->
+    <string name="umeng_socialize_female">女</string>
+    <string name="umeng_socialize_male">男</string>
+    <string name="facebook_app_id">132119704064836080123</string>
+    <!-- dfu 相关-->
+    <string name="dfu_uploading_percentage_label">0%</string>
+    <string name="dfu_uploading_percentage">%d%%</string>
+    <string name="dfu_file_status_ok">OK</string>
+    <string name="dfu_file_size_text">%d bytes</string>
+    <string name="dfu_not_available">n/a</string>
+    <!-- 单位 相关-->
+    <string name="bpm">bpm</string>
+    <string name="mmHg">mmHg</string>
+    <string name="centimeter">cm</string>
+    <string name="kg">Kg</string>
+    <string name="big_calory">Kcal</string>
+    <string name="sport_distance_unit">km</string>
+    <string name="unit_in">In</string><!--  英尺-对应厘米-->
+    <string name="unit_lb">Lb</string><!--  英镑-对应公斤-->
+    <string name="unit_mi">Mi</string><!--  英里-对应千米-->
+    <string name="unit_spo2">SpO2</string><!--  英里-对应千米-->
+    <!-- 第三方APP名称 -->
+    <string name="app_wechat">WeChat</string>
+    <string name="app_linkedin">Linkedin</string>
+    <string name="app_twitter">Twitter</string>
+    <string name="app_viber">Viber</string>
+    <string name="app_line">Line</string>
+    <string name="app_qq">QQ</string>
+    <string name="app_skype">Skype</string>
+    <string name="app_facebook">Facebook Messenger</string>
+    <string name="app_whatapp">WhatsApp</string>
+    <string name="app_gmail">Gmail</string>
+    <string name="app_outlook">Outlook</string>
+    <string name="app_instagram">Instagram</string>
+    <string name="app_snapchat">Snapchat</string>
+    <string name="app_iosmail">Iosmail</string>
+    <string name="app_zalo">Zalo</string>
+    <string name="app_telegram">Telegram</string>
+    <string name="app_youtube">YouTube</string>
+    <string name="app_kakao_talk">KakaoTalk</string>
+    <string name="app_vk">VK</string>
+    <string name="app_ok">OK</string>
+    <string name="app_icq">ICQ</string>
+    <string name="notiface_wx_no_prompt1">“微信”正在运行</string>
+    <string name="notiface_wx_no_prompt2">触摸即可了解详情或停止应用</string>
+    <string name="notiface_wx_no_prompt3">点击了解详情或停止应用</string>
+    <!-- 检查服务器地址 -->
+    <string name="check_reques_url_msg">Informal server</string>
+    <!-- 推送屏蔽内容-->
+    <string name="notiface_no_prompt1">QQ正在后台运行</string>
+    <string name="notiface_no_prompt2">了解详情或停止应用</string>
+    <string name="notiface_skype_no_prompt1">Skype:未接通</string>
+    <string name="notiface_skype_no_prompt2">Skype:在线</string>
+    <string name="notiface_skype_no_prompt3">Skype:無法接通</string>
+    <string name="notiface_skype_no_prompt4">Skype:上線</string>
+    <string name="notiface_skype_no_prompt5">Skype:Not connected</string>
+    <string name="notiface_skype_no_prompt6">Skype:Available</string>
+    <string name="notiface_facebook_no_prompt1">浮动聊天头像使用中</string>
+    <string name="notiface_facebook_no_prompt2">聊天大頭貼使用中</string>
+    <string name="notiface_facebook_no_prompt3">Chat heads active</string>
+    <string name="notiface_snapchat_no_prompt1">Running...</string>
+    <string name="notiface_snapchat_no_prompt2">Running…</string>
+    <!-- 只翻译中英文-->
+    <string name="privilege_grant_failed">Authorization failure</string>
+    <string name="authorization_cancel">Authorization to cancel</string>
+    <string name="authorized_success">Authorization success</string>
+    <string name="title_weixin">WeRun</string>
+    <string name="weixin_bingding">Bind</string>
+    <string name="weixin_bingding_ok">Bound</string>
+    <string name="weixin_bingding_seccuss">Binding success</string>
+    <string name="weixin_bingding_fail">Bindings failure</string>
+    <string name="weixin_step0">Click on the \"Bind\" button below to bind the device. After the binding is successful, the status changes to \"Bound\", then proceed to the next step</string>
+    <string name="weixin_step1">On the "Device Management" page of APP, click "Disconnect Device"</string>
+    <string name="weixin_step2">Open \"WeChat\", search into the \"WeRun\" public number, click on the upper right corner \"icon\"</string>
+    <string name="weixin_step3">Click \"Record Fitness Data\"</string>
+    <string name="weixin_step4">Click \"Add data source\"</string>
+    <string name="weixin_step5">In the search results, click on\"运动健康生态圈\" to add device</string>
+    <string name="weixin_step6">After the device is added successfully, \"Record Fitness Data\" will display \"运动健康生态圈\", the data will be automatically synchronized to WeChat Sports</string>
+    <!-- 日历相关 -->
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tue</string>
+    <string name="wednesday">Wed</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
+    <string name="saturday">Sat</string>
+    <string name="sunday">Sun</string>
 </resources>
