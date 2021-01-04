@@ -1148,21 +1148,22 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
                 break;
             case Constants.TailoringResult:
                 MyLog.i(TAG, "回调 裁剪完成 imageUri = " + imageUri);
-
-
-                if (imageUri != null) {
-                    try {
-                        Bitmap head = BmpUtils.decodeUriAsBitmap(mContext, imageUri);
-                        if (head != null) {
-                            setPicToView(head);// 保存在SD卡中
-                            ci_mines_head.setImageBitmap(head);// 用ImageView显示出来
-                            uploadImage(Constants.HEAD_IMG + "head" + BaseApplication.getUserId() + ".png");
+                if (resultCode == RESULT_OK) {
+                    if (imageUri != null) {
+                        try {
+                            Bitmap head = BmpUtils.decodeUriAsBitmap(mContext, imageUri);
+                            if (head != null) {
+                                setPicToView(head);// 保存在SD卡中
+                                ci_mines_head.setImageBitmap(head);// 用ImageView显示出来
+                                uploadImage(Constants.HEAD_IMG + "head" + BaseApplication.getUserId() + ".png");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
 
+                    }
                 }
+
                 break;
 
 

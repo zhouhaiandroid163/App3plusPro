@@ -379,7 +379,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            android:text="@string/already_new"
+                            android:text=""
                             android:textColor="@color/white_50"
                             android:textSize="15sp" />
 
@@ -389,7 +389,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dip"
                             android:gravity="center_vertical"
-                            android:text="(1.1.0)"
+                            android:text=""
                             android:textColor="@color/white_50"
                             android:textSize="15sp" />
                     </LinearLayout>

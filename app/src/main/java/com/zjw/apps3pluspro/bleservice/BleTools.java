@@ -632,7 +632,7 @@ public class BleTools {
 
     public static String getDeviceVersionName(BleDeviceTools mBleDeviceTools) {
 
-        String result = "1.1.0";
+        String result = "--";
 
         int device_type = mBleDeviceTools.get_ble_device_type();
         int device_version = mBleDeviceTools.get_ble_device_version();

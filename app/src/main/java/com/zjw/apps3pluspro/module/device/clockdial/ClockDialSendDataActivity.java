@@ -1,6 +1,7 @@
 package com.zjw.apps3pluspro.module.device.clockdial;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -552,12 +553,14 @@ public class ClockDialSendDataActivity extends BaseActivity implements View.OnCl
                 break;
             case Constants.TailoringResult:
                 MyLog.i(TAG, "回调 裁剪完成 imageUri = " + imageUri);
-
-                if (imageUri != null) {
-                    Bitmap bitmap = BmpUtils.decodeUriAsBitmap(mContext, imageUri);
+                if(resultCode == Activity.RESULT_OK){
+                    if (imageUri != null) {
+                        Bitmap bitmap = BmpUtils.decodeUriAsBitmap(mContext, imageUri);
 //                    setPicToView(bitmap);// 保存在SD卡中
-                    handleBitmap(bitmap);
+                        handleBitmap(bitmap);
+                    }
                 }
+
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);

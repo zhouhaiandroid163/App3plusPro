@@ -37,6 +37,7 @@ import com.zjw.apps3pluspro.module.device.clockdial.custom.MyCustomClockUtils
 import com.zjw.apps3pluspro.module.device.entity.ThemeDetails
 import com.zjw.apps3pluspro.module.device.entity.ThemeMarketItem
 import com.zjw.apps3pluspro.module.device.entity.ThemeModle
+import com.zjw.apps3pluspro.network.okhttp.MyOkHttpClient
 import com.zjw.apps3pluspro.utils.*
 import com.zjw.apps3pluspro.utils.DialMarketManager.GetDialDetailsListen
 import com.zjw.apps3pluspro.utils.log.MyLog
@@ -128,13 +129,17 @@ class ThemeUploadActivity : BaseActivity() {
         bitmapUtils.display(ivThemeMain, dialInfo.effectImgUrl)
         tvThemeName.text = dialInfo.dialName
 
+        waitDialog?.show(getString(R.string.loading0))
         DialMarketManager.getInstance().getDialDetails(dialInfo.dialId, object : GetDialDetailsListen {
             override fun success(themeDetails: ThemeDetails) {
+                waitDialog?.close()
                 updateUi(themeDetails)
             }
 
             override fun error(code: Int) {
+                waitDialog?.close()
                 AppUtils.showToast(context, R.string.data_try_again_code1)
+                finish()
             }
         })
 
@@ -267,10 +272,24 @@ class ThemeUploadActivity : BaseActivity() {
                 showSelectColor()
             }
             R.id.tvThemeUpload -> {
-                if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
-                    uploadTheme()
-                } else {
-                    waitDialog!!.show(getString(R.string.index_tip_no_connect1))
+                try {
+                    if (MyOkHttpClient.getInstance().isConnect(context)) {
+                        if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
+                            uploadTheme()
+                        } else {
+                            waitDialog!!.show(getString(R.string.index_tip_no_connect1))
+
+                            val handle = Handler()
+                            handle.postDelayed({
+                                waitDialog?.close()
+                                finish()
+                            }, 2000)
+                        }
+                    } else {
+                        AppUtils.showToast(context, R.string.net_worse_try_again)
+                    }
+                } catch (e: Exception) {
+                    waitDialog!!.show(getString(R.string.device_prepare2))
 
                     val handle = Handler()
                     handle.postDelayed({
@@ -278,6 +297,7 @@ class ThemeUploadActivity : BaseActivity() {
                         finish()
                     }, 2000)
                 }
+
             }
             R.id.layoutSelectPicture -> {
                 if (AuthorityManagement.verifyStoragePermissions(this)) {
@@ -1234,11 +1254,14 @@ class ThemeUploadActivity : BaseActivity() {
             }
             Constants.TailoringResult -> {
                 MyLog.i(TAG, "回调 裁剪完成 imageUri = $imageUri")
-                if (imageUri != null) {
-                    val bitmap = BmpUtils.decodeUriAsBitmap(context, imageUri)
-                    //                    setPicToView(bitmap);// 保存在SD卡中
-                    handleBitmap(bitmap)
+                if(resultCode == Activity.RESULT_OK){
+                    if (imageUri != null) {
+                        val bitmap = BmpUtils.decodeUriAsBitmap(context, imageUri)
+                        //                    setPicToView(bitmap);// 保存在SD卡中
+                        handleBitmap(bitmap)
+                    }
                 }
+
             }
         }
         super.onActivityResult(requestCode, resultCode, data)

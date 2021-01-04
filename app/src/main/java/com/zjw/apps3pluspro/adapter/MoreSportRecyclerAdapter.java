@@ -63,6 +63,8 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
         itemHolder.layoutData1.setVisibility(View.VISIBLE);
         itemHolder.layoutData4.setVisibility(View.GONE);
         itemHolder.layoutData5.setVisibility(View.GONE);
+        itemHolder.layoutDataUI0.setVisibility(View.GONE);
+        itemHolder.layoutDataUI1.setVisibility(View.GONE);
 
         if (mSportModleInfo.getDataSourceType() == 0) {
             itemHolder.tvSportName.setText(SportModleUtils.getSportTypeStr(context, mSportModleInfo.getSport_type()));
@@ -130,25 +132,25 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
         }
 
         if (mSportModleInfo.getDataSourceType() == 0) {
+            itemHolder.layoutData1.setVisibility(View.GONE);
             switch (ui_type) {
                 case "0":
-                    itemHolder.tvValue1.setText(step + "");
-                    itemHolder.tvValue2.setText(context.getResources().getString(R.string.steps) + "，" + context.getResources().getString(R.string.sport_time) + " " + NewTimeUtils.getTimeString(Long.parseLong(duration)));
+                    itemHolder.layoutDataUI0.setVisibility(View.VISIBLE);
+                    itemHolder.tvStepsUI0.setText(step + "");
+                    itemHolder.tvDurationUI0.setText(NewTimeUtils.getTimeString(Long.parseLong(duration)));
                     break;
                 case "1":
-                    itemHolder.tvValue1.setText(kcal + "");
-                    itemHolder.tvValue2.setText(context.getResources().getString(R.string.big_calory) + "，" + context.getResources().getString(R.string.sport_time) + " " + NewTimeUtils.getTimeString(Long.parseLong(duration)));
+                    itemHolder.layoutDataUI1.setVisibility(View.VISIBLE);
+                    itemHolder.tvCalUI1.setText(kcal + "");
+                    itemHolder.tvDurationUI1.setText(NewTimeUtils.getTimeString(Long.parseLong(duration)));
                     break;
                 case "4":
                 case "5":
                     if (ui_type.equalsIgnoreCase("4")) {
                         itemHolder.layoutSpeed.setVisibility(View.GONE);
-
-                        itemHolder.layoutData1.setVisibility(View.GONE);
                         itemHolder.layoutData4.setVisibility(View.VISIBLE);
                         itemHolder.layoutData5.setVisibility(View.GONE);
                     } else if (ui_type.equalsIgnoreCase("5")) {
-                        itemHolder.layoutData1.setVisibility(View.GONE);
                         itemHolder.layoutData4.setVisibility(View.GONE);
                         itemHolder.layoutData5.setVisibility(View.VISIBLE);
                     }
@@ -168,11 +170,11 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
                         long distance = Long.parseLong(my_distance);
 
                         double pace = 0;
-                        if(distance != 0){
+                        if (distance != 0) {
                             pace = duration11 / (distance / 1000f);
                         }
 
-                        String formatPace = String.format("%1$02d'%2$02d\"", (int)(pace / 60), (int)(pace % 60));
+                        String formatPace = String.format("%1$02d'%2$02d\"", (int) (pace / 60), (int) (pace % 60));
                         itemHolder.tvPace.setText(formatPace);
                         itemHolder.tvPace5.setText(formatPace);
 
@@ -238,6 +240,10 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
         ConstraintLayout layoutData4;
         @BindView(R.id.layoutData5)
         ConstraintLayout layoutData5;
+        @BindView(R.id.layoutDataUI0)
+        ConstraintLayout layoutDataUI0;
+        @BindView(R.id.layoutDataUI1)
+        ConstraintLayout layoutDataUI1;
 
         @BindView(R.id.tvDuration)
         TextView tvDuration;
@@ -270,6 +276,16 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
         TextView tvSpeed5;
         @BindView(R.id.tvSpeedUnit5)
         TextView tvSpeedUnit5;
+
+        @BindView(R.id.tvStepsUI0)
+        TextView tvStepsUI0;
+        @BindView(R.id.tvDurationUI0)
+        TextView tvDurationUI0;
+
+        @BindView(R.id.tvCalUI1)
+        TextView tvCalUI1;
+        @BindView(R.id.tvDurationUI1)
+        TextView tvDurationUI1;
 
 
         ItemHolder(View itemView) {

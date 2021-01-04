@@ -51,6 +51,7 @@ import com.zjw.apps3pluspro.network.ResultJson;
 import com.zjw.apps3pluspro.network.VolleyInterface;
 import com.zjw.apps3pluspro.network.entity.RequestInfo;
 import com.zjw.apps3pluspro.network.javabean.DeviceBean;
+import com.zjw.apps3pluspro.network.okhttp.MyOkHttpClient;
 import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
 import com.zjw.apps3pluspro.sharedpreferences.UserSetTools;
 import com.zjw.apps3pluspro.utils.AppUtils;
@@ -156,8 +157,6 @@ public class DeviceMoreSetActivity extends BaseActivity {
             tvVersionName.setText(version_name);
         }
 
-        layoutDeviceUpdate.setEnabled(false);
-
         tvUnitYingzhi.setChecked(false);
         tvUnitGongzhi.setChecked(false);
         tvClock12.setChecked(false);
@@ -193,14 +192,6 @@ public class DeviceMoreSetActivity extends BaseActivity {
             layoutPage.setVisibility(View.GONE);
             indexPage.setVisibility(View.GONE);
         }
-
-//        if (mBleDeviceTools.get_is_weather()) {
-//            layoutWeather.setVisibility(View.VISIBLE);
-//            weatherIndex.setVisibility(View.VISIBLE);
-//        } else {
-//            layoutWeather.setVisibility(View.GONE);
-//            weatherIndex.setVisibility(View.GONE);
-//        }
 
         if (mBleDeviceTools.getIsGpsSensor()) {
             layoutUpdateAGpsDate.setVisibility(View.VISIBLE);
@@ -247,6 +238,8 @@ public class DeviceMoreSetActivity extends BaseActivity {
 
     private WaitDialog waitDialog;
 
+    private boolean isClick = false;
+
     @OnClick({R.id.layoutDeviceUpdate, R.id.layoutWearType, R.id.layoutPage,
             R.id.tvUnitGongzhi, R.id.tvUnitYingzhi,
             R.id.tvClock24, R.id.tvClock12, R.id.layoutUnBind,
@@ -267,9 +260,10 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 startActivity(intent2);
                 break;
             case R.id.layoutDeviceUpdate:
+                isClick = true;
                 unregisterReceiverLto();
                 if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
-                    update();
+                    getDeviceInfo();
                 } else {
                     AppUtils.showToast(context, R.string.no_connection_notification);
                 }
@@ -333,11 +327,15 @@ public class DeviceMoreSetActivity extends BaseActivity {
             case R.id.layoutUpdateAGpsDate:
                 SysUtils.makeRootDirectory(Constants.UPDATE_DEVICE_FILE);
                 if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
-                    initBroadcastReceiverLto();
-                    waitDialog.show(getResources().getString(R.string.ignored));
-                    protoHandler = new Handler();
-                    protoHandler.postDelayed(getDeviceStatusTimeOut, 10 * 1000);
-                    writeRXCharacteristic(BtSerializeation.getBleData(null, BtSerializeation.CMD_01, BtSerializeation.KEY_AGPS));
+                    if (MyOkHttpClient.getInstance().isConnect(context)) {
+                        initBroadcastReceiverLto();
+                        waitDialog.show(getResources().getString(R.string.ignored));
+                        protoHandler = new Handler();
+                        protoHandler.postDelayed(getDeviceStatusTimeOut, 10 * 1000);
+                        writeRXCharacteristic(BtSerializeation.getBleData(null, BtSerializeation.CMD_01, BtSerializeation.KEY_AGPS));
+                    } else {
+                        AppUtils.showToast(context, R.string.net_worse_try_again);
+                    }
                 } else {
                     AppUtils.showToast(context, R.string.no_connection_notification);
                 }
@@ -357,7 +355,6 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 MyLog.i(TAG, "升级成功！");
                 tvVersionText.setText(getString(R.string.already_new));
                 tvVersionText.setTextColor(Color.BLACK);
-//                layoutDeviceUpdate.setEnabled(false);
                 finish();
             } else {
                 finish();
@@ -371,7 +368,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
         EventTools.SafeUnregisterEventBus(this);
         unregisterReceiver(broadcastReceiver);
         unregisterReceiverLto();
-        if(protoHandler != null){
+        if (protoHandler != null) {
             protoHandler.removeCallbacksAndMessages(null);
         }
         super.onDestroy();
@@ -543,26 +540,29 @@ public class DeviceMoreSetActivity extends BaseActivity {
                             MyLog.i(TAG, "固件升级 08 手环管理 需要升级 ");
                             tvVersionText.setText(getString(R.string.device_new_version));
                             tvVersionText.setTextColor(Color.RED);
-                            layoutDeviceUpdate.setEnabled(true);
+
+                            if (isClick) {
+                                update();
+                            }
                         } else {
+                            closeDialog();
                             tvVersionText.setText(getString(R.string.already_new));
-                            layoutDeviceUpdate.setEnabled(false);
                             MyLog.i(TAG, "固件升级 08 手环管理 不需要升级 ");
                         }
 
                     } else if (mDeviceBean.isOk() == 2) {
+                        closeDialog();
                         MyLog.i(TAG, "请求接口-获取设备版本号 未找到数据");
                         tvVersionText.setText(getString(R.string.already_new));
-//                        layoutDeviceUpdate.setEnabled(false);
                     } else {
+                        closeDialog();
                         MyLog.i(TAG, "请求接口-获取设备版本号 请求异常(1)");
                         tvVersionText.setText(getString(R.string.already_new));
-//                        layoutDeviceUpdate.setEnabled(false);
                     }
                     //请求失败
                 } else {
+                    closeDialog();
                     tvVersionText.setText(getString(R.string.already_new));
-//                    layoutDeviceUpdate.setEnabled(false);
                     MyLog.i(TAG, "请求接口-获取设备版本号 请求异常(0)");
                 }
             }
@@ -574,6 +574,14 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 AppUtils.showToast(mContext, R.string.net_worse_try_again);
             }
         });
+    }
+
+    private void closeDialog() {
+        if (isClick) {
+            Handler mHandler = new Handler();
+            waitDialog.show(getResources().getString(R.string.already_new));
+            mHandler.postDelayed(() -> waitDialog.close(), Constants.FINISH_ACTIVITY_DELAY_TIME);
+        }
     }
 
     private void update() {

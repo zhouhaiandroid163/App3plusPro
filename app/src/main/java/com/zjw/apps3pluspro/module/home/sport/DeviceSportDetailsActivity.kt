@@ -43,7 +43,7 @@ import java.text.DecimalFormat
 import java.util.*
 
 @Suppress("DEPRECATION")
-class DeviceSportDetailsActivity : BaseActivity(),OnMapReadyCallback{
+class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
     private val TAG = DeviceSportDetailsActivity::class.java.simpleName
     private var sportType: Int = 0
     var sportModleInfo: SportModleInfo? = null
@@ -84,6 +84,7 @@ class DeviceSportDetailsActivity : BaseActivity(),OnMapReadyCallback{
             viewGone()
         }
     }
+
     override fun initDatas() {
         super.initDatas()
         initViewData()
@@ -116,7 +117,7 @@ class DeviceSportDetailsActivity : BaseActivity(),OnMapReadyCallback{
 
         tvTitleValue1.text = NewTimeUtils.getTimeString(sportModleInfo?.reportDuration!!)
         tvTitleValue2.text = NewTimeUtils.getStringDate(sportModleInfo?.reportSportStartTime!!, NewTimeUtils.HHMMSS) + " - " + NewTimeUtils.getStringDate(sportModleInfo?.reportSportEndTime!!, NewTimeUtils.HHMMSS)
-        tvTitleValue3.text = sportModleInfo?.reportDistance.toString() + resources.getString(R.string.device_sport_unit)
+        tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0) + resources.getString(R.string.device_sport_unit)
         tvTitleValue4.text = sportModleInfo?.reportCal.toString() + resources.getString(R.string.big_calory)
         tvTitleValue5.text = avgPaceString
         tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + resources.getString(R.string.speed_unit)
@@ -369,6 +370,7 @@ class DeviceSportDetailsActivity : BaseActivity(),OnMapReadyCallback{
             mHeightCurveChartView.setParameter(xData, yData)
         }
     }
+
     fun viewGone() {
         val recordPointDataValid1 = BleTools.toBinary(sportModleInfo?.recordPointDataValid1!!, 8);
         val recordPointDataValid2 = BleTools.toBinary(sportModleInfo?.recordPointDataValid2!!, 8);

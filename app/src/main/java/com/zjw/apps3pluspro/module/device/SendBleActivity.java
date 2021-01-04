@@ -1,6 +1,7 @@
 package com.zjw.apps3pluspro.module.device;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -784,11 +785,9 @@ public class SendBleActivity extends BaseActivity implements View.OnClickListene
             case Constants.TailoringResult:
 
                 MyLog.i(TAG, "回调 裁剪完成 imageUri = " + imageUri);
-
-                if (imageUri != null) {
-                    Bitmap bitmap = BmpUtils.decodeUriAsBitmap(mContext, imageUri);
-
-
+                if(resultCode == Activity.RESULT_OK){
+                    if (imageUri != null) {
+                        Bitmap bitmap = BmpUtils.decodeUriAsBitmap(mContext, imageUri);
 //
 //                    custom_black_bg.setDrawingCacheEnabled(true);
 //                    custom_black_bg.buildDrawingCache();
@@ -808,13 +807,11 @@ public class SendBleActivity extends BaseActivity implements View.OnClickListene
 //                       MyLog.i(TAG,"处理图片 = dstbmp0 = null");
 //                    }
 
-                    handleBitmap(bitmap);
+                        handleBitmap(bitmap);
+                    }
                 }
 
-
                 break;
-
-
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
