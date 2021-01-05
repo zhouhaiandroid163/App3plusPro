@@ -212,6 +212,14 @@ class SleepHistoryActivity : BaseActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        //图表
+        if (sleep_list_data != null && sleep_list_data!!.size != 0) {
+            MyChartUtils.showDaySleepView(this@SleepHistoryActivity, sleep_list_data, rl_sleep_details_chart_view1, rl_sleep_details_chart_view2, rl_sleep_details_chart_view3)
+        }
+    }
+
     private fun noData() {
         sleep_details_lin_data_yes.visibility = View.GONE
         sleep_details_seek_data_yes.visibility = View.GONE

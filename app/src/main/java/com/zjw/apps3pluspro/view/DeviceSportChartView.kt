@@ -58,7 +58,7 @@ class DeviceSportChartView(context: Context?, attrs: AttributeSet?) : View(conte
         paintStandardLine.strokeWidth = dp2px(1).toFloat()
         paintStandardLine.isAntiAlias = true
         paintStandardLine.style = Paint.Style.FILL
-        paintStandardLine.color = ContextCompat.getColor(context!!, R.color.color_DDDDDD)
+        paintStandardLine.color = ContextCompat.getColor(context!!, R.color.color_878B90)
         paintStandardLine.textSize = sp2px(10).toFloat()
 
         padding = dp2px(6)

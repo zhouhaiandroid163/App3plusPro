@@ -42,14 +42,14 @@ class RoundProgress2View(context: Context?, attrs: AttributeSet?) : View(context
         paint.color = ContextCompat.getColor(context!!, R.color.bt_text_color)
         canvas.drawArc(rectF, -90f, 360f, false, paint)
 
-        paint.color = ContextCompat.getColor(context!!, R.color.multiProgressView1)
-        canvas.drawArc(rectF, -90f, 360f * angleProgress1, false, paint)
-
-        paint.color = ContextCompat.getColor(context!!, R.color.multiProgressView2)
-        canvas.drawArc(rectF, -90f, 360f * angleProgress2, false, paint)
+//        paint.color = ContextCompat.getColor(context!!, R.color.multiProgressView1)
+//        canvas.drawArc(rectF, -90f, 360f * angleProgress1, false, paint)
 
         paint.color = ContextCompat.getColor(context!!, R.color.multiProgressView3)
-        canvas.drawArc(rectF, -90f, 360f * angleProgress3, false, paint)
+        canvas.drawArc(rectF, -90f, 360f * angleProgress2, false, paint)
+
+//        paint.color = ContextCompat.getColor(context!!, R.color.multiProgressView3)
+//        canvas.drawArc(rectF, -90f, 360f * angleProgress3, false, paint)
 
     }
 
