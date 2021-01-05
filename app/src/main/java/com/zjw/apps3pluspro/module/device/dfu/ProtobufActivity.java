@@ -92,6 +92,8 @@ public class ProtobufActivity extends BaseActivity {
         initBroadcast();
 
         SysUtils.makeRootDirectory(Constants.UPDATE_DEVICE_FILE);
+
+        findViewById(R.id.public_head_back).setVisibility(View.INVISIBLE);
     }
 
     @Override

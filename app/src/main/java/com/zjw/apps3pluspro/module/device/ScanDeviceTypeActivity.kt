@@ -6,17 +6,26 @@ import android.widget.TextView
 import butterknife.OnClick
 import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.base.BaseActivity
+import com.zjw.apps3pluspro.bleservice.BleConstant
 
 class ScanDeviceTypeActivity : BaseActivity() {
     override fun setLayoutId(): Int {
         return R.layout.scan_device_type_activity
     }
 
-    @OnClick(R.id.layoutType1)
+    @OnClick(R.id.layoutType1, R.id.layoutType2)
     fun viewOnClick(view: View) {
         when (view.id) {
             R.id.layoutType1 -> {
-                startActivity(Intent(this, ScanDeviceActivity::class.java))
+                val mIntent = Intent(this, ScanDeviceNoBindActivity::class.java)
+                mIntent.putExtra("type", BleConstant.PLUS_HR)
+                startActivity(mIntent)
+                finish()
+            }
+            R.id.layoutType2 -> {
+                val mIntent = Intent(this, ScanDeviceActivity::class.java)
+                mIntent.putExtra("type", BleConstant.PLUS_Vibe)
+                startActivity(mIntent)
                 finish()
             }
         }

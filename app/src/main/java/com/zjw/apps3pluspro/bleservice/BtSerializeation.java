@@ -1795,6 +1795,12 @@ public class BtSerializeation {
         return data;
     }
 
+    public static byte[] bindDevice(int type) {
+        byte[] data = new byte[1];
+        data[0] = (byte) type;
+        return getBleData(data, CMD_01, 0x6c);
+    }
+
     /**
      * @param type 温度格式 默认0 摄氏度
      * @return byte ab 00 00 06 00 00 00 00 01 00 49 00 01 00

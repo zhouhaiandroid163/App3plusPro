@@ -555,6 +555,8 @@ public class BleService extends Service {
                         if (params != null) {
                             bleCmdListProto04.add(params);
                         }
+                    } else if (cmd.equals("initDeviceCmd")) {
+                        initDeviceCmd();
                     }
                 }
             }
@@ -1717,12 +1719,19 @@ public class BleService extends Service {
                 if (flag_sys || isSupportBigMtu) {
                     resetBleCmdState(true);
                     bInitGattServices = true;
-                    // 延迟使能
-                    mBleHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            initDeviceCmd();
+                    mBleHandler.postDelayed(() -> {
+                        BroadcastTools.broadcastDeviceConnectedDISCOVERSERVICES(getApplicationContext());
+
+                        if (!BaseApplication.isScanActivity) { // 重连
+                            if (!mBleDeviceTools.get_ble_name().contains(BleConstant.PLUS_HR)) {
+                                mBindDeviceHandler = new Handler();
+                                mHandler.postDelayed(runnableTime, 3 * 1000);
+                                writeRXCharacteristic(BtSerializeation.bindDevice(1));
+                            } else {
+                                initDeviceCmd();
+                            }
                         }
+
                     }, delayTime);
                 }
             } else {
@@ -1783,6 +1792,12 @@ public class BleService extends Service {
             SysUtils.logContentI(TAG, " onMtuChanged = " + mtu + " status = " + status);
         }
     }
+
+    private Handler mBindDeviceHandler;
+    Runnable runnableTime = () -> {
+        Log.w(TAG, " bindDevice time out");
+        initDeviceCmd();
+    };
 
     public final static String EXTRA_DATA = Constants.APP_NAME + "bluetooth.EXTRA_DATA";
     public final static String ACTION_DATA_AVAILABLE1 = Constants.APP_NAME + "com.example.protobuf.bluetooth.ACTION_DATA_AVAILABLE";
@@ -2140,10 +2155,51 @@ public class BleService extends Service {
                     disconnect();
                     BleTools.unBind(this);
                     break;
+                case BleConstant.Key_DeviceBindInfo:
+                    deviceBindInfo(data);
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void deviceBindInfo(byte[] data) {
+        int type = data[13] & 0xff;
+        int result = data[14] & 0xff;
+        MyLog.i(TAG, "Key_DeviceSendUnbind = device send bind info " + " type = " + type + " result = " + result);
+
+        if (0 == type) { // 绑定
+            switch (result) {
+                case 0: // 拒绝
+                    deniedByDevice();
+                    break;
+                case 1: // 同意
+                    BroadcastTools.broadcastDeviceConnectedBIND_SUCCESS(getApplicationContext());
+                    break;
+            }
+
+        } else if (1 == type) { // 询问状态
+            if (mBindDeviceHandler != null) {
+                mHandler.removeCallbacksAndMessages(null);
+            }
+            switch (result) {
+                case 0: // 解除绑定
+                    deniedByDevice();
+                    break;
+                case 1: // 同意
+                    initDeviceCmd();
+                    BroadcastTools.broadcastDeviceConnectedBIND_SUCCESS(getApplicationContext());
+                    break;
+            }
+
+        }
+    }
+
+    private void deniedByDevice() {
+        disconnect();
+        BleTools.unBind(this);
+        BroadcastTools.broadcastDeviceConnectedBIND_ERROR(getApplicationContext());
     }
 
     private boolean isInitTimeZone = false;
@@ -2165,7 +2221,6 @@ public class BleService extends Service {
 
                 byte[] dataValue = new byte[]{(byte) timeZone};
                 bleCmdList.add(BtSerializeation.getBleData(dataValue, BtSerializeation.CMD_01, BtSerializeation.KEY_SET_TIMEZONE));
-
 
                 isInitTimeZone = true;
             }

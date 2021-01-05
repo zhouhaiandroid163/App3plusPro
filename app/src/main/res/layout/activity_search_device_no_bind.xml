@@ -1,0 +1,155 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_activity_bg"
+    android:orientation="vertical">
+
+    <include layout="@layout/public_head" />
+
+    <include
+        layout="@layout/clock_dial_title"
+        android:visibility="gone" />
+
+    <include
+        layout="@layout/scan_qr_code"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/layoutScan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/llScanfDevice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/white_corner_bg"
+            android:paddingLeft="15dip"
+            android:paddingTop="12dip"
+            android:paddingRight="15dip"
+            android:paddingBottom="12dip">
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_scarch_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/device_scanf_loading"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_scarch_help"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="28dip"
+                            android:layout_height="28dip"
+                            android:background="@drawable/my_icon_dengpao_black" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_scarch_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/device_scanf_near"
+                    android:textColor="@color/white_50"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/pro_scanf_device_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="36dp"
+                    android:background="@mipmap/sync_image_white"
+                    android:indeterminate="true" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ListView
+                android:id="@+id/bleconnect_device_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                android:background="@drawable/white_corner_bg"
+                android:divider="@null"
+                android:scrollbars="none">
+
+            </ListView>
+
+            <RelativeLayout
+                android:id="@+id/rl_search_no_device"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                android:background="@color/dialog_bg"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btn_restart"
+                        style="@style/big_button_stytle"
+                        android:layout_marginLeft="15dip"
+                        android:layout_marginRight="15dip"
+                        android:text="@string/device_restart" />
+
+                    <Button
+                        android:id="@+id/btn_nobing"
+                        style="@style/big_button_stytle"
+                        android:layout_marginLeft="15dip"
+                        android:layout_marginTop="15dip"
+                        android:layout_marginRight="15dip"
+                        android:text="@string/device_no_band" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

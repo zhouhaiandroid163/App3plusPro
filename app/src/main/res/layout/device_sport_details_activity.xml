@@ -327,7 +327,9 @@
 
                 <include layout="@layout/device_sport_map" />
 
-                <include layout="@layout/device_sport_effect" />
+                <include
+                    layout="@layout/device_sport_effect"
+                    android:visibility="gone" />
 
                 <include layout="@layout/device_sport_heart" />
 

@@ -72,6 +72,8 @@ public class BaseApplication extends MultiDexApplication {
     //添加好友的简单处理
     public static boolean isAddFriend = false;
 
+    //添加好友的简单处理
+    public static boolean isScanActivity = false;
 
     @Override
     public void onCreate() {

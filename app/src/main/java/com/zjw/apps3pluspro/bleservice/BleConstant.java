@@ -45,6 +45,7 @@ public class BleConstant {
     static final int Key_UserBehavior = 0x29;//用户行为
     static final int Key_DeviceBasicInfo = 0x31;//设备信息
     static final int Key_DeviceSendUnbind = 0x33;//设备发出解绑命令
+    static final int Key_DeviceBindInfo = 0x34;//绑定回复
     static final int KEY_DEVICE_ANSWER = 0xac;
     //推送Key
     public static final int NotifaceMsgPhone = 0x01;
@@ -137,6 +138,16 @@ public class BleConstant {
     public static final int STATE_CONNECTING = 1;
     public static final int STATE_CONNECTED = 2;
     public static final int STATE_CONNECTED_TIMEOUT = 3;
+    public static final int STATE_DISCOVER_SERVICES = 4;
+    public static final int STATE_BIND_SUCCESS = 5;
+    public static final int STATE_BIND_ERROR = 6;
+
+    public static final String E07 = "E07";
+    public static final String PLUS_HR = "3PLUS HR+";
+    public static final String E08 = "E08";
+    public static final String PLUS_Vibe = "3PLUS Vibe+";
+
+    public static final UUID SCAN_RECORD = UUID.fromString("0000fe68-0000-1000-8000-00805f9b34fb");
 
 
 }

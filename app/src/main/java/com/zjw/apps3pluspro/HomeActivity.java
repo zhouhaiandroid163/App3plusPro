@@ -565,6 +565,9 @@ public class HomeActivity extends BaseActivity {
         filter.addAction(BroadcastTools.ACTION_GATT_DISCONNECTED);
         filter.addAction(BroadcastTools.ACTION_GATT_CONNECTING);
         filter.addAction(BroadcastTools.ACTION_GATT_CONNECT_TIME_OUT);
+        filter.addAction(BroadcastTools.ACTION_GATT_CONNECT_DISCOVER_SERVICES);
+        filter.addAction(BroadcastTools.ACTION_GATT_CONNECT_BIND_SUCCESS);
+        filter.addAction(BroadcastTools.ACTION_GATT_CONNECT_BIND_ERROR);
 
         filter.addAction(BroadcastTools.ACTION_GATT_SYNC_COMPLETE);
         filter.addAction(BroadcastTools.ACTION_GATT_OFF_LINE_ECG_START);
@@ -591,6 +594,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     public static boolean isSyncSportData = false;
+
     /**
      * 广播监听
      */
@@ -614,6 +618,15 @@ public class HomeActivity extends BaseActivity {
                     }
                     break;
 
+                case BroadcastTools.ACTION_GATT_CONNECT_DISCOVER_SERVICES:
+                    EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_DISCOVER_SERVICES));
+                    break;
+                case BroadcastTools.ACTION_GATT_CONNECT_BIND_SUCCESS:
+                    EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_BIND_SUCCESS));
+                    break;
+                case BroadcastTools.ACTION_GATT_CONNECT_BIND_ERROR:
+                    EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_BIND_ERROR));
+                    break;
                 //已连接
                 case BroadcastTools.ACTION_GATT_CONNECTED:
                     mConnectionState = BleConstant.STATE_CONNECTED;
@@ -622,12 +635,9 @@ public class HomeActivity extends BaseActivity {
                     if (waitDialog != null) {
                         waitDialog.close();
                     }
-
 //                    connectCountNum++;
 //                    tvConnectCount.setText("连接次数统计：" + connectCountNum);
-
                     break;
-
                 //已断开
                 case BroadcastTools.ACTION_GATT_DISCONNECTED:
                     currentGpsSportState = -1;

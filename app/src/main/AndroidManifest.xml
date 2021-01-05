@@ -329,6 +329,13 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeRemind" /> <!-- 设备帮助 -->
+
+        <activity
+            android:name=".module.device.ScanDeviceNoBindActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeRemind" /> <!-- 设备帮助 -->
+
         <activity
             android:name=".module.device.DeviceHelpActivity"
             android:screenOrientation="portrait"

@@ -378,4 +378,9 @@ public abstract class BaseActivity extends FragmentActivity {
         startService(bundle);
     }
 
+    public void startInitDeviceCmd() {
+        Bundle bundle = new Bundle();
+        bundle.putString("cmd", "initDeviceCmd");
+        startService(bundle);
+    }
 }

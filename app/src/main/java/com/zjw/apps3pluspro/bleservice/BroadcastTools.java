@@ -15,6 +15,9 @@ public class BroadcastTools {
     public final static String ACTION_GATT_CONNECTED = APP_NAME + "_" + "ACTION_GATT_CONNECTED";
     public final static String ACTION_GATT_CONNECTING = APP_NAME + "_" + "ACTION_GATT_CONNECTING";
     public final static String ACTION_GATT_CONNECT_TIME_OUT = APP_NAME + "_" + "ACTION_GATT_TIME_OUT";
+    public final static String ACTION_GATT_CONNECT_DISCOVER_SERVICES = APP_NAME + "_" + "ACTION_GATT_CONNECT_DISCOVER_SERVICES";
+    public final static String ACTION_GATT_CONNECT_BIND_SUCCESS = APP_NAME + "_" + "ACTION_GATT_CONNECT_BIND_SUCCESS";
+    public final static String ACTION_GATT_CONNECT_BIND_ERROR = APP_NAME + "_" + "ACTION_GATT_CONNECT_BIND_ERROR";
     //设备断开广播
     public final static String ACTION_GATT_DISCONNECTED = APP_NAME + "_" + "ACTION_GATT_DISCONNECTED";
     //设备断开广播
@@ -247,6 +250,24 @@ public class BroadcastTools {
     public static void broadcastDeviceConnected(Context context) {
         final Intent intent = new Intent();
         intent.setAction(ACTION_GATT_CONNECTED);
+        context.sendBroadcast(intent);
+    }
+
+    public static void broadcastDeviceConnectedDISCOVERSERVICES(Context context) {
+        final Intent intent = new Intent();
+        intent.setAction(ACTION_GATT_CONNECT_DISCOVER_SERVICES);
+        context.sendBroadcast(intent);
+    }
+
+    public static void broadcastDeviceConnectedBIND_SUCCESS(Context context) {
+        final Intent intent = new Intent();
+        intent.setAction(ACTION_GATT_CONNECT_BIND_SUCCESS);
+        context.sendBroadcast(intent);
+    }
+
+    public static void broadcastDeviceConnectedBIND_ERROR(Context context) {
+        final Intent intent = new Intent();
+        intent.setAction(ACTION_GATT_CONNECT_BIND_ERROR);
         context.sendBroadcast(intent);
     }
 
