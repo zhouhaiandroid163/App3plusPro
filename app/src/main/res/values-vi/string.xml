@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">Chuyển động GPS của thiết bị</string>
     <string name="message_push_screen_on">Chỉ thông báo khi điện thoại bị khóa</string>
     <string name="gps_switch_close">Công tắc vị trí hệ thống chưa được bật</string>
+    <string name="weather_location_reset">định vị lại</string>
     <!--    打点多运动-->
     <string name="more_sport_1">chạy ngoài trời</string>
     <string name="more_sport_2">đi bộ ngoài trời</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">lần tăng tích lũy</string>
     <string name="device_sport_decline">giảm tích lũy</string>
     <string name="device_sport_unit">mét</string>
+    <string name="device_sport_paused">Bài tập bị tạm dừng</string>
+    <string name="device_sport_runing">Đang chuyển động</string>
+    <string name="device_sport_over">Bài tập kết thúc</string>
     <!--以下定制app翻译-->
     <string name="device_name">tên thiết bị</string>
     <string name="device_power">công suất thiết bị</string>

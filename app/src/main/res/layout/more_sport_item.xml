@@ -82,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="3dp"
-                    android:text="步，时长00:12:56"
+                    android:text="@string/sleep_gang"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 

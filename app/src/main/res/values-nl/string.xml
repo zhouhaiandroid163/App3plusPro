@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">GPS-beweging van apparaat</string>
     <string name="message_push_screen_on">Alleen melden wanneer de telefoon is vergrendeld</string>
     <string name="gps_switch_close">De systeemlocatieschakelaar is niet ingeschakeld</string>
+    <string name="weather_location_reset">opnieuw lokaliseren</string>
     <!--    打点多运动-->
     <string name="more_sport_1">hardlopen in de buitenlucht</string>
     <string name="more_sport_2">buiten wandelen</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">cumulatieve klim</string>
     <string name="device_sport_decline">cumulatieve afname</string>
     <string name="device_sport_unit">meters</string>
+    <string name="device_sport_paused">De training is onderbroken</string>
+    <string name="device_sport_runing">In beweging</string>
+    <string name="device_sport_over">Oefening is voorbij</string>
     <!--以下定制app翻译-->
     <string name="device_name">apparaatnaam</string>
     <string name="device_power">apparaatvermogen</string>

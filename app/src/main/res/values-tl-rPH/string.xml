@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">Pagkilos ng GPS ng aparato</string>
     <string name="message_push_screen_on">Abisuhan lamang kapag naka-lock ang telepono</string>
     <string name="gps_switch_close">Ang switch ng lokasyon ng system ay hindi nakabukas</string>
+    <string name="weather_location_reset">muling hanapin</string>
     <!--    打点多运动-->
     <string name="more_sport_1">panlabas na pagtakbo</string>
     <string name="more_sport_2">panlabas na paglalakad</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">pinagsamang pag-akyat</string>
     <string name="device_sport_decline">pinagsama-samang pagtanggi</string>
     <string name="device_sport_unit">metro</string>
+    <string name="device_sport_paused">Naka-pause ang ehersisyo</string>
+    <string name="device_sport_runing">Kasalukuyang kumikilos</string>
+    <string name="device_sport_over">Tapos na ang ehersisyo</string>
     <!--以下定制app翻译-->
     <string name="device_name">pangalan ng aparato</string>
     <string name="device_power">kapangyarihan ng aparato</string>

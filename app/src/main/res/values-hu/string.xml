@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">Eszköz GPS mozgása</string>
     <string name="message_push_screen_on">Csak akkor értesítsen, ha a telefon le van zárva</string>
     <string name="gps_switch_close">A rendszer helykapcsolója nincs bekapcsolva</string>
+    <string name="weather_location_reset">keresse meg újra</string>
     <!--    打点多运动-->
     <string name="more_sport_1">szabadtéri futás</string>
     <string name="more_sport_2">szabadtéri séta</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">kumulatív emelkedés</string>
     <string name="device_sport_decline">összesített csökkenés</string>
     <string name="device_sport_unit">méter</string>
+    <string name="device_sport_paused">A testmozgás szünetel</string>
+    <string name="device_sport_runing">Mozgásban</string>
+    <string name="device_sport_over">A testgyakorlatnak vége</string>
     <!--以下定制app翻译-->
     <string name="device_name">eszköz neve</string>
     <string name="device_power">eszköz teljesítménye</string>

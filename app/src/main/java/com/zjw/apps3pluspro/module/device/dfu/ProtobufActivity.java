@@ -176,9 +176,9 @@ public class ProtobufActivity extends BaseActivity {
                         case "btUploadTheme":
                             if (curPiece == ThemeManager.getInstance().dataPackTotalPieceLength) {
                                 if ("watch".equalsIgnoreCase(type)) {
-                                    tvDeviceUpdateProgress.setText("上传主题");
+//                                    tvDeviceUpdateProgress.setText("上传主题");
                                 } else {
-                                    tvDeviceUpdateProgress.setText("固件升级");
+//                                    tvDeviceUpdateProgress.setText("固件升级");
                                 }
                                 Toast.makeText(ProtobufActivity.this, getResources().getString(R.string.dfu_success), Toast.LENGTH_SHORT).show();
                                 if (progressDialog != null && progressDialog.isShowing()) {

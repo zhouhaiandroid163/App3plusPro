@@ -86,7 +86,7 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:text="简约表盘1"
+                    android:text="@string/sleep_gang"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -125,7 +125,7 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:text="简约表盘2"
+                    android:text="@string/sleep_gang"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -164,7 +164,7 @@
                     android:layout_marginTop="5dp"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:text="简约表盘3"
+                    android:text="@string/sleep_gang"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>

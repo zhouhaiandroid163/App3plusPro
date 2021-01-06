@@ -36,7 +36,7 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:lines="1"
-            android:text="简约表盘1"
+            android:text="@string/sleep_gang"
             android:textColor="#ffffff"
             android:textSize="14sp" />
     </LinearLayout>

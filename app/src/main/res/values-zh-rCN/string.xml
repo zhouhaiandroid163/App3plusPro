@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">设备GPS运动</string>
     <string name="message_push_screen_on">仅在手机锁屏时通知</string>
     <string name="gps_switch_close">未开启系统定位开关</string>
+    <string name="weather_location_reset">重新定位</string>
     <!--    打点多运动-->
     <string name="more_sport_1">户外跑步</string>
     <string name="more_sport_2">健走</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">累计爬升</string>
     <string name="device_sport_decline">累计下降</string>
     <string name="device_sport_unit">米</string>
+    <string name="device_sport_paused">运动已暂停</string>
+    <string name="device_sport_runing">正在运动中</string>
+    <string name="device_sport_over">运动已结束</string>
     <!--以下定制app翻译-->
     <string name="device_name">设备名称</string>
     <string name="device_power">设备电量</string>

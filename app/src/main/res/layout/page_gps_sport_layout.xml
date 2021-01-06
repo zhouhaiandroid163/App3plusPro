@@ -90,7 +90,7 @@
                     android:id="@+id/tvValue0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="消耗112kcal  时长00:32:12"
+                    android:text="@string/sleep_gang"
                     android:textColor="#ff7f7f87"
                     android:textSize="14sp"
                     />
@@ -108,7 +108,7 @@
                     android:id="@+id/tvValue1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="消耗112kcal  时长00:32:12"
+                    android:text="@string/sleep_gang"
                     android:textColor="#ff7f7f87"
                     android:textSize="14sp"
                     />

@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">Pohyb GPS zariadenia</string>
     <string name="message_push_screen_on">Upozorniť iba na zamknutý telefón</string>
     <string name="gps_switch_close">Prepínač umiestnenia systému nie je zapnutý</string>
+    <string name="weather_location_reset">znovu vyhľadať</string>
     <!--    打点多运动-->
     <string name="more_sport_1">vonkajšie beh</string>
     <string name="more_sport_2">vonkajšie prechádzky</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">kumulatívne stúpanie</string>
     <string name="device_sport_decline">kumulatívne odmietnutie</string>
     <string name="device_sport_unit">metre</string>
+    <string name="device_sport_paused">Cvičenie je pozastavené</string>
+    <string name="device_sport_runing">V pohybe</string>
+    <string name="device_sport_over">Cvičenie skončilo</string>
     <!--以下定制app翻译-->
     <string name="device_name">názov zariadenia</string>
     <string name="device_power">výkon zariadenia</string>

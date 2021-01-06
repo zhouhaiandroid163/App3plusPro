@@ -951,7 +951,7 @@ public class DeviceFragment extends BaseFragment {
 
     private void showBleSetDialog() {
 
-        String msg = "暂不支持";
+        String msg = context.getResources().getString(R.string.my_mail_list_temporary_support);
 
         if (mBleDeviceTools.get_call_ble_name() != null && !mBleDeviceTools.get_call_ble_name().equals("")
                 && mBleDeviceTools.get_call_ble_mac() != null && !mBleDeviceTools.get_call_ble_mac().equals("")

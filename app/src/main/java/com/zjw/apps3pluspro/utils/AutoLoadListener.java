@@ -33,7 +33,7 @@ public class AutoLoadListener implements OnScrollListener {
 
                 if (view.getLastVisiblePosition() != getLastVisiblePosition && lastVisiblePositionY != y)//第一次拖至底部
                 {
-                    Toast.makeText(view.getContext(), "已经拖动至底部，再次拖动即可翻页", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(view.getContext(), "已经拖动至底部，再次拖动即可翻页", Toast.LENGTH_SHORT).show();
                     getLastVisiblePosition = view.getLastVisiblePosition();
                     lastVisiblePositionY = y;
                     return;

@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">GPS движение на устройството</string>
     <string name="message_push_screen_on">Уведомявайте само когато телефонът е заключен</string>
     <string name="gps_switch_close">Превключвателят за местоположение на системата не е включен</string>
+    <string name="weather_location_reset">преместете отново</string>
     <!--    打点多运动-->
     <string name="more_sport_1">бягане на открито</string>
     <string name="more_sport_2">ходене на открито</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">кумулативно изкачване</string>
     <string name="device_sport_decline">кумулативен спад</string>
     <string name="device_sport_unit">метра</string>
+    <string name="device_sport_paused">Упражнението е на пауза</string>
+    <string name="device_sport_runing">В движение</string>
+    <string name="device_sport_over">Упражнението приключи</string>
     <!--以下定制app翻译-->
     <string name="device_name">име на устройство</string>
     <string name="device_power">мощност на устройството</string>

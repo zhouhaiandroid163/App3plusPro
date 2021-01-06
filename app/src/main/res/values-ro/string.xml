@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">Mișcarea GPS a dispozitivului</string>
     <string name="message_push_screen_on">Notificați numai când telefonul este blocat</string>
     <string name="gps_switch_close">Comutatorul de localizare a sistemului nu este pornit</string>
+    <string name="weather_location_reset">relocați</string>
     <!--    打点多运动-->
     <string name="more_sport_1">alergare în aer liber</string>
     <string name="more_sport_2">mers pe jos în aer liber</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">urcare cumulativă</string>
     <string name="device_sport_decline">declin cumulativ</string>
     <string name="device_sport_unit">contoare</string>
+    <string name="device_sport_paused">Exercițiul este întrerupt</string>
+    <string name="device_sport_runing">In miscare</string>
+    <string name="device_sport_over">Exercițiul s-a terminat</string>
     <!--以下定制app翻译-->
     <string name="device_name">numele dispozitivului</string>
     <string name="device_power">putere dispozitiv</string>

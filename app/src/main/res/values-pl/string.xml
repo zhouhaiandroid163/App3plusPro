@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">Ruch urządzenia GPS</string>
     <string name="message_push_screen_on">Powiadamiaj tylko, gdy telefon jest zablokowany</string>
     <string name="gps_switch_close">Przełącznik lokalizacji systemu nie jest włączony</string>
+    <string name="weather_location_reset">przenieść się</string>
     <!--    打点多运动-->
     <string name="more_sport_1">bieganie na świeżym powietrzu</string>
     <string name="more_sport_2">spacery na świeżym powietrzu</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">skumulowana wspinaczka</string>
     <string name="device_sport_decline">skumulowany spadek</string>
     <string name="device_sport_unit">mierniki</string>
+    <string name="device_sport_paused">Ćwiczenie zostało wstrzymane</string>
+    <string name="device_sport_runing">W ruchu</string>
+    <string name="device_sport_over">Ćwiczenia się skończyły</string>
     <!--以下定制app翻译-->
     <string name="device_name">nazwa urządzenia</string>
     <string name="device_power">moc urządzenia</string>

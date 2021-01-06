@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">デバイスのGPSの動き</string>
     <string name="message_push_screen_on">電話がロックされている場合にのみ通知する</string>
     <string name="gps_switch_close">システムロケーションスイッチがオンになっていない</string>
+    <string name="weather_location_reset">再配置</string>
     <!--    打点多运动-->
     <string name="more_sport_1">屋外でのランニング</string>
     <string name="more_sport_2">屋外ウォーキング</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">累積上昇</string>
     <string name="device_sport_decline">累積的な減少</string>
     <string name="device_sport_unit">メートル</string>
+    <string name="device_sport_paused">運動は一時停止されます</string>
+    <string name="device_sport_runing">動いている</string>
+    <string name="device_sport_over">運動は終わった</string>
     <!--以下定制app翻译-->
     <string name="device_name">デバイス名</string>
     <string name="device_power">デバイスの電源</string>

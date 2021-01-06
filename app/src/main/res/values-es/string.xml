@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">Movimiento GPS del dispositivo</string>
     <string name="message_push_screen_on">Notificar solo cuando el teléfono está bloqueado</string>
     <string name="gps_switch_close">El interruptor de ubicación del sistema no está encendido</string>
+    <string name="weather_location_reset">trasladarse</string>
     <!--    打点多运动-->
     <string name="more_sport_1">Correr al aire libre</string>
     <string name="more_sport_2">Caminar</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">ascenso acumulativo</string>
     <string name="device_sport_decline">disminución acumulativa</string>
     <string name="device_sport_unit">metros</string>
+    <string name="device_sport_paused">El ejercicio está en pausa</string>
+    <string name="device_sport_runing">En movimiento</string>
+    <string name="device_sport_over">Se acabó el ejercicio</string>
     <!--以下定制app翻译-->
     <string name="device_name">nombre del dispositivo</string>
     <string name="device_power">alimentación del dispositivo</string>

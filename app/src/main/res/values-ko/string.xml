@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">장치 GPS 이동</string>
     <string name="message_push_screen_on">전화기가 잠겨있을 때만 알림</string>
     <string name="gps_switch_close">시스템 위치 스위치가 켜져 있지 않습니다.</string>
+    <string name="weather_location_reset">고쳐 놓다</string>
     <!--    打点多运动-->
     <string name="more_sport_1">실외 달리기</string>
     <string name="more_sport_2">야외 걷기</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">누적 상승</string>
     <string name="device_sport_decline">누적 감소</string>
     <string name="device_sport_unit">미터</string>
+    <string name="device_sport_paused">운동이 일시 중지되었습니다.</string>
+    <string name="device_sport_runing">모션</string>
+    <string name="device_sport_over">운동은 끝났다</string>
     <!--以下定制app翻译-->
     <string name="device_name">기기 이름</string>
     <string name="device_power">장치 전원</string>

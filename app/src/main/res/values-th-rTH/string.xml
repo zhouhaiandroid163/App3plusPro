@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">การเคลื่อนไหวของอุปกรณ์ GPS</string>
     <string name="message_push_screen_on">แจ้งเตือนเมื่อโทรศัพท์ถูกล็อคเท่านั้น</string>
     <string name="gps_switch_close">ไม่ได้เปิดสวิตช์ตำแหน่งระบบ</string>
+    <string name="weather_location_reset">ค้นหาใหม่</string>
     <!--    打点多运动-->
     <string name="more_sport_1">วิ่งกลางแจ้ง</string>
     <string name="more_sport_2">เดินกลางแจ้ง</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">การไต่สะสม</string>
     <string name="device_sport_decline">ลดลงสะสม</string>
     <string name="device_sport_unit">เมตร</string>
+    <string name="device_sport_paused">การออกกำลังกายหยุดชั่วคราว</string>
+    <string name="device_sport_runing">ในการเคลื่อนไหว</string>
+    <string name="device_sport_over">ออกกำลังกายจบแล้ว</string>
     <!--以下定制app翻译-->
     <string name="device_name">ชื่ออุปกรณ์</string>
     <string name="device_power">กำลังของอุปกรณ์</string>

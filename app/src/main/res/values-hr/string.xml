@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">GPS kretanje uređaja</string>
     <string name="message_push_screen_on">Obavijestite samo kad je telefon zaključan</string>
     <string name="gps_switch_close">Prekidač za lokaciju sustava nije uključen</string>
+    <string name="weather_location_reset">ponovno locirati</string>
     <!--    打点多运动-->
     <string name="more_sport_1">trčanje na otvorenom</string>
     <string name="more_sport_2">šetnja na otvorenom</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">kumulativni uspon</string>
     <string name="device_sport_decline">kumulativni pad</string>
     <string name="device_sport_unit">metri</string>
+    <string name="device_sport_paused">Vježbanje je pauzirano</string>
+    <string name="device_sport_runing">U pokretu</string>
+    <string name="device_sport_over">Vježbanje je gotovo</string>
     <!--以下定制app翻译-->
     <string name="device_name">naziv uređaja</string>
     <string name="device_power">snaga uređaja</string>

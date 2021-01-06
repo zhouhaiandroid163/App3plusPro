@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">Пристрій GPS руху</string>
     <string name="message_push_screen_on">Сповіщати лише тоді, коли телефон заблоковано</string>
     <string name="gps_switch_close">Перемикач розташування системи не ввімкнено</string>
+    <string name="weather_location_reset">передислокувати</string>
     <!--    打点多运动-->
     <string name="more_sport_1">відкритий біг</string>
     <string name="more_sport_2">прогулянки на свіжому повітрі</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">сукупний підйом</string>
     <string name="device_sport_decline">сукупний відступ</string>
     <string name="device_sport_unit">метри</string>
+    <string name="device_sport_paused">Вправа призупинена</string>
+    <string name="device_sport_runing">В русі</string>
+    <string name="device_sport_over">Вправи закінчені</string>
     <!--以下定制app翻译-->
     <string name="device_name">назва пристрою</string>
     <string name="device_power">потужність пристрою</string>

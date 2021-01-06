@@ -174,6 +174,7 @@ public class DataFragment extends BaseFragment {
         view = View.inflate(context, R.layout.data_fragment, null);
         return view;
     }
+
     @BindView(R.id.layoutSync)
     LinearLayout layoutSync;
 
@@ -205,7 +206,7 @@ public class DataFragment extends BaseFragment {
         refreshView();
         homeActivity.setGpsAccuracy(ivGpsStatus);
         layoutConnectState.setOnClickListener(v -> {
-            startActivity(new Intent(context, CommonProblemActivity .class));
+            startActivity(new Intent(context, CommonProblemActivity.class));
         });
     }
 
@@ -361,7 +362,7 @@ public class DataFragment extends BaseFragment {
         refreshView();
 //        updateUi();
         getAllData();
-        if(HomeActivity.currentGpsSportState != -1 && HomeActivity.currentGpsSportState != GpsSportDeviceStartEvent.SPORT_STATE_STOP){
+        if (HomeActivity.currentGpsSportState != -1 && HomeActivity.currentGpsSportState != GpsSportDeviceStartEvent.SPORT_STATE_STOP) {
             gpsSportDeviceStartEvent(new GpsSportDeviceStartEvent(HomeActivity.currentGpsSportState));
         }
     }
@@ -1726,10 +1727,10 @@ public class DataFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void deviceSportStatusEvent(DeviceSportStatusEvent event) {
         layoutDeviceGps.setVisibility(View.VISIBLE);
-        if(event.paused){
-            tvDeviceGpsSport.setText("运动状态:运动已暂停");
+        if (event.paused) {
+            tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_paused));
         } else {
-            tvDeviceGpsSport.setText("运动状态:正在运动中");
+            tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_runing));
         }
     }
 
@@ -1738,19 +1739,18 @@ public class DataFragment extends BaseFragment {
         layoutDeviceGps.setVisibility(View.VISIBLE);
         switch (event.state) {
             case GpsSportDeviceStartEvent.SPORT_STATE_START:
-                tvDeviceGpsSport.setText("运动状态:正在运动中");
+                tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_runing));
                 break;
             case GpsSportDeviceStartEvent.SPORT_STATE_PAUSE:
-                tvDeviceGpsSport.setText("运动状态:运动已暂停");
+                tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_paused));
                 break;
             case GpsSportDeviceStartEvent.SPORT_STATE_RESUME:
-//                tvDeviceGpsSport.setText("运动状态:运动已恢复");
                 mHandler.postDelayed(() -> {
-                    tvDeviceGpsSport.setText("运动状态:正在运动中");
+                    tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_runing));
                 }, 0);
                 break;
             case GpsSportDeviceStartEvent.SPORT_STATE_STOP:
-                tvDeviceGpsSport.setText("运动状态:运动已结束");
+                tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_over));
                 mHandler.postDelayed(() -> {
                     layoutDeviceGps.setVisibility(View.GONE);
                 }, 1000);

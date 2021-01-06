@@ -416,9 +416,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                         case "btUploadTheme":
                             if (curPiece == ThemeManager.getInstance().dataPackTotalPieceLength) {
                                 if ("watch".equalsIgnoreCase(type)) {
-                                    tvDeviceUpdateProgress.setText("上传主题");
                                 } else {
-                                    tvDeviceUpdateProgress.setText("固件升级");
                                 }
                                 Toast.makeText(DeviceMoreSetActivity.this, getResources().getString(R.string.send_success), Toast.LENGTH_SHORT).show();
                                 if (progressDialog != null && progressDialog.isShowing()) {
@@ -478,9 +476,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                         case "btUploadTheme":
                             if (curPiece == ThemeManager.getInstance().dataPackTotalPieceLength) {
                                 if ("watch".equalsIgnoreCase(type)) {
-                                    tvDeviceUpdateProgress.setText("上传主题");
                                 } else {
-                                    tvDeviceUpdateProgress.setText("固件升级");
                                 }
                                 Toast.makeText(DeviceMoreSetActivity.this, getResources().getString(R.string.send_success), Toast.LENGTH_SHORT).show();
                                 if (progressDialog != null && progressDialog.isShowing()) {

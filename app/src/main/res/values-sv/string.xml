@@ -884,6 +884,7 @@
     <string name="device_gps_sport1">Enhetens GPS-rörelse</string>
     <string name="message_push_screen_on">Meddela endast när telefonen är låst</string>
     <string name="gps_switch_close">Systemplatsomkopplaren är inte påslagen</string>
+    <string name="weather_location_reset">förflytta</string>
     <!--    打点多运动-->
     <string name="more_sport_1">utomhuslöpning</string>
     <string name="more_sport_2">utomhusvandring</string>
@@ -948,6 +949,9 @@
     <string name="device_sport_rise">kumulativ stigning</string>
     <string name="device_sport_decline">kumulativ nedgång</string>
     <string name="device_sport_unit">meter</string>
+    <string name="device_sport_paused">Träningen är pausad</string>
+    <string name="device_sport_runing">I rörelse</string>
+    <string name="device_sport_over">Träningen är över</string>
     <!--以下定制app翻译-->
     <string name="device_name">enhetsnamn</string>
     <string name="device_power">enhetseffekt</string>
