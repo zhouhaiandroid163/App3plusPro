@@ -131,8 +131,8 @@
     <color name="my_color_yuanhuan_color">#aaffffff</color>
 
     <!-- 离线心电同步View 的背景颜色 -->
-    <color name="main_off_line_sync_view_bg">#ccF8F8F8</color>
-    <color name="main_off_line_sync_view_text_color">#ff7f8088</color>
+    <color name="main_off_line_sync_view_bg">#464E58</color>
+    <color name="main_off_line_sync_view_text_color">#ffffff</color>
 
     <!-- 折线图颜色-->
     <color name="my_exercise_line_chart_color">#208bff</color>

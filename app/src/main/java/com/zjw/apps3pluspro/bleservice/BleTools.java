@@ -746,13 +746,15 @@ public class BleTools {
         } else {
             long curTime = (new Date()).getTime();//本地单击的时间
 
-            if (curTime - t1 > 500) {
+            long differenceValue = curTime - t1;
+            differenceValue = Math.abs(differenceValue);
+            if (differenceValue > 500) {
                 //间隔5秒允许点击，可以根据需要修改间隔时间
                 t1 = curTime;//当前单击事件变为上次时间
-                MyLog.i(TAG, "离线血压 == 111");
+                MyLog.i(TAG, "找设备 == 111");
                 rsult = true;
             } else {
-                MyLog.i(TAG, "离线血压 == 222");
+                MyLog.i(TAG, "找设备 == 222");
                 rsult = false;
             }
         }
@@ -760,7 +762,7 @@ public class BleTools {
     }
 
 
-    public static void unBind(Context context){
+    public static void unBind(Context context) {
         UserSetTools mUserSetTools = BaseApplication.getUserSetTools();
         BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
         mBleDeviceTools.setWeatherSyncTime(0);
