@@ -1689,7 +1689,7 @@ public class BleService extends Service {
                             SysUtils.logContentI(TAG, "characteristic_protobuf_1  error");
                         }
                     }, delayTime);
-                    delayTime += 150;
+                    delayTime += 400;
                     mBleHandler.postDelayed(() -> {
                         if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_2)) {
                             SysUtils.logContentI(TAG, "characteristic_protobuf_2 on success");
@@ -1697,7 +1697,7 @@ public class BleService extends Service {
                             SysUtils.logContentI(TAG, "characteristic_protobuf_3 error");
                         }
                     }, delayTime);
-                    delayTime += 150;
+                    delayTime += 400;
                     mBleHandler.postDelayed(() -> {
                         if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_3)) {
                             SysUtils.logContentI(TAG, "characteristic_protobuf_3 on success");
@@ -1705,7 +1705,7 @@ public class BleService extends Service {
                             SysUtils.logContentI(TAG, "characteristic_protobuf_3  error");
                         }
                     }, delayTime);
-                    delayTime += 150;
+                    delayTime += 400;
                     mBleHandler.postDelayed(() -> {
                         if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_4)) {
                             SysUtils.logContentI(TAG, "characteristic_protobuf_4 on success");
@@ -1713,7 +1713,7 @@ public class BleService extends Service {
                             SysUtils.logContentI(TAG, "characteristic_protobuf_4  error");
                         }
                     }, delayTime);
-                    delayTime += 150;
+                    delayTime += 400;
                 }
                 //发送初始化数据
                 if (flag_sys || isSupportBigMtu) {

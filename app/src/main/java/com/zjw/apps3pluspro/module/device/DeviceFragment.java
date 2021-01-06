@@ -450,12 +450,12 @@ public class DeviceFragment extends BaseFragment {
         }
 
         setBattery(homeActivity.getBlueToothStatus());
+        initBleState(homeActivity.getBlueToothStatus());
+
         if (BleService.syncState) {
             if (homeActivity.ISBlueToothConnect()) {
                 syncAnimation();
                 tvSyncState.setText(getResources().getString(R.string.sync_data_ing));
-            } else {
-                initBleState(homeActivity.getBlueToothStatus());
             }
         } else {
             if (homeActivity.ISBlueToothConnect()) {
@@ -476,8 +476,6 @@ public class DeviceFragment extends BaseFragment {
                 } else {
                     tvSyncState.setText(getResources().getString(R.string.no_data_default));
                 }
-            } else {
-                initBleState(homeActivity.getBlueToothStatus());
             }
         }
     }
