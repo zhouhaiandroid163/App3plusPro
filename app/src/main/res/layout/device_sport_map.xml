@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@drawable/white"
-            android:text="没有运动轨迹，您是拯救世界去了吗？" />
+            android:text="@string/no_data" />
 
     </LinearLayout>
 
