@@ -417,20 +417,20 @@ public class AboutActivity extends BaseActivity implements OnClickListener {
         rl_wechat.setVisibility(View.GONE);
 
 
-        if (mBleDeviceTools.get_ble_mac() != null && !mBleDeviceTools.get_ble_mac().equals("")
-                && mBleDeviceTools.get_ble_device_version() != -1) {
-
-            int device_number = mBleDeviceTools.get_ble_device_version();
-
-            if (AppUtils.isZh(mContext)) {
-                if (device_number >= 23 && mBleDeviceTools.get_is_support_wx_sport()) {
-                    view_wechat.setVisibility(View.VISIBLE);
-                    rl_wechat.setVisibility(View.VISIBLE);
-                }
-            }
-
-
-        }
+//        if (mBleDeviceTools.get_ble_mac() != null && !mBleDeviceTools.get_ble_mac().equals("")
+//                && mBleDeviceTools.get_ble_device_version() != -1) {
+//
+//            int device_number = mBleDeviceTools.get_ble_device_version();
+//
+//            if (AppUtils.isZh(mContext)) {
+//                if (device_number >= 23 && mBleDeviceTools.get_is_support_wx_sport()) {
+//                    view_wechat.setVisibility(View.VISIBLE);
+//                    rl_wechat.setVisibility(View.VISIBLE);
+//                }
+//            }
+//
+//
+//        }
     }
 
 
