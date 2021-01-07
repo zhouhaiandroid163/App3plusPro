@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 import com.zjw.apps3pluspro.application.BaseApplication;
+import com.zjw.apps3pluspro.base.BaseActivity;
 import com.zjw.apps3pluspro.module.mine.user.LoginActivity;
 import com.zjw.apps3pluspro.module.mine.user.PrivacyProtocolActivity;
 import com.zjw.apps3pluspro.module.mine.user.UserProtocolActivity;
@@ -15,7 +16,7 @@ import com.zjw.apps3pluspro.utils.MyActivityManager;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 
 
-public class CheckAgreementActivity extends Activity implements OnClickListener {
+public class CheckAgreementActivity extends BaseActivity implements OnClickListener {
 
     private static final String TAG = "CheckAgreementActivity";
     private MyActivityManager manager;
@@ -23,17 +24,18 @@ public class CheckAgreementActivity extends Activity implements OnClickListener 
     private UserSetTools mUserSetTools = BaseApplication.getUserSetTools();
     // 更新版本要用到的一些信息
 
+    @Override
+    protected int setLayoutId() {
+        return R.layout.activity_check_agreement;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check_agreement);
+    protected void initViews() {
+        super.initViews();
         manager = MyActivityManager.getInstance();
         manager.pushOneActivity(this);
         initView();
     }
-
 
     private void initView() {
         // TODO Auto-generated method stub

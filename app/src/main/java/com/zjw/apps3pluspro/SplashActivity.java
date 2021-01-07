@@ -55,10 +55,7 @@ public class SplashActivity extends Activity {
 
                 case 5:
                     //跳转到隐私检查页面
-//                    startActivity(new Intent(mContext, CheckAgreementActivity.class));
-//                    manager.popOneActivity(SplashActivity.this);
-
-                    startActivity(new Intent(mContext, LoginActivity.class));
+                    startActivity(new Intent(mContext, CheckAgreementActivity.class));
                     manager.popOneActivity(SplashActivity.this);
                     break;
 
@@ -122,16 +119,16 @@ public class SplashActivity extends Activity {
      * 检查登录状态
      */
     private void checkLogin() {
-//        if (!mUserSetTools.get_is_privacy_protocol()) {
-//            mHandler.sendEmptyMessageDelayed(5, 2000);
-//        } else {
+        if (!mUserSetTools.get_is_privacy_protocol()) {
+            mHandler.sendEmptyMessageDelayed(5, 2000);
+        } else {
             MyLog.i(TAG, "自动登录 检查状态= checkLogin = " + mUserSetTools.get_user_login());
             if (mUserSetTools.get_user_login()) {
                 mHandler.sendEmptyMessageDelayed(3, 2000);
             } else {
                 mHandler.sendEmptyMessageDelayed(1, 2000);
             }
-//        }
+        }
     }
 
 
