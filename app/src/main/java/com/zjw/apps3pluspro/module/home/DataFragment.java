@@ -553,12 +553,12 @@ public class DataFragment extends BaseFragment {
         }
 
         setBattery(HomeActivity.getBlueToothStatus());
+        initBleState(HomeActivity.getBlueToothStatus());
+
         if (BleService.syncState) {
             if (HomeActivity.ISBlueToothConnect()) {
                 syncAnimation();
                 tvSyncState.setText(getResources().getString(R.string.sync_data_ing));
-            } else {
-                initBleState(HomeActivity.getBlueToothStatus());
             }
         } else {
             if (HomeActivity.ISBlueToothConnect()) {
@@ -580,8 +580,6 @@ public class DataFragment extends BaseFragment {
                 } else {
                     tvSyncState.setText(getResources().getString(R.string.no_data_default));
                 }
-            } else {
-                initBleState(HomeActivity.getBlueToothStatus());
             }
         }
     }
