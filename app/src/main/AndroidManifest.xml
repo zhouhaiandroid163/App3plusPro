@@ -80,8 +80,10 @@
         android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme"
         tools:replace="icon,label,theme">
-        <activity android:name=".module.device.ScanQrCodeActivity"></activity>
-        <activity android:name=".zxing.activity.CaptureActivity"/>
+        <activity
+            android:name=".module.device.ScanQrCodeActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".zxing.activity.CaptureActivity" />
         <activity
             android:name=".module.device.weather.WeatherCitySearchActivity"
             android:launchMode="singleTask"
