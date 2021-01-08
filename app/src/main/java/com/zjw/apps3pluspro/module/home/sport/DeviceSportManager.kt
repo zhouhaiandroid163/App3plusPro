@@ -125,7 +125,7 @@ class DeviceSportManager private constructor() {
                     deviceSportList.add(deviceSportEntity)
                 }
             }
-        } else if (sportType == 7 || sportType == 8) {
+        } else if (sportType == 7 || sportType == 8 || sportType == 9 || sportType == 10 || sportType == 11 || sportType == 12) {
             // At last 4 byte is check crc32
             var i = 0
             while (i < sportData.size) {
