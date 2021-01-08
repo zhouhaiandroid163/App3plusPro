@@ -226,8 +226,8 @@ public class SportModleInfoUtils {
         return queryBuilder.where(SportModleInfoDao.Properties.User_id.eq(BaseApplication.getUserId()))
                 .where(SportModleInfoDao.Properties.RecordPointIdTime.ge(startTime))
                 .where(SportModleInfoDao.Properties.RecordPointIdTime.le(endTime))
-                .where(SportModleInfoDao.Properties.RecordPointSportType.notEq("9"))
-                .where(SportModleInfoDao.Properties.RecordPointSportType.notEq("10"))
+//                .where(SportModleInfoDao.Properties.RecordPointSportType.notEq("9"))
+//                .where(SportModleInfoDao.Properties.RecordPointSportType.notEq("10"))
                 .orderDesc(SportModleInfoDao.Properties.RecordPointIdTime)
                 .list();
     }
