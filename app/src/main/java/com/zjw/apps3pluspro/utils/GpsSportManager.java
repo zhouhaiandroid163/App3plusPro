@@ -2,6 +2,7 @@ package com.zjw.apps3pluspro.utils;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -86,18 +87,22 @@ public class GpsSportManager {
     };
 
     public void getLatLon(Context context, LocationListener locationListener) {
-        this.locationListener = locationListener;
+        try {
+            this.locationListener = locationListener;
 //        xaaaaaa.postDelayed(xxx, 3000);
 
-        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(context, context.getResources().getString(R.string.setting_dialog_location), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (MyUtils.isGoogle(context)) {
-            //加载google 定位
-            initGoogleMap(context);
-        } else {
-            initAMap(context);
+            if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(context, context.getResources().getString(R.string.setting_dialog_location), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (MyUtils.isGoogle(context)) {
+                //加载google 定位
+                initGoogleMap(context);
+            } else {
+                initAMap(context);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -134,7 +139,7 @@ public class GpsSportManager {
 
             mBleDeviceTools.setWeatherGps(gpsInfo.longitude + "," + gpsInfo.latitude);
 
-            if(locationListener != null){
+            if (locationListener != null) {
                 locationListener.onLocationChanged(gpsInfo);
             }
         }
@@ -221,7 +226,7 @@ public class GpsSportManager {
                         gpsInfo.gpsAccuracy = GpsInfo.GPS_HIGH;
                     }
                     mBleDeviceTools.setWeatherGps(gpsInfo.longitude + "," + gpsInfo.latitude);
-                    if(locationListener != null){
+                    if (locationListener != null) {
                         locationListener.onLocationChanged(gpsInfo);
                     }
                 }
@@ -289,14 +294,14 @@ public class GpsSportManager {
 
     public void getWeatherCity(Context context, onWeatherCityListener onWeatherCityListener) {
         RequestInfo mRequestInfo = RequestJson.getWeatherCity(context);
-         SysUtils.logAmapGpsE(TAG, "getWeatherCity = " + mRequestInfo.toString());
+        SysUtils.logAmapGpsE(TAG, "getWeatherCity = " + mRequestInfo.toString());
         NewVolleyRequest.RequestPost(mRequestInfo, TAG, new VolleyInterface(BaseApplication.getmContext(), VolleyInterface.mListener, VolleyInterface.mErrorListener) {
             @Override
             public void onMySuccess(JSONObject result) {
-                 SysUtils.logAmapGpsE(TAG, "getWeatherCity result = " + result);
+                SysUtils.logAmapGpsE(TAG, "getWeatherCity result = " + result);
                 try {
                     String code = result.optString("code");
-                    if(code.equalsIgnoreCase(ResultJson.Code_operation_success)){
+                    if (code.equalsIgnoreCase(ResultJson.Code_operation_success)) {
                         JSONObject dataJson = result.optJSONObject("data");
                         JSONArray location = dataJson.optJSONArray("location");
                         JSONObject locationItem = location.getJSONObject(0);
@@ -312,7 +317,7 @@ public class GpsSportManager {
 
             @Override
             public void onMyError(VolleyError arg0) {
-                 SysUtils.logAmapGpsE(TAG, "getWeatherCity arg0 = " + arg0);
+                SysUtils.logAmapGpsE(TAG, "getWeatherCity arg0 = " + arg0);
             }
         });
     }
@@ -359,14 +364,14 @@ public class GpsSportManager {
 
     public void getWeatherArea(Context context, onWeatherListener onWeatherListener) {
         RequestInfo mRequestInfo = RequestJson.getWeatherArea(context);
-         SysUtils.logAmapGpsE(TAG, "getWeatherArea = " + mRequestInfo.toString());
+        SysUtils.logAmapGpsE(TAG, "getWeatherArea = " + mRequestInfo.toString());
         NewVolleyRequest.RequestPost(mRequestInfo, TAG, new VolleyInterface(BaseApplication.getmContext(), VolleyInterface.mListener, VolleyInterface.mErrorListener) {
             @Override
             public void onMySuccess(JSONObject result) {
-                 SysUtils.logAmapGpsE(TAG, "getWeatherArea result = " + result);
+                SysUtils.logAmapGpsE(TAG, "getWeatherArea result = " + result);
                 try {
                     String code = result.optString("code");
-                    if(code.equalsIgnoreCase(ResultJson.Code_operation_success)){
+                    if (code.equalsIgnoreCase(ResultJson.Code_operation_success)) {
                         mUserSetTools.set_weather_now_data(result.toString());
                         getWeatherForecast(context, onWeatherListener);
                     }
@@ -378,21 +383,21 @@ public class GpsSportManager {
 
             @Override
             public void onMyError(VolleyError arg0) {
-                 SysUtils.logAmapGpsE(TAG, "getWeatherArea arg0 = " + arg0);
+                SysUtils.logAmapGpsE(TAG, "getWeatherArea arg0 = " + arg0);
             }
         });
     }
 
     private void getWeatherForecast(Context context, onWeatherListener onWeatherListener) {
         RequestInfo mRequestInfo = RequestJson.getWeatherForecast(context);
-         SysUtils.logAmapGpsE(TAG, "getWeatherArea = " + mRequestInfo.toString());
+        SysUtils.logAmapGpsE(TAG, "getWeatherArea = " + mRequestInfo.toString());
         NewVolleyRequest.RequestPost(mRequestInfo, TAG, new VolleyInterface(BaseApplication.getmContext(), VolleyInterface.mListener, VolleyInterface.mErrorListener) {
             @Override
             public void onMySuccess(JSONObject result) {
-                 SysUtils.logAmapGpsE(TAG, "getWeatherForecast result = " + result);
+                SysUtils.logAmapGpsE(TAG, "getWeatherForecast result = " + result);
                 try {
                     String code = result.optString("code");
-                    if(code.equalsIgnoreCase(ResultJson.Code_operation_success)){
+                    if (code.equalsIgnoreCase(ResultJson.Code_operation_success)) {
                         mUserSetTools.set_weather_his_data(result.toString());
                         mBleDeviceTools.setWeatherSyncTime(System.currentTimeMillis());
                         onWeatherListener.onSuccess();
@@ -404,12 +409,10 @@ public class GpsSportManager {
 
             @Override
             public void onMyError(VolleyError arg0) {
-                 SysUtils.logAmapGpsE(TAG, "getWeatherForecast arg0 = " + arg0);
+                SysUtils.logAmapGpsE(TAG, "getWeatherForecast arg0 = " + arg0);
             }
         });
     }
-
-
 
 
 }
