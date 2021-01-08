@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.RandomAccessFile;
@@ -161,6 +162,13 @@ public class SysUtils {
         Log.i(tag, content);
         if (Constants.SAVE_LOG) {
             SysUtils.writeTxtToFile("【info】" + tag + ":" + content, Constants.ERROR_DATA_IMG, Constants.P_LOG_ERROR_DATA_FILENAME);
+        }
+    }
+
+    public static void logDeviceContentI(String tag, String content) {
+        Log.i(tag, content);
+        if (Constants.SAVE_LOG) {
+            SysUtils.writeTxtToFile("【info】" + tag + ":" + content, Constants.P_LOG_PATH, Constants.P_DEVICE_LOG_BLE_FILENAME);
         }
     }
 
@@ -639,4 +647,43 @@ public class SysUtils {
         return false;
     }
 
+    public static String hexStr2Str(String hexStr) {
+        String str = "0123456789ABCDEF";
+        char[] hexs = hexStr.toCharArray();
+        byte[] bytes = new byte[hexStr.length() / 2];
+        int n;
+
+        for (int i = 0; i < bytes.length; i++) {
+            n = str.indexOf(hexs[2 * i]) * 16;
+            n += str.indexOf(hexs[2 * i + 1]);
+            bytes[i] = (byte) (n & 0xff);
+        }
+        return new String(bytes);
+    }
+
+    private static String hexString = "0123456789abcdef";
+
+    public static String decode(String bytes) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(bytes.length() / 2);
+        //将每2位16进制整数组装成一个字节
+        for (int i = 0; i < bytes.length(); i += 2)
+            baos.write((hexString.indexOf(bytes.charAt(i)) << 4 | hexString.indexOf(bytes.charAt(i + 1))));
+        return new String(baos.toByteArray());
+    }
+
+    public static String printHexString(byte[] b) {
+        if (b == null) {
+            return "";
+        }
+        String hexString = "";
+        for (int i = 0; i < b.length; i++) {
+            String hex = Integer.toHexString(b[i] & 0xFF);
+            if (hex.length() == 1) {
+                hex = '0' + hex;
+            }
+            hexString += hex.toUpperCase() + " ";
+        }
+
+        return hexString;
+    }
 }

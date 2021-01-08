@@ -3,6 +3,7 @@ package com.zjw.apps3pluspro.bleservice.anaylsis;
 import com.xiaomi.wear.protobuf.FactoryProtos;
 import com.xiaomi.wear.protobuf.WearProtos;
 import com.zjw.apps3pluspro.bleservice.BleTools;
+import com.zjw.apps3pluspro.utils.SysUtils;
 
 public class FactoryTools {
 
@@ -91,10 +92,10 @@ public class FactoryTools {
                 result_str += "factory" + "factory/" + "FileInfo/is_append  = " + file_info.getIsAppend() + "\n";
                 result_str += "factory" + "factory/" + "FileInfo/data  = " + file_info.getData() + "\n";
                 result_str += "factory" + "factory/" + "FileInfo/data  = " + BleTools.printHexString(file_info.getData().toByteArray()) + "\n";
-                ;
 
+                SysUtils.logDeviceContentI("Device log", file_info.getName());
+                SysUtils.logDeviceContentI("Device log", SysUtils.hexStr2Str(SysUtils.printHexString(file_info.getData().toByteArray()).replace(" ", "")));
                 break;
-
 
         }
 
