@@ -561,11 +561,14 @@ public class DeviceFragment extends BaseFragment {
             layoutScreenSet.setVisibility(View.VISIBLE);
         }
 
-        if (!AppUtils.isZh(context)) {
-            layoutGoogleFit.setVisibility(View.VISIBLE);
-        } else {
-            mBleDeviceTools.setIsOpenGooglefit(false);
-        }
+//        if (!AppUtils.isZh(context)) {
+//            layoutGoogleFit.setVisibility(View.VISIBLE);
+//        } else {
+//            mBleDeviceTools.setIsOpenGooglefit(false);
+//        }
+
+        layoutGoogleFit.setVisibility(View.GONE);
+        mBleDeviceTools.setIsOpenGooglefit(false);
 
         if (mBleDeviceTools.get_is_screen_saver()) {
             layoutScreensaver.setVisibility(View.VISIBLE);
