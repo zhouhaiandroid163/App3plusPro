@@ -166,6 +166,8 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
                     if (my_distance != null && !my_distance.equals("")) {
                         my_distance = my_distance.replace(",", ".");
 
+                        DecimalFormat decimalFormat = new DecimalFormat(",##0.00");
+
                         long duration11 = Long.parseLong(duration);
                         long distance = Long.parseLong(my_distance);
 
@@ -178,27 +180,30 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
                         itemHolder.tvPace.setText(formatPace);
                         itemHolder.tvPace5.setText(formatPace);
 
+                        float distanceK = 0f;
                         if (mBleDeviceTools.get_device_unit() == 1) {
-                            my_distance = AppUtils.GetFormat(2, Float.valueOf(my_distance) / 1000 + 0.005f);
+                            distanceK = Float.valueOf(my_distance) / 1000;
+
                             itemHolder.tvDistanceUnit.setText(context.getResources().getString(R.string.sport_distance_unit));
                             itemHolder.tvSpeedUnit.setText("km/h");
 
                             itemHolder.tvDistanceUnit5.setText(context.getResources().getString(R.string.sport_distance_unit));
                             itemHolder.tvSpeedUnit5.setText("km/h");
                         } else {
-                            my_distance = AppUtils.GetFormat(2, Float.valueOf(my_distance) / 1000 / 1.61f);
+                            distanceK = Float.valueOf(my_distance) / 1000 / 1.61f;
+
                             itemHolder.tvDistanceUnit.setText(context.getResources().getString(R.string.unit_mi));
                             itemHolder.tvSpeedUnit.setText("mi/h");
 
                             itemHolder.tvDistanceUnit5.setText(context.getResources().getString(R.string.unit_mi));
                             itemHolder.tvSpeedUnit5.setText("mi/h");
                         }
-                        itemHolder.tvDistance.setText(my_distance);
-                        itemHolder.tvDistance5.setText(my_distance);
 
-                        DecimalFormat decimalFormat = new DecimalFormat(",##0.00");
-                        itemHolder.tvSpeed.setText(decimalFormat.format(Float.parseFloat(my_distance) / (duration11 / 3600f)));
-                        itemHolder.tvSpeed5.setText(decimalFormat.format(Float.parseFloat(my_distance) / (duration11 / 3600f)));
+                        itemHolder.tvDistance.setText(decimalFormat.format(distanceK));
+                        itemHolder.tvDistance5.setText(decimalFormat.format(distanceK));
+
+                        itemHolder.tvSpeed.setText(decimalFormat.format(distanceK / (duration11 / 3600f)));
+                        itemHolder.tvSpeed5.setText(decimalFormat.format(distanceK / (duration11 / 3600f)));
                     }
 
                     break;
