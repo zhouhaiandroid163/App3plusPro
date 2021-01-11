@@ -205,7 +205,6 @@ public class DeviceMoreSetActivity extends BaseActivity {
         super.initDatas();
         IntentFilter filter = new IntentFilter();
         filter.addAction(BroadcastTools.ACTION_GATT_DEVICE_COMPLETE);
-        filter.addAction(BroadcastTools.TAG_CLOSE_PHOTO_ACTION);
         filter.setPriority(1000);
         registerReceiver(broadcastReceiver, filter);
 
@@ -460,47 +459,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                         getNetDeviceVersion(mBleDeviceTools.get_ble_device_type(), mBleDeviceTools.get_ble_device_version(), mBleDeviceTools.get_device_platform_type());
                     }
                     break;
-                case BroadcastTools.ACTION_UPDATE_LTO_SUCCESS:
-                    MyLog.i(TAG, "lto 收到下载固件成功！");
-                    startDfu();
-                    break;
-                case ThemeManager.ACTION_CMD_APP_START:
-                    switch (curCmd) {
-                        case "btUploadTheme":
-                            uploadDataPiece();
-                            break;
-                    }
-                    break;
-                case ThemeManager.ACTION_CMD_DEVICE_CONFIRM:
-                    switch (curCmd) {
-                        case "btUploadTheme":
-                            if (curPiece == ThemeManager.getInstance().dataPackTotalPieceLength) {
-                                if ("watch".equalsIgnoreCase(type)) {
-                                } else {
-                                }
-                                Toast.makeText(DeviceMoreSetActivity.this, getResources().getString(R.string.send_success), Toast.LENGTH_SHORT).show();
-                                if (progressDialog != null && progressDialog.isShowing()) {
-                                    progressDialog.dismiss();
-                                }
-
-                            } else {
-                                startUploadThemePiece();
-                            }
-                            break;
-                    }
-                    break;
-                case ThemeManager.ACTION_CMD_DEVICE_START:
-                    sendProtoUpdateData(BleCmdManager.getInstance().deviceStartCmd());
-                    break;
-                case ThemeManager.ACTION_CMD_APP_CONFIRM:
-                    sendProtoUpdateData(BleCmdManager.getInstance().appConfirm());
-                    break;
-                case ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK:
-                    int pageNum = intent.getIntExtra("packNum", 0);
-                    sendProtoUpdateData(BleCmdManager.getInstance().sendThemePiece(pageNum, curPiece));
-                    break;
             }
-
         }
     };
 
@@ -638,7 +597,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
             disconnect();
             BleTools.unBind(context);
             finish();
-        }, 2000);
+        }, Constants.FINISH_ACTIVITY_DELAY_TIME);
     }
 
 

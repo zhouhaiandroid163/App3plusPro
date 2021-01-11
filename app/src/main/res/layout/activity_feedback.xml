@@ -72,21 +72,19 @@
             <EditText
                 android:id="@+id/et_feedback_email"
                 android:layout_width="match_parent"
-                android:layout_height="40dip"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:background="@drawable/selector_white_bg"
-                android:gravity="top"
+                android:gravity="center_vertical"
                 android:hint="@string/feedback_mail"
-                android:imeOptions="actionDone"
-                android:inputType="textEmailAddress"
+                android:minHeight="45dp"
                 android:padding="8dip"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:paddingTop="10dp"
-                android:singleLine="true"
+                android:singleLine="false"
                 android:textColor="#ffffff"
                 android:textColorHint="#989CA0"
                 android:textSize="14sp" />
-
 
         </LinearLayout>
     </ScrollView>

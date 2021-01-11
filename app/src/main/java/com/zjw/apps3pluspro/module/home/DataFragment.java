@@ -206,7 +206,7 @@ public class DataFragment extends BaseFragment {
         refreshView();
         homeActivity.setGpsAccuracy(ivGpsStatus);
         layoutConnectState.setOnClickListener(v -> {
-            startActivity(new Intent(context, CommonProblemActivity.class));
+//            startActivity(new Intent(context, CommonProblemActivity.class));
         });
     }
 

@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/no_data_default"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="@+id/title1"
                     app:layout_constraintLeft_toRightOf="@+id/title1" />
 
@@ -124,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/no_data_default"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="@+id/title1"
                     app:layout_constraintLeft_toRightOf="@+id/title1" />
 
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/no_data_default"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     app:layout_constraintBottom_toBottomOf="@+id/title1"
                     app:layout_constraintLeft_toRightOf="@+id/title1" />
 
@@ -164,9 +164,9 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.7">
+        android:layout_marginEnd="12dp">
 
 
         <com.zjw.apps3pluspro.view.RoundProgress2View

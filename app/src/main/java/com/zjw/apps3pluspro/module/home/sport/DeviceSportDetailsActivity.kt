@@ -44,7 +44,9 @@ import java.util.*
 
 @Suppress("DEPRECATION")
 class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
+    private var unitType: Int = 0
     private val TAG = DeviceSportDetailsActivity::class.java.simpleName
+    private val mBleDeviceTools = BaseApplication.getBleDeviceTools()
     private var sportType: Int = 0
     var sportModleInfo: SportModleInfo? = null
     var caloriesFmt = DecimalFormat(",##0.00")
@@ -57,6 +59,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
 
     override fun initViews() {
         super.initViews()
+        unitType = mBleDeviceTools._device_unit
         sportModleInfo = MoreSportActivity.sportModleInfo
         ivRight.background = ContextCompat.getDrawable(this, R.mipmap.device_sport_share)
         ivTitleType.visibility = View.GONE
@@ -107,13 +110,20 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
         val avgPaceString: String
         var avgPace: Double = 0.0
         if (sportModleInfo?.reportDistance!! != 0L) {
-            avgPace = sportModleInfo?.reportDuration!! / ((sportModleInfo?.reportDistance!! / 1000.0));
+            avgPace = sportModleInfo?.reportDuration!! / ((sportModleInfo?.reportDistance!! / 1000.0))
         }
-        avgPaceString = String.format("%1$02d'%2$02d\"", (avgPace / 60).toInt(), (avgPace % 60).toInt())
-//        if (avgPace < 3600)
-//            avgPaceString = String.format("%1$02d'%2$02d\"", (avgPace / 60).toInt(), (avgPace % 60).toInt())
-//        else
-//            avgPaceString = String.format("%1$02dH %2$02d'%3$02d\"", (avgPace / (60 * 60)).toInt(), (avgPace % 3600 / 60).toInt(), (avgPace % 60).toInt())
+        val minute = (avgPace / 60).toInt()
+        val second = (avgPace % 60).toInt()
+        if (minute * 60 + second > 50 * 60 + 58) {
+            avgPaceString = String.format("%1$02d'%2$02d\"", 0, 0)
+        } else {
+            if (mBleDeviceTools._device_unit == 1) {
+                avgPaceString = String.format("%1$02d'%2$02d\"", (avgPace / 60).toInt(), (avgPace % 60).toInt())
+            } else {
+                avgPace = sportModleInfo?.reportDuration!! / ((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f))
+                avgPaceString = String.format("%1$02d'%2$02d\"", (avgPace / 60).toInt(), (avgPace % 60).toInt())
+            }
+        }
 
         tvTitleValue1.text = NewTimeUtils.getTimeString(sportModleInfo?.reportDuration!!)
         tvTitleValue2.text = NewTimeUtils.getStringDate(sportModleInfo?.reportSportStartTime!!, NewTimeUtils.HHMMSS) + " - " + NewTimeUtils.getStringDate(sportModleInfo?.reportSportEndTime!!, NewTimeUtils.HHMMSS)
@@ -127,6 +137,13 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
         tvTitleValue10.text = (sportModleInfo?.reportTotalStep!! / (sportModleInfo?.reportDuration!! / 60.0)).toInt().toString() + resources.getString(R.string.device_sport_step_speed_unit)
         tvTitleValue11.text = sportModleInfo?.reportCumulativeRise!!.toString() + resources.getString(R.string.device_sport_unit)
         tvTitleValue12.text = sportModleInfo?.reportCumulativeDecline!!.toString() + resources.getString(R.string.device_sport_unit)
+
+        if (unitType != 1) {
+            tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) + resources.getString(R.string.unit_mi)
+            tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + resources.getString(R.string.speed_unit_mi)
+            tvTitleValue11.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f) + resources.getString(R.string.unit_ft)
+            tvTitleValue12.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + resources.getString(R.string.unit_ft)
+        }
 
         tvTrainingEffectScore.text = sportModleInfo?.reportTrainingEffect!!.toString()
         tvMaxOxygenIntakeTitleValue.text = sportModleInfo?.reportMaxOxygenIntake!!.toString() + resources.getString(R.string.device_sport_maxOxygenIntake_unit)
@@ -171,19 +188,18 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
 
         tvAvgPace.text = avgPaceString
         val maxPace: Long = sportModleInfo?.reportFastPace!!
-        tvMaxPace.text = String.format("%1$02d'%2$02d\"", (maxPace / 60).toInt(), (maxPace % 60).toInt())
-//        if (maxPace < 3600)
-//            tvMaxPace.text = String.format("%1$02d'%2$02d\"", (maxPace / 60).toInt(), (maxPace % 60).toInt())
-//        else
-//            tvMaxPace.text = String.format("%1$02dH %2$02d'%3$02d\"", (maxPace / (60 * 60)).toInt(), (maxPace % 3600 / 60).toInt(), (maxPace % 60).toInt())
+        if (maxPace > 50 * 60 + 58) {
+            tvMaxPace.text = String.format("%1$02d'%2$02d\"", 0, 0)
+        } else {
+            tvMaxPace.text = String.format("%1$02d'%2$02d\"", (maxPace / 60).toInt(), (maxPace % 60).toInt())
+        }
 
         val minPace: Long = sportModleInfo?.reportSlowestPace!!
-        tvMinPace.text = String.format("%1$02d'%2$02d\"", (minPace / 60).toInt(), (minPace % 60).toInt())
-//        if (maxPace < 3600)
-//            tvMinPace.text = String.format("%1$02d'%2$02d\"", (minPace / 60).toInt(), (minPace % 60).toInt())
-//        else
-//            tvMinPace.text = String.format("%1$02dH %2$02d'%3$02d\"", (minPace / (60 * 60)).toInt(), (minPace % 3600 / 60).toInt(), (minPace % 60).toInt())
-
+        if (minPace > 50 * 60 + 58) {
+            tvMinPace.text = String.format("%1$02d'%2$02d\"", 0, 0)
+        } else {
+            tvMinPace.text = String.format("%1$02d'%2$02d\"", (minPace / 60).toInt(), (minPace % 60).toInt())
+        }
 
         if (sportModleInfo?.reportTotalStep!! == 0L) {
             goneStep()
@@ -191,14 +207,26 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
             tvAvgStepSpeed.text = (sportModleInfo?.reportTotalStep!! / (sportModleInfo?.reportDuration!! / 60.0)).toInt().toString()
             tvMaxStepSpeed.text = (sportModleInfo?.reportMaxStepSpeed!!).toString()
             tvAvgStepLength.text = (sportModleInfo?.reportDistance!! * 100 / sportModleInfo?.reportTotalStep!!).toString()
+            if (unitType != 1) {
+                tvAvgStepLength.text = caloriesFmt.format(sportModleInfo?.reportDistance!! * 100 * 0.393 / sportModleInfo?.reportTotalStep!!)
+                tvAvgStepLengthUnit.text = resources.getText(R.string.unit_in)
+            }
         }
 
         tvAvgSpeed.text = caloriesFmt.format((sportModleInfo?.reportDistance!! / 1000.0 / (sportModleInfo?.reportDuration!! / 3600.0))).toString()
+        if (unitType != 1) {
+            tvAvgSpeed.text = caloriesFmt.format((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f / (sportModleInfo?.reportDuration!! / 3600.0))).toString()
+            tvAvgSpeedUnit.text = resources.getText(R.string.speed_unit_mi)
+        }
 
         if (sportModleInfo?.reportFastSpeed!! == 0f) {
             layoutSpeed.visibility = View.GONE
         } else {
             tvMaxSpeed.text = sportModleInfo?.reportFastSpeed!!.toString()
+            if (unitType != 1) {
+                tvMaxSpeed.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!! / 1.61f)
+                tvMaxSpeedUnit.text = resources.getText(R.string.speed_unit_mi)
+            }
         }
 
         tvTotalCal.text = sportModleInfo?.reportCal!!.toString()
@@ -206,6 +234,10 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
 
         tvCumulativeRise.text = sportModleInfo?.reportCumulativeRise!!.toString()
         tvCumulativeDecline.text = sportModleInfo?.reportCumulativeDecline!!.toString()
+        if (unitType != 1) {
+            tvCumulativeRise.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f) + resources.getString(R.string.unit_ft)
+            tvCumulativeDecline.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + resources.getString(R.string.unit_ft)
+        }
 
         mPaceCurveChartView.setType(1)
 
@@ -251,13 +283,28 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                     if (distance == 0.0) {
                         yPaceData.add(0.0)
                     } else {
-                        yPaceData.add(oneGroup * 1000 / (60.0 * distance))
+                        var yMinute = oneGroup * 1000 / (60.0 * distance)
+                        if (yMinute * 60 > 50 * 60 + 58) {
+                            yPaceData.add(0.0)
+                        } else {
+                            if (unitType == 1) {
+                                yPaceData.add(oneGroup * 1000 / (60.0 * distance))
+                            } else {
+                                yPaceData.add(oneGroup * 1000 / (60.0 * distance / 1.61f))
+                            }
+                        }
                     }
-                    yStepSpeedData.add(step * 60.0 / oneGroup)
-                    ySpeedData.add(distance * 3600 / (oneGroup * 1000))
-                    yCalData.add(cal)
-                    yHeightData.add(height)
 
+                    if (unitType == 1) {
+                        ySpeedData.add(distance * 3600 / (oneGroup * 1000))
+                        yHeightData.add(height)
+                    } else {
+                        ySpeedData.add(distance * 3600 / (oneGroup * 1000 * 1.61f))
+                        yHeightData.add(height * 3.28f)
+                    }
+
+                    yStepSpeedData.add(step * 60.0 / oneGroup)
+                    yCalData.add(cal)
                 }
                 mHeartCurveChartView.setParameter(xData, yHeartData)
                 mPaceCurveChartView.setParameter(xData, yPaceData)
@@ -300,12 +347,27 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                     if (distance == 0.0) {
                         yPaceData.add(0.0)
                     } else {
-                        yPaceData.add(oneGroup * 1000 / (60.0 * distance))
+                        val yMinute = oneGroup * 1000 / (60.0 * distance)
+                        if (yMinute * 60 > 50 * 60 + 58) {
+                            yPaceData.add(0.0)
+                        } else {
+                            if (unitType == 1) {
+                                yPaceData.add(oneGroup * 1000 / (60.0 * distance))
+                            } else {
+                                yPaceData.add(oneGroup * 1000 / (60.0 * distance / 1.61f))
+                            }
+                        }
+                    }
+
+                    if (unitType == 1) {
+                        ySpeedData.add(distance * 3600 / (oneGroup * 1000))
+                        yHeightData.add(height)
+                    } else {
+                        ySpeedData.add(distance * 3600 / (oneGroup * 1000 * 1.61f))
+                        yHeightData.add(height * 3.28f)
                     }
                     yStepSpeedData.add(step * 60.0 / oneGroup)
-                    ySpeedData.add(distance * 3600 / (oneGroup * 1000))
                     yCalData.add(cal)
-                    yHeightData.add(height)
                 }
 
                 // 第十七段数据
@@ -326,12 +388,29 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                 if (distance == 0.0) {
                     yPaceData.add(0.0)
                 } else {
-                    yPaceData.add(oneGroup * 1000 / (60.0 * distance))
+                    val yMinute = oneGroup * 1000 / (60.0 * distance)
+                    if (yMinute * 60 > 50 * 60 + 58) {
+                        yPaceData.add(0.0)
+                    } else {
+                        if (unitType == 1) {
+                            yPaceData.add(oneGroup * 1000 / (60.0 * distance))
+                        } else {
+                            yPaceData.add(oneGroup * 1000 / (60.0 * distance / 1.61f))
+                        }
+                    }
                 }
+
                 yStepSpeedData.add(step * 60.0 / oneGroup)
-                ySpeedData.add(distance * 3600 / (oneGroup * 1000))
                 yCalData.add(cal)
-                yHeightData.add(height)
+
+                if (unitType == 1) {
+                    ySpeedData.add(distance * 3600 / (oneGroup * 1000))
+                    yHeightData.add(height)
+                } else {
+                    ySpeedData.add(distance * 3600 / (oneGroup * 1000 * 1.61f))
+                    yHeightData.add(height * 3.28f)
+                }
+
 
                 mHeartCurveChartView.setParameter(xData, yHeartData)
                 mPaceCurveChartView.setParameter(xData, yPaceData)

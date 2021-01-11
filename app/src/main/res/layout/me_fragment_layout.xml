@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/base_activity_bg"
     android:orientation="vertical">
+
     <include layout="@layout/home_title" />
 
     <androidx.core.widget.NestedScrollView
@@ -13,8 +14,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -165,7 +166,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:gravity="center"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
                             <TextView
                                 style="@style/public_text_title2_style"
@@ -265,7 +267,8 @@
                         android:layout_height="50dp"
                         android:gravity="center|left"
                         android:orientation="horizontal"
-                        android:paddingStart="12dp">
+                        android:paddingStart="12dp"
+                        android:visibility="gone">
 
                         <ImageView
                             style="@style/device_fragment_right_image"
@@ -296,8 +299,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="bottom|center"
-                android:paddingBottom="12dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="12dp">
 
                 <Button
                     android:id="@+id/bt_profile_exit"

@@ -508,6 +508,7 @@ public class MyNotificationsListenerService extends NotificationListenerService 
         if (count.contains(getString(R.string.notiface_wx_no_prompt1))
                 || count.contains(getString(R.string.notiface_wx_no_prompt2))
                 || count.contains(getString(R.string.notiface_wx_no_prompt3))
+                || count.contains("WeChat is running")
         ) {
             result = true;
         }

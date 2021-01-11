@@ -983,6 +983,7 @@
     <string name="no_data_default">- -</string>
     <string name="pace_unit">min/km</string>
     <string name="speed_unit">km/h</string>
+    <string name="speed_unit_mi">mi/h</string>
     <string name="crash_log_tip">Sorry,there is something wrong with the program. We are about to exit</string>
     <!-- y友盟相关 -->
     <string name="umeng_socialize_female">女</string>
@@ -1001,9 +1002,10 @@
     <string name="kg">Kg</string>
     <string name="big_calory">Kcal</string>
     <string name="sport_distance_unit">km</string>
-    <string name="unit_in">In</string><!--  英尺-对应厘米-->
+    <string name="unit_in">In</string><!--  英寸-对应厘米-->
     <string name="unit_lb">Lb</string><!--  英镑-对应公斤-->
     <string name="unit_mi">Mi</string><!--  英里-对应千米-->
+    <string name="unit_ft">Ft</string><!--  英尺-对应千米-->
     <string name="unit_spo2">SpO2</string><!--  英里-对应千米-->
     <!-- 第三方APP名称 -->
     <string name="app_wechat">WeChat</string>

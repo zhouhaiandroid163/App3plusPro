@@ -175,14 +175,26 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
                         if (distance != 0) {
                             pace = duration11 / (distance / 1000f);
                         }
+                        int minute = (int) (pace / 60);
+                        int second = (int) (pace % 60);
+                        String formatPace = "";
+                        if ((minute * 60 + second) > (50 * 60 + 58)) {
+                            formatPace = String.format("%1$02d'%2$02d\"", 0, 0);
+                        } else {
+                            if (mBleDeviceTools.get_device_unit() == 1) {
+                                formatPace = String.format("%1$02d'%2$02d\"", (int) (pace / 60), (int) (pace % 60));
+                            } else {
+                                pace = duration11 / (distance / 1000f / 1.61f);
+                                formatPace = String.format("%1$02d'%2$02d\"", (int) (pace / 60), (int) (pace % 60));
+                            }
+                        }
 
-                        String formatPace = String.format("%1$02d'%2$02d\"", (int) (pace / 60), (int) (pace % 60));
                         itemHolder.tvPace.setText(formatPace);
                         itemHolder.tvPace5.setText(formatPace);
 
                         float distanceK = 0f;
                         if (mBleDeviceTools.get_device_unit() == 1) {
-                            distanceK = Float.valueOf(my_distance) / 1000;
+                            distanceK = Float.parseFloat(my_distance) / 1000;
 
                             itemHolder.tvDistanceUnit.setText(context.getResources().getString(R.string.sport_distance_unit));
                             itemHolder.tvSpeedUnit.setText("km/h");
@@ -190,7 +202,7 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
                             itemHolder.tvDistanceUnit5.setText(context.getResources().getString(R.string.sport_distance_unit));
                             itemHolder.tvSpeedUnit5.setText("km/h");
                         } else {
-                            distanceK = Float.valueOf(my_distance) / 1000 / 1.61f;
+                            distanceK = Float.parseFloat(my_distance) / 1000 / 1.61f;
 
                             itemHolder.tvDistanceUnit.setText(context.getResources().getString(R.string.unit_mi));
                             itemHolder.tvSpeedUnit.setText("mi/h");

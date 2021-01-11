@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:curveChartView="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutStepSpeed"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="15dp"
-    android:id="@+id/layoutStepSpeed"
     android:background="@color/dialog_bg"
-    xmlns:curveChartView="http://schemas.android.com/apk/res-auto"
     android:paddingStart="12dp"
     android:paddingEnd="12dp">
 
@@ -86,6 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:gravity="center_horizontal"
                 android:text="@string/device_sport_step_speed_avg"
                 android:textColor="#878B90"
                 android:textSize="14sp" />
@@ -128,6 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:gravity="center_horizontal"
                 android:text="@string/device_sport_step_speed_max"
                 android:textColor="#878B90"
                 android:textSize="14sp" />
@@ -157,6 +159,7 @@
                     android:textSize="24sp" />
 
                 <TextView
+                    android:id="@+id/tvAvgStepLengthUnit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
@@ -170,12 +173,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:gravity="center_horizontal"
                 android:text="@string/device_sport_step_speed_step_length"
                 android:textColor="#878B90"
                 android:textSize="14sp" />
 
         </LinearLayout>
     </LinearLayout>
+
     <com.zjw.apps3pluspro.view.DeviceSportChartView
         android:id="@+id/mStepSpeedCurveChartView"
         android:layout_width="match_parent"

@@ -356,7 +356,7 @@
     <string name="open_medicine">Abrir recordatorio de medicación</string>
     <string name="medicine_tip">Cuando el "recordatorio de medicación" está habilitado, se configurará para que vibre durante el tiempo establecido. Los medicamentos regulares mejoran el cumplimiento y, por lo tanto, mejoran los resultados del tratamiento.</string>
     <string name="drink_water_title">Recordatorio de agua potable</string>
-    <string name="open_drink_water">Enciende el recordatorio de agua</string>
+    <string name="open_drink_water">Beber agua recordatorio</string>
     <string name="drink_water_tip">Cuando el "Recordatorio de agua potable" está habilitado, el dispositivo recibirá una alerta por vibración durante el tiempo establecido. Se recomienda que los adultos beban 1500ml-1700ml al día.</string>
     <string name="metting_title">Recordatorio de reunión</string>
     <string name="open_metting">Recordatorio de reunión abierta</string>
@@ -697,7 +697,7 @@
     <string name="device_continuity_measure_tip">Activar esta función causará un consumo de energía más rápido.</string>
     <string name="device_hourly_heart_title">Monitoreo de la tasa de refrigerios completos</string>
     <string name="device_continuity_heart_title">Monitoreo continuo de recursos humanos</string>
-    <string name="device_continuity_temp_title">Monitoreo continuo de temperatura.</string>
+    <string name="device_continuity_temp_title">Monitoreo continuo de temperatura</string>
     <string name="device_continuity_spo2_title">Monitoreo continuo de oxígeno en la sangre.</string>
     <string name="device_wrist_lift_screen_title">Levanta la muñeca</string>
     <string name="device_wrist_lift_screen_content">Levanta la muñeca y gira la pantalla hacia ti para iluminarla</string>
@@ -933,7 +933,7 @@
     <string name="device_sport_max_pace">ritmo más alto</string>
     <string name="device_sport_min_pace">ritmo mínimo</string>
     <string name="device_sport_step_speed_title">paso</string>
-    <string name="device_sport_step_speed_unit">paso / minuto</string>
+    <string name="device_sport_step_speed_unit">paso/min</string>
     <string name="device_sport_step_speed_unit2">cm</string>
     <string name="device_sport_step_speed_avg">frecuencia de paso promedio</string>
     <string name="device_sport_step_speed_max">frecuencia de paso más alta</string>
@@ -955,7 +955,7 @@
     <!--以下定制app翻译-->
     <string name="device_name">nombre del dispositivo</string>
     <string name="device_power">alimentación del dispositivo</string>
-    <string name="device_version">número de versión del dispositivo</string>
+    <string name="device_version">Versión del dispositivo</string>
     <string name="device_get_version">leer el número de versión ...</string>
     <string name="qr_code">Utilice la cámara del teléfono móvil para escanear el código QR en el reloj para vincularlo</string>
     <string name="qr_code_next">Siguiente paso</string>
