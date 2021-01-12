@@ -355,7 +355,7 @@
     <string name="medicine_title">Recordatorio de medicación</string>
     <string name="open_medicine">Abrir recordatorio de medicación</string>
     <string name="medicine_tip">Cuando el "recordatorio de medicación" está habilitado, se configurará para que vibre durante el tiempo establecido. Los medicamentos regulares mejoran el cumplimiento y, por lo tanto, mejoran los resultados del tratamiento.</string>
-    <string name="drink_water_title">Recordatorio de agua potable</string>
+    <string name="drink_water_title">Beber agua</string>
     <string name="open_drink_water">Beber agua recordatorio</string>
     <string name="drink_water_tip">Cuando el "Recordatorio de agua potable" está habilitado, el dispositivo recibirá una alerta por vibración durante el tiempo establecido. Se recomienda que los adultos beban 1500ml-1700ml al día.</string>
     <string name="metting_title">Recordatorio de reunión</string>

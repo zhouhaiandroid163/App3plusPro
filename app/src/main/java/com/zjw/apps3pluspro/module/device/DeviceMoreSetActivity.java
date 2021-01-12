@@ -747,13 +747,29 @@ public class DeviceMoreSetActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isPause = true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isPause = false;
+    }
+
+    private boolean isPause = false;
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void blueToothStateEvent(BlueToothStateEvent event) {
         switch (event.state) {
             case BleConstant.STATE_CONNECTING:
                 break;
             case BleConstant.STATE_DISCONNECTED:
-                AppUtils.showToast(context, R.string.no_connection_notification);
+                if (!isPause) {
+                    AppUtils.showToast(context, R.string.no_connection_notification);
+                }
                 finish();
                 break;
             case BleConstant.STATE_CONNECTED_TIMEOUT:

@@ -159,7 +159,7 @@ class StepHistoryActivity : BaseActivity() {
                 val target = mUserSetTools._user_exercise_target
 
                 tvStepProgress.text = AnalyticalUtils.getCompletionRate(mUserSetTools, steps) + "%"
-                roundViewStep.setProgress(0f, 0f, steps.toInt() / target.toFloat())
+                roundViewStep.setProgress(0f, steps.toInt() / target.toFloat(), 0f)
 
                 targetProgress.progress = Integer.parseInt(AnalyticalUtils.getCompletionRate(mUserSetTools, steps))
 
