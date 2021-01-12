@@ -2917,9 +2917,7 @@ public class BleService extends Service {
 
         int time = 100;
 
-        if (!isInitTimeZone) {
-            initTimeZone();
-        }
+        initTimeZone();
 
         if (mBleDeviceTools.get_is_support_mail_list()) {
             if (!iCallDeviceInfo) {
