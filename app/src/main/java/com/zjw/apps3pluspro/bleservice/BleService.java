@@ -1694,7 +1694,7 @@ public class BleService extends Service {
                         if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_2)) {
                             SysUtils.logContentI(TAG, "characteristic_protobuf_2 on success");
                         } else {
-                            SysUtils.logContentI(TAG, "characteristic_protobuf_3 error");
+                            SysUtils.logContentI(TAG, "characteristic_protobuf_2 error");
                         }
                     }, delayTime);
                     delayTime += 400;

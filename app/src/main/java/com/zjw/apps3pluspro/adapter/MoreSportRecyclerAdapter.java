@@ -23,6 +23,7 @@ import com.zjw.apps3pluspro.sql.entity.SportModleInfo;
 import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.NewTimeUtils;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -167,6 +168,7 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
                         my_distance = my_distance.replace(",", ".");
 
                         DecimalFormat decimalFormat = new DecimalFormat(",##0.00");
+                        decimalFormat.setRoundingMode(RoundingMode.DOWN);
 
                         long duration11 = Long.parseLong(duration);
                         long distance = Long.parseLong(my_distance);

@@ -39,6 +39,7 @@ import kotlinx.android.synthetic.main.device_sport_pace.*
 import kotlinx.android.synthetic.main.device_sport_speed.*
 import kotlinx.android.synthetic.main.device_sport_step_speed.*
 import kotlinx.android.synthetic.main.public_head_white_text.*
+import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 
@@ -59,6 +60,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
 
     override fun initViews() {
         super.initViews()
+        caloriesFmt.roundingMode = RoundingMode.DOWN
         unitType = mBleDeviceTools._device_unit
         sportModleInfo = MoreSportActivity.sportModleInfo
         ivRight.background = ContextCompat.getDrawable(this, R.mipmap.device_sport_share)
@@ -191,14 +193,22 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
         if (maxPace > 50 * 60 + 58) {
             tvMaxPace.text = String.format("%1$02d'%2$02d\"", 0, 0)
         } else {
-            tvMaxPace.text = String.format("%1$02d'%2$02d\"", (maxPace / 60).toInt(), (maxPace % 60).toInt())
+            if (unitType == 1) {
+                tvMaxPace.text = String.format("%1$02d'%2$02d\"", (maxPace / 60).toInt(), (maxPace % 60).toInt())
+            } else {
+                tvMaxPace.text = String.format("%1$02d'%2$02d\"", (maxPace * 1.61f / 60).toInt(), (maxPace * 1.61f % 60).toInt())
+            }
         }
 
         val minPace: Long = sportModleInfo?.reportSlowestPace!!
         if (minPace > 50 * 60 + 58) {
             tvMinPace.text = String.format("%1$02d'%2$02d\"", 0, 0)
         } else {
-            tvMinPace.text = String.format("%1$02d'%2$02d\"", (minPace / 60).toInt(), (minPace % 60).toInt())
+            if (unitType == 1) {
+                tvMinPace.text = String.format("%1$02d'%2$02d\"", (minPace / 60).toInt(), (minPace % 60).toInt())
+            } else {
+                tvMinPace.text = String.format("%1$02d'%2$02d\"", (minPace * 1.61f / 60).toInt(), (minPace * 1.61f % 60).toInt())
+            }
         }
 
         if (sportModleInfo?.reportTotalStep!! == 0L) {
