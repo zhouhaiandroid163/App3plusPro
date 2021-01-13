@@ -82,8 +82,9 @@
         tools:replace="icon,label,theme">
         <activity
             android:name=".module.device.ScanQrCodeActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".zxing.activity.CaptureActivity" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".module.device.weather.WeatherCitySearchActivity"
             android:launchMode="singleTask"
@@ -420,102 +421,128 @@
             android:theme="@style/AppThemeHome" /> <!-- 固件升级 RTK -->
         <activity
             android:name=".module.device.dfu.ProtobufActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 固件升级 RTK -->
         <activity
             android:name=".module.device.dfurtk.RtkDfuActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 固件升级 RTK 本地升级 -->
         <activity
             android:name=".module.device.dfurtk.RtkLocalDfuActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 我的主题 -->
         <activity
             android:name=".module.device.clockdial.MyThemeActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 表盘 -->
         <activity
             android:name=".module.device.clockdial.ClockDialActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" />
         <activity
             android:name=".module.device.clockdial.ClockDialSendDataActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" />
         <activity
             android:name=".module.device.MyMusicActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" />
         <activity
             android:name=".module.device.ContactListActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeRemind" />
         <activity
             android:name=".module.device.AddMyMailListActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 推送 -->
         <activity
             android:name=".module.device.dfu.NotificationActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" /> <!-- 运动模式历史 -->
         <activity
             android:name=".module.home.sport.SportPatternHistoryActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" /> <!-- 手环运动模式详情 -->
         <activity
             android:name=".module.home.sport.SportPatternDetailsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" /> <!-- 高德地图运动 -->
         <activity
             android:name=".module.home.sport.amap.AmapGpsSportActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" /> <!-- 高德地图轨迹 -->
         <activity
             android:name=".module.home.sport.amap.AmapLocusActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 谷歌地图运动 -->
         <activity
             android:name=".module.home.sport.google.GoogleGpsSportActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" /> <!-- 谷歌地图轨迹 -->
         <activity
             android:name=".module.home.sport.google.GoogleLocusActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" /> <!-- 生理周期主页 -->
         <activity
             android:name=".module.home.cycle.CycleActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 生理周期设置 -->
         <activity
             android:name=".module.home.cycle.CycleInitActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 生理周期名词解释 -->
         <activity
             android:name=".module.home.cycle.CycleInfoActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 血氧详情 -->
         <activity
             android:name=".module.home.spo2.Spo2DetailsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 血压测量历史 -->
         <activity
             android:name=".module.home.spo2.Spo2MesureHistoryActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 体温详情 -->
         <activity
             android:name=".module.home.temp.TempDetailsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 体温测量历史 -->
         <activity
             android:name=".module.home.temp.TempHistoryActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 关于 -->
         <activity
             android:name=".module.mine.app.AboutActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 意见反馈 -->
         <activity
             android:name=".module.mine.app.FeedBackActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 使用说明 -->
         <activity
             android:name=".module.mine.app.CommonProblemActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- =======服务相关======= -->
         <activity
