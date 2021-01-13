@@ -748,7 +748,7 @@ public class HomeActivity extends BaseActivity {
                     closePhoto();
                     break;
                 case BroadcastTools.ACTION_CMD_APP_START:
-                    Log.i("ble", " BroadcastTools.ACTION_CMD_APP_START = " + curCmd);
+                    SysUtils.logContentI("ble", " BroadcastTools.ACTION_CMD_APP_START = " + curCmd);
                     switch (curCmd) {
                         case GET_SPORT_IDS_TODAY:
                             refreshProtobufSportTimeOut();
@@ -804,7 +804,7 @@ public class HomeActivity extends BaseActivity {
                             refreshProtobufSportTimeOut();
                             if (FitnessTools.deleteIndex == FitnessTools.bleIdsList.size()) {
                                 //delete history over
-                                Log.w("ble", " delete history over");
+                                SysUtils.logContentW("ble", " delete history over");
                                 startSyncTodayDeviceSport();
                             } else {
                                 deleteDeviceSport(DELETE_DEVICE_SPORT_HISTORY);
@@ -814,7 +814,7 @@ public class HomeActivity extends BaseActivity {
                             refreshProtobufSportTimeOut();
                             if (FitnessTools.deleteIndex == FitnessTools.bleIdsList.size()) {
                                 //delete today over
-                                Log.w("ble", " delete today over");
+                                SysUtils.logContentW("ble", " delete today over");
                                 syncDeviceSportOver();
                                 getDeviceGpsSportStatus();
                             } else {
@@ -828,7 +828,7 @@ public class HomeActivity extends BaseActivity {
                     break;
                 case BroadcastTools.ACTION_CMD_GET_SPORT:
                     refreshProtobufSportTimeOut();
-                    Log.i("ble", " BroadcastTools.ACTION_CMD_GET_SPORT = " + curCmd);
+                    SysUtils.logContentI("ble", " BroadcastTools.ACTION_CMD_GET_SPORT = " + curCmd);
                     switch (curCmd) {
                         case GET_SPORT_IDS_TODAY:
                             curCmd = REQUEST_FITNESS_ID_TODAY;
@@ -850,14 +850,14 @@ public class HomeActivity extends BaseActivity {
                         if (FitnessTools.currentIndex >= FitnessTools.bleIdsList.size()) {
                             // over
                             if (curCmd.equalsIgnoreCase(REQUEST_FITNESS_ID_HISTORY)) {
-                                Log.w("ble", "REQUEST_FITNESS_ID_HISTORY sync over");
+                                SysUtils.logContentW("ble", "REQUEST_FITNESS_ID_HISTORY sync over");
                                 // history is over and delete the ids
                                 FitnessTools.deleteIndex = 0;
                                 deleteDeviceSport(DELETE_DEVICE_SPORT_HISTORY);
 //                                startSyncTodayDeviceSport();
 
                             } else if (curCmd.equalsIgnoreCase(REQUEST_FITNESS_ID_TODAY)) {
-                                Log.w("ble", "REQUEST_FITNESS_ID_TODAY sync over");
+                                SysUtils.logContentW("ble", "REQUEST_FITNESS_ID_TODAY sync over");
                                 DeviceSportManager.Companion.getInstance().uploadMoreSportData();
                                 // delete the ids
                                 FitnessTools.deleteIndex = 0;
@@ -872,13 +872,13 @@ public class HomeActivity extends BaseActivity {
                     } else {
                         switch (curCmd) {
                             case REQUEST_FITNESS_ID_TODAY:
-                                Log.w("ble", " today is no data , sync over");
+                                SysUtils.logContentW("ble", " today is no data , sync over");
                                 DeviceSportManager.Companion.getInstance().uploadMoreSportData();
                                 syncDeviceSportOver();
                                 getDeviceGpsSportStatus();
                                 break;
                             case REQUEST_FITNESS_ID_HISTORY:
-                                Log.w("ble", " HISTORY is no data");
+                                SysUtils.logContentW("ble", " HISTORY is no data");
                                 startSyncTodayDeviceSport();
                                 break;
                         }
@@ -886,7 +886,7 @@ public class HomeActivity extends BaseActivity {
 
                     break;
                 case BroadcastTools.ACTION_CMD_DEVICE_TRANSMISSION_DATA:
-                    Log.w("ble", " ACTION_CMD_DEVICE_TRANSMISSION_DATA");
+                    SysUtils.logContentW("ble", " ACTION_CMD_DEVICE_TRANSMISSION_DATA");
                     refreshProtobufSportTimeOut();
                     break;
             }
@@ -1043,12 +1043,12 @@ public class HomeActivity extends BaseActivity {
     private Handler protoHandler;
     private int timeOut = 10 * 1000;
     Runnable getProtoSportTimeOut = () -> {
-        Log.w("ble", " getProtoSportTimeOut");
+        SysUtils.logContentW("ble", " getProtoSportTimeOut");
         syncDeviceSportOver();
     };
 
     private void refreshProtobufSportTimeOut() {
-        Log.w("ble", " refreshProtobufSportTimeOut");
+        SysUtils.logContentW("ble", " refreshProtobufSportTimeOut");
         if (protoHandler == null) {
             protoHandler = new Handler();
         }
