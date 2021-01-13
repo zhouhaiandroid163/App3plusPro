@@ -29,12 +29,13 @@ public abstract class BaseActivity extends FragmentActivity {
 
     public boolean isTextDark = false;
     public int bgColor = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         int id = setLayoutId();
-        if(bgColor != 0){
+        if (bgColor != 0) {
             AppUtils.setStatusBarMode(this, isTextDark, bgColor);
         } else {
             AppUtils.setStatusBarMode(this, isTextDark, R.color.base_activity_bg);
@@ -107,6 +108,7 @@ public abstract class BaseActivity extends FragmentActivity {
         gattServiceIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         ComponentName name = startService(gattServiceIntent);
     }
+
     public void reconnectDevice() {
         Bundle bundle = new Bundle();
         bundle.putString("cmd", "reconnectDevice");
@@ -208,7 +210,7 @@ public abstract class BaseActivity extends FragmentActivity {
         startService(bundle);
     }
 
-    public double handlerEcg(Handler mHandler,int end, boolean isLeft) {
+    public double handlerEcg(Handler mHandler, int end, boolean isLeft) {
         return mBleProtocol.HandlerEcg(end, mHandler, isLeft);
     }
 
@@ -365,17 +367,22 @@ public abstract class BaseActivity extends FragmentActivity {
         bundle.putByteArray("params", params);
         startService(bundle);
     }
+
     public void sendAppStart(byte[] params) {
         Bundle bundle = new Bundle();
         bundle.putString("cmd", "proto");
         bundle.putByteArray("params", params);
         startService(bundle);
     }
+
     public void sendProtoUpdateData(byte[] params) {
-        Bundle bundle = new Bundle();
-        bundle.putString("cmd", "sendProtoUpdateData");
-        bundle.putByteArray("params", params);
-        startService(bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("cmd", "sendProtoUpdateData");
+//        bundle.putByteArray("params", params);
+//        startService(bundle);
+
+        BleService bleService = BleService.bluetoothLeService;
+        bleService.writeCharacteristicProto4(params);
     }
 
     public void startInitDeviceCmd() {

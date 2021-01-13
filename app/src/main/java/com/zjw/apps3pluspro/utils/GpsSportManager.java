@@ -151,18 +151,24 @@ public class GpsSportManager {
                 .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
                     @Override
                     public void onConnected(@Nullable Bundle bundle) {
-                        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+                        try {
+                            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-                        if (mLastLocation != null) {
-                            oldGoogleLatLng = new com.google.android.gms.maps.model.LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                            if (mLastLocation != null) {
+                                oldGoogleLatLng = new com.google.android.gms.maps.model.LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                            }
+
+                            mLocationRequest = LocationRequest.create();
+                            mLocationRequest.setInterval(5 * 1000); //5 seconds //间隔
+                            mLocationRequest.setFastestInterval(3 * 1000); //3 seconds
+                            mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);//定位模式
+                            mLocationRequest.setSmallestDisplacement(5F); //定位精度
+                            if(mGoogleApiClient != null && mGoogleApiClient.isConnected()){
+                                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, googleLocationListener);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-
-                        mLocationRequest = LocationRequest.create();
-                        mLocationRequest.setInterval(5 * 1000); //5 seconds //间隔
-                        mLocationRequest.setFastestInterval(3 * 1000); //3 seconds
-                        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);//定位模式
-                        mLocationRequest.setSmallestDisplacement(5F); //定位精度
-                        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, googleLocationListener);
                     }
 
                     @Override

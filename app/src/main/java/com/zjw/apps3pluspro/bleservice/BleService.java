@@ -3743,6 +3743,10 @@ public class BleService extends Service {
         }
     };
 
+    public void writeCharacteristicProto4(byte[] paramCmd) {
+        writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_04);
+    }
+
     Runnable process_cmd_proto_runnable = () -> {
         while (mProcessCmd) {
             try {
