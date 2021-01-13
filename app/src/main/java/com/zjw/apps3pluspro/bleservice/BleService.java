@@ -122,6 +122,7 @@ public class BleService extends Service {
 
     private Handler mHandler;
     private Handler mBleHandler;
+    private Handler handlerProto = new Handler();
     private Handler mConnectTimeOutHandler;
     private Handler mSyncTimeoutHandle;
 
@@ -1682,7 +1683,7 @@ public class BleService extends Service {
                     characteristic_protobuf_2 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_02);
                     characteristic_protobuf_3 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_03);
                     characteristic_protobuf_4 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_04);
-                    mBleHandler.postDelayed(() -> {
+                    handlerProto.postDelayed(() -> {
                         if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_1)) {
                             SysUtils.logContentI(TAG, "characteristic_protobuf_1 on success");
                         } else {
@@ -1690,15 +1691,15 @@ public class BleService extends Service {
                         }
                     }, delayTime);
                     delayTime += 400;
-                    mBleHandler.postDelayed(() -> {
+                    handlerProto.postDelayed(() -> {
                         if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_2)) {
                             SysUtils.logContentI(TAG, "characteristic_protobuf_2 on success");
                         } else {
-                            SysUtils.logContentI(TAG, "characteristic_protobuf_2 error");
+                            SysUtils.logContentI(TAG, "characteristic_protobuf_3 error");
                         }
                     }, delayTime);
                     delayTime += 400;
-                    mBleHandler.postDelayed(() -> {
+                    handlerProto.postDelayed(() -> {
                         if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_3)) {
                             SysUtils.logContentI(TAG, "characteristic_protobuf_3 on success");
                         } else {
@@ -1706,7 +1707,7 @@ public class BleService extends Service {
                         }
                     }, delayTime);
                     delayTime += 400;
-                    mBleHandler.postDelayed(() -> {
+                    handlerProto.postDelayed(() -> {
                         if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_4)) {
                             SysUtils.logContentI(TAG, "characteristic_protobuf_4 on success");
                         } else {
