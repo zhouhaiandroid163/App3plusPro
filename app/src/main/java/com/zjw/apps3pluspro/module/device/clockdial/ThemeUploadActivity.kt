@@ -361,6 +361,8 @@ class ThemeUploadActivity : BaseActivity() {
 
     lateinit var byteTheme: ByteArray
     private fun initSendData() {
+        protoHandler = Handler()
+
         if (isCustom) {
 //            byte = CustomClockDialUtils.getCustonClockDialDataByFile(this@ThemeUploadActivity, curThemeName, color_r, color_g, color_b, newBgBitmap)
             byteTheme = CustomClockDialNewUtils.getNewCustomClockDialData(curThemeName, color_r, color_g, color_b, newBgBitmap, newTextBitmap);
@@ -509,9 +511,6 @@ class ThemeUploadActivity : BaseActivity() {
             ThemeManager.getInstance().dataPieceEndPack
         }
 
-        if (protoHandler == null) {
-            protoHandler = Handler()
-        }
         protoHandler?.removeCallbacksAndMessages(null)
         protoHandler?.postDelayed(uploadProtoThemeTimeOut, 30 * 1000)
 

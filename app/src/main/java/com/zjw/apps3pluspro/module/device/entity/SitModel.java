@@ -112,18 +112,12 @@ public class SitModel {
     /**
      * 提醒设置，比较时间大小
      */
+
     public boolean isOldTime() {
-
-        boolean result = false;
-
-        if (SitStartHourTime > SitEndHourTime) {
-            return true;
-        } else if (SitStartHourTime == SitEndHourTime && SitStartMinTime > SitEndMinTime) {
+        if((SitStartHourTime * 60 + SitStartMinTime) > (SitEndHourTime * 60 + SitEndMinTime)){
             return true;
         }
-
-        return result;
+        return false;
     }
-
 
 }

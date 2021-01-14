@@ -100,17 +100,9 @@ public class WaterModel {
      * 提醒设置，比较时间大小
      */
     public boolean isOldTime() {
-
-        boolean result = false;
-
-        if (DrinkingStartHourTime > DrinkingEndHourTime) {
-            return true;
-        } else if (DrinkingStartHourTime == DrinkingEndHourTime && DrinkingStartMinTime > DrinkingEndMinTime) {
+        if((DrinkingStartHourTime * 60 + DrinkingStartMinTime) > (DrinkingEndHourTime * 60 + DrinkingEndMinTime)){
             return true;
         }
-
-        return result;
+        return false;
     }
-
-
 }

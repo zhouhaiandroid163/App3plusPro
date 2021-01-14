@@ -115,17 +115,10 @@ public class DurgModel {
      * 提醒设置，比较时间大小
      */
     public boolean isOldTime() {
-
-        boolean result = false;
-
-        if (MedicineStartHourTime > MedicineEndHourTime) {
-            return true;
-        } else if (MedicineStartHourTime == MedicineEndHourTime && MedicineStartMinTime > MedicineEndMinTime) {
+        if((MedicineStartHourTime * 60 + MedicineStartMinTime) > (MedicineEndHourTime * 60 + MedicineEndMinTime)){
             return true;
         }
-
-        return result;
+        return false;
     }
-
 
 }

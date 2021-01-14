@@ -35,7 +35,7 @@ public class UserSetTools {
 
     public boolean get_user_unit_type() {
         SharedPreferences settin = getSharedPreferencesCommon();
-        return settin.getBoolean("user_unit_type", true);
+        return settin.getBoolean("user_unit_type", false);
     }
 
 
