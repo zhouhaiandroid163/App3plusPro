@@ -1041,7 +1041,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private Handler protoHandler;
-    private int timeOut = 10 * 1000;
+    private int timeOut = 20 * 1000;
     Runnable getProtoSportTimeOut = () -> {
         SysUtils.logContentW("ble", " getProtoSportTimeOut");
         syncDeviceSportOver();

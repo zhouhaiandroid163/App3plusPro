@@ -1189,6 +1189,8 @@ public class BleService extends Service {
 
                 }
                 if (curPacket < recvMaxPacket) {
+                    intent.setAction(BroadcastTools.ACTION_CMD_DEVICE_TRANSMISSION_DATA);
+                    sendBroadcast(intent);
                     return;
                 }
                 if (curPiece < maxPiece) {
