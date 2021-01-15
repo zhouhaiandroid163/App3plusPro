@@ -333,11 +333,12 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initDatas() {
         super.initDatas();
+        homeActivity = this;
+        mContext = this;
         registerHomeKeyReceiver(this);
         SysUtils.logContentE(TAG, "onCreate");
         initBleData();
         EventTools.SafeRegisterEventBus(this);
-        mContext = HomeActivity.this;
         waitDialog = new WaitDialog(mContext);
         mBleHandler = new Handler();
         manager = MyActivityManager.getInstance();
@@ -367,7 +368,6 @@ public class HomeActivity extends BaseActivity {
                 }
             });
         }
-        homeActivity = this;
         initGooglefit();
         BluetoothUtil.enableBluetooth(HomeActivity.this, BleStateResult);
         getConnectStatus();

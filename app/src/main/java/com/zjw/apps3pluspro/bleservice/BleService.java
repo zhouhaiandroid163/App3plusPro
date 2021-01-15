@@ -122,7 +122,6 @@ public class BleService extends Service {
 
     private Handler mHandler;
     private Handler mBleHandler;
-    private Handler handlerProto = new Handler();
     private Handler mConnectTimeOutHandler;
     private Handler mSyncTimeoutHandle;
 
@@ -1515,58 +1514,60 @@ public class BleService extends Service {
 
             SysUtils.logContentI(TAG, "onServicesDiscovered ");
             if (status == BluetoothGatt.GATT_SUCCESS) {
-                iCallDeviceInfo = false;
-                isDeviceThemeInfo = false;
-                isDeviceMtu = false;
-                isInitTimeZone = false;
-                isSupportBigMtu = false;
-                mBleDeviceTools.setIsSupportBigPage(false);
-                currentMtu = 20;
+                new Thread(() -> {
+                    try {
+                        iCallDeviceInfo = false;
+                        isDeviceThemeInfo = false;
+                        isDeviceMtu = false;
+                        isInitTimeZone = false;
+                        isSupportBigMtu = false;
+                        mBleDeviceTools.setIsSupportBigPage(false);
+                        currentMtu = 20;
 
-                List<BluetoothGattService> gattServices = getSupportedGattServices();
-                boolean flag_ecg = false;
-                boolean flag_ppg = false;
-                boolean flag_sys = false;
-                boolean flag_theme = false;
-                boolean flag_log = false;
-                boolean flag_protobuf = false;
-                // 如果找到这个特定的服务ID就初始化一些东西
-                for (BluetoothGattService gattService : gattServices) {
+                        List<BluetoothGattService> gattServices = getSupportedGattServices();
+                        boolean flag_ecg = false;
+                        boolean flag_ppg = false;
+                        boolean flag_sys = false;
+                        boolean flag_theme = false;
+                        boolean flag_log = false;
+                        boolean flag_protobuf = false;
+                        // 如果找到这个特定的服务ID就初始化一些东西
+                        for (BluetoothGattService gattService : gattServices) {
 
-                    if (gattService.getUuid() != null) {
-                        SysUtils.logContentI(TAG, "初始化 getUuid ===== = " + gattService.getUuid());
+                            if (gattService.getUuid() != null) {
+                                SysUtils.logContentI(TAG, "初始化 getUuid ===== = " + gattService.getUuid());
 
-                        if (gattService.getUuid().equals(BleConstant.UUID_BASE_SERVICE)) {
-                            SysUtils.logContentI(TAG, "初始化 系统(小包) ===== = 发现服务");
-                            flag_sys = true;
-                            mSYSTEMervice = gattService;
-                            setServicesDiscovered(true);
-                        }
+                                if (gattService.getUuid().equals(BleConstant.UUID_BASE_SERVICE)) {
+                                    SysUtils.logContentI(TAG, "初始化 系统(小包) ===== = 发现服务");
+                                    flag_sys = true;
+                                    mSYSTEMervice = gattService;
+                                    setServicesDiscovered(true);
+                                }
 
-                        if (gattService.getUuid().equals(BleConstant.UUID_BIG_SERVICE)) {
-                            SysUtils.logContentI(TAG, " 初始化 系统(大包) ===== = 发现服务");
-                            mBigService = gattService;
-                            setServicesDiscovered(true);
-                            isSupportBigMtu = true;
-                            mBleDeviceTools.setIsSupportBigPage(true);
-                        }
+                                if (gattService.getUuid().equals(BleConstant.UUID_BIG_SERVICE)) {
+                                    SysUtils.logContentI(TAG, " 初始化 系统(大包) ===== = 发现服务");
+                                    mBigService = gattService;
+                                    setServicesDiscovered(true);
+                                    isSupportBigMtu = true;
+                                    mBleDeviceTools.setIsSupportBigPage(true);
+                                }
 
-                        if (gattService.getUuid().equals(BleConstant.UUID_ECG_SERVICE)) {
-                            SysUtils.logContentI(TAG, "初始化 ECG ===== = 发现服务");
-                            flag_ecg = true;
-                            mECGService = gattService;
-                        }
-                        if (gattService.getUuid().equals(BleConstant.UUID_PPG_SERVICE)) {
-                            SysUtils.logContentI(TAG, "初始化 PPG ===== = 发现服务");
-                            flag_ppg = true;
-                            mPPGService = gattService;
-                        }
+                                if (gattService.getUuid().equals(BleConstant.UUID_ECG_SERVICE)) {
+                                    SysUtils.logContentI(TAG, "初始化 ECG ===== = 发现服务");
+                                    flag_ecg = true;
+                                    mECGService = gattService;
+                                }
+                                if (gattService.getUuid().equals(BleConstant.UUID_PPG_SERVICE)) {
+                                    SysUtils.logContentI(TAG, "初始化 PPG ===== = 发现服务");
+                                    flag_ppg = true;
+                                    mPPGService = gattService;
+                                }
 
-                        if (gattService.getUuid().equals(BleConstant.UUID_THEME_SERVICE)) {
-                            SysUtils.logContentI(TAG, "初始化 THEME ===== 发现服务");
-                            flag_theme = true;
-                            mThemeService = gattService;
-                        }
+                                if (gattService.getUuid().equals(BleConstant.UUID_THEME_SERVICE)) {
+                                    SysUtils.logContentI(TAG, "初始化 THEME ===== 发现服务");
+                                    flag_theme = true;
+                                    mThemeService = gattService;
+                                }
 
 //                        if (gattService.getUuid().equals(BleConstant.UUID_LOG_SERVICE)) {
 //                            SysUtils.logContentI(TAG, "初始化 LOG ===== = 发现服务");
@@ -1574,93 +1575,92 @@ public class BleService extends Service {
 //                            mLogService = gattService;
 //                        }
 
-                        if (gattService.getUuid().equals(BleConstant.UUID_PROTOBUF_SERVICE)) {
-                            SysUtils.logContentI(TAG, " 初始化 protobuf service");
-                            flag_protobuf = true;
-                            mProtobufService = gattService;
-                        }
+                                if (gattService.getUuid().equals(BleConstant.UUID_PROTOBUF_SERVICE)) {
+                                    SysUtils.logContentI(TAG, "初始化 protobuf service");
+                                    flag_protobuf = true;
+                                    mProtobufService = gattService;
+                                }
 
-
-                    }
-                }
-                int delayTime = 100;
-                if (flag_sys) {
-                    mBleHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            characteristic_system_read = mSYSTEMervice.getCharacteristic(BleConstant.UUID_BASE_READ);
-                            if (enableNotifacationSysRead()) {
-                                SysUtils.logContentI(TAG, "系统数据(小包) = 使能成功");
-                            } else {
-                                SysUtils.logContentI(TAG, "系统数据(小包) = 使能失败");
                             }
                         }
-                    }, delayTime);
-                    delayTime += 400;
-                }
-                if (isSupportBigMtu) {
-                    mBleHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            characteristic_big_3 = mBigService.getCharacteristic(BleConstant.CHAR_BIG_UUID_03);
-                            if (enableNotifacationSysRead()) {
-                                SysUtils.logContentI(TAG, "系统数据(大包) = 使能成功");
-                            } else {
-                                SysUtils.logContentI(TAG, "系统数据(大包) = 使能失败");
-                            }
+                        int delayTime = 100;
+                        if (flag_sys) {
+                            mBleHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    characteristic_system_read = mSYSTEMervice.getCharacteristic(BleConstant.UUID_BASE_READ);
+                                    if (enableNotifacationSysRead()) {
+                                        SysUtils.logContentI(TAG, "系统数据(小包) = 使能成功");
+                                    } else {
+                                        SysUtils.logContentI(TAG, "系统数据(小包) = 使能失败");
+                                    }
+                                }
+                            }, delayTime);
+                            delayTime += 400;
                         }
-                    }, delayTime);
-                    delayTime += 400;
-                }
+                        if (isSupportBigMtu) {
+                            mBleHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    characteristic_big_3 = mBigService.getCharacteristic(BleConstant.CHAR_BIG_UUID_03);
+                                    if (enableNotifacationSysRead()) {
+                                        SysUtils.logContentI(TAG, "系统数据(大包) = 使能成功");
+                                    } else {
+                                        SysUtils.logContentI(TAG, "系统数据(大包) = 使能失败");
+                                    }
+                                }
+                            }, delayTime);
+                            delayTime += 400;
+                        }
 
-                if (flag_ecg) {
-                    // 延迟使能
-                    mBleHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            characteristic_ecg_read = mECGService.getCharacteristic(BleConstant.UUID_ECG_READ);
-                            if (enableNotifacationEcgRead()) {
-                                SysUtils.logContentI(TAG, "ECG数据 = 使能成功");
-                            } else {
-                                SysUtils.logContentI(TAG, "ECG数据 = 使能失败");
-                            }
+                        if (flag_ecg) {
+                            // 延迟使能
+                            mBleHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    characteristic_ecg_read = mECGService.getCharacteristic(BleConstant.UUID_ECG_READ);
+                                    if (enableNotifacationEcgRead()) {
+                                        SysUtils.logContentI(TAG, "ECG数据 = 使能成功");
+                                    } else {
+                                        SysUtils.logContentI(TAG, "ECG数据 = 使能失败");
+                                    }
+                                }
+                            }, delayTime);
+                            delayTime += 400;
                         }
-                    }, delayTime);
-                    delayTime += 400;
-                }
 
-                if (flag_ppg) {
-                    // 延迟使能
-                    mBleHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            characteristic_ppg_read = mPPGService.getCharacteristic(BleConstant.UUID_PPG_READ);
-                            if (enableNotifacationPpgRead()) {
-                                SysUtils.logContentI(TAG, "PPG数据 = 使能成功");
-                            } else {
-                                SysUtils.logContentI(TAG, "PPG数据 = 使能失败");
-                            }
+                        if (flag_ppg) {
+                            // 延迟使能
+                            mBleHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    characteristic_ppg_read = mPPGService.getCharacteristic(BleConstant.UUID_PPG_READ);
+                                    if (enableNotifacationPpgRead()) {
+                                        SysUtils.logContentI(TAG, "PPG数据 = 使能成功");
+                                    } else {
+                                        SysUtils.logContentI(TAG, "PPG数据 = 使能失败");
+                                    }
+                                }
+                            }, delayTime);
+                            delayTime += 400;
                         }
-                    }, delayTime);
-                    delayTime += 400;
-                }
 
-                if (flag_theme) {
-                    // 延迟使能
-                    mBleHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            characteristic_theme_read = mThemeService.getCharacteristic(BleConstant.UUID_THEME_READ);
-                            characteristic_theme_write = mThemeService.getCharacteristic(BleConstant.UUID_THEME_WRITE);
-                            if (enableNotifacationThemeRead()) {
-                                SysUtils.logContentI(TAG, "主题数据 = 使能成功");
-                            } else {
-                                SysUtils.logContentI(TAG, "主题数据 = 使能失败");
-                            }
+                        if (flag_theme) {
+                            // 延迟使能
+                            mBleHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    characteristic_theme_read = mThemeService.getCharacteristic(BleConstant.UUID_THEME_READ);
+                                    characteristic_theme_write = mThemeService.getCharacteristic(BleConstant.UUID_THEME_WRITE);
+                                    if (enableNotifacationThemeRead()) {
+                                        SysUtils.logContentI(TAG, "主题数据 = 使能成功");
+                                    } else {
+                                        SysUtils.logContentI(TAG, "主题数据 = 使能失败");
+                                    }
+                                }
+                            }, delayTime);
+                            delayTime += 400;
                         }
-                    }, delayTime);
-                    delayTime += 400;
-                }
 
 //                if (flag_log) {
 //                    // 延迟使能
@@ -1680,63 +1680,74 @@ public class BleService extends Service {
 //                }
 
 //                int delayTime = 1500;
-                if (flag_protobuf) {
-                    characteristic_protobuf_1 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_01);
-                    characteristic_protobuf_2 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_02);
-                    characteristic_protobuf_3 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_03);
-                    characteristic_protobuf_4 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_04);
-                    handlerProto.postDelayed(() -> {
-                        if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_1)) {
-                            SysUtils.logContentI(TAG, "characteristic_protobuf_1 on success");
-                        } else {
-                            SysUtils.logContentI(TAG, "characteristic_protobuf_1  error");
-                        }
-                    }, delayTime);
-                    delayTime += 400;
-                    handlerProto.postDelayed(() -> {
-                        if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_2)) {
-                            SysUtils.logContentI(TAG, "characteristic_protobuf_2 on success");
-                        } else {
-                            SysUtils.logContentI(TAG, "characteristic_protobuf_3 error");
-                        }
-                    }, delayTime);
-                    delayTime += 400;
-                    handlerProto.postDelayed(() -> {
-                        if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_3)) {
-                            SysUtils.logContentI(TAG, "characteristic_protobuf_3 on success");
-                        } else {
-                            SysUtils.logContentI(TAG, "characteristic_protobuf_3  error");
-                        }
-                    }, delayTime);
-                    delayTime += 400;
-                    handlerProto.postDelayed(() -> {
-                        if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_4)) {
-                            SysUtils.logContentI(TAG, "characteristic_protobuf_4 on success");
-                        } else {
-                            SysUtils.logContentI(TAG, "characteristic_protobuf_4  error");
-                        }
-                    }, delayTime);
-                    delayTime += 400;
-                }
-                //发送初始化数据
-                if (flag_sys || isSupportBigMtu) {
-                    resetBleCmdState(true);
-                    bInitGattServices = true;
-                    mBleHandler.postDelayed(() -> {
-                        BroadcastTools.broadcastDeviceConnectedDISCOVERSERVICES(getApplicationContext());
 
-                        if (!BaseApplication.isScanActivity) { // 重连
-                            if (!mBleDeviceTools.get_ble_name().contains(BleConstant.PLUS_HR)) {
-                                mBindDeviceHandler = new Handler();
-                                mHandler.postDelayed(runnableTime, 3 * 1000);
-                                writeRXCharacteristic(BtSerializeation.bindDevice(1));
+                        Thread.sleep(delayTime);
+                        if (flag_protobuf) {
+                            characteristic_protobuf_1 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_01);
+                            characteristic_protobuf_2 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_02);
+                            characteristic_protobuf_3 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_03);
+                            characteristic_protobuf_4 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_04);
+
+                            if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_1)) {
+                                SysUtils.logContentI(TAG, "characteristic_protobuf_1 on success");
                             } else {
-                                initDeviceCmd();
+                                SysUtils.logContentI(TAG, "characteristic_protobuf_1  error");
+                                connectBleRXError();
+                                return;
                             }
-                        }
 
-                    }, delayTime);
-                }
+                            Thread.sleep(400);
+                            if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_2)) {
+                                SysUtils.logContentI(TAG, "characteristic_protobuf_2 on success");
+                            } else {
+                                SysUtils.logContentI(TAG, "characteristic_protobuf_2 error");
+                                connectBleRXError();
+                                return;
+                            }
+                            Thread.sleep(400);
+                            if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_3)) {
+                                SysUtils.logContentI(TAG, "characteristic_protobuf_3 on success");
+                            } else {
+                                SysUtils.logContentI(TAG, "characteristic_protobuf_3  error");
+                                connectBleRXError();
+                                return;
+                            }
+
+                            Thread.sleep(400);
+                            if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_4)) {
+                                SysUtils.logContentI(TAG, "characteristic_protobuf_4 on success");
+                            } else {
+                                SysUtils.logContentI(TAG, "characteristic_protobuf_4  error");
+                                connectBleRXError();
+                                return;
+                            }
+                            Thread.sleep(400);
+                        }
+                        //发送初始化数据
+                        Thread.sleep(400);
+                        if (flag_sys || isSupportBigMtu) {
+                            resetBleCmdState(true);
+                            bInitGattServices = true;
+
+                            mBleHandler.post(() -> {
+                                BroadcastTools.broadcastDeviceConnectedDISCOVERSERVICES(getApplicationContext());
+                                if (!BaseApplication.isScanActivity) { // 重连
+                                    if (!mBleDeviceTools.get_ble_name().contains(BleConstant.PLUS_HR)) {
+                                        mBindDeviceHandler = new Handler();
+                                        mBindDeviceHandler.postDelayed(runnableTime, 3 * 1000);
+                                        writeRXCharacteristic(BtSerializeation.bindDevice(1));
+                                    } else {
+                                        initDeviceCmd();
+                                    }
+                                }
+                            });
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+
             } else {
                 SysUtils.logContentI(TAG, "onServicesDiscovered is error");
             }
@@ -2184,7 +2195,7 @@ public class BleService extends Service {
 
         } else if (1 == type) { // 询问状态
             if (mBindDeviceHandler != null) {
-                mHandler.removeCallbacksAndMessages(null);
+                mBindDeviceHandler.removeCallbacksAndMessages(null);
             }
             switch (result) {
                 case 0: // 解除绑定
@@ -3785,6 +3796,11 @@ public class BleService extends Service {
     private void initDeviceParameter() {
         mBleDeviceTools.setSupportNewDeviceCrc(false);
         mBleBaseProtocol.setRcvDataState(0);
+    }
+
+    private void connectBleRXError() {
+        disconnect();
+        reconnectDevcie();
     }
 }
 
