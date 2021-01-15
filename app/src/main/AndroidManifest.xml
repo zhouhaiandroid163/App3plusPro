@@ -222,18 +222,22 @@
             tools:ignore="LockedOrientationActivity" /> <!-- 注册 -->
         <activity
             android:name=".module.mine.user.RegistActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 忘记密码-找回密码 -->
         <activity
             android:name=".module.mine.user.ForgetPswActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 新用户个人信息录入 -->
         <activity
             android:name=".module.mine.user.ProfileInitActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" /> <!-- 个人信息设置 -->
         <activity
             android:name=".module.mine.user.ProfileActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" /> <!-- 步数目标设置 -->
         <activity
@@ -242,88 +246,108 @@
             android:theme="@style/AppThemeWhite" /> <!-- 睡眠目标 -->
         <activity
             android:name=".module.mine.user.TargetSleepActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 修改密码 -->
         <activity
             android:name=".module.mine.user.UpdatePasswordActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 隐私协议 -->
         <activity
             android:name=".module.mine.user.PrivacyProtocolActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 隐私协议 -->
         <activity
             android:name=".module.mine.user.UserProtocolActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 检查隐私协议 -->
         <activity android:name=".CheckAgreementActivity" /> <!-- 用户使用帮助 -->
         <activity
             android:name=".module.mine.user.UserHelpActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 整点心率详情 -->
         <!-- 连续心率详情 -->
         <!-- 心电测量 -->
         <activity
             android:name=".module.home.ecg.EcgMeasureActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 心电测量历史页面 -->
         <activity
             android:name=".module.home.ecg.EcgMesureHistoryActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 心电测量详细页面 -->
         <activity
             android:name=".module.home.ecg.EcgMesureDetailsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 心电帮助 -->
         <activity
             android:name=".module.home.ecg.EcgMesureHelpActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 心电报告 -->
         <activity
             android:name=".module.home.ecg.EcgReportActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@style/AppThemeWhite" /> <!-- HRV健康指数帮助 -->
         <activity
             android:name=".module.home.ecg.HrvIndexHelpActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- PPG心率测量 -->
         <activity
             android:name=".module.home.ppg.PpgMeasureActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- PPG心率测量历史 -->
         <activity
             android:name=".module.home.ppg.PpgMesureHistoryActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- PPG心率测量详情 -->
         <activity
             android:name=".module.home.ppg.PpgMesureDetailsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 好友详情 -->
         <activity
             android:name=".module.friend.FriendRankInfoActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 处理好友信息 -->
         <activity
             android:name=".module.friend.FriendInfoHandleActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 修改好友备注 -->
         <activity
             android:name=".module.friend.FriendInfoRemarksActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 搜索好友 -->
         <activity
             android:name=".module.friend.SearchFriendActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 添加好友 -->
         <activity
             android:name=".module.friend.AddFriendActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 新的好友 -->
         <activity
             android:name=".module.friend.NewFriendActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 设备管理 -->
         <!-- 搜索设备 -->
@@ -341,62 +365,77 @@
 
         <activity
             android:name=".module.device.DeviceHelpActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeRemind" /> <!-- 肤色选择 -->
         <activity
             android:name=".module.device.SkinColourActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1" /> <!-- 手环风格主题 -->
         <activity
             android:name=".module.device.DeviceThemeActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 屏幕设置 -->
         <activity
             android:name=".module.device.ScreenSettingsActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 蓝牙连接说明 -->
         <activity
             android:name=".module.device.BleConnectProblemActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 微信运动 -->
         <activity
             android:name=".module.device.WeixinActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 屏保 -->
         <activity
             android:name=".module.device.SendBleActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" /> <!-- 免打扰 -->
         <activity
             android:name=".module.device.reminde.DisturbActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeRemind" /> <!-- 心率预警 -->
         <activity
             android:name=".module.device.reminde.HeartWarnActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeRemind" /> <!-- 更多设置 -->
         <activity
             android:name=".module.device.reminde.RemindSettingActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 闹钟设置 -->
         <activity
             android:name=".module.device.reminde.AlarmClockActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeHome" /> <!-- 添加闹钟 编辑闹钟 -->
         <activity
             android:name=".module.device.reminde.AddAlarmClockActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 修改周期闹钟周期 -->
         <activity
             android:name=".module.device.reminde.AlarmClockCycleActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 手环推送 -->
         <activity
             android:name=".module.device.reminde.MessagePushActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 吃药提醒 -->
         <activity
             android:name=".module.device.reminde.DurgNoticeActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeRemind" /> <!-- 会议提醒 -->
         <activity

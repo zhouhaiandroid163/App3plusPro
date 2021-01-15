@@ -560,8 +560,8 @@ public class DeviceMoreSetActivity extends BaseActivity {
                         Intent intent = new Intent(this, BleDfuActivity.class);
                         startActivityForResult(intent, REQUEST_DFU);//此处的requestCode应与下面结果处理函中调用的requestCode一致
                     } else if (mBleDeviceTools.get_device_platform_type() == 1) {
-                        Intent intent = new Intent(context, RtkDfuActivity.class);
-                        startActivityForResult(intent, REQUEST_DFU);//此处的requestCode应与下面结果处理函中调用的requestCode一致
+                        startActivity(new Intent(context, RtkDfuActivity.class));
+                        finish();
                     }
                 } else {
                     AppUtils.showToast(context, R.string.dfu_error_low_power);
