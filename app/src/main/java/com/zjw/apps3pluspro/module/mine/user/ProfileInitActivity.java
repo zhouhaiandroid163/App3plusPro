@@ -16,6 +16,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -542,7 +544,8 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
                     day = arg3;
                     birthdayValue = year + "-" + month + "-" + day;
 
-                    tv_profile_init_birthday.setText(birthdayValue);
+                    String[] time = birthdayValue.split("-");
+                    tv_profile_init_birthday.setText(time[1] + "/" + time[2] + "/" + time[0]);
 //                    dialog.cancel();
                 } else {
                     AppUtils.showToast(mContext, R.string.birthday_error);
@@ -673,6 +676,8 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
     /**
      * 身高的dialog
      */
+    int pvFt = 0;
+    int pvIn = 0;
     private void showHeightDialog() {
         // TODO Auto-generated method stub
 
@@ -697,8 +702,12 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
         PickerView pv_height = (PickerView) view.findViewById(R.id.pv_height);
         TextView tv_height_unit_dialog = (TextView) view.findViewById(R.id.tv_height_unit_dialog);
 
-        List<String> dataHeight = new ArrayList<String>();
+        PickerView pv_height_ft = (PickerView) view.findViewById(R.id.pv_height_ft);
+        PickerView pv_height_in = (PickerView) view.findViewById(R.id.pv_height_in);
+        RelativeLayout layout1 = view.findViewById(R.id.layout1);
+        LinearLayout layout2 = view.findViewById(R.id.layout2);
 
+        List<String> dataHeight = new ArrayList<String>();
 
         if (mUserSetTools.get_user_unit_type()) {
 
@@ -724,27 +733,35 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
             });
 
         } else {
-            tv_height_unit_dialog.setText(getString(R.string.unit_in));
+            layout1.setVisibility(View.GONE);
+            layout2.setVisibility(View.VISIBLE);
 
-            for (int i = 28; i < 101; i++) {
-                dataHeight.add("" + i);
+            List<String> dataHeight1 = new ArrayList<String>();
+            List<String> dataHeight2 = new ArrayList<String>();
+            for (int i = 2; i < 9; i++) {
+                dataHeight1.add("" + i);
+            }
+            for (int i = 0; i < 12; i++) {
+                dataHeight2.add("" + i);
             }
 
-            if (TextUtils.isEmpty(heightValue) || MyUtils.CmToInInt(heightValue) < 28 || MyUtils.CmToInInt(heightValue) > 100) {
-//                heightValue = String.valueOf(DefaultVale.USER_HEIGHT);
-                pv_height.setData(dataHeight, 40);
-
+            String height = "0";
+            if (TextUtils.isEmpty(heightValue) || MyUtils.CmToInInt(heightValue) < 24 || MyUtils.CmToInInt(heightValue) > 107) {
+                height = "170";
             } else {
-                int index = MyUtils.CmToInInt(heightValue) - 28;
-                pv_height.setData(dataHeight, index);
+                height = heightValue;
             }
-            pv_height.setOnSelectListener(new onSelectListener() {
+            int in = MyUtils.CmToInInt(height);
+            pv_height_ft.setData(dataHeight1, (in / 12 - 2));
+            pv_height_in.setData(dataHeight2, in % 12);
 
-                @Override
-                public void onSelect(String text) {
-                    heightValue = MyUtils.InToCmString(text);
-
-                }
+            pvFt = in / 12;
+            pvIn = in % 12;
+            pv_height_ft.setOnSelectListener(text -> {
+                pvFt = Integer.parseInt(text);
+            });
+            pv_height_in.setOnSelectListener(text -> {
+                pvIn = Integer.parseInt(text);
             });
         }
 
@@ -765,7 +782,10 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
                 if (mUserSetTools.get_user_unit_type()) {
                     tv_profile_init_height.setText(heightValue + getString(R.string.centimeter));
                 } else {
-                    tv_profile_init_height.setText(MyUtils.CmToInString(heightValue) + getString(R.string.unit_in));
+                    int in = MyUtils.CmToInInt(heightValue);
+                    pvFt = in / 12;
+                    pvIn = in % 12;
+                    tv_profile_init_height.setText(String.format("%1$2d'%2$2d\"", pvFt, pvIn));
                 }
                 dialog.cancel();
 

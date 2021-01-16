@@ -66,6 +66,7 @@ public class MeFragment extends BaseFragment {
     private UserSetTools mUserSetTools = BaseApplication.getUserSetTools();
 
     private int xxxx = 0;
+
     @Override
     public View initView() {
         homeActivity = (HomeActivity) this.getActivity();
@@ -145,13 +146,15 @@ public class MeFragment extends BaseFragment {
             tv_profile_sex.setText(R.string.girl);
         }
         if (!TextUtils.isEmpty(birthdayValue)) {
-            tv_profile_birthday.setText(birthdayValue);
+            String[] time = birthdayValue.split("-");
+            tv_profile_birthday.setText(time[1] + "/" + time[2] + "/" + time[0]);
         }
         if (!JavaUtil.checkIsNull(heightValue)) {
             if (mUserSetTools.get_user_unit_type()) {
                 tv_profile_height.setText(heightValue + getString(R.string.centimeter));
             } else {
-                tv_profile_height.setText(MyUtils.CmToInString(heightValue) + getString(R.string.unit_in));
+                int in = MyUtils.CmToInInt(heightValue);
+                tv_profile_height.setText(String.format("%1$2d'%2$2d\"", in / 12, in % 12));
             }
         }
         if (!JavaUtil.checkIsNull(weightValue)) {

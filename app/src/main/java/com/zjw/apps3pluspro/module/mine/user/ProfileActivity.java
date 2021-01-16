@@ -26,6 +26,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -79,8 +80,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.SimpleFormatter;
 
 
 /**
@@ -222,7 +225,12 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
         sexValue = String.valueOf(mUserSetTools.get_user_sex());
         UserName = mUserSetTools.get_user_nickname();
         weightValue = String.valueOf(mUserSetTools.get_user_weight());
+
         heightValue = String.valueOf(mUserSetTools.get_user_height());
+        int in = MyUtils.CmToInInt(heightValue);
+        pvFt = in / 12;
+        pvIn = in % 12;
+
         birthdayValue = !JavaUtil.checkIsNull(mUserSetTools.get_user_birthday()) ? mUserSetTools.get_user_birthday() : DefaultVale.USER_BIRTHDAY;
 
         //修改密码，暂时屏蔽
@@ -277,7 +285,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
             if (mUserSetTools.get_user_unit_type()) {
                 tv_profile_height.setText(heightValue + getString(R.string.centimeter));
             } else {
-                tv_profile_height.setText(MyUtils.CmToInString(heightValue) + getString(R.string.unit_in));
+                tv_profile_height.setText(String.format("%1$2d'%2$2d\"", pvFt, pvIn));
             }
         }
 
@@ -297,10 +305,9 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
         }
 
         if (!TextUtils.isEmpty(birthdayValue)) {
-            tv_profile_birthday.setText(birthdayValue);
+            String[] time = birthdayValue.split("-");
+            tv_profile_birthday.setText(time[1] + "/" + time[2] + "/" + time[0]);
         }
-
-
     }
 
     @Override
@@ -664,6 +671,9 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
     /**
      * 身高的dialog
      */
+    int pvFt = 0;
+    int pvIn = 0;
+
     private void showHeightDialog() {
         // TODO Auto-generated method stub
         MyLog.i(TAG, "公制问题 身高 = 类型 " + mUserSetTools.get_user_unit_type());
@@ -682,12 +692,13 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
         wl.height = LayoutParams.WRAP_CONTENT;
 
         PickerView pv_height = (PickerView) view.findViewById(R.id.pv_height);
-
+        PickerView pv_height_ft = (PickerView) view.findViewById(R.id.pv_height_ft);
+        PickerView pv_height_in = (PickerView) view.findViewById(R.id.pv_height_in);
         TextView tv_height_unit_dialog = (TextView) view.findViewById(R.id.tv_height_unit_dialog);
+        RelativeLayout layout1 = view.findViewById(R.id.layout1);
+        LinearLayout layout2 = view.findViewById(R.id.layout2);
 
         List<String> dataHeight = new ArrayList<String>();
-
-
         if (mUserSetTools.get_user_unit_type()) {
 
 
@@ -714,28 +725,32 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
             });
 
         } else {
-            tv_height_unit_dialog.setText(getString(R.string.unit_in));
+            layout1.setVisibility(View.GONE);
+            layout2.setVisibility(View.VISIBLE);
 
-            for (int i = 28; i < 101; i++) {
-                dataHeight.add("" + i);
+            List<String> dataHeight1 = new ArrayList<String>();
+            List<String> dataHeight2 = new ArrayList<String>();
+            for (int i = 2; i < 9; i++) {
+                dataHeight1.add("" + i);
+            }
+            for (int i = 0; i < 12; i++) {
+                dataHeight2.add("" + i);
             }
 
-            if (TextUtils.isEmpty(heightValue) || MyUtils.CmToInInt(heightValue) < 28 || MyUtils.CmToInInt(heightValue) > 100) {
+            if (TextUtils.isEmpty(heightValue) || MyUtils.CmToInInt(heightValue) < 24 || MyUtils.CmToInInt(heightValue) > 107) {
                 heightValue = "170";
-                pv_height.setData(dataHeight, 40);
-                MyLog.i(TAG, "公制问题 英制 身高 = heightValue = " + heightValue);
-            } else {
-                int index = MyUtils.CmToInInt(heightValue) - 28;
-                pv_height.setData(dataHeight, index);
             }
-            pv_height.setOnSelectListener(new onSelectListener() {
+            int in = MyUtils.CmToInInt(heightValue);
+            pv_height_ft.setData(dataHeight1, (in / 12 - 2));
+            pv_height_in.setData(dataHeight2, in % 12);
 
-                @Override
-                public void onSelect(String text) {
-                    heightValue = MyUtils.InToCmString(text);
-                    MyLog.i(TAG, "公制问题 text = " + text);
-                    MyLog.i(TAG, "公制问题 value = " + heightValue);
-                }
+            pvFt = in / 12;
+            pvIn = in % 12;
+            pv_height_ft.setOnSelectListener(text -> {
+                pvFt = Integer.parseInt(text);
+            });
+            pv_height_in.setOnSelectListener(text -> {
+                pvIn = Integer.parseInt(text);
             });
         }
 
@@ -748,13 +763,10 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
         view.findViewById(R.id.tv_height_ok).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                heightValue = String.valueOf((int) (pvFt * 30.48 + pvIn * 2.54));
                 saveUserHeight();
-
-
             }
         });
-
 
         // 设置显示位置
         dialog.onWindowAttributesChanged(wl);
@@ -842,8 +854,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 
 
             if (!TextUtils.isEmpty(heightValue)) {
-
-                tv_profile_height.setText(MyUtils.CmToInString(heightValue) + getString(R.string.unit_in));
+                tv_profile_height.setText(String.format("%1$2d'%2$2d\"", pvFt, pvIn));
             }
 
             if (!TextUtils.isEmpty(weightValue)) {
@@ -884,14 +895,12 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
      * 保存用户身高
      */
     void saveUserHeight() {
-
         dialog.cancel();
-
         if (!JavaUtil.checkIsNull(heightValue)) {
             if (mUserSetTools.get_user_unit_type()) {
                 tv_profile_height.setText(heightValue + getString(R.string.centimeter));
             } else {
-                tv_profile_height.setText(MyUtils.CmToInString(heightValue) + getString(R.string.unit_in));
+                tv_profile_height.setText(String.format("%1$2d'%2$2d\"", pvFt, pvIn));
             }
             BroadcastTools.sendBleUserinfoData(mContext);
             mUserSetTools.set_user_height(Integer.valueOf(heightValue));
@@ -899,8 +908,6 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
             mUserData.setHeight(String.valueOf(mUserSetTools.get_user_height()));
             uploadUserInfo(mUserData);
         }
-
-
     }
 
     /**
@@ -933,7 +940,8 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 
 
         if (MyTime.getIsOldTime(upBirthdayValue)) {
-            tv_profile_birthday.setText(upBirthdayValue);
+            String[] time = upBirthdayValue.split("-");
+            tv_profile_birthday.setText(time[1] + "/" + time[2] + "/" + time[0]);
             mUserSetTools.set_user_birthday(upBirthdayValue);
             UserData mUserData = new UserData();
             mUserData.setBirthday(mUserSetTools.get_user_birthday());

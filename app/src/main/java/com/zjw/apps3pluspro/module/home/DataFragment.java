@@ -649,7 +649,7 @@ public class DataFragment extends BaseFragment {
 
         tvExerciseStep.setText(steps);
         tvExerciseDistance.setText(distance);
-        tvExerciseCal.setText(calory);
+        tvExerciseCal.setText(calory + " ");
 
         String[] steps24 = mMovementInfo.getData().split(",");
         int max = 0;
@@ -809,7 +809,7 @@ public class DataFragment extends BaseFragment {
             tvAvg.setText(avg);
             tvMax.setText(max);
             tvMin.setText(min);
-            tvHeartTitle.setText(getResources().getString(R.string.heart) + last_heart + getResources().getString(R.string.bpm));
+            tvHeartTitle.setText(getResources().getString(R.string.heart) + " " + last_heart + " " + getResources().getString(R.string.bpm));
         } else {
             tvAvg.setText(context.getString(R.string.sleep_gang));
             tvMax.setText(context.getString(R.string.sleep_gang));
@@ -1307,7 +1307,7 @@ public class DataFragment extends BaseFragment {
             } else {
                 layoutTemperatureNoData.setVisibility(View.GONE);
                 layoutTemperatureShowData.setVisibility(View.VISIBLE);
-                tvTemperatureTitle.setText(getResources().getString(R.string.temp_body) + last_body_value + unit);
+                tvTemperatureTitle.setText(getResources().getString(R.string.temp_body) + " " + last_body_value + unit);
             }
         } else {
             layoutTemperatureNoData.setVisibility(View.VISIBLE);

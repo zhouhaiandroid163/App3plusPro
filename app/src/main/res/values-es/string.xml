@@ -98,7 +98,7 @@
     <string name="skin_colour_title">Selección de color de piel</string>
     <string name="skin_colour_tip">El tono de piel seleccionado afectará la precisión de la información de medición diaria. Elige un color que sea similar a tu piel.</string>
     <string name="target_complete">Meta cumplida</string>
-    <string name="target_steps">Objetivo en movimiento</string>
+    <string name="target_steps">Pasos objetivo</string>
     <string name="target_steps_tip">De acuerdo con las recomendaciones de la Organización Mundial de la Salud, se requiere un ejercicio de intensidad media que dure 40 minutos todos los días, lo que equivale a caminar 8,000 pasos.</string>
     <string name="sleep_target">Objetivo de sueño</string>
     <string name="sleep_target_tip">Según la Organización Mundial de la Salud, los adultos duermen entre 7 y 9 horas al día.</string>
@@ -111,7 +111,7 @@
     <string name="map_google">Google</string>
     <string name="map_gaode">Amap</string>
     <!-- 我的界面 -->
-    <string name="title_mine">Mi</string>
+    <string name="title_mine">Cuenta</string>
     <string name="mine_device">Mi dispositivo</string>
     <string name="add_device">Agregar dispositivo</string>
     <string name="my_target">Mi objetivo</string>
@@ -147,7 +147,7 @@
     <string name="title_today">Hoy</string>
     <string name="title_old_week">La semana pasada</string>
     <string name="title_health">Salud</string>
-    <string name="tilte_data">Datos</string>
+    <string name="tilte_data">Actividad</string>
     <string name="start_sport">Comienza a hacer ejercicio</string>
     <string name="sport_time">Duración</string>
     <string name="sport_pace">Velocidad</string>
@@ -324,7 +324,7 @@
     <string name="open_do_not_disturb">Active el modo no molestar</string>
     <string name="do_not_disturb_tip">Cuando "Modo no molestar" está habilitado, a las (22: 00-08: 00), la notificación y la pantalla de la muñeca elevada se deshabilitarán.</string>
     <string name="more_app_remain">Configuraciones de terceros</string>
-    <string name="restore_factory">Restablecimiento de fábrica</string>
+    <string name="restore_factory">restablecimiento de fábrica</string>
     <string name="restore_factory_tip">Ya sea para restaurar la configuración de fábrica</string>
     <string name="firmware_update">Dispositivo Actualizar</string>
     <string name="already_new">Último</string>
@@ -652,7 +652,7 @@
     <string name="custom_sync">Dial sincronizado</string>
     <!--新交互-->
     <!--数据-->
-    <string name="device_title">Dispositivo</string>
+    <string name="device_title">Ajuste</string>
     <string name="data_cyc_set_tip">Establecer el ciclo fisiológico es más propicio para comprender su salud</string>
     <string name="ecg_heart">ECG HR</string>
     <string name="ecg_bp">ECG BP</string>

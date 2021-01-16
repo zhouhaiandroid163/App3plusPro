@@ -98,9 +98,9 @@
     <string name="skin_colour_title">Skin color selection</string>
     <string name="skin_colour_tip">The selected skin tone will affect the accuracy of the daily measurement information. Please choose a color that is similar to your skin.</string>
     <string name="target_complete">Goal accomplished</string>
-    <string name="target_steps">Moving target</string>
+    <string name="target_steps">Steps Goal</string>
     <string name="target_steps_tip">According to the recommendations of the World Health Organization, a medium-intensity exercise lasting 40 minutes is required every day, which is equivalent to walking 8,000 steps.</string>
-    <string name="sleep_target">Sleep target</string>
+    <string name="sleep_target">Sleep Goal</string>
     <string name="sleep_target_tip">According to the World Health Organization, adults sleep 7-9 hours a day.</string>
     <string name="section_few">Small amount</string>
     <string name="section_fit">Moderate amount</string>
@@ -111,7 +111,7 @@
     <string name="map_google">Google</string>
     <string name="map_gaode">Amap</string>
     <!-- 我的界面 -->
-    <string name="title_mine">Mine</string>
+    <string name="title_mine">Account</string>
     <string name="mine_device">My device</string>
     <string name="add_device">Add device</string>
     <string name="my_target">My goal</string>
@@ -147,7 +147,7 @@
     <string name="title_today">Today</string>
     <string name="title_old_week">Last week</string>
     <string name="title_health">Health</string>
-    <string name="tilte_data">Data</string>
+    <string name="tilte_data">Activity</string>
     <string name="start_sport">Start exercising</string>
     <string name="sport_time">Duration</string>
     <string name="sport_pace">Speed</string>
@@ -324,7 +324,7 @@
     <string name="open_do_not_disturb">Turn on the do not disturb mode</string>
     <string name="do_not_disturb_tip">When "Do not disturb mode" is enabled, at (22:00-08:00), the notification and the raised wrist screen will be disabled.</string>
     <string name="more_app_remain">Third party settings</string>
-    <string name="restore_factory">Reset</string>
+    <string name="restore_factory">factory reset</string>
     <string name="restore_factory_tip">Whether to restore factory settings</string>
     <string name="firmware_update">Firmware update</string>
     <string name="already_new">Latest</string>
@@ -394,7 +394,7 @@
     <string name="dfu_file_init_message">Initialization</string>
     <string name="dfu_file_status_invalid_message">The file is invalid!</string>
     <string name="dfu_tishi_text1">1. During the upgrade process, keep the phone and device Bluetooth connected, and place the device next to the phone.</string>
-    <string name="dfu_tishi_text2">2. After the upgrade is complete, if the device is not upgraded successfully, reconnect the device after 200 seconds.</string>
+    <string name="dfu_tishi_text2">2. After the upgrade is complete, if the device is not upgraded successfully, reconnect the device after 3 Minutes.</string>
     <string name="dfu_error_low_power">Upgrade the firmware, please ensure that the device power is not less than 25%</string>
     <!-- 意见反馈/常见问题 -->
     <string name="common_problem_list_title1">Measurement of health data:</string>
@@ -652,7 +652,7 @@
     <string name="custom_sync">Synchronized dial</string>
     <!--新交互-->
     <!--数据-->
-    <string name="device_title">Device</string>
+    <string name="device_title">Setting</string>
     <string name="data_cyc_set_tip">Setting the physiological cycle is more conducive to understanding your health</string>
     <string name="ecg_heart">ECG HR</string>
     <string name="ecg_bp">ECG BP</string>
@@ -809,7 +809,7 @@
     <string name="temp_normal_tip11">The temperature inside the human body is called body temperature. The normal body temperature of the human body is between 96.8～98.96℉6 on average, exceeding 98.96℉ is fever, 99.14～100.4℉ is low fever, 100.58～104℉ is high fever, and above 104℉ is life-threatening.</string>
     <string name="blood_oxygen_tip1">The normal blood oxygen saturation of the human body is 95%-100%. The higher the oxygen content in the blood, the better the human metabolism. Of course, high blood oxygen content is not a good phenomenon. The blood oxygen in the human body has a certain degree of saturation. Too low will cause insufficient oxygen supply in the body, and too high will cause cell aging in the body. </string>
     <string name="tourist_login">visitor login</string>
-    <string name="consume">consumption</string>
+    <string name="consume">Burned </string>
     <string name="read_contacts_permission"> Please open the application settings to enable access to contact permissions</string>
     <!-- 表盘 -->
     <string name="summary">Summary</string>
@@ -1002,10 +1002,10 @@
     <string name="kg">Kg</string>
     <string name="big_calory">Kcal</string>
     <string name="sport_distance_unit">km</string>
-    <string name="unit_in">In</string><!--  英寸-对应厘米-->
-    <string name="unit_lb">Lb</string><!--  英镑-对应公斤-->
-    <string name="unit_mi">Mi</string><!--  英里-对应千米-->
-    <string name="unit_ft">Ft</string><!--  英尺-对应千米-->
+    <string name="unit_in">in</string><!--  英寸-对应厘米-->
+    <string name="unit_lb">lbs</string><!--  英镑-对应公斤-->
+    <string name="unit_mi">mi</string><!--  英里-对应千米-->
+    <string name="unit_ft">ft</string><!--  英尺-对应千米-->
     <string name="unit_spo2">SpO2</string><!--  英里-对应千米-->
     <!-- 第三方APP名称 -->
     <string name="app_wechat">WeChat</string>

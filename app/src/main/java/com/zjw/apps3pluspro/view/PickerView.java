@@ -38,7 +38,7 @@ public class PickerView extends View {
     /**
      * 选中的位置，这个位置是mDataList的中心位置，一直不变
      */
-    public static int mCurrentSelected;
+    private int mCurrentSelected;
     private Paint mPaint;
 
     private float mMaxTextSize = 80;
