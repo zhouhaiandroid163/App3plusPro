@@ -622,7 +622,7 @@ public class BleDeviceTools {
 
     public int get_device_unit() {
         SharedPreferences settin = getSharedPreferencesCommon();
-        return settin.getInt("device_unit", 1);
+        return settin.getInt("device_unit", 0);
     }
 
     //Ecg 频率 0 = 125 ， 1 = 250
@@ -2378,10 +2378,75 @@ public class BleDeviceTools {
         return settin.getBoolean("getIsSupportGetDeviceProtoStatus", false);
     }
 
-    public void setIsSupportGetDeviceProtoStatus(boolean IsCoronaNotiface) {
+    public void setIsSupportGetDeviceProtoStatus(boolean getIsSupportGetDeviceProtoStatus) {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
-        editor.putBoolean("getIsSupportGetDeviceProtoStatus", IsCoronaNotiface);
+        editor.putBoolean("getIsSupportGetDeviceProtoStatus", getIsSupportGetDeviceProtoStatus);
+        editor.apply();
+    }
+
+    //设备是否支持辅助定位
+    public boolean getIsSupportAppAuxiliarySport() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportAppAuxiliarySport", false);
+    }
+
+    public void setIsSupportAppAuxiliarySport(boolean IsSupportAppAuxiliarySport) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportAppAuxiliarySport", IsSupportAppAuxiliarySport);
+        editor.apply();
+    }
+
+    //设备是否支持卡路里目标
+    public boolean getIsSupportCalorieTarget() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportCalorieTarget", false);
+    }
+
+    public void setIsSupportCalorieTarget(boolean IsSupportCalorieTarget) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportCalorieTarget", IsSupportCalorieTarget);
+        editor.apply();
+    }
+
+    //设备是否支持卡路里目标
+    public boolean getIsSupportDistanceTarget() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportDistanceTarget", false);
+    }
+
+    public void setIsSupportDistanceTarget(boolean IsSupportDistanceTarget) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportDistanceTarget", IsSupportDistanceTarget);
+        editor.apply();
+    }
+
+    //设备是否支持活动时长目标
+    public boolean getIsSupportActivityTimeTarget() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportActivityTimeTarget", false);
+    }
+
+    public void setIsSupportActivityTimeTarget(boolean IsSupportActivityTimeTarget) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportActivityTimeTarget", IsSupportActivityTimeTarget);
+        editor.apply();
+    }
+
+    //设备是否支持活动时长目标
+    public boolean getIsSupportSleepTarget() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("IsSupportSleepTarget", false);
+    }
+
+    public void setIsSupportSleepTarget(boolean IsSupportSleepTarget) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("IsSupportSleepTarget", IsSupportSleepTarget);
         editor.apply();
     }
 }

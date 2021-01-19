@@ -149,7 +149,8 @@
                     android:layout_height="wrap_content"
                     android:text="rtk"
                     android:textColor="#c3c3c3"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 

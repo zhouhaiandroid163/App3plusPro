@@ -60,13 +60,11 @@ import com.zjw.apps3pluspro.sql.entity.HealthInfo;
 import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.utils.DefaultVale;
-import com.zjw.apps3pluspro.utils.DialMarketManager;
 import com.zjw.apps3pluspro.utils.FileUtil;
 import com.zjw.apps3pluspro.utils.JavaUtil;
 import com.zjw.apps3pluspro.utils.MusicSyncManager;
 import com.zjw.apps3pluspro.utils.MyTime;
 import com.zjw.apps3pluspro.utils.NotificationUtils;
-import com.zjw.apps3pluspro.utils.PageManager;
 import com.zjw.apps3pluspro.utils.PhoneUtil;
 import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.utils.ThemeManager;
@@ -2172,6 +2170,11 @@ public class BleService extends Service {
                 case BleConstant.Key_DeviceBindInfo:
                     deviceBindInfo(data);
                     break;
+
+                case BleConstant.Key_DeviceToAppSport:
+                    devicetoAppSportInfo(data);
+                    break;
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -2207,6 +2210,39 @@ public class BleService extends Service {
                     break;
             }
 
+        }
+    }
+
+    private void devicetoAppSportInfo(byte[] data) {
+        if (!mBleDeviceTools.getIsSupportAppAuxiliarySport()) {
+            MyLog.i(TAG, "devicetoAppSportInfo = no support");
+            return;
+        }
+        int model = data[13] & 0xff;
+        int cmd = data[14] & 0xff;
+        MyLog.i(TAG, "devicetoAppSportInfo = model = " + model + " cmd = " + cmd);
+        //模式A=返回距离
+        if (model == 0) {
+            switch (cmd) {
+                case 0: // 发起运动
+                    BroadcastTools.broadcastDevicetoAppSportState(getApplicationContext(), BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START);
+                    break;
+                case 1: // 运动已暂停
+                    BroadcastTools.broadcastDevicetoAppSportState(getApplicationContext(), BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_PAUSE);
+                    break;
+                case 2: // 运动继续
+                    BroadcastTools.broadcastDevicetoAppSportState(getApplicationContext(), BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESUME);
+                    break;
+                case 3: // 结束运动
+                    BroadcastTools.broadcastDevicetoAppSportState(getApplicationContext(), BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_STOP);
+                    break;
+                case 4: // 正在运动中…
+                    BroadcastTools.broadcastDevicetoAppSportState(getApplicationContext(), BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_YES);
+                    break;
+                case 5: // 非运动状态…
+                    BroadcastTools.broadcastDevicetoAppSportState(getApplicationContext(), BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO);
+                    break;
+            }
         }
     }
 

@@ -60,6 +60,7 @@ import com.zjw.apps3pluspro.eventbus.BluetoothAdapterStateEvent;
 import com.zjw.apps3pluspro.eventbus.DataSyncCompleteEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceInfoEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceSportStatusEvent;
+import com.zjw.apps3pluspro.eventbus.DeviceToAppSportStateEvent;
 import com.zjw.apps3pluspro.eventbus.DialInfoCompleteEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoWatchFacePrepareStatusEvent;
@@ -589,6 +590,8 @@ public class HomeActivity extends BaseActivity {
         filter.addAction(BroadcastTools.ACTION_GATT_PROTOSPORT);
         filter.addAction(BroadcastTools.ACTION_CMD_DEVICE_TRANSMISSION_DATA);
 
+        filter.addAction(BroadcastTools.ACTION_GATT_DEVICE_TO_APP_SPORT_STATE);
+
         filter.setPriority(1000);
         registerReceiver(broadcastReceiver, filter);
     }
@@ -889,6 +892,12 @@ public class HomeActivity extends BaseActivity {
                     SysUtils.logContentW("ble", " ACTION_CMD_DEVICE_TRANSMISSION_DATA");
                     refreshProtobufSportTimeOut();
                     break;
+
+
+                case BroadcastTools.ACTION_GATT_DEVICE_TO_APP_SPORT_STATE:
+                    int sportState = intent.getIntExtra(BroadcastTools.ACTION_GATT_DEVICE_TO_APP_SPORT_TAG, -1);
+                    EventBus.getDefault().post(new DeviceToAppSportStateEvent(sportState));
+                    break;
             }
         }
     };
@@ -970,7 +979,6 @@ public class HomeActivity extends BaseActivity {
             case GpsSportDeviceStartEvent.SPORT_STATE_RESUME:
                 break;
             case GpsSportDeviceStartEvent.SPORT_STATE_STOP:
-
                 GpsSportManager.getInstance().stopGps(this);
                 break;
         }

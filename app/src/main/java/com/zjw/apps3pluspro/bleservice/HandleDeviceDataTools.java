@@ -731,7 +731,7 @@ public class HandleDeviceDataTools {
             }
 
             if (deviceParams14[7] == 1) {
-                MyLog.i(TAG, "固件返回值 = 获取设备 proto 状态 不支持");
+                MyLog.i(TAG, "固件返回值 = 获取设备 proto 状态 支持");
                 mBleDeviceTools.setIsSupportGetDeviceProtoStatus(true);
             } else {
                 MyLog.i(TAG, "固件返回值 = 获取设备 proto 状态 不支持");
@@ -757,7 +757,7 @@ public class HandleDeviceDataTools {
             MyLog.i(TAG, "固件返回值 = 内置表盘选择 = 不支持 2");
             mBleDeviceTools.setIsSupportBuiltDialSelection(false);
 
-            MyLog.i(TAG, "固件返回值 = 获取设备 proto 状态 不支持");
+            MyLog.i(TAG, "固件返回值 = 获取设备 proto 状态 不支持 2");
             mBleDeviceTools.setIsSupportGetDeviceProtoStatus(false);
         }
         //升级方式
@@ -791,7 +791,7 @@ public class HandleDeviceDataTools {
             mBleDeviceTools.setIsCoronaNotiface(false);
         }
 
-        int[] deviceParams17 = MyUtils.BinstrToIntArray(data[29]); // 参数16
+        int[] deviceParams17 = MyUtils.BinstrToIntArray(data[29]); // 参数17
         if (deviceParams17[0] == 0) {
             MyLog.i(TAG, "固件返回值 =喝水 = 支持");
             mBleDeviceTools.setIsSupportDrinkWater(true);
@@ -835,11 +835,53 @@ public class HandleDeviceDataTools {
             mBleDeviceTools.setIsSupportTakePicture(false);
         }
         if (deviceParams17[6] == 0) {
-            MyLog.i(TAG, "固件返回值 =抬腕亮屏 = 支持");
+            MyLog.i(TAG, "固件返回值 = 抬腕亮屏 = 支持");
             mBleDeviceTools.setIsSupportRaiseWristBrightenScreen(true);
         } else {
             MyLog.i(TAG, "固件返回值 = 抬腕亮屏 = 不支持");
             mBleDeviceTools.setIsSupportRaiseWristBrightenScreen(false);
+        }
+
+        int[] deviceParams18 = MyUtils.BinstrToIntArray(data[30]); // 参数18
+
+        if (deviceParams18[0] == 0) {
+            MyLog.i(TAG, "固件返回值 = APP辅助定位 = 支持");
+            mBleDeviceTools.setIsSupportAppAuxiliarySport(true);
+        } else {
+            MyLog.i(TAG, "固件返回值 = APP辅助定位 = 不支持");
+            mBleDeviceTools.setIsSupportAppAuxiliarySport(false);
+        }
+
+        if (deviceParams18[1] == 1) {
+            MyLog.i(TAG, "固件返回值 = 卡路里目标设置 = 支持");
+            mBleDeviceTools.setIsSupportCalorieTarget(true);
+        } else {
+            MyLog.i(TAG, "固件返回值 = 卡路里目标设置 = 不支持");
+            mBleDeviceTools.setIsSupportCalorieTarget(false);
+        }
+
+        if (deviceParams18[2] == 1) {
+            MyLog.i(TAG, "固件返回值 = 距离目标设置 = 支持");
+            mBleDeviceTools.setIsSupportDistanceTarget(true);
+        } else {
+            MyLog.i(TAG, "固件返回值 = 距离目标设置 = 不支持");
+            mBleDeviceTools.setIsSupportDistanceTarget(false);
+        }
+
+        if (deviceParams18[3] == 1) {
+            MyLog.i(TAG, "固件返回值 = 活动时间目标设置 = 支持");
+            mBleDeviceTools.setIsSupportActivityTimeTarget(true);
+        } else {
+            MyLog.i(TAG, "固件返回值 = 活动时间目标设置 = 不支持");
+            mBleDeviceTools.setIsSupportActivityTimeTarget(false);
+        }
+
+        if (deviceParams18[4] == 1) {
+            MyLog.i(TAG, "固件返回值 = 睡眠目标设置 = 支持");
+            mBleDeviceTools.setIsSupportSleepTarget(true);
+        } else {
+            MyLog.i(TAG, "固件返回值 = 睡眠目标设置 = 不支持");
+            mBleDeviceTools.setIsSupportSleepTarget(false);
         }
 
 

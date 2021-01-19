@@ -167,6 +167,17 @@ public class WeatherBean {
             low = Integer.parseInt(weatherModle.get_c_low_temp());
         }
 
+        //当前温度不为空
+        if (now != -128) {
+            //最小温度,大于当前温度
+            if (low > now) {
+                low = now;
+            }
+            if (high < now) {
+                high = now;
+            }
+        }
+
         result[0] = (byte) ((year << 2) | (mon >> 2));
         result[1] = (byte) (((mon & 0x03) << 6) | (day << 1) | (air >> 3 & 0x01));
         result[2] = (byte) (((air << 5) & 0xe0) | (type & 0x1f));

@@ -111,7 +111,7 @@
     <string name="map_google">谷歌</string>
     <string name="map_gaode">高德</string>
     <!-- 我的界面 -->
-    <string name="title_mine">我的</string>
+    <string name="title_mine">账户</string>
     <string name="mine_device">我的设备</string>
     <string name="add_device">添加设备</string>
     <string name="my_target">我的目标</string>
@@ -394,7 +394,7 @@
     <string name="dfu_file_init_message">初始化</string>
     <string name="dfu_file_status_invalid_message">文件无效！</string>
     <string name="dfu_tishi_text1">1.升级过程中，请保持手机和设备蓝牙保持连接，并且设备尽量放在手机旁边。</string>
-    <string name="dfu_tishi_text2">2.升级完成后，如果设备没有升级成功，请200秒后，重新连接设备升级。</string>
+    <string name="dfu_tishi_text2">2.升级完成后，如果设备没有升级成功，请3分钟后，重新连接设备升级。</string>
     <string name="dfu_error_low_power">升级固件请保证设备电量不小于25%</string>
     <!-- 意见反馈/常见问题 -->
     <string name="common_problem_list_title1">健康数据的测量:</string>
@@ -652,7 +652,7 @@
     <string name="custom_sync">同步表盘</string>
     <!--新交互-->
     <!--数据-->
-    <string name="device_title">设备</string>
+    <string name="device_title">设置</string>
     <string name="data_cyc_set_tip">设置生理周期更利于你了解自己的健康情况</string>
     <string name="ecg_heart">ECG心率</string>
     <string name="ecg_bp">ECG血压</string>

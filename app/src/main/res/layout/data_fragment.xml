@@ -14,6 +14,55 @@
         layout="@layout/home_title"
         android:visibility="visible" />
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/test_01"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="成功" />
+
+        <Button
+            android:id="@+id/test_02"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="失败" />
+
+        <Button
+            android:id="@+id/test_03"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="询问" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/test_input"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="15.6"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/test_04"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="上传" />
+
+    </LinearLayout>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutConnectState"
         android:layout_width="match_parent"

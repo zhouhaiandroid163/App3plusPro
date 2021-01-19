@@ -324,7 +324,7 @@
     <string name="open_do_not_disturb">Turn on the do not disturb mode</string>
     <string name="do_not_disturb_tip">When "Do not disturb mode" is enabled, at (22:00-08:00), the notification and the raised wrist screen will be disabled.</string>
     <string name="more_app_remain">Third party settings</string>
-    <string name="restore_factory">factory reset</string>
+    <string name="restore_factory">Factory reset</string>
     <string name="restore_factory_tip">Whether to restore factory settings</string>
     <string name="firmware_update">Firmware update</string>
     <string name="already_new">Latest</string>

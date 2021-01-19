@@ -394,7 +394,7 @@
     <string name="dfu_file_init_message">Inicializar</string>
     <string name="dfu_file_status_invalid_message">¡El archivo no es válido!</string>
     <string name="dfu_tishi_text1">1. Durante el proceso de actualización, mantenga el teléfono y el dispositivo Bluetooth conectados y coloque el dispositivo al lado del teléfono.</string>
-    <string name="dfu_tishi_text2">2. Una vez completada la actualización, si el dispositivo no se actualiza correctamente, vuelva a conectarlo después de 200 segundos.</string>
+    <string name="dfu_tishi_text2">2. Una vez completada la actualización, si el dispositivo no se actualiza correctamente, vuelva a conectarlo después de 3 minutos.</string>
     <string name="dfu_error_low_power">Actualice el firmware, asegúrese de que la energía del dispositivo no sea inferior al 25%</string>
     <!-- 意见反馈/常见问题 -->
     <string name="common_problem_list_title1">Medición de datos de salud:</string>
@@ -652,7 +652,7 @@
     <string name="custom_sync">Dial sincronizado</string>
     <!--新交互-->
     <!--数据-->
-    <string name="device_title">Ajuste</string>
+    <string name="device_title">Configuración</string>
     <string name="data_cyc_set_tip">Establecer el ciclo fisiológico es más propicio para comprender su salud</string>
     <string name="ecg_heart">ECG HR</string>
     <string name="ecg_bp">ECG BP</string>

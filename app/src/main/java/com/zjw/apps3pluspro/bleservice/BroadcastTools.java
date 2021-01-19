@@ -18,6 +18,15 @@ public class BroadcastTools {
     public final static String ACTION_GATT_CONNECT_DISCOVER_SERVICES = APP_NAME + "_" + "ACTION_GATT_CONNECT_DISCOVER_SERVICES";
     public final static String ACTION_GATT_CONNECT_BIND_SUCCESS = APP_NAME + "_" + "ACTION_GATT_CONNECT_BIND_SUCCESS";
     public final static String ACTION_GATT_CONNECT_BIND_ERROR = APP_NAME + "_" + "ACTION_GATT_CONNECT_BIND_ERROR";
+    //辅助运动状态
+    public final static String ACTION_GATT_DEVICE_TO_APP_SPORT_STATE = APP_NAME + "_" + "ACTION_GATT_DEVICE_TO_APP_SPORT_STATE";
+    public final static String ACTION_GATT_DEVICE_TO_APP_SPORT_TAG = APP_NAME + "_" + "ACTION_GATT_DEVICE_TO_APP_SPORT_TAG";
+    public final static int TAG_DEVICE_TO_APP_SPORT_STATE_START = 0;//0=发起运动 (设备发起)
+    public final static int TAG_DEVICE_TO_APP_SPORT_STATE_PAUSE = 1;//1=运动已暂停(设备发起)
+    public final static int TAG_DEVICE_TO_APP_SPORT_STATE_RESUME = 2;//2=运动继续(设备发起)
+    public final static int TAG_DEVICE_TO_APP_SPORT_STATE_STOP = 3;//3=结束运动(设备发起)
+    public final static int TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_YES = 4;//4=正在运动中…(回复APP当前运动状态)
+    public final static int TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO = 5;//5=非运动状态…(回复APP当前运动状态)
     //设备断开广播
     public final static String ACTION_GATT_DISCONNECTED = APP_NAME + "_" + "ACTION_GATT_DISCONNECTED";
     //设备断开广播
@@ -268,6 +277,13 @@ public class BroadcastTools {
     public static void broadcastDeviceConnectedBIND_ERROR(Context context) {
         final Intent intent = new Intent();
         intent.setAction(ACTION_GATT_CONNECT_BIND_ERROR);
+        context.sendBroadcast(intent);
+    }
+
+    public static void broadcastDevicetoAppSportState(Context context, int state) {
+        final Intent intent = new Intent();
+        intent.setAction(ACTION_GATT_DEVICE_TO_APP_SPORT_STATE);
+        intent.putExtra(ACTION_GATT_DEVICE_TO_APP_SPORT_TAG, state);
         context.sendBroadcast(intent);
     }
 

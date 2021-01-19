@@ -94,6 +94,7 @@ public class BtSerializeation {
     private static final byte KEY_GET_DEVICE_ERROR_LOG = (byte) 0xef;
 
     public static final byte KEY_AGPS = (byte) 0x6b;
+    public static final byte KEY_DEVICE_TO_APP_SPORT = (byte) 0x6d;
 
     //大数据传输通道。
     private static final byte KEY_SEND_THEME_HEAD = (byte) 0x01;
@@ -1913,6 +1914,32 @@ public class BtSerializeation {
         System.arraycopy(valueByte1, 0, byte_3, 0, valueByte1.length);
         System.arraycopy(valueByte, 0, byte_3, valueByte1.length, valueByte.length);
         return byte_3;
+    }
+
+    /**
+     * state 0=失败，1=成功，2=询问
+     *
+     * @param state
+     * @return
+     */
+    public static byte[] sendSportState(int state) {
+        byte[] data = new byte[2];
+        data[0] = (byte) 0x00;
+        data[1] = (byte) state;
+        return getBleData(data, CMD_01, KEY_DEVICE_TO_APP_SPORT);
+    }
+
+
+    public static byte[] sendSportData(float distance) {
+        int distance_value = (int) (distance * 10);
+        byte[] data = new byte[6];
+        data[0] = (byte) 0x00;
+        data[1] = (byte) 0x04;
+        data[2] = (byte) (distance_value >> 24);
+        data[3] = (byte) ((distance_value & 0x00ff0000) >> 16);
+        data[4] = (byte) ((distance_value & 0x0000ff00) >> 8);
+        data[5] = (byte) (distance_value & 0xff);
+        return getBleData(data, CMD_01, KEY_DEVICE_TO_APP_SPORT);
     }
 
 }

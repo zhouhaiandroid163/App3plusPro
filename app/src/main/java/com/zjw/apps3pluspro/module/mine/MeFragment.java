@@ -3,6 +3,7 @@ package com.zjw.apps3pluspro.module.mine;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,6 +15,7 @@ import com.zjw.apps3pluspro.HomeActivity;
 import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.base.BaseFragment;
+import com.zjw.apps3pluspro.bleservice.BleTools;
 import com.zjw.apps3pluspro.module.device.BleConnectProblemActivity;
 import com.zjw.apps3pluspro.module.mine.app.AboutActivity;
 import com.zjw.apps3pluspro.module.mine.app.CommonProblemActivity;
@@ -29,6 +31,7 @@ import com.zjw.apps3pluspro.network.okhttp.MyOkHttpClient;
 import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
 import com.zjw.apps3pluspro.sharedpreferences.UserSetTools;
 import com.zjw.apps3pluspro.utils.AppUtils;
+import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.utils.DefaultVale;
 import com.zjw.apps3pluspro.utils.DialogUtils;
 import com.zjw.apps3pluspro.utils.FileUtil;
@@ -233,8 +236,9 @@ public class MeFragment extends BaseFragment {
                 new DialogUtils.DialogClickListener() {
                     @Override
                     public void OnOK() {
-                        homeActivity.disconnect();
-                        MyOkHttpClient.getInstance().quitApp(context);
+//                        homeActivity.disconnect();
+//                        MyOkHttpClient.getInstance().quitApp(context);
+                        unBindDevice();
                     }
 
                     @Override
@@ -242,5 +246,15 @@ public class MeFragment extends BaseFragment {
                     }
                 }
         );
+    }
+
+    private void unBindDevice() {
+        homeActivity.restore_factory();
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(() -> {
+            homeActivity.disconnect();
+            BleTools.unBind(context);
+            MyOkHttpClient.getInstance().quitApp(context);
+        }, Constants.FINISH_ACTIVITY_DELAY_TIME);
     }
 }

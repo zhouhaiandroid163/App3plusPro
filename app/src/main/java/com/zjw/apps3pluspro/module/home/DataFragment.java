@@ -31,10 +31,14 @@ import com.zjw.apps3pluspro.base.BaseFragment;
 import com.zjw.apps3pluspro.bleservice.BleConstant;
 import com.zjw.apps3pluspro.bleservice.BleService;
 import com.zjw.apps3pluspro.bleservice.BleTools;
+import com.zjw.apps3pluspro.bleservice.BroadcastTools;
+import com.zjw.apps3pluspro.bleservice.BtSerializeation;
 import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent;
+import com.zjw.apps3pluspro.eventbus.BluetoothAdapterStateEvent;
 import com.zjw.apps3pluspro.eventbus.DataSyncCompleteEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceInfoEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceSportStatusEvent;
+import com.zjw.apps3pluspro.eventbus.DeviceToAppSportStateEvent;
 import com.zjw.apps3pluspro.eventbus.GpsSportDeviceStartEvent;
 import com.zjw.apps3pluspro.eventbus.OffEcgSyncStateEvent;
 import com.zjw.apps3pluspro.eventbus.SyncDeviceSportEvent;
@@ -65,7 +69,6 @@ import com.zjw.apps3pluspro.module.home.sport.MoreSportActivity;
 import com.zjw.apps3pluspro.module.home.sport.SportModleUtils;
 import com.zjw.apps3pluspro.module.home.temp.TempDetailsActivity;
 import com.zjw.apps3pluspro.module.home.temp.TempHistoryActivity;
-import com.zjw.apps3pluspro.module.mine.app.CommonProblemActivity;
 import com.zjw.apps3pluspro.module.mine.user.TargetSettingActivity;
 import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
 import com.zjw.apps3pluspro.sharedpreferences.UserSetTools;
@@ -167,11 +170,39 @@ public class DataFragment extends BaseFragment {
         super.onDestroy();
     }
 
+    private EditText test_input;
+
     @Override
     public View initView() {
         EventTools.SafeRegisterEventBus(this);
         homeActivity = (HomeActivity) this.getActivity();
         view = View.inflate(context, R.layout.data_fragment, null);
+        view.findViewById(R.id.test_01).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                locationSuccess();
+            }
+        });
+        view.findViewById(R.id.test_02).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                locationFail();
+            }
+        });
+        view.findViewById(R.id.test_03).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestSportSate();
+            }
+        });
+        view.findViewById(R.id.test_04).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float value = Float.valueOf(test_input.getText().toString().trim());
+                uploadSportDistance(value);
+            }
+        });
+        test_input = (EditText) view.findViewById(R.id.test_input);
         return view;
     }
 
@@ -1756,5 +1787,50 @@ public class DataFragment extends BaseFragment {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void DeviceToAppSportStateEvent(DeviceToAppSportStateEvent event) {
+        layoutDeviceGps.setVisibility(View.VISIBLE);
+        switch (event.state) {
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START: // 发起运动
+                tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_runing));
+                break;
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_PAUSE: // 运动已暂停
+                tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_paused));
+                break;
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESUME: // 运动继续
+                mHandler.postDelayed(() -> {
+                    tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_runing));
+                }, 0);
+                break;
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_STOP: // 结束运动
+                tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_over));
+                mHandler.postDelayed(() -> {
+                    layoutDeviceGps.setVisibility(View.GONE);
+                }, 1000);
+                break;
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_YES: // 正在运动中…
+                tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_runing));
+                break;
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO: // 非运动状态…
+                layoutDeviceGps.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    private void locationFail() {
+        homeActivity.writeRXCharacteristic(BtSerializeation.sendSportState(0));
+    }
+
+    private void locationSuccess() {
+        homeActivity.writeRXCharacteristic(BtSerializeation.sendSportState(1));
+    }
+
+    private void requestSportSate() {
+        homeActivity.writeRXCharacteristic(BtSerializeation.sendSportState(2));
+    }
+
+    private void uploadSportDistance(float distance) {
+        homeActivity.writeRXCharacteristic(BtSerializeation.sendSportData(distance));
+    }
 
 }
