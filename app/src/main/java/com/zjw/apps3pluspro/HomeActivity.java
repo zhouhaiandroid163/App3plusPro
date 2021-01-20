@@ -1907,7 +1907,10 @@ public class HomeActivity extends BaseActivity {
                         case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START:
                         case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESUME:
                             double distance = GpsSportManager.getInstance().getDistance(appGpsInfo.latitude, appGpsInfo.longitude, gpsInfo.latitude, gpsInfo.longitude);
-                            writeRXCharacteristic(BtSerializeation.sendSportData(distance));
+                            if (distance != 0) {
+                                Log.i(TAG, "initGpsSport2 distance" + distance);
+                                writeRXCharacteristic(BtSerializeation.sendSportData(distance));
+                            }
                             break;
                     }
                 }
@@ -1916,6 +1919,7 @@ public class HomeActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
+
     private void initAPPHelpDevice() {
         appGpsInfo = null;
         GpsSportManager.getInstance().stopGps(homeActivity);

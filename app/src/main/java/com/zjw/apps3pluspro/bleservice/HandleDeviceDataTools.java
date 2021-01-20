@@ -844,7 +844,7 @@ public class HandleDeviceDataTools {
 
         int[] deviceParams18 = MyUtils.BinstrToIntArray(data[30]); // 参数18
 
-        if (deviceParams18[0] == 0) {
+        if (deviceParams18[0] == 1) {
             MyLog.i(TAG, "固件返回值 = APP辅助定位 = 支持");
             mBleDeviceTools.setIsSupportAppAuxiliarySport(true);
         } else {

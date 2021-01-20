@@ -425,9 +425,9 @@ public class GpsSportManager {
 
     public double getDistance(double startLatitude, double startlongitude, double endlatitude, double endlongitude) {
         double lat1 = (Math.PI / 180) * startLatitude;
-        double lat2 = (Math.PI / 180) * startlongitude;
+        double lat2 = (Math.PI / 180) * endlatitude;
 
-        double lon1 = (Math.PI / 180) * endlatitude;
+        double lon1 = (Math.PI / 180) * startlongitude;
         double lon2 = (Math.PI / 180) * endlongitude;
 
 //      double Lat1r = (Math.PI/180)*(gp1.getLatitudeE6()/1E6);
