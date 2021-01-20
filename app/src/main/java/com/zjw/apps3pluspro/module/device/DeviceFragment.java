@@ -495,14 +495,16 @@ public class DeviceFragment extends BaseFragment {
 
     private void initBleState(int state) {
         MyLog.i(TAG, "  initBleState = " + state);
-        setDeviceEnable(false);
+
         switch (state) {
             case BleConstant.STATE_DISCONNECTED:
+                setDeviceEnable(false);
                 MyLog.i(TAG, "setBattery() state = STATE_DISCONNECTED");
                 ivSync.setBackground(getResources().getDrawable(R.mipmap.sync_image));
                 tvSyncState.setText(getResources().getString(R.string.index_tip_no_connect1));
                 break;
             case BleConstant.STATE_CONNECTING:
+                setDeviceEnable(false);
                 MyLog.i(TAG, "setBattery() state = STATE_CONNECTING");
                 tvSyncState.setText(getResources().getString(R.string.loading3));
                 syncAnimation();
@@ -518,6 +520,7 @@ public class DeviceFragment extends BaseFragment {
                 setDeviceEnable(true);
                 break;
             case BleConstant.STATE_CONNECTED_TIMEOUT:
+                setDeviceEnable(true);
                 MyLog.i(TAG, "setBattery() state = STATE_CONNECTED_TIMEOUT");
                 tvSyncState.setText(getResources().getString(R.string.connect_timeout));
                 break;

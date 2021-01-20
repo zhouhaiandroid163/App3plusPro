@@ -1732,6 +1732,9 @@ public class RequestJson {
             JSONArray jsonArray = new JSONArray();
             for (int i = 0; i < sportModleInfoList.size(); i++) {
                 SportModleInfo mSportModleInfo = sportModleInfoList.get(i);
+                if(TextUtils.isEmpty(mSportModleInfo.getRecordPointSportData())){
+                    continue;
+                }
                 JSONObject mJSONObject = new JSONObject();
                 mJSONObject.put("userId", Long.parseLong(BaseApplication.getUserId()));
                 mJSONObject.put("deviceMac", mSportModleInfo.getDeviceMac());
@@ -1805,6 +1808,9 @@ public class RequestJson {
             request_json = new JSONObject();
             try {
                 request_json.put("recordPointList", jsonArray);
+                if(jsonArray.length() == 0){
+                    return null;
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

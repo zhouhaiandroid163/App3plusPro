@@ -278,6 +278,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 startActivity(new Intent(context, WearTypeActivity.class));
                 break;
             case R.id.tvUnitGongzhi:
+                tvUnitGongzhi.setChecked(true);
                 tvUnitYingzhi.setChecked(false);
                 mUserSetTools.set_user_unit_type(true);
                 mBleDeviceTools.set_device_unit(1);
@@ -286,6 +287,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 }
                 break;
             case R.id.tvUnitYingzhi:
+                tvUnitYingzhi.setChecked(true);
                 tvUnitGongzhi.setChecked(false);
                 mUserSetTools.set_user_unit_type(false);
                 mBleDeviceTools.set_device_unit(0);
@@ -296,6 +298,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
             //摄氏度
             case R.id.tvCentigrade:
                 mBleDeviceTools.setTemperatureType(0);
+                tvCentigrade.setChecked(true);
                 tvFahrenheitDegree.setChecked(false);
                 if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
                     writeRXCharacteristic(BtSerializeation.setTemperatureType(0));
@@ -303,6 +306,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 break;
             // 华氏度
             case R.id.tvFahrenheitDegree:
+                tvFahrenheitDegree.setChecked(true);
                 tvCentigrade.setChecked(false);
                 mBleDeviceTools.setTemperatureType(1);
                 if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
@@ -310,6 +314,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 }
                 break;
             case R.id.tvClock24:
+                tvClock24.setChecked(true);
                 tvClock12.setChecked(false);
                 mBleDeviceTools.set_colock_type(1);
                 if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
@@ -317,6 +322,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 }
                 break;
             case R.id.tvClock12:
+                tvClock12.setChecked(true);
                 tvClock24.setChecked(false);
                 mBleDeviceTools.set_colock_type(0);
                 if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {

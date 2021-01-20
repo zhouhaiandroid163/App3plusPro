@@ -644,6 +644,8 @@ public class HomeActivity extends BaseActivity {
                 //已断开
                 case BroadcastTools.ACTION_GATT_DISCONNECTED:
                     currentGpsSportState = -1;
+                    appGpsInfo = null;
+                    curSportState = BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO;
                     GpsSportManager.getInstance().stopGps(homeActivity);
                     curCmd = "";
                     isSyncSportData = false;
@@ -892,11 +894,10 @@ public class HomeActivity extends BaseActivity {
                     SysUtils.logContentW("ble", " ACTION_CMD_DEVICE_TRANSMISSION_DATA");
                     refreshProtobufSportTimeOut();
                     break;
-
-
                 case BroadcastTools.ACTION_GATT_DEVICE_TO_APP_SPORT_STATE:
                     int sportState = intent.getIntExtra(BroadcastTools.ACTION_GATT_DEVICE_TO_APP_SPORT_TAG, -1);
                     EventBus.getDefault().post(new DeviceToAppSportStateEvent(sportState));
+                    deviceToAppSportStateEvent(new DeviceToAppSportStateEvent(sportState));
                     break;
             }
         }
@@ -1869,5 +1870,54 @@ public class HomeActivity extends BaseActivity {
             }
         });
 //        });
+    }
+
+    private int curSportState = BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO;
+
+    public void deviceToAppSportStateEvent(DeviceToAppSportStateEvent event) {
+        curSportState = event.state;
+        switch (event.state) {
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START: // 发起运动
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_YES: // 正在运动中…
+                initGpsSport2();
+                break;
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_PAUSE: // 运动已暂停
+                break;
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESUME: // 运动继续
+                break;
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_STOP: // 结束运动
+                initAPPHelpDevice();
+                break;
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO: // 非运动状态…
+                break;
+        }
+    }
+
+    private GpsSportManager.GpsInfo appGpsInfo = null;
+
+    private void initGpsSport2() {
+        try {
+            GpsSportManager.getInstance().getLatLon(this, gpsInfo -> {
+                if (appGpsInfo == null || curSportState == BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_YES) {
+                    appGpsInfo = gpsInfo;
+                    writeRXCharacteristic(BtSerializeation.sendSportState(1));
+                    curSportState = BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START;
+                } else {
+                    switch (curSportState) {
+                        case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START:
+                        case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESUME:
+                            double distance = GpsSportManager.getInstance().getDistance(appGpsInfo.latitude, appGpsInfo.longitude, gpsInfo.latitude, gpsInfo.longitude);
+                            writeRXCharacteristic(BtSerializeation.sendSportData(distance));
+                            break;
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void initAPPHelpDevice() {
+        appGpsInfo = null;
+        GpsSportManager.getInstance().stopGps(homeActivity);
     }
 }

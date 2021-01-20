@@ -1930,7 +1930,7 @@ public class BtSerializeation {
     }
 
 
-    public static byte[] sendSportData(float distance) {
+    public static byte[] sendSportData(double distance) {
         int distance_value = (int) (distance * 10);
         byte[] data = new byte[6];
         data[0] = (byte) 0x00;

@@ -187,22 +187,25 @@ class DeviceSportManager private constructor() {
 
             if (noUploadData1.size > 0 && isUploadDeviceSport == "0") {
                 val mRequestInfo = RequestJson.postRecordPointList(noUploadData1)
-                NewVolleyRequest.RequestPost(mRequestInfo, TAG, object : VolleyInterface(BaseApplication.getmContext(), mListener, mErrorListener) {
-                    override fun onMySuccess(result: JSONObject) {
-                        try {
-                            Log.i(TAG, "postRecordPointList=$result")
-                            val resultString = result.optString("code")
-                            if (resultString.equals(ResultJson.Code_operation_success, ignoreCase = true)) {
-                                mSportModleInfoUtils.updateNoUploadData(noUploadData1)
+                if(mRequestInfo == null){
+                    mSportModleInfoUtils.updateNoUploadData(noUploadData1)
+                } else{
+                    NewVolleyRequest.RequestPost(mRequestInfo, TAG, object : VolleyInterface(BaseApplication.getmContext(), mListener, mErrorListener) {
+                        override fun onMySuccess(result: JSONObject) {
+                            try {
+                                Log.i(TAG, "postRecordPointList=$result")
+                                val resultString = result.optString("code")
+                                if (resultString.equals(ResultJson.Code_operation_success, ignoreCase = true)) {
+                                    mSportModleInfoUtils.updateNoUploadData(noUploadData1)
+                                }
+                            } catch (e: JSONException) {
+                                e.printStackTrace()
                             }
-                        } catch (e: JSONException) {
-                            e.printStackTrace()
                         }
-                    }
 
-                    override fun onMyError(arg0: VolleyError) {}
-                })
-
+                        override fun onMyError(arg0: VolleyError) {}
+                    })
+                }
             }
         }).start()
     }

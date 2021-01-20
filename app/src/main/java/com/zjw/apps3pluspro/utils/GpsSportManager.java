@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class GpsSportManager {
     }
 
     public void stopGps(Context context) {
+        releaseWakeLock();
         this.locationListener = null;
         if (MyUtils.isGoogle(context)) {
             if (mGoogleApiClient != null) {
@@ -88,6 +90,7 @@ public class GpsSportManager {
 
     public void getLatLon(Context context, LocationListener locationListener) {
         try {
+            acquireWakeLock(context);
             this.locationListener = locationListener;
 //        xaaaaaa.postDelayed(xxx, 3000);
 
@@ -163,7 +166,7 @@ public class GpsSportManager {
                             mLocationRequest.setFastestInterval(3 * 1000); //3 seconds
                             mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);//定位模式
                             mLocationRequest.setSmallestDisplacement(5F); //定位精度
-                            if(mGoogleApiClient != null && mGoogleApiClient.isConnected()){
+                            if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
                                 LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, googleLocationListener);
                             }
                         } catch (Exception e) {
@@ -418,6 +421,49 @@ public class GpsSportManager {
                 SysUtils.logAmapGpsE(TAG, "getWeatherForecast arg0 = " + arg0);
             }
         });
+    }
+
+    public double getDistance(double startLatitude, double startlongitude, double endlatitude, double endlongitude) {
+        double lat1 = (Math.PI / 180) * startLatitude;
+        double lat2 = (Math.PI / 180) * startlongitude;
+
+        double lon1 = (Math.PI / 180) * endlatitude;
+        double lon2 = (Math.PI / 180) * endlongitude;
+
+//      double Lat1r = (Math.PI/180)*(gp1.getLatitudeE6()/1E6);
+//      double Lat2r = (Math.PI/180)*(gp2.getLatitudeE6()/1E6);
+//      double Lon1r = (Math.PI/180)*(gp1.getLongitudeE6()/1E6);
+//      double Lon2r = (Math.PI/180)*(gp2.getLongitudeE6()/1E6);
+
+        //地球半径
+        double R = 6371;
+
+        //两点间距离 km，如果想要米的话，结果*1000就可以了
+        double d = Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)) * R;
+
+        return d * 1000;
+    }
+
+    private PowerManager.WakeLock wakeLock = null;
+
+    private void acquireWakeLock(Context context) {
+        if (null == wakeLock) {
+            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK
+                    | PowerManager.ON_AFTER_RELEASE, getClass()
+                    .getCanonicalName());
+            if (null != wakeLock) {
+                //   Log.i(TAG, "call acquireWakeLock");
+                wakeLock.acquire();
+            }
+        }
+    }
+
+    private void releaseWakeLock() {
+        if (null != wakeLock && wakeLock.isHeld()) {
+            wakeLock.release();
+            wakeLock = null;
+        }
     }
 
 

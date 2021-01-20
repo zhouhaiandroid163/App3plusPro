@@ -2994,12 +2994,18 @@ public class BleService extends Service {
 
         time = time + 100;
 
+        if (mBleDeviceTools.getIsSupportAppAuxiliarySport()) {
+            mBleHandler.postDelayed(() -> {
+                writeRXCharacteristic(BtSerializeation.sendSportState(2));
+            }, time);
+            time = time + 500;
+        }
+
         if (mBleDeviceTools.getIsSupportProtobuf() && mBleDeviceTools.getPointExercise()) {
             mBleHandler.postDelayed(() -> {
                 BroadcastTools.broadcastSyncProtoSport(getApplicationContext());
             }, time);
         }
-
     }
 
 
