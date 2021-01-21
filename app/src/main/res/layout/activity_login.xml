@@ -217,7 +217,8 @@
             android:gravity="bottom|center"
             android:orientation="vertical"
             android:paddingTop="10dip"
-            android:paddingBottom="10dip">
+            android:paddingBottom="10dip"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"

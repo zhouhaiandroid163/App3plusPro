@@ -67,7 +67,8 @@
                             android:layout_height="wrap_content"
                             android:text="@string/dfu_tishi_text2"
                             android:textColor="@color/white_50"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 

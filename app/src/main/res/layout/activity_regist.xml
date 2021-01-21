@@ -97,11 +97,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/privacy_protocol_dialog_content"
                 android:textColor="@color/white_50"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_user"
