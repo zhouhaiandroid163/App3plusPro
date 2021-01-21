@@ -149,8 +149,13 @@ public class MeFragment extends BaseFragment {
             tv_profile_sex.setText(R.string.girl);
         }
         if (!TextUtils.isEmpty(birthdayValue)) {
-            String[] time = birthdayValue.split("-");
-            tv_profile_birthday.setText(time[1] + "/" + time[2] + "/" + time[0]);
+            if (AppUtils.isZh(homeActivity)) {
+                tv_profile_birthday.setText(birthdayValue);
+            } else {
+                String[] time = birthdayValue.split("-");
+                tv_profile_birthday.setText(time[1] + "/" + time[2] + "/" + time[0]);
+            }
+
         }
         if (!JavaUtil.checkIsNull(heightValue)) {
             if (mUserSetTools.get_user_unit_type()) {

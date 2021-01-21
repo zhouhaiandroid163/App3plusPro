@@ -544,9 +544,13 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
                     day = arg3;
                     birthdayValue = year + "-" + month + "-" + day;
 
-                    String[] time = birthdayValue.split("-");
-                    tv_profile_init_birthday.setText(time[1] + "/" + time[2] + "/" + time[0]);
-//                    dialog.cancel();
+                    if (AppUtils.isZh(mContext)) {
+                        tv_profile_init_birthday.setText(birthdayValue);
+                    } else {
+                        String[] time = birthdayValue.split("-");
+                        tv_profile_init_birthday.setText(time[1] + "/" + time[2] + "/" + time[0]);
+                    }
+
                 } else {
                     AppUtils.showToast(mContext, R.string.birthday_error);
                 }
@@ -678,6 +682,7 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
      */
     int pvFt = 0;
     int pvIn = 0;
+
     private void showHeightDialog() {
         // TODO Auto-generated method stub
 
@@ -820,7 +825,7 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
 
 //        waitDialog.show(getString(R.string.loading0));
 
-        RequestInfo mRequestInfo = RequestJson.modifyUserInfo(mContext,mUserData,false);
+        RequestInfo mRequestInfo = RequestJson.modifyUserInfo(mContext, mUserData, false);
 
         MyLog.i(TAG, "请求接口-修改个人信息 mRequestInfo = " + mRequestInfo.toString());
 

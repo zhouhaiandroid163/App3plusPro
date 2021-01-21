@@ -306,8 +306,13 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
         }
 
         if (!TextUtils.isEmpty(birthdayValue)) {
-            String[] time = birthdayValue.split("-");
-            tv_profile_birthday.setText(time[1] + "/" + time[2] + "/" + time[0]);
+            if (AppUtils.isZh(mContext)) {
+                tv_profile_birthday.setText(birthdayValue);
+            } else {
+                String[] time = birthdayValue.split("-");
+                tv_profile_birthday.setText(time[1] + "/" + time[2] + "/" + time[0]);
+            }
+
         }
     }
 
@@ -941,8 +946,12 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 
 
         if (MyTime.getIsOldTime(upBirthdayValue)) {
-            String[] time = upBirthdayValue.split("-");
-            tv_profile_birthday.setText(time[1] + "/" + time[2] + "/" + time[0]);
+            if (AppUtils.isZh(mContext)) {
+                tv_profile_birthday.setText(upBirthdayValue);
+            } else {
+                String[] time = upBirthdayValue.split("-");
+                tv_profile_birthday.setText(time[1] + "/" + time[2] + "/" + time[0]);
+            }
             mUserSetTools.set_user_birthday(upBirthdayValue);
             UserData mUserData = new UserData();
             mUserData.setBirthday(mUserSetTools.get_user_birthday());
