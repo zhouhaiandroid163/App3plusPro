@@ -3,6 +3,7 @@ package com.zjw.apps3pluspro.base;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.zjw.apps3pluspro.bleservice.BleService;
 import com.zjw.apps3pluspro.module.device.entity.ThemeModle;
 import com.zjw.apps3pluspro.sql.entity.HealthInfo;
 import com.zjw.apps3pluspro.utils.AppUtils;
+import com.zjw.apps3pluspro.utils.location.ForegroundLocationService;
 import com.zjw.ffitsdk.BleProtocol;
 
 import butterknife.ButterKnife;
@@ -389,5 +391,20 @@ public abstract class BaseActivity extends FragmentActivity {
         Bundle bundle = new Bundle();
         bundle.putString("cmd", "initDeviceCmd");
         startService(bundle);
+    }
+
+    public void startLocationService() {
+        Intent intent = new Intent(this, ForegroundLocationService.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        } else {
+            startService(intent);
+        }
+    }
+
+    public void stopLocationService() {
+        Intent intent = new Intent(this, ForegroundLocationService.class);
+        stopService(intent);
     }
 }

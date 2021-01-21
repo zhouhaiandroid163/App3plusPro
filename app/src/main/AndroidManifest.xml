@@ -738,6 +738,17 @@
             android:enabled="true"
             android:exported="false" />
 
+        <service
+            android:name="com.zjw.apps3pluspro.utils.location.ForegroundLocationService"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="location"
+            android:permission="android.permission.ACCESS_BACKGROUND_LOCATION">
+            <intent-filter android:priority="1000">
+                <action android:name="com.zjw.ffit.utils.location.ForegroundLocationService" />
+            </intent-filter>
+        </service>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.zjw.apps3pluspro.fileprovider"

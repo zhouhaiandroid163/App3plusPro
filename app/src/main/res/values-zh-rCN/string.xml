@@ -967,6 +967,9 @@
     <string name="device_prepare4">设备电量低...</string>
     <string name="update_AGPS_date">更新AGPS数据</string>
     <string name="update_AGPS_date_no">不需要更新AGPS数据</string>
+    <string name="goal_cal">卡路里目标</string>
+    <string name="goal_activity_time">运动时间目标</string>
+    <string name="goal_distance">距离目标</string>
     <!-- 中文简体 -->
 
     <!-- ========================其他======================== -->

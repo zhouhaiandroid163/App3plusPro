@@ -54,7 +54,7 @@ public class GpsSportManager {
         return gpsSportManager;
     }
 
-    private GpsSportManager() {
+    public GpsSportManager() {
     }
 
     public void stopGps(Context context) {
