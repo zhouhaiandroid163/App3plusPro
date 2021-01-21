@@ -15,6 +15,7 @@ import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.base.BaseActivity;
 import com.zjw.apps3pluspro.bleservice.BroadcastTools;
+import com.zjw.apps3pluspro.bleservice.BtSerializeation;
 import com.zjw.apps3pluspro.network.NewVolleyRequest;
 import com.zjw.apps3pluspro.network.RequestJson;
 import com.zjw.apps3pluspro.network.ResultJson;
@@ -75,12 +76,55 @@ public class TargetSettingActivity extends BaseActivity {
         waitDialog = new WaitDialog(context);
     }
 
+    @BindView(R.id.layoutCal)
+    LinearLayout layoutCal;
+    @BindView(R.id.layoutDistance)
+    LinearLayout layoutDistance;
+    @BindView(R.id.layoutActivityTime)
+    LinearLayout layoutActivityTime;
     @Override
     protected void onResume() {
         super.onResume();
 
         initStepTarget();
         initSleepTarget();
+
+        initCalTarget();
+        initActivityTimeTarget();
+        initDistanceTarget();
+
+        if (mBleDeviceTools.getIsSupportCalorieTarget()) {
+            layoutCal.setVisibility(View.VISIBLE);
+        } else {
+            layoutCal.setVisibility(View.GONE);
+        }
+        if (mBleDeviceTools.getIsSupportDistanceTarget()) {
+            layoutDistance.setVisibility(View.VISIBLE);
+        } else {
+            layoutDistance.setVisibility(View.GONE);
+        }
+        if (mBleDeviceTools.getIsSupportActivityTimeTarget()) {
+            layoutActivityTime.setVisibility(View.VISIBLE);
+        } else {
+            layoutActivityTime.setVisibility(View.GONE);
+        }
+    }
+
+    private void initDistanceTarget() {
+        tvDistance.setText(mUserSetTools.get_user_distance_target());
+        if (mUserSetTools.get_user_unit_type()) {
+            tvDistanceUnit.setText(getResources().getString(R.string.sport_distance_unit));
+        } else {
+            tvDistanceUnit.setText(getResources().getString(R.string.unit_mi));
+        }
+    }
+
+    private void initActivityTimeTarget() {
+        tvActivityTime.setText(mUserSetTools.get_user_activity_target());
+    }
+
+    private void initCalTarget() {
+        tvCal.setText(mUserSetTools.get_user_cal_target());
     }
 
     private void initStepTarget() {
@@ -88,18 +132,67 @@ public class TargetSettingActivity extends BaseActivity {
         tvStep.setText(sport_target);
     }
 
-    @OnClick({R.id.layoutStep, R.id.layoutSleep})
+    @BindView(R.id.tvCal)
+    TextView tvCal;
+    @BindView(R.id.tvActivityTime)
+    TextView tvActivityTime;
+    @BindView(R.id.tvDistance)
+    TextView tvDistance;
+    @BindView(R.id.tvDistanceUnit)
+    TextView tvDistanceUnit;
+
+    @OnClick({R.id.layoutStep, R.id.layoutSleep, R.id.layoutCal, R.id.layoutActivityTime, R.id.layoutDistance})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layoutStep:
-//                startActivity(new Intent(context, TargetStepActivity.class));
                 showStepDialog();
                 break;
             case R.id.layoutSleep:
-//                startActivity(new Intent(context, TargetSleepActivity.class));
                 showSleepDialog();
                 break;
+            case R.id.layoutCal:
+                initCalDialog();
+                break;
+            case R.id.layoutDistance:
+                initDistanceDialog();
+                break;
+            case R.id.layoutActivityTime:
+                initActivityTimeDialog();
+                break;
         }
+    }
+
+    private void initActivityTimeDialog() {
+        List<String> dataSex = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            dataSex.add(String.valueOf(i * 15 + 15));
+        }
+        int goal = Integer.parseInt(mUserSetTools.get_user_activity_target());
+        int selected = goal / 15 - 1;
+
+        showGoalDialog(2, dataSex, selected);
+    }
+
+    private void initDistanceDialog() {
+        List<String> dataSex = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            dataSex.add(String.valueOf(i + 1));
+        }
+        int goal = Integer.parseInt(mUserSetTools.get_user_distance_target());
+        int selected = goal - 1;
+
+        showGoalDialog(1, dataSex, selected);
+    }
+
+    private void initCalDialog() {
+        List<String> dataSex = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            dataSex.add(String.valueOf(i * 100 + 100));
+        }
+        int goal = Integer.parseInt(mUserSetTools.get_user_cal_target());
+        int selected = goal / 100 - 1;
+
+        showGoalDialog(0, dataSex, selected);
     }
 
     String textTargetStep = "3000";
@@ -127,6 +220,7 @@ public class TargetSettingActivity extends BaseActivity {
             i = i + 1000;
         }
         String target_steps = mUserSetTools.get_user_exercise_target();
+        textTargetStep = target_steps;
         pvList.setData(dataSex, (Integer.parseInt(target_steps) - 3000) / 1000);
 
         pvList.setOnSelectListener(text -> textTargetStep = text);
@@ -211,12 +305,15 @@ public class TargetSettingActivity extends BaseActivity {
 
         waitDialog.show(getString(R.string.loading0));
         new Handler().postDelayed(() -> uploadCalibrationInfo(mCalibrationData), Constants.serviceHandTime);
+
+        writeRXCharacteristic(BtSerializeation.sendGoalData(3, Integer.parseInt(mUserSetTools.get_user_sleep_target())));
     }
 
     private void initSleepTarget() {
         String sleep_target = !JavaUtil.checkIsNull(mUserSetTools.get_user_sleep_target()) ? mUserSetTools.get_user_sleep_target() : String.valueOf(DefaultVale.USER_SLEEP_TARGET);
         tvSleep.setText(MyTime.getHours(sleep_target));
     }
+
     private void uploadCalibrationInfo(CalibrationData mCalibrationData) {
         RequestInfo mRequestInfo = RequestJson.modifyCalibrationInfo(mCalibrationData);
         NewVolleyRequest.RequestPost(mRequestInfo, TAG,
@@ -242,6 +339,7 @@ public class TargetSettingActivity extends BaseActivity {
                             AppUtils.showToast(mContext, R.string.server_try_again_code0);
                         }
                     }
+
                     @Override
                     public void onMyError(VolleyError arg0) {
                         // TODO Auto-generated method stub
@@ -250,6 +348,71 @@ public class TargetSettingActivity extends BaseActivity {
                         AppUtils.showToast(mContext, R.string.net_worse_try_again);
                     }
                 });
+    }
+
+    String textGoal = "0";
+
+    private void showGoalDialog(int type, List<String> dataSex, int selected) {
+        switch (type) {
+            case 0:
+                textGoal = mUserSetTools.get_user_cal_target();
+                break;
+            case 1:
+                textGoal = mUserSetTools.get_user_distance_target();
+                break;
+            case 2:
+                textGoal = mUserSetTools.get_user_activity_target();
+                break;
+        }
+        View view = getLayoutInflater().inflate(R.layout.target_step_dialog, null);
+        Dialog dialog = new Dialog(this, R.style.shareStyle);
+        dialog.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        Window window = dialog.getWindow();
+        // 设置显示动画
+        window.setWindowAnimations(R.style.main_menu_animstyle);
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.x = 0;
+        wl.y = getWindowManager().getDefaultDisplay().getHeight();
+        // 以下这两句是为了保证按钮可以水平满屏
+        wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+
+        PickerView pvList = view.findViewById(R.id.pvList);
+
+        pvList.setData(dataSex, selected);
+
+        pvList.setOnSelectListener(text -> textGoal = text);
+
+        view.findViewById(R.id.tvCancel).setOnClickListener(v -> dialog.cancel());
+        view.findViewById(R.id.tvOk).setOnClickListener(v -> {
+            switch (type) {
+                case 0:
+                    mUserSetTools.set_user_cal_target(textGoal);
+                    initCalTarget();
+                    writeRXCharacteristic(BtSerializeation.sendGoalData(0, Integer.parseInt(mUserSetTools.get_user_cal_target())));
+                    break;
+                case 1:
+                    mUserSetTools.set_user_distance_target(textGoal);
+                    initDistanceTarget();
+                    int distance = 0;
+                    if (mUserSetTools.get_user_unit_type()) {
+                        distance = Integer.parseInt(mUserSetTools.get_user_distance_target()) * 1000;
+                    } else {
+                        distance = Integer.parseInt(mUserSetTools.get_user_distance_target()) * 1610;
+                    }
+                    writeRXCharacteristic(BtSerializeation.sendGoalData(1, distance));
+                    break;
+                case 2:
+                    mUserSetTools.set_user_activity_target(textGoal);
+                    initActivityTimeTarget();
+                    writeRXCharacteristic(BtSerializeation.sendGoalData(2, Integer.parseInt(mUserSetTools.get_user_activity_target())));
+                    break;
+            }
+            dialog.cancel();
+        });
+        dialog.onWindowAttributesChanged(wl);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
     }
 
 }

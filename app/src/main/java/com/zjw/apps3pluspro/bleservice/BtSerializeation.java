@@ -95,6 +95,7 @@ public class BtSerializeation {
 
     public static final byte KEY_AGPS = (byte) 0x6b;
     public static final byte KEY_DEVICE_TO_APP_SPORT = (byte) 0x6d;
+    public static final byte KEY_SET_GOAL = (byte) 0x6f;
 
     //大数据传输通道。
     private static final byte KEY_SEND_THEME_HEAD = (byte) 0x01;
@@ -1899,6 +1900,7 @@ public class BtSerializeation {
     public static byte[] getDeviceWatchFacePrepareStatus(String themeId, int themeSize) {
         return getProtoByte(WatchFaceTools.getDeviceWatchFacePrepareStatus(themeId, themeSize));
     }
+
     public static byte[] getDeviceOtaPrepareStatus(boolean isForce, String version, String md5) {
         return getProtoByte(SystemTools.getDeviceOtaPrepareStatus(isForce, version, md5));
     }
@@ -1940,6 +1942,16 @@ public class BtSerializeation {
         data[4] = (byte) ((distance_value & 0x0000ff00) >> 8);
         data[5] = (byte) (distance_value & 0xff);
         return getBleData(data, CMD_01, KEY_DEVICE_TO_APP_SPORT);
+    }
+
+    public static byte[] sendGoalData(int type, int goal) {
+        byte[] data = new byte[5];
+        data[0] = (byte) type;
+        data[1] = (byte) ((goal >> 24) & 0xFF);
+        data[2] = (byte) ((goal >> 16) & 0xFF);
+        data[3] = (byte) ((goal >> 8) & 0xFF);
+        data[4] = (byte) (goal & 0xFF);
+        return getBleData(data, CMD_01, KEY_SET_GOAL);
     }
 
 }

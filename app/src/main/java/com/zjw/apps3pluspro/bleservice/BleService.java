@@ -2797,6 +2797,22 @@ public class BleService extends Service {
         MyLog.i(TAG, "初始化 写入目标步数");
         writeRXCharacteristic(init_steps_target);
 
+        MyLog.i(TAG, "初始化 写入基本目标");
+        try {
+            writeRXCharacteristic(BtSerializeation.sendGoalData(3, Integer.parseInt(mUserSetTools.get_user_sleep_target())));
+            writeRXCharacteristic(BtSerializeation.sendGoalData(2, Integer.parseInt(mUserSetTools.get_user_activity_target())));
+            int distance = 0;
+            if(mUserSetTools.get_user_unit_type()){
+                distance = Integer.parseInt(mUserSetTools.get_user_distance_target()) * 1000;
+            } else {
+                distance = Integer.parseInt(mUserSetTools.get_user_distance_target()) * 1610;
+            }
+            writeRXCharacteristic(BtSerializeation.sendGoalData(1, distance));
+            writeRXCharacteristic(BtSerializeation.sendGoalData(0, Integer.parseInt(mUserSetTools.get_user_cal_target())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         MyLog.i(TAG, "初始化 写入久坐提醒");
         writeRXCharacteristic(init_sit);
 

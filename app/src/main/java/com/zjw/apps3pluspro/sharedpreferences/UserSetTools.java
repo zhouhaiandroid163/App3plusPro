@@ -214,8 +214,44 @@ public class UserSetTools {
         return settin.getString("user_sleep_target", String.valueOf(DefaultVale.USER_SLEEP_TARGET));
     }
 
+    //活动时间
+    public void set_user_activity_target(String user_sleep_target) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putString("set_user_activity_target", user_sleep_target);
+        editor.commit();
+    }
 
+    public String get_user_activity_target() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getString("set_user_activity_target", String.valueOf(DefaultVale.USER_ACTIVITY_TARGET));
+    }
 
+    //距离
+    public void set_user_distance_target(String user_sleep_target) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putString("set_user_distance_target", user_sleep_target);
+        editor.commit();
+    }
+
+    public String get_user_distance_target() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getString("set_user_distance_target", String.valueOf(DefaultVale.USER_DISTANCE_TARGET));
+    }
+
+    //卡路里
+    public void set_user_cal_target(String user_sleep_target) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putString("set_user_cal_target", user_sleep_target);
+        editor.commit();
+    }
+
+    public String get_user_cal_target() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getString("set_user_cal_target", String.valueOf(DefaultVale.USER_CAL_TARGET));
+    }
 
     //最近一次步数步数，用来计算健康值
     public void set_user_stpe(int user_stpe) {
@@ -607,7 +643,6 @@ public class UserSetTools {
         SharedPreferences settin = getSharedPreferencesCommon();
         return settin.getString("service_upload_un_device_info", "");
     }
-
 
 
     //============版本升级，时间间隔============

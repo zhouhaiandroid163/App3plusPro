@@ -50,6 +50,9 @@ public class DefaultVale {
 
     public static final int USER_SPORT_TARGET = 8000;
     public static final int USER_SLEEP_TARGET = 480;
+    public static final int USER_ACTIVITY_TARGET = 30;
+    public static final int USER_DISTANCE_TARGET = 5;
+    public static final int USER_CAL_TARGET = 500;
 
     public static final String USER_WEAR_WAY = "L";
 
