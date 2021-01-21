@@ -1016,6 +1016,7 @@ public class HomeActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void locationChangeEventBus(LocationChangeEventBus event) {
+        GpsSportManager.GpsInfo gpsInfo = event.gpsInfo;
         if(mBleDeviceTools.getIsSupportAppAuxiliarySport()){
             if (appGpsInfo == null || curSportState == BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_YES) {
                 appGpsInfo = gpsInfo;
@@ -1025,16 +1026,21 @@ public class HomeActivity extends BaseActivity {
                 switch (curSportState) {
                     case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START:
                     case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESUME:
-                        double distance = GpsSportManager.getInstance().getDistance(appGpsInfo.latitude, appGpsInfo.longitude, gpsInfo.latitude, gpsInfo.longitude);
-                        if (distance != 0) {
-                            Log.i(TAG, "initGpsSport2 distance" + distance);
-                            writeRXCharacteristic(BtSerializeation.sendSportData(distance));
+                        if(appGpsInfo.latitude == gpsInfo.latitude && appGpsInfo.longitude == gpsInfo.longitude){
+                            Log.i(TAG, "locationChangeEventBus location is not change...");
+                        } else {
+                            double distance = GpsSportManager.getInstance().getDistance(appGpsInfo.latitude, appGpsInfo.longitude, gpsInfo.latitude, gpsInfo.longitude);
+                            if (distance != 0) {
+                                appGpsInfo = gpsInfo;
+                                Log.w(TAG, "locationChangeEventBus distance = " + distance);
+                                writeRXCharacteristic(BtSerializeation.sendSportData(distance));
+                            }
                         }
+
                         break;
                 }
             }
         } else {
-            GpsSportManager.GpsInfo gpsInfo = event.gpsInfo;
             switch (curCmd) {
                 case APP_GPS_READY:
                     sendAppStart(BtSerializeation.appStartCmd(1));
