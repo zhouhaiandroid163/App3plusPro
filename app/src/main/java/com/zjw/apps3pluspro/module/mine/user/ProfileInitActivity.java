@@ -33,6 +33,7 @@ import com.zjw.apps3pluspro.network.VolleyInterface;
 import com.zjw.apps3pluspro.network.entity.RequestInfo;
 import com.zjw.apps3pluspro.network.entity.UserData;
 import com.zjw.apps3pluspro.network.javabean.UserBean;
+import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
 import com.zjw.apps3pluspro.sharedpreferences.UserSetTools;
 import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.view.dialog.WaitDialog;
@@ -69,7 +70,7 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
 
     private TextView tv_profile_init_birthday, tv_profile_init_height, tv_profile_init_weight, tv_profile_init_sex, tv_profile_init_unit;
     private EditText edit_profile_int_name;
-
+    private BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
 
     // 退出当前账号。
     private String UserName;
@@ -248,8 +249,10 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
 
         if (unitTag.equals("0")) {
             mUserSetTools.set_user_unit_type(true); //公英制
+            mBleDeviceTools.set_device_unit(1);
         } else {
             mUserSetTools.set_user_unit_type(false); //公英制
+            mBleDeviceTools.set_device_unit(0);
         }
         mUserSetTools.set_user_nickname(UserName);//昵称
         mUserSetTools.set_user_height(Integer.valueOf(heightValue));//身高
@@ -464,6 +467,7 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
 
         if (unitTag.equals("0")) {
             mUserSetTools.set_user_unit_type(true);
+            mBleDeviceTools.set_device_unit(1);
             tv_profile_init_unit.setText(R.string.Metric);
 
             if (!TextUtils.isEmpty(heightValue)) {
@@ -475,8 +479,8 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
             }
 
         } else {
-
             mUserSetTools.set_user_unit_type(false);
+            mBleDeviceTools.set_device_unit(0);
             tv_profile_init_unit.setText(R.string.Inch);
 
             if (!TextUtils.isEmpty(heightValue)) {

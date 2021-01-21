@@ -66,6 +66,7 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
         itemHolder.layoutData5.setVisibility(View.GONE);
         itemHolder.layoutDataUI0.setVisibility(View.GONE);
         itemHolder.layoutDataUI1.setVisibility(View.GONE);
+        itemHolder.layoutDataUi2.setVisibility(View.GONE);
 
         if (mSportModleInfo.getDataSourceType() == 0) {
             itemHolder.tvSportName.setText(SportModleUtils.getSportTypeStr(context, mSportModleInfo.getSport_type()));
@@ -144,6 +145,14 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
                     itemHolder.layoutDataUI1.setVisibility(View.VISIBLE);
                     itemHolder.tvCalUI1.setText(kcal + "");
                     itemHolder.tvDurationUI1.setText(NewTimeUtils.getTimeString(Long.parseLong(duration)));
+                    break;
+
+                case "2":
+                    itemHolder.layoutDataUi2.setVisibility(View.VISIBLE);
+                    itemHolder.tvCal2.setText(kcal + "");
+                    itemHolder.tvDuration2.setText(NewTimeUtils.getTimeString(Long.parseLong(duration)));
+                    itemHolder.tvSteps2.setText(step);
+                    initDistance(mSportModleInfo.getDisance(), itemHolder.tvDistance2, itemHolder.tvDistanceUnit2);
                     break;
                 case "4":
                 case "5":
@@ -232,12 +241,44 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
         });
     }
 
+    private void initDistance(String my_distance, TextView textView, TextView textViewUnit) {
+        if (my_distance != null && !my_distance.equals("")) {
+            my_distance = my_distance.replace(",", ".");
+            DecimalFormat decimalFormat = new DecimalFormat(",##0.00");
+            decimalFormat.setRoundingMode(RoundingMode.DOWN);
+            float distanceK = 0f;
+            if (mBleDeviceTools.get_device_unit() == 1) {
+                distanceK = Float.parseFloat(my_distance) / 1000;
+                textViewUnit.setText(context.getResources().getString(R.string.sport_distance_unit));
+            } else {
+                distanceK = Float.parseFloat(my_distance) / 1000 / 1.61f;
+                textViewUnit.setText(context.getResources().getString(R.string.unit_mi));
+            }
+            textView.setText(decimalFormat.format(distanceK));
+        }
+    }
+
     @Override
     public int getItemCount() {
         return mList.size();
     }
 
     public static class ItemHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.layoutDataUi2)
+        ConstraintLayout layoutDataUi2;
+        @BindView(R.id.tvDuration2)
+        TextView tvDuration2;
+        @BindView(R.id.tvSteps2)
+        TextView tvSteps2;
+        @BindView(R.id.tvCal2)
+        TextView tvCal2;
+        @BindView(R.id.tvDistance2)
+        TextView tvDistance2;
+        @BindView(R.id.tvDistanceUnit2)
+        TextView tvDistanceUnit2;
+
+
         @BindView(R.id.tvSportName)
         TextView tvSportName;
         @BindView(R.id.tvSportTime)
