@@ -883,7 +883,7 @@ class ThemeUploadActivity : BaseActivity() {
                             TimerTwoStop()
                             TimerFourStop()
                             TimerThreeStop()
-                            DialMarketManager.getInstance().uploadDialDownloadRecording(themeDetails.dialId, DialMarketManager.uploadDialDownloadRecordingType4_error, this)
+                            DialMarketManager.getInstance().uploadDialDownloadRecording(themeDetails.dialId, DialMarketManager.uploadDialDownloadRecordingType4_error, context)
                             handFailState(false)
                         }
                         FourNowCount++
@@ -1159,7 +1159,7 @@ class ThemeUploadActivity : BaseActivity() {
                     val interval_code = budle4!!.getInt(BroadcastTools.INTENT_PUT_SUSPENSION_INTERVAL_INTERVAL_CODE)
                     MyLog.i(TAG, "主题数据 接收广播 连接间隔 interval_code = $interval_code")
                     if (interval_code == 1) {
-                        DialMarketManager.getInstance().uploadDialDownloadRecording(themeDetails.dialId, DialMarketManager.uploadDialDownloadRecordingType4_error, this)
+                        DialMarketManager.getInstance().uploadDialDownloadRecording(themeDetails.dialId, DialMarketManager.uploadDialDownloadRecordingType4_error, context)
                         handFailState(false)
                     } else if (interval_code == 2) {
                         FourNowCount = 0

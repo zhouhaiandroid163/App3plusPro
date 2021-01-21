@@ -232,7 +232,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
         if (sportModleInfo?.reportFastSpeed!! == 0f) {
             layoutSpeed.visibility = View.GONE
         } else {
-            tvMaxSpeed.text = sportModleInfo?.reportFastSpeed!!.toString()
+            tvMaxSpeed.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!!)
             if (unitType != 1) {
                 tvMaxSpeed.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!! / 1.61f)
                 tvMaxSpeedUnit.text = resources.getText(R.string.speed_unit_mi)
