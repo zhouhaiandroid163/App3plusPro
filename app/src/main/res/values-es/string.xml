@@ -169,8 +169,8 @@
     <string name="sport_modle_type9">Deportes de interior</string>
     <string name="sport_modle_type100">GPS</string>
     <!-- 睡眠界面 -->
-    <string name="hour">H</string>
-    <string name="minute">M</string>
+    <string name="hour">hr</string>
+    <string name="minute">min</string>
     <string name="title_sleep">Dormir</string>
     <string name="sleep_state">Condición del sueño</string>
     <string name="sleep_length_time">Tiempo de sueño</string>
@@ -277,7 +277,7 @@
     <string name="calibration">Durante la calibración:</string>
     <string name="measurement_time">Tiempo de medición</string>
     <!-- 关爱界面 -->
-    <string name="title_care">Cuidado</string>
+    <string name="title_care">Amigos</string>
     <string name="search_friend">Buscar</string>
     <string name="search_friend_tip">Vaya a la página "Mi", donde puede ver la identificación de la otra parte.</string>
     <string name="stay_up">Quédate despierto hasta tarde</string>

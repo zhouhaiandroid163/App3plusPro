@@ -277,7 +277,7 @@
     <string name="calibration">校准中:</string>
     <string name="measurement_time">测量时间</string>
     <!-- 关爱界面 -->
-    <string name="title_care">关爱</string>
+    <string name="title_care">好友</string>
     <string name="search_friend">搜索</string>
     <string name="search_friend_tip">进入“我的”页面，上面可以查看对方的ID。</string>
     <string name="stay_up">熬夜</string>

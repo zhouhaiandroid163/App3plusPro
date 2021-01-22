@@ -81,14 +81,14 @@ class WeatherMainActivity : BaseActivity() {
             layoutCity.visibility = View.GONE
         }
         if (mBleDeviceTools.weatherCity.isNotEmpty()) {
-            tvLatLon.visibility = View.VISIBLE
+//            tvLatLon.visibility = View.VISIBLE
             tvLatLon.text = mBleDeviceTools.weatherGps
 
             tvCityName.text = mBleDeviceTools.weatherCity
             tvCityName.visibility = View.VISIBLE
 
         } else {
-            tvLatLon.visibility = View.GONE
+//            tvLatLon.visibility = View.GONE
             tvCityName.text = resources.getText(R.string.no_data_default)
         }
     }
@@ -116,7 +116,7 @@ class WeatherMainActivity : BaseActivity() {
                 return
             }
             layoutCity.visibility = View.VISIBLE
-            tvLatLon.visibility = View.VISIBLE
+//            tvLatLon.visibility = View.VISIBLE
             showDialog()
             mBleDeviceTools.weatherSwitch = true
             mBleDeviceTools.weatherCity = ""
@@ -148,7 +148,7 @@ class WeatherMainActivity : BaseActivity() {
         } else {
             mBleDeviceTools.weatherSwitch = false
             layoutCity.visibility = View.GONE
-            tvLatLon.visibility = View.GONE
+//            tvLatLon.visibility = View.GONE
         }
     }
 

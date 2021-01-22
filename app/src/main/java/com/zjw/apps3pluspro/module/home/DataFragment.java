@@ -838,8 +838,8 @@ public class DataFragment extends BaseFragment {
 
         if (!JavaUtil.checkIsNull(avg)) {
             tvAvg.setText(avg);
-            tvMax.setText(max);
-            tvMin.setText(min);
+            tvMax.setText(" " + max + " ");
+            tvMin.setText(" " + min + " ");
             tvHeartTitle.setText(getResources().getString(R.string.heart) + " " + last_heart + " " + getResources().getString(R.string.bpm));
         } else {
             tvAvg.setText(context.getString(R.string.sleep_gang));

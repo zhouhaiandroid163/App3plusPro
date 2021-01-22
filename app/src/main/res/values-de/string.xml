@@ -169,8 +169,8 @@
     <string name="sport_modle_type9">Indoor-Sport</string>
     <string name="sport_modle_type100">GPS</string>
     <!-- 睡眠界面 -->
-    <string name="hour">H</string>
-    <string name="minute">M</string>
+    <string name="hour">hr</string>
+    <string name="minute">min</string>
     <string name="title_sleep">Schlafen</string>
     <string name="sleep_state">Schlafzustand</string>
     <string name="sleep_length_time">Schlafenszeit</string>

@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sleep_gang"
-                android:textColor="#ff4c4d58"
+                android:textColor="@color/white_50"
                 android:textSize="14sp" />
 
             <com.zjw.apps3pluspro.view.MultiProgressView
