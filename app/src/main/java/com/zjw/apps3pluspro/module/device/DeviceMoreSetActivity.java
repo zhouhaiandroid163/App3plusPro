@@ -284,6 +284,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 mBleDeviceTools.set_device_unit(1);
                 if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
                     writeRXCharacteristic(BtSerializeation.setCompany(1));
+                    updateDistance();
                 }
                 break;
             case R.id.tvUnitYingzhi:
@@ -293,6 +294,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 mBleDeviceTools.set_device_unit(0);
                 if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
                     writeRXCharacteristic(BtSerializeation.setCompany(0));
+                    updateDistance();
                 }
                 break;
             //摄氏度
@@ -346,6 +348,16 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 }
                 break;
         }
+    }
+
+    private void updateDistance() {
+        int distance = 0;
+        if (mUserSetTools.get_user_unit_type()) {
+            distance = Integer.parseInt(mUserSetTools.get_user_distance_target()) * 1000;
+        } else {
+            distance = Integer.parseInt(mUserSetTools.get_user_distance_target()) * 1610;
+        }
+        writeRXCharacteristic(BtSerializeation.sendGoalData(1, distance));
     }
 
     //监听升级是否成功

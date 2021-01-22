@@ -85,26 +85,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom|center"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
             android:orientation="vertical"
-            android:paddingTop="20dip"
-            android:paddingBottom="48dp">
-
+            android:padding="12dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/privacy_protocol_dialog_content"
                 android:textColor="@color/white_50"
-                android:textSize="12sp"
-                android:visibility="gone" />
+                android:textSize="12sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
-
+                android:layout_marginTop="4dp">
                 <TextView
                     android:id="@+id/tv_user"
                     android:layout_width="0px"
@@ -134,6 +131,17 @@
                     android:textSize="12sp" />
 
             </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom|center"
+            android:orientation="vertical"
+            android:paddingTop="20dip"
+            android:paddingBottom="48dp">
+
 
             <Button
                 android:id="@+id/btn_regist_ok"

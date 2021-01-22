@@ -296,7 +296,7 @@
     <string name="have_new_friend_tip">Nuevo amigo</string>
     <string name="detailed_info">Detalles</string>
     <string name="no_add_oneself">No puedes agregarte como amigo</string>
-    <string name="delete_friend_content">¿Seguro que quieres eliminar a este amigo?</string>
+    <string name="delete_friend_content">Seguro que quieres eliminar a este amigo?</string>
     <string name="care_info">Amigo relacionado</string>
     <string name="care_remarks">Modificar notas</string>
     <string name="care_ignore">Ignorar</string>
@@ -970,5 +970,6 @@
     <string name="goal_cal">objetivo de calorías</string>
     <string name="goal_activity_time">objetivo de tiempo de ejercicio</string>
     <string name="goal_distance">objetivo de distancia</string>
+    <string name="no_account">No tienes una cuenta?</string>
     <!-- 西班牙 -->
 </resources>

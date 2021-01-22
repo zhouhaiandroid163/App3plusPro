@@ -30,7 +30,7 @@
             android:id="@+id/edit_login_username"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="36dp"
             android:background="@color/transparent"
             android:hint="@string/input_your_mobile_phone"
             android:maxLength="50"
@@ -78,34 +78,43 @@
         <Button
             android:id="@+id/btn_login_app"
             style="@style/public_button1_style"
-            android:layout_marginTop="50dip"
+            android:layout_marginTop="64dip"
             android:background="@mipmap/login_bt_bg"
             android:gravity="center"
             android:text="@string/btn_login"
             android:textColor="#ff565e67" />
 
+
+        <TextView
+            android:id="@+id/rl_forget_paswd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/title_forget_pas"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dip">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="36dp"
+            android:gravity="bottom|center_horizontal">
 
             <TextView
-                android:id="@+id/rl_forget_paswd"
-                android:layout_width="0px"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5sp"
-                android:text="@string/title_forget_pas"
-                android:textColor="@color/white"
+                android:padding="5dip"
+                android:text="@string/no_account"
+                android:textColor="#ccffffff"
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/tv_login_regist"
-                android:layout_width="0px"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="right"
                 android:padding="5dip"
                 android:text="@string/create_an_account"
                 android:textColor="@color/white"

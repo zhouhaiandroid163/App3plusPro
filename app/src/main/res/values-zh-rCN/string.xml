@@ -970,6 +970,7 @@
     <string name="goal_cal">卡路里目标</string>
     <string name="goal_activity_time">运动时间目标</string>
     <string name="goal_distance">距离目标</string>
+    <string name="no_account">还没有账号?</string>
     <!-- 中文简体 -->
 
     <!-- ========================其他======================== -->
