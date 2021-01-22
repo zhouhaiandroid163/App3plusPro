@@ -24,10 +24,7 @@ import com.zjw.apps3pluspro.bleservice.BleTools
 import com.zjw.apps3pluspro.module.home.entity.DeviceSportEntity
 import com.zjw.apps3pluspro.module.home.sport.amap.PathSmoothTool
 import com.zjw.apps3pluspro.sql.entity.SportModleInfo
-import com.zjw.apps3pluspro.utils.GPSUtil
-import com.zjw.apps3pluspro.utils.ImageUtil
-import com.zjw.apps3pluspro.utils.MyUtils
-import com.zjw.apps3pluspro.utils.NewTimeUtils
+import com.zjw.apps3pluspro.utils.*
 import com.zjw.apps3pluspro.utils.log.MyLog
 import kotlinx.android.synthetic.main.device_sport_cal.*
 import kotlinx.android.synthetic.main.device_sport_details_activity.*
@@ -116,7 +113,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
         }
         val minute = (avgPace / 60).toInt()
         val second = (avgPace % 60).toInt()
-        if (minute * 60 + second > 50 * 60 + 58) {
+        if (SysUtils.isShow00Pace(minute, second)) {
             avgPaceString = String.format("%1$02d'%2$02d\"", 0, 0)
         } else {
             if (mBleDeviceTools._device_unit == 1) {
@@ -190,7 +187,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
 
         tvAvgPace.text = avgPaceString
         val maxPace: Long = sportModleInfo?.reportFastPace!!
-        if (maxPace > 50 * 60 + 58) {
+        if (SysUtils.isShow00Pace(maxPace.toInt())) {
             tvMaxPace.text = String.format("%1$02d'%2$02d\"", 0, 0)
         } else {
             if (unitType == 1) {
@@ -201,7 +198,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
         }
 
         val minPace: Long = sportModleInfo?.reportSlowestPace!!
-        if (minPace > 50 * 60 + 58) {
+        if (SysUtils.isShow00Pace(minPace.toInt())) {
             tvMinPace.text = String.format("%1$02d'%2$02d\"", 0, 0)
         } else {
             if (unitType == 1) {
@@ -294,7 +291,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                         yPaceData.add(0.0)
                     } else {
                         var yMinute = oneGroup * 1000 / (60.0 * distance)
-                        if (yMinute * 60 > 50 * 60 + 58) {
+                        if (SysUtils.isShow00Pace((yMinute * 60).toInt())) {
                             yPaceData.add(0.0)
                         } else {
                             if (unitType == 1) {
@@ -358,7 +355,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                         yPaceData.add(0.0)
                     } else {
                         val yMinute = oneGroup * 1000 / (60.0 * distance)
-                        if (yMinute * 60 > 50 * 60 + 58) {
+                        if (SysUtils.isShow00Pace((yMinute * 60).toInt())) {
                             yPaceData.add(0.0)
                         } else {
                             if (unitType == 1) {
@@ -399,7 +396,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                     yPaceData.add(0.0)
                 } else {
                     val yMinute = oneGroup * 1000 / (60.0 * distance)
-                    if (yMinute * 60 > 50 * 60 + 58) {
+                    if (SysUtils.isShow00Pace((yMinute * 60).toInt())) {
                         yPaceData.add(0.0)
                     } else {
                         if (unitType == 1) {

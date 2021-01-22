@@ -18,10 +18,12 @@ import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.bleservice.BleTools;
 import com.zjw.apps3pluspro.module.home.sport.SportModleUtils;
+import com.zjw.apps3pluspro.network.entity.UserData;
 import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
 import com.zjw.apps3pluspro.sql.entity.SportModleInfo;
 import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.NewTimeUtils;
+import com.zjw.apps3pluspro.utils.SysUtils;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -189,7 +191,7 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
                         int minute = (int) (pace / 60);
                         int second = (int) (pace % 60);
                         String formatPace = "";
-                        if ((minute * 60 + second) > (50 * 60 + 58)) {
+                        if (SysUtils.isShow00Pace(minute, second)) {
                             formatPace = String.format("%1$02d'%2$02d\"", 0, 0);
                         } else {
                             if (mBleDeviceTools.get_device_unit() == 1) {

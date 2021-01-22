@@ -1312,35 +1312,39 @@ public class BleService extends Service {
     }
 
     public void writeCharacteristic(byte[] value, UUID serviceUUid, UUID uuid) {
-        SysUtils.logContentI(TAG, "writeRXCharacteristic =" + BleTools.bytes2HexString(value));
-        if (mBluetoothGatt == null) {
-            return;
-        }
-        BluetoothGattService gap_service = mBluetoothGatt.getService(serviceUUid);
-        if (gap_service == null) {
-            return;
-        }
-        BluetoothGattCharacteristic dev_name = gap_service.getCharacteristic(uuid);
-        if (dev_name == null) {
-            return;
-        }
-        dev_name.setValue(value);
-        boolean status = mBluetoothGatt.writeCharacteristic(dev_name);
+        try {
+            SysUtils.logContentI(TAG, "writeRXCharacteristic =" + BleTools.bytes2HexString(value));
+            if (mBluetoothGatt == null) {
+                return;
+            }
+            BluetoothGattService gap_service = mBluetoothGatt.getService(serviceUUid);
+            if (gap_service == null) {
+                return;
+            }
+            BluetoothGattCharacteristic dev_name = gap_service.getCharacteristic(uuid);
+            if (dev_name == null) {
+                return;
+            }
+            dev_name.setValue(value);
+            boolean status = mBluetoothGatt.writeCharacteristic(dev_name);
 
 
-        for (int i = 1; i <= Constants.detectBleCmdReissueCount; i++) {
-            if (status) {
-                break;
+            for (int i = 1; i <= Constants.detectBleCmdReissueCount; i++) {
+                if (status) {
+                    break;
+                }
+                SysUtils.logContentI(TAG, "uuid = " + uuid + " writeCharacteristic status =  number of reissues " + i + " status = " + status);
+                try {
+                    Thread.sleep(Constants.detectBleCmdReissuePeriod);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                status = mBluetoothGatt.writeCharacteristic(dev_name);
             }
-            SysUtils.logContentI(TAG, "uuid = " + uuid + " writeCharacteristic status =  number of reissues " + i + " status = " + status);
-            try {
-                Thread.sleep(Constants.detectBleCmdReissuePeriod);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            status = mBluetoothGatt.writeCharacteristic(dev_name);
+            SysUtils.logContentI(TAG, "uuid = " + uuid + " writeCharacteristic status end = " + status);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        SysUtils.logContentI(TAG, "uuid = " + uuid + " writeCharacteristic status end = " + status);
 
     }
 
@@ -2802,7 +2806,7 @@ public class BleService extends Service {
             writeRXCharacteristic(BtSerializeation.sendGoalData(3, Integer.parseInt(mUserSetTools.get_user_sleep_target())));
             writeRXCharacteristic(BtSerializeation.sendGoalData(2, Integer.parseInt(mUserSetTools.get_user_activity_target())));
             int distance = 0;
-            if(mUserSetTools.get_user_unit_type()){
+            if (mUserSetTools.get_user_unit_type()) {
                 distance = Integer.parseInt(mUserSetTools.get_user_distance_target()) * 1000;
             } else {
                 distance = Integer.parseInt(mUserSetTools.get_user_distance_target()) * 1610;
@@ -3816,11 +3820,7 @@ public class BleService extends Service {
     };
 
     public void writeCharacteristicProto4(byte[] paramCmd) {
-        try {
-            writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_04);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_04);
     }
 
     Runnable process_cmd_proto_runnable = () -> {

@@ -686,4 +686,13 @@ public class SysUtils {
 
         return hexString;
     }
+
+    public static boolean isShow00Pace(int minute, int second) {
+        int totalSecond = minute * 60 + second;
+        return totalSecond > (50 * 60 + 58) || totalSecond <= 0;
+    }
+
+    public static boolean isShow00Pace(int totalSecond) {
+        return totalSecond > (50 * 60 + 58) || totalSecond <= 0;
+    }
 }
