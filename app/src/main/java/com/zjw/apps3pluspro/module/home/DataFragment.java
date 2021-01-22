@@ -1830,7 +1830,7 @@ public class DataFragment extends BaseFragment {
     }
 
     private void uploadSportDistance(float distance) {
-        homeActivity.writeRXCharacteristic(BtSerializeation.sendSportData(distance));
+//        homeActivity.writeRXCharacteristic(BtSerializeation.sendSportData(distance));
     }
 
 }

@@ -1932,15 +1932,31 @@ public class BtSerializeation {
     }
 
 
-    public static byte[] sendSportData(double distance) {
-        int distance_value = (int) (distance * 10);
+    public static byte[] sendSportData(double latitude, double longitude, int gpsAccuracy) {
         byte[] data = new byte[6];
         data[0] = (byte) 0x00;
         data[1] = (byte) 0x04;
-        data[2] = (byte) (distance_value >> 24);
-        data[3] = (byte) ((distance_value & 0x00ff0000) >> 16);
-        data[4] = (byte) ((distance_value & 0x0000ff00) >> 8);
-        data[5] = (byte) (distance_value & 0xff);
+
+        data[2] = (byte) gpsAccuracy;
+
+        long time = System.currentTimeMillis() / 1000;
+        data[3] = (byte) (time >> 24);
+        data[4] = (byte) ((time & 0x00ff0000) >> 16);
+        data[5] = (byte) ((time & 0x0000ff00) >> 8);
+        data[6] = (byte) (time & 0xff);
+
+        long lat = (long) (latitude * 1000000 + 90000000);
+        data[3] = (byte) (lat >> 24);
+        data[4] = (byte) ((lat & 0x00ff0000) >> 16);
+        data[5] = (byte) ((lat & 0x0000ff00) >> 8);
+        data[6] = (byte) (lat & 0xff);
+
+        long lon = (long) (longitude * 1000000 + 180000000);
+        data[3] = (byte) (lon >> 24);
+        data[4] = (byte) ((lon & 0x00ff0000) >> 16);
+        data[5] = (byte) ((lon & 0x0000ff00) >> 8);
+        data[6] = (byte) (lon & 0xff);
+
         return getBleData(data, CMD_01, KEY_DEVICE_TO_APP_SPORT);
     }
 

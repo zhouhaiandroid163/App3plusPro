@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/privacy_protocol_dialog_content"
                 android:textColor="@color/white_50"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -111,14 +111,14 @@
                     android:padding="2dip"
                     android:text="@string/user_protocol_title"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="、"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tv_privacy"
@@ -128,7 +128,7 @@
                     android:padding="2dip"
                     android:text="@string/privacy_protocol_title"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
             </LinearLayout>
 

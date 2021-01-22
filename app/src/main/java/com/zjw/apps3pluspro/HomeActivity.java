@@ -1033,7 +1033,7 @@ public class HomeActivity extends BaseActivity {
                             if (distance != 0) {
                                 appGpsInfo = gpsInfo;
                                 Log.w(TAG, "locationChangeEventBus distance = " + distance);
-                                writeRXCharacteristic(BtSerializeation.sendSportData(distance));
+                                writeRXCharacteristic(BtSerializeation.sendSportData(gpsInfo.latitude,gpsInfo.longitude,gpsInfo.gpsAccuracy));
                             }
                         }
 
