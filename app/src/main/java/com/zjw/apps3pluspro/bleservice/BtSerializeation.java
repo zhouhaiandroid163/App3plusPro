@@ -1,6 +1,7 @@
 package com.zjw.apps3pluspro.bleservice;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.zjw.apps3pluspro.bleservice.anaylsis.FitnessTools;
 import com.zjw.apps3pluspro.bleservice.anaylsis.SystemTools;
@@ -1933,25 +1934,26 @@ public class BtSerializeation {
 
 
     public static byte[] sendSportData(double latitude, double longitude, int gpsAccuracy) {
+        Log.w(TAG, "locationChangeEventBus latitude = " + latitude + "  longitude = " + longitude);
         byte[] data = new byte[15];
         data[0] = (byte) 0x00;
         data[1] = (byte) 0x04;
 
         data[2] = (byte) gpsAccuracy;
 
-        long time = System.currentTimeMillis() / 1000;
+        int time = (int) (System.currentTimeMillis() / 1000);
         data[3] = (byte) ((time >> 24) & 0xFF);
         data[4] = (byte) ((time >> 16) & 0xFF);
         data[5] = (byte) ((time >> 8) & 0xFF);
         data[6] = (byte) (time & 0xFF);
 
-        long lat = (long) (latitude * 1000000 + 90000000);
+        int lat = (int) (latitude * 1000000) + 90000000;
         data[7] = (byte) ((lat >> 24) & 0xFF);
         data[8] = (byte) ((lat >> 16) & 0xFF);
         data[9] = (byte) ((lat >> 8) & 0xFF);
         data[10] = (byte) (lat & 0xFF);
 
-        long lon = (long) (longitude * 1000000 + 180000000);
+        int lon = (int) (longitude * 1000000) + 180000000;
         data[11] = (byte) ((lon >> 24) & 0xFF);
         data[12] = (byte) ((lon >> 16) & 0xFF);
         data[13] = (byte) ((lon >> 8) & 0xFF);
