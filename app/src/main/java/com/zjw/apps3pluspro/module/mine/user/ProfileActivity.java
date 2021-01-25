@@ -769,8 +769,21 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
         view.findViewById(R.id.tv_height_ok).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                heightValue = String.valueOf((int) (pvFt * 30.48 + pvIn * 2.54));
-                saveUserHeight();
+                dialog.cancel();
+                if (!JavaUtil.checkIsNull(heightValue)) {
+                    if (mUserSetTools.get_user_unit_type()) {
+                        tv_profile_height.setText(heightValue + getString(R.string.centimeter));
+                    } else {
+                        int inResult = pvFt * 12 + pvIn;
+                        heightValue = String.valueOf((int) (inResult * 2.54));
+                        tv_profile_height.setText(String.format("%1$2d'%2$2d\"", pvFt, pvIn));
+                    }
+                    BroadcastTools.sendBleUserinfoData(mContext);
+                    mUserSetTools.set_user_height(Integer.valueOf(heightValue));
+                    UserData mUserData = new UserData();
+                    mUserData.setHeight(String.valueOf(mUserSetTools.get_user_height()));
+                    uploadUserInfo(mUserData);
+                }
             }
         });
 
@@ -860,9 +873,11 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 
 
             if (!TextUtils.isEmpty(heightValue)) {
+                int in = Integer.parseInt(MyUtils.CmToInString(heightValue));
+                pvFt = in / 12;
+                pvIn = in % 12;
                 tv_profile_height.setText(String.format("%1$2d'%2$2d\"", pvFt, pvIn));
             }
-
             if (!TextUtils.isEmpty(weightValue)) {
                 tv_profile_weight.setText(MyUtils.KGToLBString(weightValue, this) + getString(R.string.unit_lb));
             }
@@ -894,25 +909,6 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
             mUserData.setNikname(mUserSetTools.get_user_nickname());
             uploadUserInfo(mUserData);
 
-        }
-    }
-
-    /**
-     * 保存用户身高
-     */
-    void saveUserHeight() {
-        dialog.cancel();
-        if (!JavaUtil.checkIsNull(heightValue)) {
-            if (mUserSetTools.get_user_unit_type()) {
-                tv_profile_height.setText(heightValue + getString(R.string.centimeter));
-            } else {
-                tv_profile_height.setText(String.format("%1$2d'%2$2d\"", pvFt, pvIn));
-            }
-            BroadcastTools.sendBleUserinfoData(mContext);
-            mUserSetTools.set_user_height(Integer.valueOf(heightValue));
-            UserData mUserData = new UserData();
-            mUserData.setHeight(String.valueOf(mUserSetTools.get_user_height()));
-            uploadUserInfo(mUserData);
         }
     }
 
