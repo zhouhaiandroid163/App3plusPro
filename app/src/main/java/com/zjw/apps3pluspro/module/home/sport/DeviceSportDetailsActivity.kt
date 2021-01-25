@@ -247,6 +247,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
         }
 
         mPaceCurveChartView.setType(1)
+        mHeartCurveChartView.setType(2)
 
         val sportDataString = sportModleInfo?.recordPointSportData
         val sportData = sportDataString?.split("-")

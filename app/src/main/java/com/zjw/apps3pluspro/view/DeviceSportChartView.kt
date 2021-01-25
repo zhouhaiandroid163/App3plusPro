@@ -13,6 +13,7 @@ import kotlin.math.roundToInt
 class DeviceSportChartView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     private var type: Int = 0
+    private var y0: Int = 0
     private var maxY: Float = 0f
     private var lineColor: Int = 0
     private var gradientColorStart: Int = 0
@@ -120,7 +121,13 @@ class DeviceSportChartView(context: Context?, attrs: AttributeSet?) : View(conte
         canvas.drawLine(startX, padding.toFloat(), startX, baseline, paintStandardLine)
 
         mPoints = arrayOfNulls<Point>(yData.size + 1)
-        mPoints[0] = Point(startX.roundToInt(), baseline.roundToInt())
+
+        if (type == 2) {
+            val y: Double = baseline - (baseline - padding) * yData[0] * 0.95 / maxY
+            mPoints[0] = Point(startX.roundToInt(), y.toInt())
+        } else {
+            mPoints[0] = Point(startX.roundToInt(), baseline.roundToInt())
+        }
 
         for (i in xData.indices) {
             var x: Float = 0f
@@ -153,9 +160,7 @@ class DeviceSportChartView(context: Context?, attrs: AttributeSet?) : View(conte
         var startp: Point
         var endp: Point = mPoints[mPoints.size - 1]!!
         val path = Path()
-
         path.moveTo(startX, baseline)
-
         for (i in 0 until mPoints.size - 1) {
             startp = mPoints[i]!!
             endp = mPoints[i + 1]!!
@@ -180,9 +185,7 @@ class DeviceSportChartView(context: Context?, attrs: AttributeSet?) : View(conte
         lineGradientPaint.strokeWidth = dp2px(2).toFloat()
         canvas.drawPath(path, lineGradientPaint)
 
-
         val path2 = Path()
-        path2.moveTo(startX, baseline)
         for (i in 0 until mPoints.size - 1) {
             startp = mPoints[i]!!
             endp = mPoints[i + 1]!!
@@ -253,6 +256,10 @@ class DeviceSportChartView(context: Context?, attrs: AttributeSet?) : View(conte
 
     fun setType(type: Int) {
         this.type = type;
+    }
+
+    fun setY0(y0: Int) {
+        this.y0 = y0
     }
 
     private fun dp2px(value: Int): Int {

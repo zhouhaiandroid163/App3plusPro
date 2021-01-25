@@ -58,18 +58,17 @@ public class MeFragment extends BaseFragment {
     TextView tvUserName;
     @BindView(R.id.tvUserId)
     TextView tvUserId;
+    @BindView(R.id.tvAccountName)
+    TextView tvAccountName;
     @BindView(R.id.layoutCommonProblem)
     LinearLayout layoutCommonProblem;
     @BindView(R.id.layoutMore)
     LinearLayout layoutMore;
     @BindView(R.id.layoutPen)
     LinearLayout layoutPen;
+
     private HomeActivity homeActivity;
-    private BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
     private UserSetTools mUserSetTools = BaseApplication.getUserSetTools();
-
-    private int xxxx = 0;
-
     @Override
     public View initView() {
         homeActivity = (HomeActivity) this.getActivity();
@@ -118,6 +117,7 @@ public class MeFragment extends BaseFragment {
         updateUi();
         tvUserName.setText(mUserSetTools.get_user_nickname());
         tvUserId.setText(MyUtils.encryptionUid(BaseApplication.getUserId()));
+        tvAccountName.setText(mUserSetTools.get_user_account());
 
         tvTitleTop.setText(getResources().getString(R.string.title_mine));
         layoutPen.setVisibility(View.VISIBLE);
