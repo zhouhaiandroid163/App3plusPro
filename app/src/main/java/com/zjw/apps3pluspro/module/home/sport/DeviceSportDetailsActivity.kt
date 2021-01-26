@@ -498,6 +498,8 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun goneType3(recordPointDataValid1: String, recordPointDataValid2: String) {
+        goneSpeed()
+        gonePace()
         if (recordPointDataValid1.substring(0, 1) == "1") {
             if (recordPointDataValid1.substring(1, 2) == "0") {
                 goneCal()

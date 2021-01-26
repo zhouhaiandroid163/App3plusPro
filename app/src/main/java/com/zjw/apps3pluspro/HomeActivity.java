@@ -608,300 +608,304 @@ public class HomeActivity extends BaseActivity {
         @SuppressLint("NewApi")
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getAction()) {
+            try {
+                switch (intent.getAction()) {
 
-                //搜索回调连接设备
-                case BroadcastTools.ACTION_RESULT_BLE_DEVICE_ACTION:
-                    MyLog.i(TAG, "choose device to connnecting");
-//                    waitDialog.show(context.getString(R.string.loading3));
-                    DeviceModel btDevice = intent.getParcelableExtra(BroadcastTools.BLE_DEVICE);
-                    if (btDevice != null) {
-//                        mBleDeviceTools.set_ble_mac(btDevice.address);
-//                        mBleDeviceTools.set_ble_name(btDevice.name);
-                        bindDeviceConnect(btDevice.address);
-                    }
-                    break;
-
-                case BroadcastTools.ACTION_GATT_CONNECT_DISCOVER_SERVICES:
-                    EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_DISCOVER_SERVICES));
-                    break;
-                case BroadcastTools.ACTION_GATT_CONNECT_BIND_SUCCESS:
-                    EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_BIND_SUCCESS));
-                    break;
-                case BroadcastTools.ACTION_GATT_CONNECT_BIND_ERROR:
-                    EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_BIND_ERROR));
-                    break;
-                //已连接
-                case BroadcastTools.ACTION_GATT_CONNECTED:
-                    mConnectionState = BleConstant.STATE_CONNECTED;
-                    EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_CONNECTED));
-                    MyLog.i(TAG, "已连接");
-                    if (waitDialog != null) {
-                        waitDialog.close();
-                    }
-//                    connectCountNum++;
-//                    tvConnectCount.setText("连接次数统计：" + connectCountNum);
-                    break;
-                //已断开
-                case BroadcastTools.ACTION_GATT_DISCONNECTED:
-                    currentGpsSportState = -1;
-                    appGpsInfo = null;
-                    curSportState = BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO;
-                    GpsSportManager.getInstance().stopGps(homeActivity);
-                    curCmd = "";
-                    stopLocationService();
-
-                    isSyncSportData = false;
-                    mConnectionState = BleConstant.STATE_DISCONNECTED;
-                    BleService.syncState = false;
-                    EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_DISCONNECTED));
-                    break;
-                case BroadcastTools.ACTION_GATT_CONNECTING:
-                    mConnectionState = BleConstant.STATE_CONNECTING;
-                    BleService.syncState = false;
-                    MyLog.i(TAG, "连接中");
-                    EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_CONNECTING));
-                    break;
-                case BroadcastTools.ACTION_GATT_CONNECT_TIME_OUT:
-                    mConnectionState = BleConstant.STATE_CONNECTED_TIMEOUT;
-                    BleService.syncState = false;
-                    EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_CONNECTED_TIMEOUT));
-                    MyLog.i(TAG, "超时");
-                    //同步完成
-                case BroadcastTools.ACTION_GATT_SYNC_COMPLETE:
-                    BleService.syncState = false;
-                    EventBus.getDefault().post(new DataSyncCompleteEvent());
-                    isHomeSyncTime = false;
-                    if (is_device_update_one) {
-                        is_device_update_one = false;
-                        String version_name = BleTools.getDeviceVersionName(mBleDeviceTools);
-                        if (!JavaUtil.checkIsNull(version_name)) {
-                            getNetDeviceVersion(mBleDeviceTools.get_ble_device_type(), mBleDeviceTools.get_ble_device_version(), mBleDeviceTools.get_device_platform_type());
+                    //搜索回调连接设备
+                    case BroadcastTools.ACTION_RESULT_BLE_DEVICE_ACTION:
+                        MyLog.i(TAG, "choose device to connnecting");
+    //                    waitDialog.show(context.getString(R.string.loading3));
+                        DeviceModel btDevice = intent.getParcelableExtra(BroadcastTools.BLE_DEVICE);
+                        if (btDevice != null) {
+    //                        mBleDeviceTools.set_ble_mac(btDevice.address);
+    //                        mBleDeviceTools.set_ble_name(btDevice.name);
+                            bindDeviceConnect(btDevice.address);
                         }
-                    }
-                    syncWeather();
-                    break;
-                case BroadcastTools.ACTION_GATT_PROTOSPORT:
-                    if (currentGpsSportState == -1 || currentGpsSportState == GpsSportDeviceStartEvent.SPORT_STATE_STOP) {
-                        isSyncSportData = true;
-                        getSport();
-                    }
-                    break;
-                case BroadcastTools.ACTION_GATT_DEVICE_COMPLETE:
-                    EventBus.getDefault().post(new DeviceInfoEvent());
-                    break;
-                case BroadcastTools.ACTION_GATT_OFF_LINE_ECG_START:
-                    MyLog.i(TAG, "离线心电数据 = 开始");
-                    if (main_off_line_sync_view != null && main_off_line_sync_view.getVisibility() != View.VISIBLE) {
-                        main_off_line_sync_view.setVisibility(View.VISIBLE);
-                    }
-                    EventBus.getDefault().post(new OffEcgSyncStateEvent(OffEcgSyncStateEvent.OFF_ECG_SYNC_STATE_START));
-                    break;
+                        break;
 
-                case BroadcastTools.ACTION_GATT_OFF_LINE_ECG_END:
-                    MyLog.i(TAG, "离线心电数据 = 结束");
-                    if (main_off_line_sync_view != null) {
-                        main_off_line_sync_view.setVisibility(View.GONE);
-                    }
-                    EventBus.getDefault().post(new OffEcgSyncStateEvent(OffEcgSyncStateEvent.OFF_ECG_SYNC_STATE_END));
-                    break;
+                    case BroadcastTools.ACTION_GATT_CONNECT_DISCOVER_SERVICES:
+                        EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_DISCOVER_SERVICES));
+                        break;
+                    case BroadcastTools.ACTION_GATT_CONNECT_BIND_SUCCESS:
+                        EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_BIND_SUCCESS));
+                        break;
+                    case BroadcastTools.ACTION_GATT_CONNECT_BIND_ERROR:
+                        EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_BIND_ERROR));
+                        break;
+                    //已连接
+                    case BroadcastTools.ACTION_GATT_CONNECTED:
+                        mConnectionState = BleConstant.STATE_CONNECTED;
+                        EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_CONNECTED));
+                        MyLog.i(TAG, "已连接");
+                        if (waitDialog != null) {
+                            waitDialog.close();
+                        }
+    //                    connectCountNum++;
+    //                    tvConnectCount.setText("连接次数统计：" + connectCountNum);
+                        break;
+                    //已断开
+                    case BroadcastTools.ACTION_GATT_DISCONNECTED:
+                        currentGpsSportState = -1;
+                        appGpsInfo = null;
+                        curSportState = BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO;
+                        GpsSportManager.getInstance().stopGps(homeActivity);
+                        curCmd = "";
+                        stopLocationService();
 
-                case BroadcastTools.ACTION_GATT_OFF_LINE_ECG_NO_OK:
-                    MyLog.i(TAG, "离线心电数据 = 心电质量差");
-                    AppUtils.showToast(mContext, R.string.off_ecg_quality_no_ok);
-                    break;
-
-
-                case BroadcastTools.ACTION_SYNC_LOADING:
-                    EventBus.getDefault().post(new SyncTimeLoadingEvent());
-                    break;
-
-                case BroadcastTools.ACTION_SYNC_TIME_OUT:
-                    EventBus.getDefault().post(new SyncTimeOutEvent());
-                    break;
-
-
-                //通话设备信息回调
-                case BroadcastTools.ACTION_GATT_CALL_DEVICE_INFO:
-                    MyLog.i(TAG, "通话设备信息回调");
-
-                    String call_ble_mac = mBleDeviceTools.get_call_ble_mac();
-                    String call_ble_name = mBleDeviceTools.get_call_ble_name();
-
-                    MyLog.i(TAG, "通话设备信息回调 call_ble_mac = " + call_ble_mac);
-                    MyLog.i(TAG, "通话设备信息回调 call_ble_name = " + call_ble_name);
-
-                    //如果没配对
-                    if (!MyUtils.checkBlePairMac(mBleDeviceTools.get_call_ble_mac())) {
-                        if (DeviceIsConnect()) {
-                            try {
-                                createBond();
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                        isSyncSportData = false;
+                        mConnectionState = BleConstant.STATE_DISCONNECTED;
+                        BleService.syncState = false;
+                        EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_DISCONNECTED));
+                        break;
+                    case BroadcastTools.ACTION_GATT_CONNECTING:
+                        mConnectionState = BleConstant.STATE_CONNECTING;
+                        BleService.syncState = false;
+                        MyLog.i(TAG, "连接中");
+                        EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_CONNECTING));
+                        break;
+                    case BroadcastTools.ACTION_GATT_CONNECT_TIME_OUT:
+                        mConnectionState = BleConstant.STATE_CONNECTED_TIMEOUT;
+                        BleService.syncState = false;
+                        EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_CONNECTED_TIMEOUT));
+                        MyLog.i(TAG, "超时");
+                        //同步完成
+                    case BroadcastTools.ACTION_GATT_SYNC_COMPLETE:
+                        BleService.syncState = false;
+                        EventBus.getDefault().post(new DataSyncCompleteEvent());
+                        isHomeSyncTime = false;
+                        if (is_device_update_one) {
+                            is_device_update_one = false;
+                            String version_name = BleTools.getDeviceVersionName(mBleDeviceTools);
+                            if (!JavaUtil.checkIsNull(version_name)) {
+                                getNetDeviceVersion(mBleDeviceTools.get_ble_device_type(), mBleDeviceTools.get_ble_device_version(), mBleDeviceTools.get_device_platform_type());
                             }
                         }
-                    }
-                    break;
-
-                case BroadcastTools.ACTION_GATT_DIAL_COMPLETE:
-                    EventBus.getDefault().post(new DialInfoCompleteEvent());
-                    break;
-
-                case BroadcastTools.ACTION_BLUE_STATE_CHANGED:
-                    int state = intent.getIntExtra("extra_data", 0);
-                    EventBus.getDefault().post(new BluetoothAdapterStateEvent(state));
-                    break;
-
-                case BroadcastTools.TAG_CLOSE_PHOTO_ACTION:
-                    closePhoto();
-                    break;
-                case BroadcastTools.ACTION_CMD_APP_START:
-                    SysUtils.logContentI("ble", " BroadcastTools.ACTION_CMD_APP_START = " + curCmd);
-                    switch (curCmd) {
-                        case GET_SPORT_IDS_TODAY:
-                            refreshProtobufSportTimeOut();
-                            sendAppStart(BtSerializeation.GetSportIds(0));
-                            break;
-                        case GET_SPORT_IDS_HISTORY:
-                            refreshProtobufSportTimeOut();
-                            sendAppStart(BtSerializeation.GetSportIds(1));
-                            break;
-                        case REQUEST_FITNESS_ID_TODAY:
-                        case REQUEST_FITNESS_ID_HISTORY:
-                            refreshProtobufSportTimeOut();
-                            sendAppStart(BtSerializeation.requestFitnessId());
-                            break;
-                        case DELETE_DEVICE_SPORT_HISTORY:
-                        case DELETE_DEVICE_SPORT_TODAY:
-                            refreshProtobufSportTimeOut();
-                            sendAppStart(BtSerializeation.deleteSportId());
-                            break;
-                        case GET_PAGE_DEVICE:
-                            sendAppStart(BtSerializeation.getPageDevice());
-                            break;
-                        case SET_PAGE_DEVICE:
-                            sendAppStart(BtSerializeation.getPageDeviceSet());
-                            break;
-                        case APP_GPS_READY:
-                            sendAppStart(BtSerializeation.getGpsReady(gpsInfo));
-                            break;
-                        case APP_SEND_GPS:
-                            sendAppStart(BtSerializeation.getGpsByte(gpsInfo));
-                            break;
-                        case APP_REQUEST_GPS_SPORT_STATE:
-                            sendAppStart(BtSerializeation.getRequestGpsStateByte());
-                            break;
-                        case APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL:
-                            sendAppStart(BtSerializeation.getDeviceWatchFacePrepareStatus(themeId, themeSize));
-                            break;
-                        case APP_REQUEST_DEVICE_OTA_PREPARE:
-                            sendAppStart(BtSerializeation.getDeviceOtaPrepareStatus(isForce, version, md5));
-                            break;
-
-                    }
-                    break;
-                case BroadcastTools.ACTION_CMD_DEVICE_START:
-                    sendAppStart(BtSerializeation.deviceStartCmd());
-                    break;
-                case BroadcastTools.ACTION_CMD_APP_CONFIRM:
-                    sendAppStart(BtSerializeation.appConfirm());
-                    break;
-                case BroadcastTools.ACTION_CMD_DEVICE_CONFIRM:
-                    switch (curCmd) {
-                        case DELETE_DEVICE_SPORT_HISTORY:
-                            refreshProtobufSportTimeOut();
-                            if (FitnessTools.deleteIndex == FitnessTools.bleIdsList.size()) {
-                                //delete history over
-                                SysUtils.logContentW("ble", " delete history over");
-                                startSyncTodayDeviceSport();
-                            } else {
-                                deleteDeviceSport(DELETE_DEVICE_SPORT_HISTORY);
-                            }
-                            break;
-                        case DELETE_DEVICE_SPORT_TODAY:
-                            refreshProtobufSportTimeOut();
-                            if (FitnessTools.deleteIndex == FitnessTools.bleIdsList.size()) {
-                                //delete today over
-                                SysUtils.logContentW("ble", " delete today over");
-                                syncDeviceSportOver();
-                                getDeviceGpsSportStatus();
-                            } else {
-                                deleteDeviceSport(DELETE_DEVICE_SPORT_TODAY);
-                            }
-                            break;
-                        case APP_GPS_READY:
-                            curCmd = APP_SEND_GPS;
-                            break;
-                    }
-                    break;
-                case BroadcastTools.ACTION_CMD_GET_SPORT:
-                    refreshProtobufSportTimeOut();
-                    SysUtils.logContentI("ble", " BroadcastTools.ACTION_CMD_GET_SPORT = " + curCmd);
-                    switch (curCmd) {
-                        case GET_SPORT_IDS_TODAY:
-                            curCmd = REQUEST_FITNESS_ID_TODAY;
-                            break;
-                        case GET_SPORT_IDS_HISTORY:
-                            curCmd = REQUEST_FITNESS_ID_HISTORY;
-                            break;
-                    }
-                    switch (curCmd) {
-                        case REQUEST_FITNESS_ID_TODAY:
-                            tvProgress.setText("today " + (FitnessTools.currentIndex) + "/" + FitnessTools.bleIdsList.size());
-                            break;
-                        case REQUEST_FITNESS_ID_HISTORY:
-                            tvProgress.setText("History " + (FitnessTools.currentIndex) + "/" + FitnessTools.bleIdsList.size());
-                            break;
-                    }
-
-                    if (FitnessTools.bleIdsList.size() != 0) {
-                        if (FitnessTools.currentIndex >= FitnessTools.bleIdsList.size()) {
-                            // over
-                            if (curCmd.equalsIgnoreCase(REQUEST_FITNESS_ID_HISTORY)) {
-                                SysUtils.logContentW("ble", "REQUEST_FITNESS_ID_HISTORY sync over");
-                                // history is over and delete the ids
-                                FitnessTools.deleteIndex = 0;
-                                deleteDeviceSport(DELETE_DEVICE_SPORT_HISTORY);
-//                                startSyncTodayDeviceSport();
-
-                            } else if (curCmd.equalsIgnoreCase(REQUEST_FITNESS_ID_TODAY)) {
-                                SysUtils.logContentW("ble", "REQUEST_FITNESS_ID_TODAY sync over");
-                                DeviceSportManager.Companion.getInstance().uploadMoreSportData();
-                                // delete the ids
-                                FitnessTools.deleteIndex = 0;
-                                deleteDeviceSport(DELETE_DEVICE_SPORT_TODAY);
-                            }
-                        } else {
-                            if (main_off_line_sync_view != null && main_off_line_sync_view.getVisibility() != View.VISIBLE) {
-                                main_off_line_sync_view.setVisibility(View.VISIBLE);
-                            }
-                            sendAppStart(BtSerializeation.appStartCmd(1));
+                        syncWeather();
+                        break;
+                    case BroadcastTools.ACTION_GATT_PROTOSPORT:
+                        if (currentGpsSportState == -1 || currentGpsSportState == GpsSportDeviceStartEvent.SPORT_STATE_STOP) {
+                            isSyncSportData = true;
+                            getSport();
                         }
-                    } else {
+                        break;
+                    case BroadcastTools.ACTION_GATT_DEVICE_COMPLETE:
+                        EventBus.getDefault().post(new DeviceInfoEvent());
+                        break;
+                    case BroadcastTools.ACTION_GATT_OFF_LINE_ECG_START:
+                        MyLog.i(TAG, "离线心电数据 = 开始");
+                        if (main_off_line_sync_view != null && main_off_line_sync_view.getVisibility() != View.VISIBLE) {
+                            main_off_line_sync_view.setVisibility(View.VISIBLE);
+                        }
+                        EventBus.getDefault().post(new OffEcgSyncStateEvent(OffEcgSyncStateEvent.OFF_ECG_SYNC_STATE_START));
+                        break;
+
+                    case BroadcastTools.ACTION_GATT_OFF_LINE_ECG_END:
+                        MyLog.i(TAG, "离线心电数据 = 结束");
+                        if (main_off_line_sync_view != null) {
+                            main_off_line_sync_view.setVisibility(View.GONE);
+                        }
+                        EventBus.getDefault().post(new OffEcgSyncStateEvent(OffEcgSyncStateEvent.OFF_ECG_SYNC_STATE_END));
+                        break;
+
+                    case BroadcastTools.ACTION_GATT_OFF_LINE_ECG_NO_OK:
+                        MyLog.i(TAG, "离线心电数据 = 心电质量差");
+                        AppUtils.showToast(mContext, R.string.off_ecg_quality_no_ok);
+                        break;
+
+
+                    case BroadcastTools.ACTION_SYNC_LOADING:
+                        EventBus.getDefault().post(new SyncTimeLoadingEvent());
+                        break;
+
+                    case BroadcastTools.ACTION_SYNC_TIME_OUT:
+                        EventBus.getDefault().post(new SyncTimeOutEvent());
+                        break;
+
+
+                    //通话设备信息回调
+                    case BroadcastTools.ACTION_GATT_CALL_DEVICE_INFO:
+                        MyLog.i(TAG, "通话设备信息回调");
+
+                        String call_ble_mac = mBleDeviceTools.get_call_ble_mac();
+                        String call_ble_name = mBleDeviceTools.get_call_ble_name();
+
+                        MyLog.i(TAG, "通话设备信息回调 call_ble_mac = " + call_ble_mac);
+                        MyLog.i(TAG, "通话设备信息回调 call_ble_name = " + call_ble_name);
+
+                        //如果没配对
+                        if (!MyUtils.checkBlePairMac(mBleDeviceTools.get_call_ble_mac())) {
+                            if (DeviceIsConnect()) {
+                                try {
+                                    createBond();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        break;
+
+                    case BroadcastTools.ACTION_GATT_DIAL_COMPLETE:
+                        EventBus.getDefault().post(new DialInfoCompleteEvent());
+                        break;
+
+                    case BroadcastTools.ACTION_BLUE_STATE_CHANGED:
+                        int state = intent.getIntExtra("extra_data", 0);
+                        EventBus.getDefault().post(new BluetoothAdapterStateEvent(state));
+                        break;
+
+                    case BroadcastTools.TAG_CLOSE_PHOTO_ACTION:
+                        closePhoto();
+                        break;
+                    case BroadcastTools.ACTION_CMD_APP_START:
+                        SysUtils.logContentI("ble", " BroadcastTools.ACTION_CMD_APP_START = " + curCmd);
+                        switch (curCmd) {
+                            case GET_SPORT_IDS_TODAY:
+                                refreshProtobufSportTimeOut();
+                                sendAppStart(BtSerializeation.GetSportIds(0));
+                                break;
+                            case GET_SPORT_IDS_HISTORY:
+                                refreshProtobufSportTimeOut();
+                                sendAppStart(BtSerializeation.GetSportIds(1));
+                                break;
+                            case REQUEST_FITNESS_ID_TODAY:
+                            case REQUEST_FITNESS_ID_HISTORY:
+                                refreshProtobufSportTimeOut();
+                                sendAppStart(BtSerializeation.requestFitnessId());
+                                break;
+                            case DELETE_DEVICE_SPORT_HISTORY:
+                            case DELETE_DEVICE_SPORT_TODAY:
+                                refreshProtobufSportTimeOut();
+                                sendAppStart(BtSerializeation.deleteSportId());
+                                break;
+                            case GET_PAGE_DEVICE:
+                                sendAppStart(BtSerializeation.getPageDevice());
+                                break;
+                            case SET_PAGE_DEVICE:
+                                sendAppStart(BtSerializeation.getPageDeviceSet());
+                                break;
+                            case APP_GPS_READY:
+                                sendAppStart(BtSerializeation.getGpsReady(gpsInfo));
+                                break;
+                            case APP_SEND_GPS:
+                                sendAppStart(BtSerializeation.getGpsByte(gpsInfo));
+                                break;
+                            case APP_REQUEST_GPS_SPORT_STATE:
+                                sendAppStart(BtSerializeation.getRequestGpsStateByte());
+                                break;
+                            case APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL:
+                                sendAppStart(BtSerializeation.getDeviceWatchFacePrepareStatus(themeId, themeSize));
+                                break;
+                            case APP_REQUEST_DEVICE_OTA_PREPARE:
+                                sendAppStart(BtSerializeation.getDeviceOtaPrepareStatus(isForce, version, md5));
+                                break;
+
+                        }
+                        break;
+                    case BroadcastTools.ACTION_CMD_DEVICE_START:
+                        sendAppStart(BtSerializeation.deviceStartCmd());
+                        break;
+                    case BroadcastTools.ACTION_CMD_APP_CONFIRM:
+                        sendAppStart(BtSerializeation.appConfirm());
+                        break;
+                    case BroadcastTools.ACTION_CMD_DEVICE_CONFIRM:
+                        switch (curCmd) {
+                            case DELETE_DEVICE_SPORT_HISTORY:
+                                refreshProtobufSportTimeOut();
+                                if (FitnessTools.deleteIndex == FitnessTools.bleIdsList.size()) {
+                                    //delete history over
+                                    SysUtils.logContentW("ble", " delete history over");
+                                    startSyncTodayDeviceSport();
+                                } else {
+                                    deleteDeviceSport(DELETE_DEVICE_SPORT_HISTORY);
+                                }
+                                break;
+                            case DELETE_DEVICE_SPORT_TODAY:
+                                refreshProtobufSportTimeOut();
+                                if (FitnessTools.deleteIndex == FitnessTools.bleIdsList.size()) {
+                                    //delete today over
+                                    SysUtils.logContentW("ble", " delete today over");
+                                    syncDeviceSportOver();
+                                    getDeviceGpsSportStatus();
+                                } else {
+                                    deleteDeviceSport(DELETE_DEVICE_SPORT_TODAY);
+                                }
+                                break;
+                            case APP_GPS_READY:
+                                curCmd = APP_SEND_GPS;
+                                break;
+                        }
+                        break;
+                    case BroadcastTools.ACTION_CMD_GET_SPORT:
+                        refreshProtobufSportTimeOut();
+                        SysUtils.logContentI("ble", " BroadcastTools.ACTION_CMD_GET_SPORT = " + curCmd);
+                        switch (curCmd) {
+                            case GET_SPORT_IDS_TODAY:
+                                curCmd = REQUEST_FITNESS_ID_TODAY;
+                                break;
+                            case GET_SPORT_IDS_HISTORY:
+                                curCmd = REQUEST_FITNESS_ID_HISTORY;
+                                break;
+                        }
                         switch (curCmd) {
                             case REQUEST_FITNESS_ID_TODAY:
-                                SysUtils.logContentW("ble", " today is no data , sync over");
-                                DeviceSportManager.Companion.getInstance().uploadMoreSportData();
-                                syncDeviceSportOver();
-                                getDeviceGpsSportStatus();
+                                tvProgress.setText("today " + (FitnessTools.currentIndex) + "/" + FitnessTools.bleIdsList.size());
                                 break;
                             case REQUEST_FITNESS_ID_HISTORY:
-                                SysUtils.logContentW("ble", " HISTORY is no data");
-                                startSyncTodayDeviceSport();
+                                tvProgress.setText("History " + (FitnessTools.currentIndex) + "/" + FitnessTools.bleIdsList.size());
                                 break;
                         }
-                    }
 
-                    break;
-                case BroadcastTools.ACTION_CMD_DEVICE_TRANSMISSION_DATA:
-                    SysUtils.logContentW("ble", " ACTION_CMD_DEVICE_TRANSMISSION_DATA");
-                    refreshProtobufSportTimeOut();
-                    break;
-                case BroadcastTools.ACTION_GATT_DEVICE_TO_APP_SPORT_STATE:
-                    int sportState = intent.getIntExtra(BroadcastTools.ACTION_GATT_DEVICE_TO_APP_SPORT_TAG, -1);
-                    EventBus.getDefault().post(new DeviceToAppSportStateEvent(sportState));
-                    deviceToAppSportStateEvent(new DeviceToAppSportStateEvent(sportState));
-                    break;
+                        if (FitnessTools.bleIdsList.size() != 0) {
+                            if (FitnessTools.currentIndex >= FitnessTools.bleIdsList.size()) {
+                                // over
+                                if (curCmd.equalsIgnoreCase(REQUEST_FITNESS_ID_HISTORY)) {
+                                    SysUtils.logContentW("ble", "REQUEST_FITNESS_ID_HISTORY sync over");
+                                    // history is over and delete the ids
+                                    FitnessTools.deleteIndex = 0;
+                                    deleteDeviceSport(DELETE_DEVICE_SPORT_HISTORY);
+    //                                startSyncTodayDeviceSport();
+
+                                } else if (curCmd.equalsIgnoreCase(REQUEST_FITNESS_ID_TODAY)) {
+                                    SysUtils.logContentW("ble", "REQUEST_FITNESS_ID_TODAY sync over");
+                                    DeviceSportManager.Companion.getInstance().uploadMoreSportData();
+                                    // delete the ids
+                                    FitnessTools.deleteIndex = 0;
+                                    deleteDeviceSport(DELETE_DEVICE_SPORT_TODAY);
+                                }
+                            } else {
+                                if (main_off_line_sync_view != null && main_off_line_sync_view.getVisibility() != View.VISIBLE) {
+                                    main_off_line_sync_view.setVisibility(View.VISIBLE);
+                                }
+                                sendAppStart(BtSerializeation.appStartCmd(1));
+                            }
+                        } else {
+                            switch (curCmd) {
+                                case REQUEST_FITNESS_ID_TODAY:
+                                    SysUtils.logContentW("ble", " today is no data , sync over");
+                                    DeviceSportManager.Companion.getInstance().uploadMoreSportData();
+                                    syncDeviceSportOver();
+                                    getDeviceGpsSportStatus();
+                                    break;
+                                case REQUEST_FITNESS_ID_HISTORY:
+                                    SysUtils.logContentW("ble", " HISTORY is no data");
+                                    startSyncTodayDeviceSport();
+                                    break;
+                            }
+                        }
+
+                        break;
+                    case BroadcastTools.ACTION_CMD_DEVICE_TRANSMISSION_DATA:
+                        SysUtils.logContentW("ble", " ACTION_CMD_DEVICE_TRANSMISSION_DATA");
+                        refreshProtobufSportTimeOut();
+                        break;
+                    case BroadcastTools.ACTION_GATT_DEVICE_TO_APP_SPORT_STATE:
+                        int sportState = intent.getIntExtra(BroadcastTools.ACTION_GATT_DEVICE_TO_APP_SPORT_TAG, -1);
+                        EventBus.getDefault().post(new DeviceToAppSportStateEvent(sportState));
+                        deviceToAppSportStateEvent(new DeviceToAppSportStateEvent(sportState));
+                        break;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     };

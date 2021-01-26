@@ -20,10 +20,10 @@
     <string name="quit_measure_tip">Do you exit the current measurement?</string>
     <string name="open_woheart_tip">Turning on the continuous HR function will result in faster power consumption.</string>
     <string name="delete_sport_tip">Make sure to delete the exercise record</string>
-    <string name="dialog_yes">Ok</string>
+    <string name="dialog_yes">OK</string>
     <string name="dialog_no">Cancel</string>
     <!-- 引导/登录/注册/忘记密码/修改密码界面 -->
-    <string name="btn_login">SING IN</string>
+    <string name="btn_login">SIGN IN</string>
     <string name="input_your_mobile_phone">Input mobile number/mailbox</string>
     <string name="wrong_input_your_mobile_phone">Phone number or mailbox format error</string>
     <string name="input_your_email">Input your email</string>

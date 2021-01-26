@@ -118,7 +118,7 @@ public class StepHistogramView extends View {
         P_width = getWidth();
         P_height = getHeight();
 
-        baseline = P_height - textHeight;
+        baseline = P_height - textHeight * 1.2f;
         spacing = (P_width) / ((aniProgress.length - 1) + aniProgress.length);
 
         if (isgrid) {
