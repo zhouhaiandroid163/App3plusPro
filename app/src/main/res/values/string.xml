@@ -662,7 +662,7 @@
     <string name="page_heart_min">Lowest</string>
     <string name="page_heart_avg">Average</string>
     <string name="page_exercise_title">Daily activities</string>
-    <string name="data_sport">Motion</string>
+    <string name="data_sport">Workouts</string>
     <!--卡片排序-->
     <string name="data_card_sorting">Set card sorting</string>
     <string name="card_hide_top_tip">Hold down the list and drag up and down to adjust the display order</string>

@@ -662,7 +662,7 @@
     <string name="page_heart_min">Bajo</string>
     <string name="page_heart_avg">Promedio</string>
     <string name="page_exercise_title">Actividades diarias</string>
-    <string name="data_sport">Movimiento</string>
+    <string name="data_sport">Entrenamientos</string>
     <!--卡片排序-->
     <string name="data_card_sorting">Establecer clasificación de tarjeta</string>
     <string name="card_hide_top_tip">Mantenga presionada la lista y arrastre hacia arriba y hacia abajo para ajustar el orden de visualización</string>

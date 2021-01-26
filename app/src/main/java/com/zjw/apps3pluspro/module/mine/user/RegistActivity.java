@@ -8,6 +8,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -70,6 +71,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener {
         AppUtils.initEditTextFocusChange(et_register_password1, view2, "#57FFB5", "#1Effffff");
         AppUtils.initEditTextFocusChange(et_register_password2, view3, "#57FFB5", "#1Effffff");
     }
+
     @BindView(R.id.view1)
     View view1;
     @BindView(R.id.view2)
@@ -141,8 +143,10 @@ public class RegistActivity extends BaseActivity implements OnClickListener {
 
         findViewById(R.id.tv_user).setOnClickListener(this);
         findViewById(R.id.tv_privacy).setOnClickListener(this);
+        findViewById(R.id.layoutAgree).setOnClickListener(this);
+        findViewById(R.id.btAgree).setOnClickListener(this);
 
-
+        initOkButton();
     }
 
     void initData() {
@@ -157,6 +161,24 @@ public class RegistActivity extends BaseActivity implements OnClickListener {
         }
     }
 
+    private boolean isAgree = false;
+    @BindView(R.id.btAgree)
+    Button btAgree;
+    @BindView(R.id.btn_regist_ok)
+    Button btn_regist_ok;
+
+    private void initOkButton(){
+        if (isAgree) {
+            btAgree.setBackground(getResources().getDrawable(R.mipmap.agree));
+            btn_regist_ok.setBackground(getResources().getDrawable(R.mipmap.white_bt_bg));
+            btn_regist_ok.setTextColor(getResources().getColor(R.color.bt_text_color));
+        } else {
+            btAgree.setBackground(getResources().getDrawable(R.mipmap.no_agree));
+            btn_regist_ok.setBackground(getResources().getDrawable(R.mipmap.grey_bt_bg));
+            btn_regist_ok.setTextColor(getResources().getColor(R.color.color_71757A));
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -164,24 +186,27 @@ public class RegistActivity extends BaseActivity implements OnClickListener {
             case R.id.public_head_back:
                 manager.popOneActivity(this);
                 break;
-
             //注册
             case R.id.btn_regist_ok:
+                if (!isAgree) {
+                    return;
+                }
                 checkInputAll(et_register_account.getText().toString().trim(),
                         et_register_password1.getText().toString().trim(),
                         et_register_password2.getText().toString().trim());
                 break;
-
             //手机号注册跳转-隐私协议
             case R.id.tv_user:
                 startActivity(new Intent(mContext, UserProtocolActivity.class));
                 break;
-
             case R.id.tv_privacy:
                 startActivity(new Intent(mContext, PrivacyProtocolActivity.class));
-
                 break;
-
+            case R.id.layoutAgree:
+            case R.id.btAgree:
+                isAgree = !isAgree;
+                initOkButton();
+                break;
         }
     }
 

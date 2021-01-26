@@ -369,5 +369,6 @@
     <color name="bt_text_color">#565E67</color>
     <color name="dialog_bg">#464E58</color>
     <color name="text_color">#989CA0</color>
+    <color name="color_71757A">#71757A</color>
 
 </resources>

@@ -95,255 +95,297 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
 
     @SuppressLint("SetTextI18n")
     fun initViewData() {
-        if (sportModleInfo?.reportDuration!! == 0L || sportModleInfo?.recordPointSportData == null) {
-            layoutData.visibility = View.GONE
-            layoutNoData.visibility = View.VISIBLE
-            return
-        }
+        try {
+            if (sportModleInfo?.reportDuration!! == 0L || sportModleInfo?.recordPointSportData == null) {
+                layoutData.visibility = View.GONE
+                layoutNoData.visibility = View.VISIBLE
+                return
+            }
 
-        loadMap()
+            loadMap()
 
-        layoutData.visibility = View.VISIBLE
-        layoutNoData.visibility = View.GONE
+            layoutData.visibility = View.VISIBLE
+            layoutNoData.visibility = View.GONE
 
-        val avgPaceString: String
-        var avgPace: Double = 0.0
-        if (sportModleInfo?.reportDistance!! != 0L) {
-            avgPace = sportModleInfo?.reportDuration!! / ((sportModleInfo?.reportDistance!! / 1000.0))
-        }
-        val minute = (avgPace / 60).toInt()
-        val second = (avgPace % 60).toInt()
-        if (SysUtils.isShow00Pace(minute, second)) {
-            avgPaceString = String.format("%1$02d'%2$02d\"", 0, 0)
-        } else {
-            if (mBleDeviceTools._device_unit == 1) {
-                avgPaceString = String.format("%1$02d'%2$02d\"", (avgPace / 60).toInt(), (avgPace % 60).toInt())
+            val avgPaceString: String
+            var avgPace: Double = 0.0
+            if (sportModleInfo?.reportDistance!! != 0L) {
+                avgPace = sportModleInfo?.reportDuration!! / ((sportModleInfo?.reportDistance!! / 1000.0))
+            }
+            val minute = (avgPace / 60).toInt()
+            val second = (avgPace % 60).toInt()
+            if (SysUtils.isShow00Pace(minute, second)) {
+                avgPaceString = String.format("%1$02d'%2$02d\"", 0, 0)
             } else {
-                avgPace = sportModleInfo?.reportDuration!! / ((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f))
-                avgPaceString = String.format("%1$02d'%2$02d\"", (avgPace / 60).toInt(), (avgPace % 60).toInt())
-            }
-        }
-
-        tvTitleValue1.text = NewTimeUtils.getTimeString(sportModleInfo?.reportDuration!!)
-        tvTitleValue2.text = NewTimeUtils.getStringDate(sportModleInfo?.reportSportStartTime!!, NewTimeUtils.HHMMSS) + " - " + NewTimeUtils.getStringDate(sportModleInfo?.reportSportEndTime!!, NewTimeUtils.HHMMSS)
-        tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0) + resources.getString(R.string.sport_distance_unit)
-        tvTitleValue4.text = sportModleInfo?.reportCal.toString() + resources.getString(R.string.big_calory)
-        tvTitleValue5.text = avgPaceString
-        tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + resources.getString(R.string.speed_unit)
-        tvTitleValue7.text = sportModleInfo?.reportAvgHeart!!.toString() + resources.getString(R.string.bpm)
-        tvTitleValue8.text = sportModleInfo?.reportMaxHeart!!.toString() + resources.getString(R.string.bpm)
-        tvTitleValue9.text = sportModleInfo?.reportTotalStep!!.toString() + resources.getString(R.string.steps)
-        tvTitleValue10.text = (sportModleInfo?.reportTotalStep!! / (sportModleInfo?.reportDuration!! / 60.0)).toInt().toString() + resources.getString(R.string.device_sport_step_speed_unit)
-        tvTitleValue11.text = sportModleInfo?.reportCumulativeRise!!.toString() + resources.getString(R.string.device_sport_unit)
-        tvTitleValue12.text = sportModleInfo?.reportCumulativeDecline!!.toString() + resources.getString(R.string.device_sport_unit)
-
-        if (unitType != 1) {
-            tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) + resources.getString(R.string.unit_mi)
-            tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + resources.getString(R.string.speed_unit_mi)
-            tvTitleValue11.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f) + resources.getString(R.string.unit_ft)
-            tvTitleValue12.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + resources.getString(R.string.unit_ft)
-        }
-
-        tvTrainingEffectScore.text = sportModleInfo?.reportTrainingEffect!!.toString()
-        tvMaxOxygenIntakeTitleValue.text = sportModleInfo?.reportMaxOxygenIntake!!.toString() + resources.getString(R.string.device_sport_maxOxygenIntake_unit)
-        tvRecoveryTimeValue.text = sportModleInfo?.reportRecoveryTime!!.toString() + resources.getString(R.string.hour)
-
-        tvHeartAvgHeart.text = sportModleInfo?.reportAvgHeart!!.toString()
-        tvHeartMaxHeart.text = sportModleInfo?.reportMaxHeart!!.toString()
-        tvHeartMinHeart.text = sportModleInfo?.reportMinHeart!!.toString()
-        tvDeviceSportHeartLimit.text = NewTimeUtils.getTimeString(sportModleInfo?.reportHeartLimitTime!!)
-        tvDeviceSportHeartAnaerobic.text = NewTimeUtils.getTimeString(sportModleInfo?.reportHeartAnaerobic!!)
-        tvDeviceSportHeartAerobic.text = NewTimeUtils.getTimeString(sportModleInfo?.reportHeartAerobic!!)
-        tvDeviceSportHeartFatBurning.text = NewTimeUtils.getTimeString(sportModleInfo?.reportHeartFatBurning!!)
-        tvDeviceSportHeartWarmUp.text = NewTimeUtils.getTimeString(sportModleInfo?.reportHeartWarmUp!!)
-        var durationTime = sportModleInfo?.reportHeartLimitTime!! + sportModleInfo?.reportHeartAnaerobic!! + sportModleInfo?.reportHeartAerobic!! + sportModleInfo?.reportHeartFatBurning!! + sportModleInfo?.reportHeartWarmUp!!;
-        if (durationTime != 0L) {
-            var progress1: Long = sportModleInfo?.reportHeartLimitTime!! * 100 / durationTime
-            var progress2: Long = sportModleInfo?.reportHeartAnaerobic!! * 100 / durationTime
-            var progress3: Long = sportModleInfo?.reportHeartAerobic!! * 100 / durationTime
-            var progress4: Long = sportModleInfo?.reportHeartFatBurning!! * 100 / durationTime
-            if (sportModleInfo?.reportHeartLimitTime!! > 0 && progress1 == 0L) {
-                progress1 = 1
-            }
-            if (sportModleInfo?.reportHeartAnaerobic!! > 0 && progress2 == 0L) {
-                progress2 = 1
-            }
-            if (sportModleInfo?.reportHeartAerobic!! > 0 && progress3 == 0L) {
-                progress3 = 1
-            }
-            if (sportModleInfo?.reportHeartFatBurning!! > 0 && progress4 == 0L) {
-                progress4 = 1
+                if (mBleDeviceTools._device_unit == 1) {
+                    avgPaceString = String.format("%1$02d'%2$02d\"", (avgPace / 60).toInt(), (avgPace % 60).toInt())
+                } else {
+                    avgPace = sportModleInfo?.reportDuration!! / ((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f))
+                    avgPaceString = String.format("%1$02d'%2$02d\"", (avgPace / 60).toInt(), (avgPace % 60).toInt())
+                }
             }
 
-            val progress5: Long = 100 - progress1 - progress2 - progress3 - progress4
+            tvTitleValue1.text = NewTimeUtils.getTimeString(sportModleInfo?.reportDuration!!)
+            tvTitleValue2.text = NewTimeUtils.getStringDate(sportModleInfo?.reportSportStartTime!!, NewTimeUtils.HHMMSS) + " - " + NewTimeUtils.getStringDate(sportModleInfo?.reportSportEndTime!!, NewTimeUtils.HHMMSS)
+            tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0) + resources.getString(R.string.sport_distance_unit)
+            tvTitleValue4.text = sportModleInfo?.reportCal.toString() + resources.getString(R.string.big_calory)
+            tvTitleValue5.text = avgPaceString
+            tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + resources.getString(R.string.speed_unit)
+            tvTitleValue7.text = sportModleInfo?.reportAvgHeart!!.toString() + resources.getString(R.string.bpm)
+            tvTitleValue8.text = sportModleInfo?.reportMaxHeart!!.toString() + resources.getString(R.string.bpm)
+            tvTitleValue9.text = sportModleInfo?.reportTotalStep!!.toString() + resources.getString(R.string.steps)
+            tvTitleValue10.text = (sportModleInfo?.reportTotalStep!! / (sportModleInfo?.reportDuration!! / 60.0)).toInt().toString() + resources.getString(R.string.device_sport_step_speed_unit)
+            tvTitleValue11.text = sportModleInfo?.reportCumulativeRise!!.toString() + resources.getString(R.string.device_sport_unit)
+            tvTitleValue12.text = sportModleInfo?.reportCumulativeDecline!!.toString() + resources.getString(R.string.device_sport_unit)
 
-            tvDeviceSportHeartLimitProgress.text = "$progress1%"
-            tvDeviceSportHeartAnaerobicProgress.text = "$progress2%"
-            tvDeviceSportHeartAerobicProgress.text = "$progress3%"
-            tvDeviceSportHeartFatBurningProgress.text = "$progress4%"
-            tvDeviceSportHeartWarmUpProgress.text = "$progress5%"
-            heartDistributedView.start(progress1.toInt(), progress2.toInt(), progress3.toInt(), progress4.toInt(), progress5.toInt())
-        }
-
-        tvAvgPace.text = avgPaceString
-        val maxPace: Long = sportModleInfo?.reportFastPace!!
-        if (SysUtils.isShow00Pace(maxPace.toInt())) {
-            tvMaxPace.text = String.format("%1$02d'%2$02d\"", 0, 0)
-        } else {
-            if (unitType == 1) {
-                tvMaxPace.text = String.format("%1$02d'%2$02d\"", (maxPace / 60).toInt(), (maxPace % 60).toInt())
-            } else {
-                tvMaxPace.text = String.format("%1$02d'%2$02d\"", (maxPace * 1.61f / 60).toInt(), (maxPace * 1.61f % 60).toInt())
-            }
-        }
-
-        val minPace: Long = sportModleInfo?.reportSlowestPace!!
-        if (SysUtils.isShow00Pace(minPace.toInt())) {
-            tvMinPace.text = String.format("%1$02d'%2$02d\"", 0, 0)
-        } else {
-            if (unitType == 1) {
-                tvMinPace.text = String.format("%1$02d'%2$02d\"", (minPace / 60).toInt(), (minPace % 60).toInt())
-            } else {
-                tvMinPace.text = String.format("%1$02d'%2$02d\"", (minPace * 1.61f / 60).toInt(), (minPace * 1.61f % 60).toInt())
-            }
-        }
-
-        if (sportModleInfo?.reportTotalStep!! == 0L) {
-            goneStep()
-        } else {
-            tvAvgStepSpeed.text = (sportModleInfo?.reportTotalStep!! / (sportModleInfo?.reportDuration!! / 60.0)).toInt().toString()
-            tvMaxStepSpeed.text = (sportModleInfo?.reportMaxStepSpeed!!).toString()
-            tvAvgStepLength.text = (sportModleInfo?.reportDistance!! * 100 / sportModleInfo?.reportTotalStep!!).toString()
             if (unitType != 1) {
-                tvAvgStepLength.text = caloriesFmt.format(sportModleInfo?.reportDistance!! * 100 * 0.393 / sportModleInfo?.reportTotalStep!!)
-                tvAvgStepLengthUnit.text = resources.getText(R.string.unit_in)
+                tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) + resources.getString(R.string.unit_mi)
+                tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + resources.getString(R.string.speed_unit_mi)
+                tvTitleValue11.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f) + resources.getString(R.string.unit_ft)
+                tvTitleValue12.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + resources.getString(R.string.unit_ft)
             }
-        }
 
-        tvAvgSpeed.text = caloriesFmt.format((sportModleInfo?.reportDistance!! / 1000.0 / (sportModleInfo?.reportDuration!! / 3600.0))).toString()
-        if (unitType != 1) {
-            tvAvgSpeed.text = caloriesFmt.format((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f / (sportModleInfo?.reportDuration!! / 3600.0))).toString()
-            tvAvgSpeedUnit.text = resources.getText(R.string.speed_unit_mi)
-        }
+            tvTrainingEffectScore.text = sportModleInfo?.reportTrainingEffect!!.toString()
+            tvMaxOxygenIntakeTitleValue.text = sportModleInfo?.reportMaxOxygenIntake!!.toString() + resources.getString(R.string.device_sport_maxOxygenIntake_unit)
+            tvRecoveryTimeValue.text = sportModleInfo?.reportRecoveryTime!!.toString() + resources.getString(R.string.hour)
 
-        if (sportModleInfo?.reportFastSpeed!! == 0f) {
-            layoutSpeed.visibility = View.GONE
-        } else {
-            tvMaxSpeed.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!!)
-            if (unitType != 1) {
-                tvMaxSpeed.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!! / 1.61f)
-                tvMaxSpeedUnit.text = resources.getText(R.string.speed_unit_mi)
-            }
-        }
-
-        tvTotalCal.text = sportModleInfo?.reportCal!!.toString()
-        tvAvgCal.text = caloriesFmt.format((sportModleInfo?.reportCal!! / (sportModleInfo?.reportDuration!! / 60.0))).toString()
-
-        tvCumulativeRise.text = sportModleInfo?.reportCumulativeRise!!.toString()
-        tvCumulativeDecline.text = sportModleInfo?.reportCumulativeDecline!!.toString()
-        if (unitType != 1) {
-            tvCumulativeRise.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f) + resources.getString(R.string.unit_ft)
-            tvCumulativeDecline.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + resources.getString(R.string.unit_ft)
-        }
-
-        mPaceCurveChartView.setType(1)
-        mHeartCurveChartView.setType(2)
-
-        val sportDataString = sportModleInfo?.recordPointSportData
-        val sportData = sportDataString?.split("-")
-        var deviceSportList = ArrayList<DeviceSportEntity>()
-        if (sportData != null) {
-            deviceSportList = DeviceSportManager.instance.parsingFitness(sportType, sportData)
-        }
-
-        if (deviceSportList.size > 16) {
-            val oneGroup = deviceSportList.size / 16
-            val lastData = deviceSportList.size % 16
-            if (lastData * 1f / oneGroup < 0.1) {
-                var xTime = oneGroup * 1f / 60
-                val xData = ArrayList<Double>()
-                for (i in 0 until 16) {
-                    xData.add((xTime * (i + 1)).toDouble())
+            tvHeartAvgHeart.text = sportModleInfo?.reportAvgHeart!!.toString()
+            tvHeartMaxHeart.text = sportModleInfo?.reportMaxHeart!!.toString()
+            tvHeartMinHeart.text = sportModleInfo?.reportMinHeart!!.toString()
+            tvDeviceSportHeartLimit.text = NewTimeUtils.getTimeString(sportModleInfo?.reportHeartLimitTime!!)
+            tvDeviceSportHeartAnaerobic.text = NewTimeUtils.getTimeString(sportModleInfo?.reportHeartAnaerobic!!)
+            tvDeviceSportHeartAerobic.text = NewTimeUtils.getTimeString(sportModleInfo?.reportHeartAerobic!!)
+            tvDeviceSportHeartFatBurning.text = NewTimeUtils.getTimeString(sportModleInfo?.reportHeartFatBurning!!)
+            tvDeviceSportHeartWarmUp.text = NewTimeUtils.getTimeString(sportModleInfo?.reportHeartWarmUp!!)
+            var durationTime = sportModleInfo?.reportHeartLimitTime!! + sportModleInfo?.reportHeartAnaerobic!! + sportModleInfo?.reportHeartAerobic!! + sportModleInfo?.reportHeartFatBurning!! + sportModleInfo?.reportHeartWarmUp!!;
+            if (durationTime != 0L) {
+                var progress1: Long = sportModleInfo?.reportHeartLimitTime!! * 100 / durationTime
+                var progress2: Long = sportModleInfo?.reportHeartAnaerobic!! * 100 / durationTime
+                var progress3: Long = sportModleInfo?.reportHeartAerobic!! * 100 / durationTime
+                var progress4: Long = sportModleInfo?.reportHeartFatBurning!! * 100 / durationTime
+                if (sportModleInfo?.reportHeartLimitTime!! > 0 && progress1 == 0L) {
+                    progress1 = 1
+                }
+                if (sportModleInfo?.reportHeartAnaerobic!! > 0 && progress2 == 0L) {
+                    progress2 = 1
+                }
+                if (sportModleInfo?.reportHeartAerobic!! > 0 && progress3 == 0L) {
+                    progress3 = 1
+                }
+                if (sportModleInfo?.reportHeartFatBurning!! > 0 && progress4 == 0L) {
+                    progress4 = 1
                 }
 
-                val yHeartData = ArrayList<Double>()
-                val yPaceData = ArrayList<Double>()
-                val yStepSpeedData = ArrayList<Double>()
-                val ySpeedData = ArrayList<Double>()
-                val yCalData = ArrayList<Double>()
-                val yHeightData = ArrayList<Double>()
+                val progress5: Long = 100 - progress1 - progress2 - progress3 - progress4
 
-                for (i in 0..15) {
-                    var heart: Double = 0.0
-                    var distance: Double = 0.0
-                    var height: Double = 0.0
-                    var step: Int = 0
-                    var cal: Double = 0.0
-                    for (j in i * oneGroup until (i + 1) * oneGroup) {
-                        var deviceSportEntity = deviceSportList[j];
-                        heart += deviceSportEntity.heart
-                        distance += deviceSportEntity.distance
-                        height += deviceSportEntity.height
-                        step += deviceSportEntity.step
-                        cal += deviceSportEntity.cal
+                tvDeviceSportHeartLimitProgress.text = "$progress1%"
+                tvDeviceSportHeartAnaerobicProgress.text = "$progress2%"
+                tvDeviceSportHeartAerobicProgress.text = "$progress3%"
+                tvDeviceSportHeartFatBurningProgress.text = "$progress4%"
+                tvDeviceSportHeartWarmUpProgress.text = "$progress5%"
+                heartDistributedView.start(progress1.toInt(), progress2.toInt(), progress3.toInt(), progress4.toInt(), progress5.toInt())
+            }
+
+            tvAvgPace.text = avgPaceString
+            val maxPace: Long = sportModleInfo?.reportFastPace!!
+            if (SysUtils.isShow00Pace(maxPace.toInt())) {
+                tvMaxPace.text = String.format("%1$02d'%2$02d\"", 0, 0)
+            } else {
+                if (unitType == 1) {
+                    tvMaxPace.text = String.format("%1$02d'%2$02d\"", (maxPace / 60).toInt(), (maxPace % 60).toInt())
+                } else {
+                    tvMaxPace.text = String.format("%1$02d'%2$02d\"", (maxPace * 1.61f / 60).toInt(), (maxPace * 1.61f % 60).toInt())
+                }
+            }
+
+            val minPace: Long = sportModleInfo?.reportSlowestPace!!
+            if (SysUtils.isShow00Pace(minPace.toInt())) {
+                tvMinPace.text = String.format("%1$02d'%2$02d\"", 0, 0)
+            } else {
+                if (unitType == 1) {
+                    tvMinPace.text = String.format("%1$02d'%2$02d\"", (minPace / 60).toInt(), (minPace % 60).toInt())
+                } else {
+                    tvMinPace.text = String.format("%1$02d'%2$02d\"", (minPace * 1.61f / 60).toInt(), (minPace * 1.61f % 60).toInt())
+                }
+            }
+
+            if (sportModleInfo?.reportTotalStep!! == 0L) {
+                goneStep()
+            } else {
+                tvAvgStepSpeed.text = (sportModleInfo?.reportTotalStep!! / (sportModleInfo?.reportDuration!! / 60.0)).toInt().toString()
+                tvMaxStepSpeed.text = (sportModleInfo?.reportMaxStepSpeed!!).toString()
+                tvAvgStepLength.text = (sportModleInfo?.reportDistance!! * 100 / sportModleInfo?.reportTotalStep!!).toString()
+                if (unitType != 1) {
+                    tvAvgStepLength.text = caloriesFmt.format(sportModleInfo?.reportDistance!! * 100 * 0.393 / sportModleInfo?.reportTotalStep!!)
+                    tvAvgStepLengthUnit.text = resources.getText(R.string.unit_in)
+                }
+            }
+
+            tvAvgSpeed.text = caloriesFmt.format((sportModleInfo?.reportDistance!! / 1000.0 / (sportModleInfo?.reportDuration!! / 3600.0))).toString()
+            if (unitType != 1) {
+                tvAvgSpeed.text = caloriesFmt.format((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f / (sportModleInfo?.reportDuration!! / 3600.0))).toString()
+                tvAvgSpeedUnit.text = resources.getText(R.string.speed_unit_mi)
+            }
+
+            if (sportModleInfo?.reportFastSpeed!! == 0f) {
+                layoutSpeed.visibility = View.GONE
+            } else {
+                tvMaxSpeed.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!!)
+                if (unitType != 1) {
+                    tvMaxSpeed.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!! / 1.61f)
+                    tvMaxSpeedUnit.text = resources.getText(R.string.speed_unit_mi)
+                }
+            }
+
+            tvTotalCal.text = sportModleInfo?.reportCal!!.toString()
+            tvAvgCal.text = caloriesFmt.format((sportModleInfo?.reportCal!! / (sportModleInfo?.reportDuration!! / 60.0))).toString()
+
+            tvCumulativeRise.text = sportModleInfo?.reportCumulativeRise!!.toString()
+            tvCumulativeDecline.text = sportModleInfo?.reportCumulativeDecline!!.toString()
+            if (unitType != 1) {
+                tvCumulativeRise.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f) + resources.getString(R.string.unit_ft)
+                tvCumulativeDecline.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + resources.getString(R.string.unit_ft)
+            }
+
+            mPaceCurveChartView.setType(1)
+            mHeartCurveChartView.setType(2)
+
+            val sportDataString = sportModleInfo?.recordPointSportData
+            val sportData = sportDataString?.split("-")
+            var deviceSportList = ArrayList<DeviceSportEntity>()
+            if (sportData != null) {
+                deviceSportList = DeviceSportManager.instance.parsingFitness(sportType, sportData)
+            }
+
+            if (deviceSportList.size > 16) {
+                val oneGroup = deviceSportList.size / 16
+                val lastData = deviceSportList.size % 16
+                if (lastData * 1f / oneGroup < 0.1) {
+                    var xTime = oneGroup * 1f / 60
+                    val xData = ArrayList<Double>()
+                    for (i in 0 until 16) {
+                        xData.add((xTime * (i + 1)).toDouble())
                     }
-                    yHeartData.add(heart / oneGroup)
-                    if (distance == 0.0) {
-                        yPaceData.add(0.0)
-                    } else {
-                        var yMinute = oneGroup * 1000 / (60.0 * distance)
-                        if (SysUtils.isShow00Pace((yMinute * 60).toInt())) {
+
+                    val yHeartData = ArrayList<Double>()
+                    val yPaceData = ArrayList<Double>()
+                    val yStepSpeedData = ArrayList<Double>()
+                    val ySpeedData = ArrayList<Double>()
+                    val yCalData = ArrayList<Double>()
+                    val yHeightData = ArrayList<Double>()
+
+                    for (i in 0..15) {
+                        var heart: Double = 0.0
+                        var distance: Double = 0.0
+                        var height: Double = 0.0
+                        var step: Int = 0
+                        var cal: Double = 0.0
+                        for (j in i * oneGroup until (i + 1) * oneGroup) {
+                            var deviceSportEntity = deviceSportList[j];
+                            heart += deviceSportEntity.heart
+                            distance += deviceSportEntity.distance
+                            height += deviceSportEntity.height
+                            step += deviceSportEntity.step
+                            cal += deviceSportEntity.cal
+                        }
+                        yHeartData.add(heart / oneGroup)
+                        if (distance == 0.0) {
                             yPaceData.add(0.0)
                         } else {
-                            if (unitType == 1) {
-                                yPaceData.add(oneGroup * 1000 / (60.0 * distance))
+                            var yMinute = oneGroup * 1000 / (60.0 * distance)
+                            if (SysUtils.isShow00Pace((yMinute * 60).toInt())) {
+                                yPaceData.add(0.0)
                             } else {
-                                yPaceData.add(oneGroup * 1000 / (60.0 * distance / 1.61f))
+                                if (unitType == 1) {
+                                    yPaceData.add(oneGroup * 1000 / (60.0 * distance))
+                                } else {
+                                    yPaceData.add(oneGroup * 1000 / (60.0 * distance / 1.61f))
+                                }
                             }
                         }
+
+                        if (unitType == 1) {
+                            ySpeedData.add(distance * 3600 / (oneGroup * 1000))
+                            yHeightData.add(height)
+                        } else {
+                            ySpeedData.add(distance * 3600 / (oneGroup * 1000 * 1.61f))
+                            yHeightData.add(height * 3.28f)
+                        }
+
+                        yStepSpeedData.add(step * 60.0 / oneGroup)
+                        yCalData.add(cal)
+                    }
+                    mHeartCurveChartView.setParameter(xData, yHeartData)
+                    mPaceCurveChartView.setParameter(xData, yPaceData)
+                    mStepSpeedCurveChartView.setParameter(xData, yStepSpeedData)
+                    mSpeedCurveChartView.setParameter(xData, ySpeedData)
+                    mCalCurveChartView.setParameter(xData, yCalData)
+                    mHeightCurveChartView.setParameter(xData, yHeightData)
+
+                } else {
+                    // 17 段数据
+                    var xTime = oneGroup * 1f / 60
+                    val xData = ArrayList<Double>()
+                    for (i in 0 until 16) {
+                        xData.add((xTime * (i + 1)).toDouble())
+                    }
+                    xData.add(lastData * 1.0 / 60 + xTime * 16)
+
+                    val yHeartData = ArrayList<Double>()
+                    val yPaceData = ArrayList<Double>()
+                    val yStepSpeedData = ArrayList<Double>()
+                    val ySpeedData = ArrayList<Double>()
+                    val yCalData = ArrayList<Double>()
+                    val yHeightData = ArrayList<Double>()
+
+                    for (i in 0..15) {
+                        var heart: Double = 0.0
+                        var distance: Double = 0.0
+                        var height: Double = 0.0
+                        var step: Int = 0
+                        var cal: Double = 0.0
+                        for (j in i * oneGroup until (i + 1) * oneGroup) {
+                            var deviceSportEntity = deviceSportList[j];
+                            heart += deviceSportEntity.heart
+                            distance += deviceSportEntity.distance
+                            height += deviceSportEntity.height
+                            step += deviceSportEntity.step
+                            cal += deviceSportEntity.cal
+                        }
+                        yHeartData.add(heart / oneGroup)
+                        if (distance == 0.0) {
+                            yPaceData.add(0.0)
+                        } else {
+                            val yMinute = oneGroup * 1000 / (60.0 * distance)
+                            if (SysUtils.isShow00Pace((yMinute * 60).toInt())) {
+                                yPaceData.add(0.0)
+                            } else {
+                                if (unitType == 1) {
+                                    yPaceData.add(oneGroup * 1000 / (60.0 * distance))
+                                } else {
+                                    yPaceData.add(oneGroup * 1000 / (60.0 * distance / 1.61f))
+                                }
+                            }
+                        }
+
+                        if (unitType == 1) {
+                            ySpeedData.add(distance * 3600 / (oneGroup * 1000))
+                            yHeightData.add(height)
+                        } else {
+                            ySpeedData.add(distance * 3600 / (oneGroup * 1000 * 1.61f))
+                            yHeightData.add(height * 3.28f)
+                        }
+                        yStepSpeedData.add(step * 60.0 / oneGroup)
+                        yCalData.add(cal)
                     }
 
-                    if (unitType == 1) {
-                        ySpeedData.add(distance * 3600 / (oneGroup * 1000))
-                        yHeightData.add(height)
-                    } else {
-                        ySpeedData.add(distance * 3600 / (oneGroup * 1000 * 1.61f))
-                        yHeightData.add(height * 3.28f)
-                    }
-
-                    yStepSpeedData.add(step * 60.0 / oneGroup)
-                    yCalData.add(cal)
-                }
-                mHeartCurveChartView.setParameter(xData, yHeartData)
-                mPaceCurveChartView.setParameter(xData, yPaceData)
-                mStepSpeedCurveChartView.setParameter(xData, yStepSpeedData)
-                mSpeedCurveChartView.setParameter(xData, ySpeedData)
-                mCalCurveChartView.setParameter(xData, yCalData)
-                mHeightCurveChartView.setParameter(xData, yHeightData)
-
-            } else {
-                // 17 段数据
-                var xTime = oneGroup * 1f / 60
-                val xData = ArrayList<Double>()
-                for (i in 0 until 16) {
-                    xData.add((xTime * (i + 1)).toDouble())
-                }
-                xData.add(lastData * 1.0 / 60 + xTime * 16)
-
-                val yHeartData = ArrayList<Double>()
-                val yPaceData = ArrayList<Double>()
-                val yStepSpeedData = ArrayList<Double>()
-                val ySpeedData = ArrayList<Double>()
-                val yCalData = ArrayList<Double>()
-                val yHeightData = ArrayList<Double>()
-
-                for (i in 0..15) {
+                    // 第十七段数据
                     var heart: Double = 0.0
                     var distance: Double = 0.0
                     var height: Double = 0.0
                     var step: Int = 0
                     var cal: Double = 0.0
-                    for (j in i * oneGroup until (i + 1) * oneGroup) {
+                    for (j in 16 * oneGroup until 16 * oneGroup + lastData) {
                         var deviceSportEntity = deviceSportList[j];
                         heart += deviceSportEntity.heart
                         distance += deviceSportEntity.distance
@@ -367,6 +409,9 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                         }
                     }
 
+                    yStepSpeedData.add(step * 60.0 / oneGroup)
+                    yCalData.add(cal)
+
                     if (unitType == 1) {
                         ySpeedData.add(distance * 3600 / (oneGroup * 1000))
                         yHeightData.add(height)
@@ -374,87 +419,45 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                         ySpeedData.add(distance * 3600 / (oneGroup * 1000 * 1.61f))
                         yHeightData.add(height * 3.28f)
                     }
-                    yStepSpeedData.add(step * 60.0 / oneGroup)
-                    yCalData.add(cal)
+
+
+                    mHeartCurveChartView.setParameter(xData, yHeartData)
+                    mPaceCurveChartView.setParameter(xData, yPaceData)
+                    mStepSpeedCurveChartView.setParameter(xData, yStepSpeedData)
+                    mSpeedCurveChartView.setParameter(xData, ySpeedData)
+                    mCalCurveChartView.setParameter(xData, yCalData)
+                    mHeightCurveChartView.setParameter(xData, yHeightData)
                 }
 
-                // 第十七段数据
-                var heart: Double = 0.0
-                var distance: Double = 0.0
-                var height: Double = 0.0
-                var step: Int = 0
-                var cal: Double = 0.0
-                for (j in 16 * oneGroup until 16 * oneGroup + lastData) {
-                    var deviceSportEntity = deviceSportList[j];
-                    heart += deviceSportEntity.heart
-                    distance += deviceSportEntity.distance
-                    height += deviceSportEntity.height
-                    step += deviceSportEntity.step
-                    cal += deviceSportEntity.cal
-                }
-                yHeartData.add(heart / oneGroup)
-                if (distance == 0.0) {
-                    yPaceData.add(0.0)
-                } else {
-                    val yMinute = oneGroup * 1000 / (60.0 * distance)
-                    if (SysUtils.isShow00Pace((yMinute * 60).toInt())) {
-                        yPaceData.add(0.0)
+            } else {
+                val xData = ArrayList<Double>()
+                val yData = ArrayList<Double>()
+                for (i in 0 until 17) {
+                    if (i == 16) {
+                        xData.add(0.8f + 16 * 1.3)
                     } else {
-                        if (unitType == 1) {
-                            yPaceData.add(oneGroup * 1000 / (60.0 * distance))
+                        xData.add(1.3 * (i + 1))
+                    }
+                }
+                for (i in 0 until 17) {
+                    if (i == 16) {
+                        yData.add(21.0)
+                    } else {
+                        if (i % 2 == 0) {
+                            yData.add(65.0 / 2)
                         } else {
-                            yPaceData.add(oneGroup * 1000 / (60.0 * distance / 1.61f))
+                            yData.add(65.0)
                         }
                     }
                 }
-
-                yStepSpeedData.add(step * 60.0 / oneGroup)
-                yCalData.add(cal)
-
-                if (unitType == 1) {
-                    ySpeedData.add(distance * 3600 / (oneGroup * 1000))
-                    yHeightData.add(height)
-                } else {
-                    ySpeedData.add(distance * 3600 / (oneGroup * 1000 * 1.61f))
-                    yHeightData.add(height * 3.28f)
-                }
-
-
-                mHeartCurveChartView.setParameter(xData, yHeartData)
-                mPaceCurveChartView.setParameter(xData, yPaceData)
-                mStepSpeedCurveChartView.setParameter(xData, yStepSpeedData)
-                mSpeedCurveChartView.setParameter(xData, ySpeedData)
-                mCalCurveChartView.setParameter(xData, yCalData)
-                mHeightCurveChartView.setParameter(xData, yHeightData)
+                mHeartCurveChartView.setParameter(xData, yData)
+                mPaceCurveChartView.setParameter(xData, yData)
+                mStepSpeedCurveChartView.setParameter(xData, yData)
+                mSpeedCurveChartView.setParameter(xData, yData)
+                mCalCurveChartView.setParameter(xData, yData)
+                mHeightCurveChartView.setParameter(xData, yData)
             }
-
-        } else {
-            val xData = ArrayList<Double>()
-            val yData = ArrayList<Double>()
-            for (i in 0 until 17) {
-                if (i == 16) {
-                    xData.add(0.8f + 16 * 1.3)
-                } else {
-                    xData.add(1.3 * (i + 1))
-                }
-            }
-            for (i in 0 until 17) {
-                if (i == 16) {
-                    yData.add(21.0)
-                } else {
-                    if (i % 2 == 0) {
-                        yData.add(65.0 / 2)
-                    } else {
-                        yData.add(65.0)
-                    }
-                }
-            }
-            mHeartCurveChartView.setParameter(xData, yData)
-            mPaceCurveChartView.setParameter(xData, yData)
-            mStepSpeedCurveChartView.setParameter(xData, yData)
-            mSpeedCurveChartView.setParameter(xData, yData)
-            mCalCurveChartView.setParameter(xData, yData)
-            mHeightCurveChartView.setParameter(xData, yData)
+        } catch (e: Exception) {
         }
     }
 
