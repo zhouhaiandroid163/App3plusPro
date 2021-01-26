@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">lungimea medie a pasului</string>
     <string name="device_sport_cal_avg">calorii medii</string>
     <string name="device_sport_cal_activity">calorii de activitate</string>
-    <string name="device_sport_cal_unit">kcal / min</string>
+    <string name="device_sport_cal_unit">CAL / min</string>
     <string name="device_sport_speed">viteză</string>
     <string name="device_sport_speed_avg">viteza medie</string>
     <string name="device_sport_speed_max">viteză maximă</string>

@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">priemerná dĺžka kroku</string>
     <string name="device_sport_cal_avg">priemerné kalórie</string>
     <string name="device_sport_cal_activity">aktivita kalórií</string>
-    <string name="device_sport_cal_unit">kcal / min</string>
+    <string name="device_sport_cal_unit">CAL / min</string>
     <string name="device_sport_speed">rýchlosť</string>
     <string name="device_sport_speed_avg">priemerná rýchlosť</string>
     <string name="device_sport_speed_max">maximálna rýchlosť</string>

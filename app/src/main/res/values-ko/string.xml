@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">평균 걸음 길이</string>
     <string name="device_sport_cal_avg">평균 칼로리</string>
     <string name="device_sport_cal_activity">활동 칼로리</string>
-    <string name="device_sport_cal_unit">kcal / 분</string>
+    <string name="device_sport_cal_unit">CAL / 분</string>
     <string name="device_sport_speed">속도</string>
     <string name="device_sport_speed_avg">평균 속도</string>
     <string name="device_sport_speed_max">최대 속도</string>

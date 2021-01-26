@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">平均ステップ長</string>
     <string name="device_sport_cal_avg">平均カロリー</string>
     <string name="device_sport_cal_activity">アクティビティカロリー</string>
-    <string name="device_sport_cal_unit"> kcal / min </string>
+    <string name="device_sport_cal_unit"> CAL / min </string>
     <string name="device_sport_speed">速度</string>
     <string name="device_sport_speed_avg">平均速度</string>
     <string name="device_sport_speed_max">最高速度</string>

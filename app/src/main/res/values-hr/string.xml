@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">prosječna duljina koraka</string>
     <string name="device_sport_cal_avg">prosječne kalorije</string>
     <string name="device_sport_cal_activity">kalorije aktivnosti</string>
-    <string name="device_sport_cal_unit">kcal / min</string>
+    <string name="device_sport_cal_unit">CAL / min</string>
     <string name="device_sport_speed">brzina</string>
     <string name="device_sport_speed_avg">prosječna brzina</string>
     <string name="device_sport_speed_max">maksimalna brzina</string>

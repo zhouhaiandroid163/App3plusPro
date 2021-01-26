@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">Average stride</string>
     <string name="device_sport_cal_avg">Average calories</string>
     <string name="device_sport_cal_activity">Activity calories</string>
-    <string name="device_sport_cal_unit">kcal/min</string>
+    <string name="device_sport_cal_unit">CAL/min</string>
     <string name="device_sport_speed">speed</string>
     <string name="device_sport_speed_avg">Average speed</string>
     <string name="device_sport_speed_max">Maximum speed</string>
@@ -1004,7 +1004,7 @@
     <string name="mmHg">mmHg</string>
     <string name="centimeter">cm</string>
     <string name="kg">Kg</string>
-    <string name="big_calory">Kcal</string>
+    <string name="big_calory">CAL</string>
     <string name="sport_distance_unit">km</string>
     <string name="unit_in">in</string><!--  英寸-对应厘米-->
     <string name="unit_lb">lbs</string><!--  英镑-对应公斤-->

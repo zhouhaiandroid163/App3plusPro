@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">average na haba ng hakbang</string>
     <string name="device_sport_cal_avg">average ng mga calibre</string>
     <string name="device_sport_cal_activity">aktibidad kaloriya</string>
-    <string name="device_sport_cal_unit">kcal / min</string>
+    <string name="device_sport_cal_unit">CAL / min</string>
     <string name="device_sport_speed">bilis</string>
     <string name="device_sport_speed_avg">average na bilis</string>
     <string name="device_sport_speed_max">maximum na bilis</string>

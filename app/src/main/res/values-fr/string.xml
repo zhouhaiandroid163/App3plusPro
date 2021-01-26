@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">longueur de pas moyenne</string>
     <string name="device_sport_cal_avg">calories moyennes</string>
     <string name="device_sport_cal_activity">calories d\'activité</string>
-    <string name="device_sport_cal_unit">kcal / min</string>
+    <string name="device_sport_cal_unit">CAL / min</string>
     <string name="device_sport_speed">vitesse</string>
     <string name="device_sport_speed_avg">vitesse moyenne</string>
     <string name="device_sport_speed_max">vitesse maximale</string>

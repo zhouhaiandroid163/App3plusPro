@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">gennemsnitlig trinlængde</string>
     <string name="device_sport_cal_avg">gennemsnitlige kalorier</string>
     <string name="device_sport_cal_activity">aktivitetskalorier</string>
-    <string name="device_sport_cal_unit">kcal / min</string>
+    <string name="device_sport_cal_unit">CAL / min</string>
     <string name="device_sport_speed">hastighed</string>
     <string name="device_sport_speed_avg">gennemsnitshastighed</string>
     <string name="device_sport_speed_max">maksimal hastighed</string>

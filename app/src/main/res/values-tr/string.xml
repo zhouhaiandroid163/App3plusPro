@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">ortalama adım uzunluğu</string>
     <string name="device_sport_cal_avg">ortalama kalori</string>
     <string name="device_sport_cal_activity">aktivite kalorileri</string>
-    <string name="device_sport_cal_unit">kcal / dak</string>
+    <string name="device_sport_cal_unit">CAL / dak</string>
     <string name="device_sport_speed">hız</string>
     <string name="device_sport_speed_avg">ortalama hız</string>
     <string name="device_sport_speed_max">maksimum hız</string>

@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">átlagos lépéshossz</string>
     <string name="device_sport_cal_avg">átlagos kalória</string>
     <string name="device_sport_cal_activity">tevékenység kalóriái</string>
-    <string name="device_sport_cal_unit">kcal / perc</string>
+    <string name="device_sport_cal_unit">CAL / perc</string>
     <string name="device_sport_speed">sebesség</string>
     <string name="device_sport_speed_avg">átlagos sebesség</string>
     <string name="device_sport_speed_max">maximális sebesség</string>

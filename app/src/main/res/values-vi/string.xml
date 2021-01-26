@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">độ dài bước trung bình</string>
     <string name="device_sport_cal_avg">calo trung bình</string>
     <string name="device_sport_cal_activity">lượng calo hoạt động</string>
-    <string name="device_sport_cal_unit">kcal / phút</string>
+    <string name="device_sport_cal_unit">CAL / phút</string>
     <string name="device_sport_speed">tốc độ</string>
     <string name="device_sport_speed_avg">tốc độ trung bình</string>
     <string name="device_sport_speed_max">tốc độ tối đa</string>

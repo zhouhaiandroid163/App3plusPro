@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">panjang langkah purata</string>
     <string name="device_sport_cal_avg">kalori purata</string>
     <string name="device_sport_cal_activity">kalori aktiviti</string>
-    <string name="device_sport_cal_unit">kcal / min</string>
+    <string name="device_sport_cal_unit">CAL / min</string>
     <string name="device_sport_speed">kelajuan</string>
     <string name="device_sport_speed_avg">kelajuan purata</string>
     <string name="device_sport_speed_max">kelajuan maksimum</string>

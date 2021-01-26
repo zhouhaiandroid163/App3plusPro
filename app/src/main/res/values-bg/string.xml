@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">средна дължина на стъпката</string>
     <string name="device_sport_cal_avg">средни калории</string>
     <string name="device_sport_cal_activity">калории за активност</string>
-    <string name="device_sport_cal_unit">kcal / min</string>
+    <string name="device_sport_cal_unit">CAL / min</string>
     <string name="device_sport_speed">скорост</string>
     <string name="device_sport_speed_avg">средна скорост</string>
     <string name="device_sport_speed_max">максимална скорост</string>

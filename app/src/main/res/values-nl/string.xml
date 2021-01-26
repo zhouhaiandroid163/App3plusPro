@@ -940,7 +940,7 @@
     <string name="device_sport_step_speed_step_length">gemiddelde staplengte</string>
     <string name="device_sport_cal_avg">gemiddelde calorieën</string>
     <string name="device_sport_cal_activity">activiteit calorieën</string>
-    <string name="device_sport_cal_unit">kcal / min</string>
+    <string name="device_sport_cal_unit">CAL / min</string>
     <string name="device_sport_speed">snelheid</string>
     <string name="device_sport_speed_avg">gemiddelde snelheid</string>
     <string name="device_sport_speed_max">maximale snelheid</string>
