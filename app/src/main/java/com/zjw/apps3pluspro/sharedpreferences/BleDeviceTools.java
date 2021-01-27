@@ -1987,7 +1987,7 @@ public class BleDeviceTools {
 
     public int getTemperatureType() {
         SharedPreferences settin = getSharedPreferencesCommon();
-        return settin.getInt("TemperatureType", 0);
+        return settin.getInt("TemperatureType", 1);
     }
 
     // 温度 默认0 摄氏度

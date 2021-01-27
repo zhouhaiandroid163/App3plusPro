@@ -175,8 +175,8 @@
     <string name="sleep_state">Sleep condition</string>
     <string name="sleep_length_time">Sleep time</string>
     <string name="sober">Awake</string>
-    <string name="light_sleep">Light sleep</string>
-    <string name="deep_sleep">Deep sleep</string>
+    <string name="light_sleep">Light</string>
+    <string name="deep_sleep">Deep</string>
     <string name="get_into_sleep">Fall asleep</string>
     <string name="get_into_sleep_time">Fall asleep</string>
     <string name="get_up_time">Wake up time</string>
