@@ -17,6 +17,7 @@ import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.base.BaseFragment;
 import com.zjw.apps3pluspro.bleservice.BleTools;
 import com.zjw.apps3pluspro.module.device.BleConnectProblemActivity;
+import com.zjw.apps3pluspro.module.device.DeviceManager;
 import com.zjw.apps3pluspro.module.mine.app.AboutActivity;
 import com.zjw.apps3pluspro.module.mine.app.CommonProblemActivity;
 import com.zjw.apps3pluspro.module.mine.user.ProfileActivity;
@@ -69,6 +70,7 @@ public class MeFragment extends BaseFragment {
 
     private HomeActivity homeActivity;
     private UserSetTools mUserSetTools = BaseApplication.getUserSetTools();
+
     @Override
     public View initView() {
         homeActivity = (HomeActivity) this.getActivity();
@@ -241,8 +243,6 @@ public class MeFragment extends BaseFragment {
                 new DialogUtils.DialogClickListener() {
                     @Override
                     public void OnOK() {
-//                        homeActivity.disconnect();
-//                        MyOkHttpClient.getInstance().quitApp(context);
                         unBindDevice();
                     }
 
@@ -254,12 +254,8 @@ public class MeFragment extends BaseFragment {
     }
 
     private void unBindDevice() {
-        homeActivity.restore_factory();
-        Handler mHandler = new Handler();
-        mHandler.postDelayed(() -> {
-            homeActivity.disconnect();
-            BleTools.unBind(context);
-            MyOkHttpClient.getInstance().quitApp(context);
-        }, Constants.FINISH_ACTIVITY_DELAY_TIME);
+        homeActivity.disconnect();
+        DeviceManager.getInstance().unBind(context, null);
+        MyOkHttpClient.getInstance().quitApp(context);
     }
 }

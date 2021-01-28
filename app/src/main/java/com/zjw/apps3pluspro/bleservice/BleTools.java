@@ -760,25 +760,4 @@ public class BleTools {
         }
         return rsult;
     }
-
-
-    public static void unBind(Context context) {
-        UserSetTools mUserSetTools = BaseApplication.getUserSetTools();
-        BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
-        mBleDeviceTools.setWeatherSyncTime(0);
-        mBleDeviceTools.setLastUploadDataServiceTime(0);
-        mBleDeviceTools.setLastSyncTime(0);
-        mBleDeviceTools.setLastDeviceSportSyncTime(0);
-        requestServerTools.uploadUnDeviceData(context.getApplicationContext());
-        mBleDeviceTools.set_ble_mac("");
-        mBleDeviceTools.set_call_ble_mac("");
-        mBleDeviceTools.set_ble_name("");
-        mBleDeviceTools.set_call_ble_name("");
-        mUserSetTools.set_service_upload_device_info("");
-        mBleDeviceTools.set_device_theme_resolving_power_height(0);
-        mBleDeviceTools.set_device_theme_resolving_power_width(0);
-        BleService.setBlueToothStatus(BleConstant.STATE_DISCONNECTED);
-        DialMarketManager.getInstance().clearList();
-        PageManager.getInstance().cleanList();
-    }
 }

@@ -130,8 +130,9 @@ public class RequestJson {
     public static final String handleFriendUrl = requestUrl + "ffit/careFriend/updStatus";//处理好友的申请
 
     public static final String getAppUpdateInfoUrl = requestUrl + "ffit/appUpdate/getAppVersion";//APP升级
-    public static final String bindDevice = requestUrl + "ffit/device/conn";//绑定设备上传
+    public static final String uploadBindDevice = requestUrl + "ffit/device/conn";//绑定设备上传
     public static final String unbindDevice = requestUrl + "ffit/device/disConn";//解绑设备
+    public static final String downLoadBindDevice = requestUrl + "ffit/device/info";//用户设备信息
 
     public static final String feedbackUrl = requestUrl + "feekBackApi/feedback";//意见反馈//沿用老接口
     public static final String getDeviceUpdateInfoUrl = requestUrl + "ffit/firmware/getFirewareUpgradeVersion";//固件升级//沿用老接口
@@ -174,7 +175,6 @@ public class RequestJson {
     public static final String getWeatherForecast = requestUrl + "ffit/heFengApi/forecast7dWeather";
     //
     public static final String getLto = requestUrl + "ffit/bream/downloadLto";
-
 
 
     //====================================检查服务器============================================
@@ -1222,7 +1222,7 @@ public class RequestJson {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return new RequestInfo(request_json, bindDevice);
+        return new RequestInfo(request_json, uploadBindDevice);
     }
 
 
@@ -1732,7 +1732,7 @@ public class RequestJson {
             JSONArray jsonArray = new JSONArray();
             for (int i = 0; i < sportModleInfoList.size(); i++) {
                 SportModleInfo mSportModleInfo = sportModleInfoList.get(i);
-                if(TextUtils.isEmpty(mSportModleInfo.getRecordPointSportData())){
+                if (TextUtils.isEmpty(mSportModleInfo.getRecordPointSportData())) {
                     continue;
                 }
                 JSONObject mJSONObject = new JSONObject();
@@ -1808,7 +1808,7 @@ public class RequestJson {
             request_json = new JSONObject();
             try {
                 request_json.put("recordPointList", jsonArray);
-                if(jsonArray.length() == 0){
+                if (jsonArray.length() == 0) {
                     return null;
                 }
             } catch (JSONException e) {
@@ -2054,6 +2054,44 @@ public class RequestJson {
     public static RequestInfo getLto() {
         JSONObject request_json = new JSONObject();
         return new RequestInfo(request_json, getLto);
+    }
+
+    public static RequestInfo uploadBindDeviceInfo(String deviceMac, String deviceName) {
+        JSONObject requestJson = new JSONObject();
+        try {
+            requestJson.put("userId", BaseApplication.getUserId());
+            requestJson.put("deviceMac", deviceMac);
+            requestJson.put("deviceName", deviceName);
+            requestJson.put("deviceType", "0");
+            requestJson.put("deviceVersion", "0");
+            requestJson.put("deviceIdentifier", "0");
+            requestJson.put("appVersion", MyUtils.getAppInfo());
+            requestJson.put("appName", MyUtils.getAppName());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return new RequestInfo(requestJson, uploadBindDevice);
+    }
+
+    public static RequestInfo unBindDeviceInfo(String deviceMac) {
+        JSONObject requestJson = new JSONObject();
+        try {
+            requestJson.put("userId", BaseApplication.getUserId());
+            requestJson.put("deviceMac", deviceMac);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return new RequestInfo(requestJson, unbindDevice);
+    }
+
+    public static RequestInfo downLoadBindDevice() {
+        JSONObject requestJson = new JSONObject();
+        try {
+            requestJson.put("userId", BaseApplication.getUserId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return new RequestInfo(requestJson, downLoadBindDevice);
     }
 }
 

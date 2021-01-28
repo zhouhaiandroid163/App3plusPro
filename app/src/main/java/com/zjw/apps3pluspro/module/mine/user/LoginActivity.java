@@ -21,6 +21,7 @@ import com.zjw.apps3pluspro.HomeActivity;
 import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.base.BaseActivity;
+import com.zjw.apps3pluspro.module.device.DeviceManager;
 import com.zjw.apps3pluspro.network.NewVolleyRequest;
 import com.zjw.apps3pluspro.network.RequestJson;
 import com.zjw.apps3pluspro.network.ResultJson;
@@ -655,9 +656,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
      */
     void GotoMain() {
         //标志位-已登录
-        mUserSetTools.set_user_login(true);
-        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-        manager.finishAllActivity();
+        DeviceManager.getInstance().downLoadBindDevice(new DeviceManager.DeviceManagerListen() {
+            @Override
+            public void onSuccess() {
+                mUserSetTools.set_user_login(true);
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                manager.finishAllActivity();
+            }
+
+            @Override
+            public void onError() {
+                mUserSetTools.set_user_login(true);
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                manager.finishAllActivity();
+            }
+        });
     }
 
     //===============第三方登录=====================

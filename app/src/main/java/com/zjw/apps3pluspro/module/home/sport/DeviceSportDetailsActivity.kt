@@ -209,14 +209,19 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                 }
             }
 
+            tvAvgStepSpeed.text = (sportModleInfo?.reportTotalStep!! / (sportModleInfo?.reportDuration!! / 60.0)).toInt().toString()
+            tvMaxStepSpeed.text = (sportModleInfo?.reportMaxStepSpeed!!).toString()
+
             if (sportModleInfo?.reportTotalStep!! == 0L) {
-                goneStep()
+                tvAvgStepLength.text = "0"
+                if (unitType != 1) {
+                    tvAvgStepLength.text = "0"
+                    tvAvgStepLengthUnit.text = resources.getText(R.string.unit_in)
+                }
             } else {
-                tvAvgStepSpeed.text = (sportModleInfo?.reportTotalStep!! / (sportModleInfo?.reportDuration!! / 60.0)).toInt().toString()
-                tvMaxStepSpeed.text = (sportModleInfo?.reportMaxStepSpeed!!).toString()
                 tvAvgStepLength.text = (sportModleInfo?.reportDistance!! * 100 / sportModleInfo?.reportTotalStep!!).toString()
                 if (unitType != 1) {
-                    tvAvgStepLength.text = caloriesFmt.format(sportModleInfo?.reportDistance!! * 100 * 0.393 / sportModleInfo?.reportTotalStep!!)
+                    tvAvgStepLength.text = (sportModleInfo?.reportDistance!! * 100 * 0.393 / sportModleInfo?.reportTotalStep!!).toInt().toString()
                     tvAvgStepLengthUnit.text = resources.getText(R.string.unit_in)
                 }
             }

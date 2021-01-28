@@ -37,6 +37,7 @@ import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.bleservice.anaylsis.AnalysisProtoData;
 import com.zjw.apps3pluspro.bleservice.anaylsis.FitnessTools;
 import com.zjw.apps3pluspro.broadcastreceiver.PhoneReceiver;
+import com.zjw.apps3pluspro.module.device.DeviceManager;
 import com.zjw.apps3pluspro.module.home.ecg.EcgMeasureActivity;
 import com.zjw.apps3pluspro.module.device.reminde.RemindeUtils;
 import com.zjw.apps3pluspro.module.device.entity.MusicInfo;
@@ -1926,7 +1927,7 @@ public class BleService extends Service {
                 case BleConstant.Key_DeviceInfo: {
                     MyLog.i(TAG, "蓝牙回调 - 设备信息");
                     HandleDeviceDataTools.handleDeviceInfo(this, mBleDeviceTools, data);
-                    requestServerTools.uploadDeviceData(getApplicationContext());
+//                    requestServerTools.uploadDeviceData(getApplicationContext());
                 }
                 break;
 
@@ -2169,7 +2170,7 @@ public class BleService extends Service {
                 case BleConstant.Key_DeviceSendUnbind:
                     MyLog.i(TAG, "Key_DeviceSendUnbind = device send unbind ");
                     disconnect();
-                    BleTools.unBind(this);
+                    DeviceManager.getInstance().unBind(this, null);
                     break;
                 case BleConstant.Key_DeviceBindInfo:
                     deviceBindInfo(data);
@@ -2252,7 +2253,7 @@ public class BleService extends Service {
 
     private void deniedByDevice() {
         disconnect();
-        BleTools.unBind(this);
+        DeviceManager.getInstance().unBind(this, null);
         BroadcastTools.broadcastDeviceConnectedBIND_ERROR(getApplicationContext());
     }
 

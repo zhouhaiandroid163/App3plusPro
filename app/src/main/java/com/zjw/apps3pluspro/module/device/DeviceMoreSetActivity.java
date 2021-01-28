@@ -609,13 +609,26 @@ public class DeviceMoreSetActivity extends BaseActivity {
     }
 
     private void unBindDevice() {
-        restore_factory();
-        Handler mHandler = new Handler();
-        mHandler.postDelayed(() -> {
-            disconnect();
-            BleTools.unBind(context);
-            finish();
-        }, Constants.FINISH_ACTIVITY_DELAY_TIME);
+        waitDialog.show(getResources().getString(R.string.ignored));
+        DeviceManager.getInstance().unBind(this, new DeviceManager.DeviceManagerListen() {
+            @Override
+            public void onSuccess() {
+                waitDialog.close();
+                restore_factory();
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(() -> {
+                    disconnect();
+                    DeviceManager.getInstance().unBind(context, null);
+                    finish();
+                }, Constants.FINISH_ACTIVITY_DELAY_TIME);
+            }
+
+            @Override
+            public void onError() {
+                waitDialog.close();
+                AppUtils.showToast(context, R.string.data_try_again_code1);
+            }
+        });
     }
 
 

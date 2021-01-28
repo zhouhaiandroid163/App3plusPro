@@ -700,7 +700,7 @@ public class BleDeviceTools {
 
     public int get_is_support_persist_heart() {
         SharedPreferences settin = getSharedPreferencesCommon();
-        return settin.getInt("is_support_persist_heart", 0);
+        return settin.getInt("is_support_persist_heart", 1);
     }
 
     //计步算法类型 0 = 算法一 ， 1 = 算法二  = 设备传什么存什么-用户上传后台
