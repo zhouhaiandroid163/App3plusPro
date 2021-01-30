@@ -36,6 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -69,11 +70,13 @@ import com.zjw.apps3pluspro.eventbus.LocationChangeEventBus;
 import com.zjw.apps3pluspro.eventbus.OffEcgSyncStateEvent;
 import com.zjw.apps3pluspro.eventbus.PageDeviceSetEvent;
 import com.zjw.apps3pluspro.eventbus.PageDeviceSyncEvent;
+import com.zjw.apps3pluspro.eventbus.ShowDialogEvent;
 import com.zjw.apps3pluspro.eventbus.SyncDeviceSportEvent;
 import com.zjw.apps3pluspro.eventbus.SyncTimeLoadingEvent;
 import com.zjw.apps3pluspro.eventbus.SyncTimeOutEvent;
 import com.zjw.apps3pluspro.eventbus.tools.EventTools;
 import com.zjw.apps3pluspro.module.device.DeviceFragment;
+import com.zjw.apps3pluspro.module.device.ScanDeviceActivity;
 import com.zjw.apps3pluspro.module.device.ScanDeviceTypeActivity;
 import com.zjw.apps3pluspro.module.device.dfu.BleDfuActivity;
 import com.zjw.apps3pluspro.module.device.dfu.ProtobufActivity;
@@ -614,11 +617,11 @@ public class HomeActivity extends BaseActivity {
                     //搜索回调连接设备
                     case BroadcastTools.ACTION_RESULT_BLE_DEVICE_ACTION:
                         MyLog.i(TAG, "choose device to connnecting");
-    //                    waitDialog.show(context.getString(R.string.loading3));
+                        //                    waitDialog.show(context.getString(R.string.loading3));
                         DeviceModel btDevice = intent.getParcelableExtra(BroadcastTools.BLE_DEVICE);
                         if (btDevice != null) {
-    //                        mBleDeviceTools.set_ble_mac(btDevice.address);
-    //                        mBleDeviceTools.set_ble_name(btDevice.name);
+                            //                        mBleDeviceTools.set_ble_mac(btDevice.address);
+                            //                        mBleDeviceTools.set_ble_name(btDevice.name);
                             bindDeviceConnect(btDevice.address);
                         }
                         break;
@@ -640,8 +643,8 @@ public class HomeActivity extends BaseActivity {
                         if (waitDialog != null) {
                             waitDialog.close();
                         }
-    //                    connectCountNum++;
-    //                    tvConnectCount.setText("连接次数统计：" + connectCountNum);
+                        //                    connectCountNum++;
+                        //                    tvConnectCount.setText("连接次数统计：" + connectCountNum);
                         break;
                     //已断开
                     case BroadcastTools.ACTION_GATT_DISCONNECTED:
@@ -863,7 +866,7 @@ public class HomeActivity extends BaseActivity {
                                     // history is over and delete the ids
                                     FitnessTools.deleteIndex = 0;
                                     deleteDeviceSport(DELETE_DEVICE_SPORT_HISTORY);
-    //                                startSyncTodayDeviceSport();
+                                    //                                startSyncTodayDeviceSport();
 
                                 } else if (curCmd.equalsIgnoreCase(REQUEST_FITNESS_ID_TODAY)) {
                                     SysUtils.logContentW("ble", "REQUEST_FITNESS_ID_TODAY sync over");
@@ -1021,7 +1024,7 @@ public class HomeActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void locationChangeEventBus(LocationChangeEventBus event) {
         GpsSportManager.GpsInfo gpsInfo = event.gpsInfo;
-        if(mBleDeviceTools.getIsSupportAppAuxiliarySport()){
+        if (mBleDeviceTools.getIsSupportAppAuxiliarySport()) {
             if (appGpsInfo == null || curSportState == BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_YES) {
                 appGpsInfo = gpsInfo;
                 writeRXCharacteristic(BtSerializeation.sendSportState(1));
@@ -1030,14 +1033,14 @@ public class HomeActivity extends BaseActivity {
                 switch (curSportState) {
                     case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START:
                     case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESUME:
-                        if(appGpsInfo.latitude == gpsInfo.latitude && appGpsInfo.longitude == gpsInfo.longitude){
+                        if (appGpsInfo.latitude == gpsInfo.latitude && appGpsInfo.longitude == gpsInfo.longitude) {
                             Log.i(TAG, "locationChangeEventBus location is not change...");
                         } else {
                             double distance = GpsSportManager.getInstance().getDistance(appGpsInfo.latitude, appGpsInfo.longitude, gpsInfo.latitude, gpsInfo.longitude);
                             if (distance != 0) {
                                 appGpsInfo = gpsInfo;
                                 Log.w(TAG, "locationChangeEventBus distance = " + distance);
-                                writeRXCharacteristic(BtSerializeation.sendSportData(gpsInfo.latitude,gpsInfo.longitude,gpsInfo.gpsAccuracy));
+                                writeRXCharacteristic(BtSerializeation.sendSportData(gpsInfo.latitude, gpsInfo.longitude, gpsInfo.gpsAccuracy));
                             }
                         }
 
@@ -1243,11 +1246,12 @@ public class HomeActivity extends BaseActivity {
         }
         switch (requestCode) {
             case AuthorityManagement.REQUEST_EXTERNAL_LOCATION: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    MyLog.i(TAG, "获取定位权限 回调允许");
-//                } else {
-//                    MyLog.i(TAG, "获取定位权限 回调拒绝");
-//                }
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    MyLog.i(TAG, "获取定位权限 回调允许");
+                } else {
+                    MyLog.i(TAG, "获取定位权限 回调拒绝");
+                    showSettingDialog(getString(R.string.setting_dialog_location));
+                }
             }
             break;
             case AuthorityManagement.REQUEST_EXTERNAL_STORAGE: {
@@ -1304,35 +1308,26 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
-    void showSettingDialog(String title) {
-        new android.app.AlertDialog.Builder(mContext)
-                .setTitle(getString(R.string.dialog_prompt))
-                .setMessage(title)
-                .setPositiveButton(getString(R.string.setting_dialog_setting), new DialogInterface.OnClickListener() {//添加确定按钮
-
-                    public void onClick(DialogInterface dialog, int which) {
-
+    void showSettingDialog(String content) {
+        DialogUtils.BaseDialog(context,
+                context.getResources().getString(R.string.dialog_prompt),
+                content,
+                context.getDrawable(R.drawable.black_corner_bg),
+                new DialogUtils.DialogClickListener() {
+                    @Override
+                    public void OnOK() {
                         Intent intent = new Intent();
                         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                         Uri uri = Uri.fromParts("package", mContext.getPackageName(), null);
                         intent.setData(uri);
                         startActivity(intent);
-
                     }
 
-                }).setNegativeButton(getString(R.string.setting_dialog_cancel), new DialogInterface.OnClickListener() {
-
-
-            @Override
-
-            public void onClick(DialogInterface dialog, int which) {
-
-                // TODO Auto-generated method stub
-
-            }
-
-        }).show();
-
+                    @Override
+                    public void OnCancel() {
+                    }
+                }
+                , getString(R.string.setting_dialog_setting));
     }
 
 
@@ -1936,4 +1931,17 @@ public class HomeActivity extends BaseActivity {
         GpsSportManager.getInstance().stopGps(homeActivity);
         stopLocationService();
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showDialogEvent(ShowDialogEvent event) {
+        switch (event.type) {
+            case 0:
+                AuthorityManagement.verifyLocation(this);
+                break;
+            case 1:
+                DialogUtils.showSettingGps(this);
+                break;
+        }
+    }
+
 }

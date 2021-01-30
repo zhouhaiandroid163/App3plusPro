@@ -468,6 +468,7 @@ public class DataFragment extends BaseFragment {
                 tvConnectState.setText(getResources().getString(R.string.index_tip_no_connect1));
 
                 layoutConnectState.setVisibility(View.VISIBLE);
+                layoutDeviceGps.setVisibility(View.GONE);
                 break;
             case BleConstant.STATE_CONNECTING:
                 MyLog.i(TAG, "initBleState() state = STATE_CONNECTING");

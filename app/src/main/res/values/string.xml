@@ -151,7 +151,7 @@
     <string name="start_sport">Start exercising</string>
     <string name="sport_time">Duration</string>
     <string name="sport_pace">Speed</string>
-    <string name="sport_locus">Motion track</string>
+    <string name="sport_locus">Map</string>
     <string name="sport_no_gps">GPS signal is poor, it is recommended to try in an open space</string>
     <string name="dialog_quit_sport_title">Sports tips</string>
     <string name="dialog_quit_sport_content">Whether to end the current campaign</string>

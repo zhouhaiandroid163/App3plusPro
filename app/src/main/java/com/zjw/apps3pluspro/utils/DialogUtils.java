@@ -1,5 +1,6 @@
 package com.zjw.apps3pluspro.utils;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -90,18 +91,22 @@ public class DialogUtils {
     }
 
     public static void BaseDialog(Context context, String title, String content, Drawable bg, DialogClickListener dialogClickListener) {
-        showBaseDialog(context, title, content, bg, dialogClickListener, true, false);
+        showBaseDialog(context, title, content, bg, dialogClickListener, true, false, null);
+    }
+
+    public static void BaseDialog(Context context, String title, String content, Drawable bg, DialogClickListener dialogClickListener, String okString) {
+        showBaseDialog(context, title, content, bg, dialogClickListener, true, false, okString);
     }
 
     private static void BaseDialog(Context context, String title, String content, Drawable bg, DialogClickListener dialogClickListener, boolean isShowCancel) {
-        showBaseDialog(context, title, content, bg, dialogClickListener, isShowCancel, false);
+        showBaseDialog(context, title, content, bg, dialogClickListener, isShowCancel, false, null);
     }
 
     public static Dialog BaseDialogShowProgress(Context context, String title, String content, Drawable bg) {
-        return showBaseDialog(context, title, content, bg, null, false, true);
+        return showBaseDialog(context, title, content, bg, null, false, true, null);
     }
 
-    private static Dialog showBaseDialog(Context context, String title, String content, Drawable bg, DialogClickListener dialogClickListener, boolean isShowCancel, boolean isShowProgress) {
+    private static Dialog showBaseDialog(Context context, String title, String content, Drawable bg, DialogClickListener dialogClickListener, boolean isShowCancel, boolean isShowProgress, String okString) {
         Dialog baseDialog = new Dialog(context, R.style.progress_dialog);
         baseDialog.setContentView(R.layout.base_dialog_layout);
         baseDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -119,6 +124,10 @@ public class DialogUtils {
             tvCancel.setVisibility(View.GONE);
             tvOk.setVisibility(View.GONE);
             baseDialog.setCancelable(false);
+        }
+
+        if (okString != null) {
+            tvOk.setText(okString);
         }
 
         ConstraintLayout mConstraintLayout = (androidx.constraintlayout.widget.ConstraintLayout) tvContent.getParent();
@@ -144,5 +153,20 @@ public class DialogUtils {
         return baseDialog;
     }
 
+    public static void showSettingGps(Activity activity) {
+        showBaseDialog(activity, activity.getResources().getString(R.string.dialog_prompt), activity.getResources().getString(R.string.open_gps),
+                activity.getDrawable(R.drawable.black_corner_bg), new DialogClickListener() {
+                    @Override
+                    public void OnOK() {
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        activity.startActivity(intent); // 设置完成后返回到原来的界面
+                    }
+
+                    @Override
+                    public void OnCancel() {
+
+                    }
+                }, true, false, activity.getResources().getString(R.string.setting_dialog_setting));
+    }
 
 }

@@ -21,8 +21,11 @@ import com.android.volley.VolleyError;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.zjw.apps3pluspro.HomeActivity;
 import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
+import com.zjw.apps3pluspro.eventbus.ShowDialogEvent;
+import com.zjw.apps3pluspro.module.device.ScanDeviceActivity;
 import com.zjw.apps3pluspro.module.device.weather.WeatherCityEntity;
 import com.zjw.apps3pluspro.network.NewVolleyRequest;
 import com.zjw.apps3pluspro.network.RequestJson;
@@ -33,6 +36,7 @@ import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
 import com.zjw.apps3pluspro.sharedpreferences.UserSetTools;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,6 +48,7 @@ import java.util.ArrayList;
  */
 public class GpsSportManager {
     private static final String TAG = GpsSportManager.class.getSimpleName();
+    private int type = 0; // 1 代表长时间定位
     private BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
     private static GpsSportManager gpsSportManager;
 
@@ -57,19 +62,27 @@ public class GpsSportManager {
     public GpsSportManager() {
     }
 
+    public GpsSportManager(int type) {
+        this.type = type;
+    }
+
     public void stopGps(Context context) {
-        releaseWakeLock();
-        this.locationListener = null;
-        if (MyUtils.isGoogle(context)) {
-            if (mGoogleApiClient != null) {
-                LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, googleLocationListener);
-                mGoogleApiClient = null;
+        try {
+            releaseWakeLock();
+            this.locationListener = null;
+            if (MyUtils.isGoogle(context)) {
+                if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+                    LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, googleLocationListener);
+                    mGoogleApiClient = null;
+                }
+            } else {
+                if (null != mlocationClient) {
+                    mlocationClient.onDestroy();
+                    mlocationClient = null;
+                }
             }
-        } else {
-            if (null != mlocationClient) {
-                mlocationClient.onDestroy();
-                mlocationClient = null;
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -92,11 +105,12 @@ public class GpsSportManager {
         try {
             acquireWakeLock(context);
             this.locationListener = locationListener;
-//        xaaaaaa.postDelayed(xxx, 3000);
-
             if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(context, context.getResources().getString(R.string.setting_dialog_location), Toast.LENGTH_SHORT).show();
+                EventBus.getDefault().post(new ShowDialogEvent(0));
                 return;
+            }
+            if (!MyUtils.isGPSOpen(context)) {
+                EventBus.getDefault().post(new ShowDialogEvent(1));
             }
             if (MyUtils.isGoogle(context)) {
                 //加载google 定位
@@ -249,8 +263,11 @@ public class GpsSportManager {
 
     private AMapLocationClientOption getDefaultOption() {
         AMapLocationClientOption mOption = new AMapLocationClientOption();
-        mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);//可选，设置定位模式，可选的模式有高精度、仅设备、仅网络。默认为高精度模式
-//        mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Device_Sensors);//仅设备模式。
+        if (type == 1) {
+            mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Device_Sensors);//仅设备模式。
+        } else {
+            mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);//可选，设置定位模式，可选的模式有高精度、仅设备、仅网络。默认为高精度模式
+        }
         mOption.setGpsFirst(false);//可选，设置是否gps优先，只在高精度模式下有效。默认关闭
         mOption.setHttpTimeOut(30000);//可选，设置网络请求超时时间。默认为30秒。在仅设备模式下无效
         mOption.setInterval(1000);//可选，设置定位间隔。默认为2秒

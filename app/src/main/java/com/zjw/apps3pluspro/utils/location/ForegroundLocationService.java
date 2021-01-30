@@ -38,7 +38,7 @@ public class ForegroundLocationService extends Service {
         super.onCreate();
         SysUtils.logContentI(TAG, "onCreate");
         startForgeGround();
-        gpsSportManager = new GpsSportManager();
+        gpsSportManager = new GpsSportManager(1);
 
         if (locationThread == null) {
             locationThread = new Thread(() -> gpsSportManager.getLatLon(ForegroundLocationService.this, locationListener));
