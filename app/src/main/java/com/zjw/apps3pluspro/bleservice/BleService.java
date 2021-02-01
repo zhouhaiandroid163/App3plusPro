@@ -1927,7 +1927,7 @@ public class BleService extends Service {
                 case BleConstant.Key_DeviceInfo: {
                     MyLog.i(TAG, "蓝牙回调 - 设备信息");
                     HandleDeviceDataTools.handleDeviceInfo(this, mBleDeviceTools, data);
-//                    requestServerTools.uploadDeviceData(getApplicationContext());
+                    requestServerTools.uploadDeviceData(getApplicationContext());
                 }
                 break;
 

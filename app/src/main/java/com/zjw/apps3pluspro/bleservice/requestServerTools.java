@@ -1,6 +1,7 @@
 package com.zjw.apps3pluspro.bleservice;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.android.volley.VolleyError;
 import com.zjw.apps3pluspro.application.BaseApplication;
@@ -63,61 +64,49 @@ public class requestServerTools {
 
         UserSetTools mUserSetTools = BaseApplication.getUserSetTools();
 
-        if (mUserSetTools.get_service_upload_device_info() != null
-                && !mUserSetTools.toString().equals(mUserSetTools.get_service_upload_device_info())) {
+        if (TextUtils.isEmpty(mUserSetTools.get_service_upload_device_info()) || !mRequestInfo.toString().equalsIgnoreCase(mUserSetTools.get_service_upload_device_info())) {
 
-            mUserSetTools.set_service_upload_device_info(mUserSetTools.toString());
             mUserSetTools.set_service_upload_un_device_info("");
+            NewVolleyRequest.RequestPost(mRequestInfo, TAG, new VolleyInterface(context, VolleyInterface.mListener, VolleyInterface.mErrorListener) {
 
-            MyLog.i(TAG, "数据库-上传设备信息 和上次不一样");
+                @Override
+                public void onMySuccess(JSONObject result) {
+                    // TODO Auto-generated method stub
 
-            MyLog.i(TAG, "数据库-上传设备信息" + mRequestInfo.toString());
+                    MyLog.i(TAG, "请求接口-上传设备信息 请求成功 = result = " + result.toString());
 
-            NewVolleyRequest.RequestPost(mRequestInfo, TAG,
-                    new VolleyInterface(context, VolleyInterface.mListener, VolleyInterface.mErrorListener) {
+                    CurrencyBean mCurrencyBean = ResultJson.CurrencyBean(result);
 
-                        @Override
-                        public void onMySuccess(JSONObject result) {
-                            // TODO Auto-generated method stub
+                    //请求成功
+                    if (mCurrencyBean.isRequestSuccess()) {
 
-                            MyLog.i(TAG, "请求接口-上传设备信息 请求成功 = result = " + result.toString());
+                        if (mCurrencyBean.uploadSuccess() == 1) {
+                            mUserSetTools.set_service_upload_device_info(mRequestInfo.toString());
 
-                            CurrencyBean mCurrencyBean = ResultJson.CurrencyBean(result);
-
-                            //请求成功
-                            if (mCurrencyBean.isRequestSuccess()) {
-
-                                if (mCurrencyBean.uploadSuccess() == 1) {
-
-                                    MyLog.i(TAG, "请求接口-上传设备信息 成功");
+                            MyLog.i(TAG, "请求接口-上传设备信息 成功");
 
 
-                                } else if (mCurrencyBean.uploadSuccess() == 0) {
-                                    MyLog.i(TAG, "请求接口-上传设备信息 失败");
-                                } else {
-                                    MyLog.i(TAG, "请求接口-上传设备信息 请求异常(1)");
-                                }
-                                //请求失败
-                            } else {
-                                MyLog.i(TAG, "请求接口-上传设备信息 请求异常(0)");
-
-                            }
-
+                        } else if (mCurrencyBean.uploadSuccess() == 0) {
+                            MyLog.i(TAG, "请求接口-上传设备信息 失败");
+                        } else {
+                            MyLog.i(TAG, "请求接口-上传设备信息 请求异常(1)");
                         }
+                        //请求失败
+                    } else {
+                        MyLog.i(TAG, "请求接口-上传设备信息 请求异常(0)");
 
-                        @Override
-                        public void onMyError(VolleyError arg0) {
-                            // TODO Auto-generated method stub
+                    }
+                }
 
-                            MyLog.i(TAG, "请求接口-上传设备信息 请求失败 = message = " + arg0.getMessage());
-                            return;
-                        }
-                    });
-
+                @Override
+                public void onMyError(VolleyError arg0) {
+                    // TODO Auto-generated method stub
+                    MyLog.i(TAG, "请求接口-上传设备信息 请求失败 = message = " + arg0.getMessage());
+                }
+            });
         } else {
             MyLog.i(TAG, "数据库-上传设备信息 和上次一样");
         }
-
 
     }
 
@@ -1024,6 +1013,7 @@ public class requestServerTools {
 
     public static final int SYNC_TIME_START_TAG = 1;
     public static final int SYNC_TIME_END_TAG = 2;
+
     public static void syncWatchTime(Context mContext, int type) {
 //        RequestInfo mRequestInfo = RequestJson.syncWatchTime(type);
 //        MyLog.i(TAG, " syncWatchTime = " + mRequestInfo.getRequestJson());

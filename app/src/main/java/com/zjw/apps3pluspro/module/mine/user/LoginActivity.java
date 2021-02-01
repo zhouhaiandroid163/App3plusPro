@@ -483,6 +483,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     @Override
                     public void onMySuccess(JSONObject result) {
                         // TODO Auto-generated method stub
+                        waitDialog.close();
 
                         MyLog.i(TAG, "请求接口-获取个人信息 = result = " + result.toString());
 
