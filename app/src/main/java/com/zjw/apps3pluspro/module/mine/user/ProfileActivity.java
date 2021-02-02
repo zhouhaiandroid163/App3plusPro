@@ -802,9 +802,12 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
     private void showNameDialog() {
         View view = getLayoutInflater().inflate(R.layout.dialog_nickname, null);
         dialog = new Dialog(mContext, R.style.shareStyle);
-        dialog.setContentView(view, new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT));
+        dialog.setContentView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         Window window = dialog.getWindow();
+
+        dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         // 设置显示动画
         window.setWindowAnimations(R.style.main_menu_animstyle);
         WindowManager.LayoutParams wl = window.getAttributes();

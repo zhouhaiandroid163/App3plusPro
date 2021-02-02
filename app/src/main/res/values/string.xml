@@ -930,9 +930,9 @@
     <string name="device_sport_heart_distributedView">Heart rate distribution interval</string>
     <string name="device_sport_pace">Pace</string>
     <string name="device_sport_avg_pace">Average pace</string>
-    <string name="device_sport_max_pace">Top speed</string>
+    <string name="device_sport_max_pace">Maximum pace</string>
     <string name="device_sport_min_pace">Minimum pace</string>
-    <string name="device_sport_step_speed_title">pace</string>
+    <string name="device_sport_step_speed_title">Cadence</string>
     <string name="device_sport_step_speed_unit">Steps/min</string>
     <string name="device_sport_step_speed_unit2">cm</string>
     <string name="device_sport_step_speed_avg">Average cadence</string>
@@ -941,7 +941,7 @@
     <string name="device_sport_cal_avg">Average calories</string>
     <string name="device_sport_cal_activity">Activity calories</string>
     <string name="device_sport_cal_unit">CAL/min</string>
-    <string name="device_sport_speed">speed</string>
+    <string name="device_sport_speed">Speed</string>
     <string name="device_sport_speed_avg">Average speed</string>
     <string name="device_sport_speed_max">Maximum speed</string>
     <string name="device_sport_speed_unit">Km/h</string>
