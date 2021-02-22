@@ -290,6 +290,7 @@ public class AGpsUpdateActivity extends BaseActivity {
         rotate.setFillAfter(true);// 动画执行完后是否停留在执行完的状态
         rotate.setStartOffset(10);// 执行前的等待时间
         ivSyncWhite.setAnimation(rotate);
+        ivSyncWhite.setVisibility(View.GONE);
 
 //        msg.setText("上传中...");
         progressDialog.show();

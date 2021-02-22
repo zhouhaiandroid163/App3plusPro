@@ -1193,13 +1193,15 @@ public class BleService extends Service {
                 }
                 if (curPiece < maxPiece) {
                     SysUtils.logContentI(TAG, TAG_CONTENT + " app confirm");
-                    intent.setAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
-                    sendBroadcast(intent);
+//                    intent.setAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
+//                    sendBroadcast(intent);
+                    bleCmdList_proto.add(BtSerializeation.appConfirm());
                     return;
                 }
                 SysUtils.logContentI(TAG, TAG_CONTENT + " app confirm");
-                intent.setAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
-                sendBroadcast(intent);
+//                intent.setAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
+//                sendBroadcast(intent);
+                bleCmdList_proto.add(BtSerializeation.appConfirm());
                 //解析
                 String[] sportData = recvData3.split(" ");
                 SysUtils.logContentI(TAG, TAG_CONTENT + " recvData3 =" + sportData.length);
@@ -1279,8 +1281,9 @@ public class BleService extends Service {
                         return;
                     }
 
-                    intent.setAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
-                    sendBroadcast(intent);
+//                    intent.setAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
+//                    sendBroadcast(intent);
+                    bleCmdList_proto.add(BtSerializeation.appConfirm());
 
                     strCmd = recvData.split(" ");
                     byte[] valueByte = new byte[strCmd.length];
