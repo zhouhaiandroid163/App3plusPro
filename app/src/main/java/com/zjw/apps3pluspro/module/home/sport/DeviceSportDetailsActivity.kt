@@ -398,30 +398,30 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                         step += deviceSportEntity.step
                         cal += deviceSportEntity.cal
                     }
-                    yHeartData.add(heart / oneGroup)
+                    yHeartData.add(heart / lastData)
                     if (distance == 0.0) {
                         yPaceData.add(0.0)
                     } else {
-                        val yMinute = oneGroup * 1000 / (60.0 * distance)
+                        val yMinute = lastData * 1000 / (60.0 * distance)
                         if (SysUtils.isShow00Pace((yMinute * 60).toInt())) {
                             yPaceData.add(0.0)
                         } else {
                             if (unitType == 1) {
-                                yPaceData.add(oneGroup * 1000 / (60.0 * distance))
+                                yPaceData.add(lastData * 1000 / (60.0 * distance))
                             } else {
-                                yPaceData.add(oneGroup * 1000 / (60.0 * distance / 1.61f))
+                                yPaceData.add(lastData * 1000 / (60.0 * distance / 1.61f))
                             }
                         }
                     }
 
-                    yStepSpeedData.add(step * 60.0 / oneGroup)
+                    yStepSpeedData.add(step * 60.0 / lastData)
                     yCalData.add(cal)
 
                     if (unitType == 1) {
-                        ySpeedData.add(distance * 3600 / (oneGroup * 1000))
+                        ySpeedData.add(distance * 3600 / (lastData * 1000))
                         yHeightData.add(height)
                     } else {
-                        ySpeedData.add(distance * 3600 / (oneGroup * 1000 * 1.61f))
+                        ySpeedData.add(distance * 3600 / (lastData * 1000 * 1.61f))
                         yHeightData.add(height * 3.28f)
                     }
 
