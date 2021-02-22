@@ -1756,11 +1756,13 @@ public class DataFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void deviceSportStatusEvent(DeviceSportStatusEvent event) {
-        layoutDeviceGps.setVisibility(View.VISIBLE);
-        if (event.paused) {
-            tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_paused));
-        } else {
-            tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_runing));
+        if(event.sportType != 0){
+            layoutDeviceGps.setVisibility(View.VISIBLE);
+            if (event.paused) {
+                tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_paused));
+            } else {
+                tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_runing));
+            }
         }
     }
 

@@ -13,6 +13,7 @@ import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.bleservice.BleService;
 import com.zjw.apps3pluspro.bleservice.BleTools;
 import com.zjw.apps3pluspro.bleservice.BroadcastTools;
+import com.zjw.apps3pluspro.eventbus.DeviceNoSportEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceSportStatusEvent;
 import com.zjw.apps3pluspro.eventbus.GpsSportDeviceStartEvent;
 import com.zjw.apps3pluspro.module.device.entity.FitnessId;
@@ -80,7 +81,6 @@ public class FitnessTools {
             result_str += "未知" + "\n";
         }
 
-
         switch (pos) {
             case UserProfile:
                 System.out.println("用户信息");
@@ -124,7 +124,7 @@ public class FitnessTools {
                     for (int j = 0; j < 7; j++) {
                         my_data[j] = id_byte[i * 7 + j];
                     }
-                    SysUtils.logContentE(TAG,  "id = " + BleTools.printHexString(my_data));
+                    SysUtils.logContentE(TAG, "id = " + BleTools.printHexString(my_data));
 
                     byte[] time_byte = new byte[4];
                     time_byte[0] = my_data[3];
@@ -135,7 +135,7 @@ public class FitnessTools {
                     int shiqu = my_data[4] & 0xff;
                     shiqu = shiqu * 15 / 60;
                     int version_number = my_data[5] & 0xff;
-                    SysUtils.logContentI(TAG,  "时间 = " + time + "  时区 = " + shiqu + "  版本号 = " + version_number);
+                    SysUtils.logContentI(TAG, "时间 = " + time + "  时区 = " + shiqu + "  版本号 = " + version_number);
 
                     int miaoshu = my_data[6] & 0xff;
                     int typeDescription = miaoshu >>> 7;
@@ -202,7 +202,7 @@ public class FitnessTools {
                             description = description + "  GPS";
                             break;
                     }
-                    SysUtils.logContentI(TAG,  "description = " + description);
+                    SysUtils.logContentI(TAG, "description = " + description);
                     SysUtils.logContentI(TAG, "类型描述 = " + typeDescription + "  运动类型 = " + sportType + "  数据类型 = " + dataType);
 
                     if (typeDescription == 1) {
@@ -272,8 +272,13 @@ public class FitnessTools {
                 Log.i(TAG, "sportType = " + curSportType + " paused = " + paused + " timestamp = " + timestamp + " duration = " + duration);
                 Log.i(TAG, "standalone = " + standalone + " appLaunched = " + appLaunched);
 
-                if (!standalone && curSportType != 0) {
+                if (!standalone) {
                     EventBus.getDefault().post(new DeviceSportStatusEvent(curSportType, paused));
+                }
+                break;
+            case 0: // 没有数据
+                if(wear.getId() == FitnessProtos.Fitness.FitnessID.GET_SPORT_STATUS.getNumber()){
+                    EventBus.getDefault().post(new DeviceNoSportEvent());
                 }
                 break;
         }
@@ -288,13 +293,12 @@ public class FitnessTools {
                 .setType(WearProtos.WearPacket.Type.FITNESS)
                 .setId(FitnessProtos.Fitness.FitnessID.GET_SPORT_STATUS.getNumber())
                 .setFitness(builder);
-
-        try {
-            WearProtos.WearPacket wear = WearProtos.WearPacket.parseFrom(wear1.build().toByteArray());
-            FitnessTools.analysisFitness(wear);
-        } catch (InvalidProtocolBufferException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            WearProtos.WearPacket wear = WearProtos.WearPacket.parseFrom(wear1.build().toByteArray());
+//            FitnessTools.analysisFitness(wear);
+//        } catch (InvalidProtocolBufferException e) {
+//            e.printStackTrace();
+//        }
 
         return wear1.build().toByteArray();
     }
@@ -554,7 +558,7 @@ public class FitnessTools {
                         i += 3;
                         // one data paring over, insert to db
                     }
-                    SysUtils.logContentI(TAG,  " dataNumber = " + dataNumber + " time = " + time);
+                    SysUtils.logContentI(TAG, " dataNumber = " + dataNumber + " time = " + time);
                 }
             } else if (sportType == 6) {
                 // 户外骑行
@@ -639,8 +643,8 @@ public class FitnessTools {
                 latLon.append(lon).append(",").append(lat).append(";");
             }
             if (timeString.length() > 0) {
-                SysUtils.logContentI(TAG,  " timeString = " + timeString.toString());
-                SysUtils.logContentI(TAG,  " latLon = " + latLon.toString());
+                SysUtils.logContentI(TAG, " timeString = " + timeString.toString());
+                SysUtils.logContentI(TAG, " latLon = " + latLon.toString());
                 sportModleInfo.setRecordGpsTime(timeString.substring(0, timeString.length() - 1));
                 sportModleInfo.setMap_data(latLon.substring(0, latLon.length() - 1));
             }
@@ -928,7 +932,7 @@ public class FitnessTools {
                 sportModleInfo.setReportDataValid1(dataValid1);
                 sportModleInfo.setReportDataValid2(dataValid2);
 
-                SysUtils.logContentI(TAG,  " dataValid1 = " + dataValid1 + " dataValid2 = " + dataValid2);
+                SysUtils.logContentI(TAG, " dataValid1 = " + dataValid1 + " dataValid2 = " + dataValid2);
 
                 int i = 10;
                 long sportStartTime = Integer.parseInt(sportData[i + 3] + sportData[i + 2] + sportData[i + 1] + sportData[i], 16);
@@ -976,7 +980,7 @@ public class FitnessTools {
                 long heartWarmUp = Integer.parseInt(sportData[i + 3] + sportData[i + 2] + sportData[i + 1] + sportData[i], 16);
                 sportModleInfo.setReportHeartWarmUp(heartWarmUp);
                 i += 4;
-                SysUtils.logContentI(TAG,  " sportStartTime = " + sportStartTime + " sportEndTime = " + sportEndTime + "  heartFatBurning = " + heartFatBurning + " heartWarmUp = " + heartWarmUp);
+                SysUtils.logContentI(TAG, " sportStartTime = " + sportStartTime + " sportEndTime = " + sportEndTime + "  heartFatBurning = " + heartFatBurning + " heartWarmUp = " + heartWarmUp);
             }
 
             SysUtils.logContentW(TAG, " report over and start inseart db");

@@ -65,11 +65,12 @@ public class WaitDialog {
     }
 
     private void closeDialog() {
-
         try {
             if (mDialog != null) {
-                mDialog.dismiss();
-                mDialog = null;
+                if(mDialog.isShowing()){
+                    mDialog.dismiss();
+                    mDialog = null;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

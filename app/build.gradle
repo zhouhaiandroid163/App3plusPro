@@ -135,6 +135,8 @@ dependencies {
     implementation 'com.hjq:xxpermissions:1.5'
 
     implementation files('libs/zxing.jar')
+
+    implementation 'org.dom4j:dom4j:2.1.1'
 }
 protobuf {
     //配置protoc编译器

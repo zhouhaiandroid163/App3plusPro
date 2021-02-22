@@ -80,11 +80,11 @@
         android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme"
         tools:replace="icon,label,theme">
+        <activity android:name=".module.device.AGpsUpdateActivity"></activity>
         <activity
             android:name=".module.device.ScanQrCodeActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".module.device.weather.WeatherCitySearchActivity"
             android:launchMode="singleTask"
@@ -356,13 +356,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeRemind" /> <!-- 设备帮助 -->
-
         <activity
             android:name=".module.device.ScanDeviceNoBindActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeRemind" /> <!-- 设备帮助 -->
-
         <activity
             android:name=".module.device.DeviceHelpActivity"
             android:launchMode="singleTask"
@@ -737,9 +735,8 @@
             android:name="com.realsil.sdk.dfu.DfuService"
             android:enabled="true"
             android:exported="false" />
-
         <service
-            android:name="com.zjw.apps3pluspro.utils.location.ForegroundLocationService"
+            android:name=".utils.location.ForegroundLocationService"
             android:enabled="true"
             android:exported="true"
             android:foregroundServiceType="location"

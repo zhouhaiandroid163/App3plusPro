@@ -60,9 +60,11 @@ import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent;
 import com.zjw.apps3pluspro.eventbus.BluetoothAdapterStateEvent;
 import com.zjw.apps3pluspro.eventbus.DataSyncCompleteEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceInfoEvent;
+import com.zjw.apps3pluspro.eventbus.DeviceNoSportEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceSportStatusEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceToAppSportStateEvent;
 import com.zjw.apps3pluspro.eventbus.DialInfoCompleteEvent;
+import com.zjw.apps3pluspro.eventbus.GetDeviceProtoAGpsPrepareStatusSuccessEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoWatchFacePrepareStatusEvent;
 import com.zjw.apps3pluspro.eventbus.GpsSportDeviceStartEvent;
@@ -75,7 +77,11 @@ import com.zjw.apps3pluspro.eventbus.SyncDeviceSportEvent;
 import com.zjw.apps3pluspro.eventbus.SyncTimeLoadingEvent;
 import com.zjw.apps3pluspro.eventbus.SyncTimeOutEvent;
 import com.zjw.apps3pluspro.eventbus.tools.EventTools;
+import com.zjw.apps3pluspro.kml.KmlFileManager;
+import com.zjw.apps3pluspro.kml.TrackPoint;
+import com.zjw.apps3pluspro.module.device.AGpsUpdateActivity;
 import com.zjw.apps3pluspro.module.device.DeviceFragment;
+import com.zjw.apps3pluspro.module.device.DeviceMoreSetActivity;
 import com.zjw.apps3pluspro.module.device.ScanDeviceActivity;
 import com.zjw.apps3pluspro.module.device.ScanDeviceTypeActivity;
 import com.zjw.apps3pluspro.module.device.dfu.BleDfuActivity;
@@ -122,9 +128,12 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -637,6 +646,7 @@ public class HomeActivity extends BaseActivity {
                         break;
                     //已连接
                     case BroadcastTools.ACTION_GATT_CONNECTED:
+                        isFirstConnect = true;
                         mConnectionState = BleConstant.STATE_CONNECTED;
                         EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_CONNECTED));
                         MyLog.i(TAG, "已连接");
@@ -648,6 +658,7 @@ public class HomeActivity extends BaseActivity {
                         break;
                     //已断开
                     case BroadcastTools.ACTION_GATT_DISCONNECTED:
+                        isFirstConnect = false;
                         currentGpsSportState = -1;
                         appGpsInfo = null;
                         curSportState = BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO;
@@ -828,7 +839,6 @@ public class HomeActivity extends BaseActivity {
                                     //delete today over
                                     SysUtils.logContentW("ble", " delete today over");
                                     syncDeviceSportOver();
-                                    getDeviceGpsSportStatus();
                                 } else {
                                     deleteDeviceSport(DELETE_DEVICE_SPORT_TODAY);
                                 }
@@ -887,7 +897,6 @@ public class HomeActivity extends BaseActivity {
                                     SysUtils.logContentW("ble", " today is no data , sync over");
                                     DeviceSportManager.Companion.getInstance().uploadMoreSportData();
                                     syncDeviceSportOver();
-                                    getDeviceGpsSportStatus();
                                     break;
                                 case REQUEST_FITNESS_ID_HISTORY:
                                     SysUtils.logContentW("ble", " HISTORY is no data");
@@ -964,16 +973,27 @@ public class HomeActivity extends BaseActivity {
     }
 
     private boolean isFirstConnect = false;
+    private boolean isFirstOnCreate = true;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void deviceSportStatusEvent(DeviceSportStatusEvent event) {
         if (isFirstConnect) {
             MyLog.w(TAG, " deviceSportStatusEvent is first connect");
             isFirstConnect = false;
-            curCmd = APP_GPS_READY;
-            initGpsSport();
+            if(event.sportType != 0){
+                curCmd = APP_GPS_READY;
+                initGpsSport();
+            }
         } else {
             MyLog.w(TAG, " no initGpsSport");
+        }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void deviceNoSportEvent(DeviceNoSportEvent event) {
+        MyLog.w(TAG, " init agps request");
+        if (mBleDeviceTools.getIsGpsSensor() && isFirstOnCreate) {
+            isFirstOnCreate = false;
+            writeRXCharacteristic(BtSerializeation.getBleData(null, BtSerializeation.CMD_01, BtSerializeation.KEY_AGPS));
         }
     }
 
@@ -1040,10 +1060,13 @@ public class HomeActivity extends BaseActivity {
                             if (distance != 0) {
                                 appGpsInfo = gpsInfo;
                                 Log.w(TAG, "locationChangeEventBus distance = " + distance);
+                                refreshGpsInfo(gpsInfo);
                                 writeRXCharacteristic(BtSerializeation.sendSportData(gpsInfo.latitude, gpsInfo.longitude, gpsInfo.gpsAccuracy));
+
+//                                TrackPoint tp = new TrackPoint(gpsInfo.longitude, gpsInfo.latitude, gpsInfo.altitude, System.currentTimeMillis());
+//                                KmlFileManager.getInstance().addData(tp);
                             }
                         }
-
                         break;
                 }
             }
@@ -1060,6 +1083,43 @@ public class HomeActivity extends BaseActivity {
                     break;
             }
         }
+    }
+
+    private Dialog progressDialog1;
+
+    private void createKml() {
+        progressDialog1 = new Dialog(HomeActivity.this, R.style.progress_dialog);
+        progressDialog1.setContentView(R.layout.progress_layout);
+        progressDialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        TextView msg = (TextView) progressDialog1.findViewById(R.id.id_tv_loadingmsg);
+
+        progressDialog1.show();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String now = sdf.format(new Date());
+
+        String fileName = "1" + "_" + now + ".kml";
+        SysUtils.makeFilePath(Constants.P_LOG_KML, fileName);
+        SysUtils.logContentW(TAG, "fileName =" + fileName);
+        msg.setText(Constants.P_LOG_KML + fileName + "文件生成中");
+
+        try {
+            File file = new File(Constants.LOC_DIR + Constants.P_LOG_LOC_FILENAME);
+            String newPath = Constants.LOC_DIR + "1" + "_" + now + ".log";
+            boolean result = file.renameTo(new File(newPath));
+            Log.i(TAG, "file.rename = " + result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        new Thread(() -> {
+            KmlFileManager.getInstance().createKml(Constants.P_LOG_KML + fileName);
+            mBleHandler.postDelayed(() -> {
+                if (progressDialog1 != null) {
+                    progressDialog1.dismiss();
+                }
+            }, 2000);
+        }).start();
     }
 
     private void initGpsSport() {
@@ -1124,6 +1184,7 @@ public class HomeActivity extends BaseActivity {
         if (protoHandler != null) {
             protoHandler.removeCallbacksAndMessages(null);
         }
+        getDeviceGpsSportStatus();
     }
 
     private void getDeviceGpsSportStatus() {
@@ -1131,6 +1192,29 @@ public class HomeActivity extends BaseActivity {
             // 询问gps运动结果
             curCmd = APP_REQUEST_GPS_SPORT_STATE;
             sendAppStart(BtSerializeation.appStartCmd(1));
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getDeviceProtoAGpsPrepareStatusSuccessEvent(GetDeviceProtoAGpsPrepareStatusSuccessEvent event) {
+        protoHandler.removeCallbacksAndMessages(null);
+        if (event.needGpsInfo) {
+            // download file
+            DialogUtils.BaseDialog(context,
+                    context.getResources().getString(R.string.dialog_prompt),
+                    context.getResources().getString(R.string.update_AGPS_date),
+                    context.getDrawable(R.drawable.black_corner_bg),
+                    new DialogUtils.DialogClickListener() {
+                        @Override
+                        public void OnOK() {
+                            startActivity(new Intent(HomeActivity.this, AGpsUpdateActivity.class));
+                        }
+
+                        @Override
+                        public void OnCancel() {
+                        }
+                    }
+            );
         }
     }
 
@@ -1927,6 +2011,7 @@ public class HomeActivity extends BaseActivity {
     private GpsSportManager.GpsInfo appGpsInfo = null;
 
     private void resetAppHelpDevice() {
+//        createKml();
         appGpsInfo = null;
         GpsSportManager.getInstance().stopGps(homeActivity);
         stopLocationService();
