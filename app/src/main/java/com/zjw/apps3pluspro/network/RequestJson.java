@@ -355,6 +355,8 @@ public class RequestJson {
             request_json.put("loginName", account);
             request_json.put("accountType", accountType);
             request_json.put("reqType", reqType);
+            request_json.put("appId", "02");
+            request_json.put("emailType", 2);
 
         } catch (JSONException e) {
             e.printStackTrace();

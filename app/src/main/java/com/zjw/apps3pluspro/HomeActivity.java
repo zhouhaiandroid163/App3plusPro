@@ -1192,6 +1192,10 @@ public class HomeActivity extends BaseActivity {
             // 询问gps运动结果
             curCmd = APP_REQUEST_GPS_SPORT_STATE;
             sendAppStart(BtSerializeation.appStartCmd(1));
+        } else {
+            if(mBleDeviceTools.getIsGpsSensor()){
+                EventBus.getDefault().post(new DeviceNoSportEvent());
+            }
         }
     }
 
