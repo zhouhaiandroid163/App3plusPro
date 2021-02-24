@@ -1025,6 +1025,7 @@ public class RequestJson {
             request_json.put("phoneModel", "Android");
             request_json.put("appMsg", MyUtils.getAppName() + "_" + MyUtils.getAppInfo());
             request_json.put("phoneSystem", MyUtils.getPhoneModel());
+            request_json.put("appId", "02");
             if (type == 3) {
                 request_json.put("feekBackType", type);
             }
