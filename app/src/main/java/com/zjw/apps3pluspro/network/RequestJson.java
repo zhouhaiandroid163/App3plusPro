@@ -505,6 +505,9 @@ public class RequestJson {
         mUserData.setAppName(context.getString(R.string.app_name));
         mUserData.setAppVersion(MyUtils.getAppInfo());
 
+        mUserData.setLongitude(String.valueOf(HomeActivity.phoneLon));
+        mUserData.setLatitude(String.valueOf(HomeActivity.phoneLat));
+
         JSONObject request_json = UserData.getUserData(mUserData);
 
 

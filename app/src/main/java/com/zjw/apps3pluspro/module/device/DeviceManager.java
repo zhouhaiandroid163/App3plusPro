@@ -121,6 +121,9 @@ public class DeviceManager {
                             BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
                             mBleDeviceTools.set_ble_name(deviceName);
                             mBleDeviceTools.set_ble_mac(deviceMac);
+
+                            BleService.curBleName = deviceName;
+                            BleService.curBleAddress = deviceMac;
                             deviceManagerListen.onSuccess();
                         } else {
                             deviceManagerListen.onError();

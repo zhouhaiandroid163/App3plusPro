@@ -27,7 +27,24 @@ public class UserData implements Parcelable {
     private String city;//城市名
     private String appName;//APP名称
     private String appVersion;//APP版本
+    private String longitude;//APP版本
+    private String latitude;//APP版本
 
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
 
     public UserData() {
 
