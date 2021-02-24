@@ -2173,6 +2173,17 @@ public class BleService extends Service {
                 case BleConstant.Key_DeviceSendUnbind:
                     MyLog.i(TAG, "Key_DeviceSendUnbind = device send unbind ");
                     disconnect();
+                    DeviceManager.getInstance().unBind(this, new DeviceManager.DeviceManagerListen() {
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
                     DeviceManager.getInstance().unBind(this, null);
                     break;
                 case BleConstant.Key_DeviceBindInfo:
@@ -2256,6 +2267,17 @@ public class BleService extends Service {
 
     private void deniedByDevice() {
         disconnect();
+        DeviceManager.getInstance().unBind(this, new DeviceManager.DeviceManagerListen() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
         DeviceManager.getInstance().unBind(this, null);
         BroadcastTools.broadcastDeviceConnectedBIND_ERROR(getApplicationContext());
     }
