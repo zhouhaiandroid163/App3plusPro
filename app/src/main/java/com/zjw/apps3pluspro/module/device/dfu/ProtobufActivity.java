@@ -2,7 +2,6 @@ package com.zjw.apps3pluspro.module.device.dfu;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -240,11 +239,11 @@ public class ProtobufActivity extends BaseActivity {
         rotate.setFillAfter(true);// 动画执行完后是否停留在执行完的状态
         rotate.setStartOffset(10);// 执行前的等待时间
         ivSyncWhite.setAnimation(rotate);
+        ivSyncWhite.setVisibility(View.GONE);
 
 //        msg.setText("上传中...");
         progressDialog.show();
         progressDialog.setCanceledOnTouchOutside(false);
-
 
         progressDialog.setOnDismissListener(dialog -> {
         });

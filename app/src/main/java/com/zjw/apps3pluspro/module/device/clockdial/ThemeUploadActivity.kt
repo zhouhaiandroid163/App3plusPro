@@ -84,6 +84,7 @@ class ThemeUploadActivity : BaseActivity() {
         waitDialog = WaitDialog(context)
         val filter = IntentFilter()
         filter.addAction(BroadcastTools.ACTION_DOWN_CLOCK_FILE_STATE_SUCCESS)
+        filter.addAction(BroadcastTools.ACTION_DOWN_CLOCK_FILE_STATE_ERROR)
         filter.priority = 1000
         registerReceiver(broadcastReceiver, filter)
 
@@ -355,6 +356,9 @@ class ThemeUploadActivity : BaseActivity() {
                     } else {
                         initSendData()
                     }
+                BroadcastTools.ACTION_DOWN_CLOCK_FILE_STATE_ERROR -> {
+                    AppUtils.showToast(context, R.string.net_worse_try_again)
+                }
             }
         }
     }

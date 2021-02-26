@@ -77,6 +77,7 @@
                 android:background="@drawable/selector_white_bg"
                 android:gravity="center_vertical"
                 android:hint="@string/feedback_mail"
+                android:maxLength="50"
                 android:minHeight="45dp"
                 android:padding="8dip"
                 android:paddingStart="10dp"

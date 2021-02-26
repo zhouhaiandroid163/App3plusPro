@@ -140,6 +140,7 @@ public class BroadcastTools {
 
     //表盘文件下载成功广播
     public static final String ACTION_DOWN_CLOCK_FILE_STATE_SUCCESS = APP_NAME + "_" + "TAG_DOWN_Clock_FILE_STATE_SUCCESS";
+    public static final String ACTION_DOWN_CLOCK_FILE_STATE_ERROR = APP_NAME + "_" + "TAG_DOWN_Clock_FILE_STATE_ERROR";
 
     //系统蓝牙状态发生改变
     public final static String ACTION_BLUE_STATE_CHANGED = APP_NAME + "_" + "ACTION_BLUE_STATE_CHANGED";
