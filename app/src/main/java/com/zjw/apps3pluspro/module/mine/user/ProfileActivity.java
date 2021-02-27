@@ -736,7 +736,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 
             List<String> dataHeight1 = new ArrayList<String>();
             List<String> dataHeight2 = new ArrayList<String>();
-            for (int i = 2; i < 9; i++) {
+            for (int i = 2; i < 8; i++) {
                 dataHeight1.add("" + i);
             }
             for (int i = 0; i < 12; i++) {
@@ -745,6 +745,10 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 
             if (TextUtils.isEmpty(heightValue) || MyUtils.CmToInInt(heightValue) < 24 || MyUtils.CmToInInt(heightValue) > 107) {
                 heightValue = "170";
+            }
+            // 之前版本设置的英寸最大范围超出协议，此处将用户最大设置的值强行缩小到协议范围内，（只对身高超过241cm的用户生效）
+            if(MyUtils.CmToInInt(heightValue) > 95){
+                heightValue = "241";
             }
             int in = MyUtils.CmToInInt(heightValue);
             pv_height_ft.setData(dataHeight1, (in / 12 - 2));
