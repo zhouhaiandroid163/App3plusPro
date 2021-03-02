@@ -9,7 +9,9 @@
         android:layout_height="match_parent"
         android:layout_marginTop="24dp"
         android:orientation="vertical"
-        android:padding="30dip">
+        android:paddingLeft="30dp"
+        android:paddingTop="30dp"
+        android:paddingRight="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +32,7 @@
             android:id="@+id/edit_login_username"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="32dp"
             android:background="@color/transparent"
             android:hint="@string/input_your_mobile_phone"
             android:maxLength="50"
