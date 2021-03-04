@@ -675,6 +675,7 @@ public class RtkDfuActivity extends RtkBaseDfuActivity<DfuHelper> implements Vie
     private void initBroadcast() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_SUCCESS);
+        filter.addAction(BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_ERROR);
         filter.setPriority(1000);
         registerReceiver(broadcastReceiver, filter);
     }
@@ -696,6 +697,10 @@ public class RtkDfuActivity extends RtkBaseDfuActivity<DfuHelper> implements Vie
                     MyLog.i(TAG, "DFU 收到下载固件成功！");
                     startDfu();
 
+                    break;
+                case BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_ERROR:
+                    AppUtils.showToast(context, R.string.net_worse_try_again);
+                    finish();
                     break;
 
 

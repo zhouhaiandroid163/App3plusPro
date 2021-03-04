@@ -1,27 +1,20 @@
 package com.zjw.apps3pluspro.module.device;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -34,12 +27,7 @@ import com.zjw.apps3pluspro.bleservice.BleConstant;
 import com.zjw.apps3pluspro.bleservice.BleTools;
 import com.zjw.apps3pluspro.bleservice.BroadcastTools;
 import com.zjw.apps3pluspro.bleservice.BtSerializeation;
-import com.zjw.apps3pluspro.bleservice.UpdateInfoService;
-import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoAGpsPrepareStatusSuccessEvent;
-import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusEvent;
-import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusSuccessEvent;
-import com.zjw.apps3pluspro.eventbus.tools.EventTools;
 import com.zjw.apps3pluspro.module.device.dfu.BleDfuActivity;
 import com.zjw.apps3pluspro.module.device.dfu.ProtobufActivity;
 import com.zjw.apps3pluspro.module.device.dfurtk.RtkDfuActivity;
@@ -55,24 +43,17 @@ import com.zjw.apps3pluspro.network.okhttp.MyOkHttpClient;
 import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
 import com.zjw.apps3pluspro.sharedpreferences.UserSetTools;
 import com.zjw.apps3pluspro.utils.AppUtils;
-import com.zjw.apps3pluspro.utils.BleCmdManager;
 import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.utils.DialogUtils;
 import com.zjw.apps3pluspro.utils.GoogleFitManager;
 import com.zjw.apps3pluspro.utils.JavaUtil;
 import com.zjw.apps3pluspro.utils.SysUtils;
-import com.zjw.apps3pluspro.utils.ThemeManager;
-import com.zjw.apps3pluspro.utils.ThemeUtils;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 import com.zjw.apps3pluspro.view.dialog.WaitDialog;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
-
-
-import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -133,7 +114,6 @@ public class DeviceMoreSetActivity extends BaseActivity {
     protected void initViews() {
         super.initViews();
         setTvTitle(R.string.more_set_tip);
-        EventTools.SafeRegisterEventBus(this);
 
         tvMacAdress.setText(mBleDeviceTools.get_ble_mac());
         tvDeviceName.setText(mBleDeviceTools.get_ble_name());
@@ -251,7 +231,11 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 UnableBindDeviceDialog();
                 break;
             case R.id.layoutWeather:
-                startActivity(new Intent(this, WeatherMainActivity.class));
+                if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
+                    startActivity(new Intent(this, WeatherMainActivity.class));
+                } else {
+                    AppUtils.showToast(context, R.string.no_connection_notification);
+                }
                 break;
             case R.id.layoutPage:
                 Intent intent2 = new Intent(context, PageManagementActivity.class);
@@ -380,7 +364,6 @@ public class DeviceMoreSetActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        EventTools.SafeUnregisterEventBus(this);
         unregisterReceiver(broadcastReceiver);
         if (protoHandler != null) {
             protoHandler.removeCallbacksAndMessages(null);
@@ -582,39 +565,4 @@ public class DeviceMoreSetActivity extends BaseActivity {
             protoHandler.postDelayed(() -> waitDialog.close(), Constants.FINISH_ACTIVITY_DELAY_TIME);
         }
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        isPause = true;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        isPause = false;
-    }
-
-    private boolean isPause = false;
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void blueToothStateEvent(BlueToothStateEvent event) {
-        switch (event.state) {
-            case BleConstant.STATE_CONNECTING:
-                break;
-            case BleConstant.STATE_DISCONNECTED:
-                if (!isPause) {
-                    AppUtils.showToast(context, R.string.no_connection_notification);
-                }
-                finish();
-                break;
-            case BleConstant.STATE_CONNECTED_TIMEOUT:
-                break;
-            case BleConstant.STATE_CONNECTED:
-                break;
-            default:
-                break;
-        }
-    }
-
 }

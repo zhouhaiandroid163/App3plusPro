@@ -16,11 +16,17 @@ import butterknife.OnClick
 import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.application.BaseApplication
 import com.zjw.apps3pluspro.base.BaseActivity
+import com.zjw.apps3pluspro.bleservice.BleConstant
 import com.zjw.apps3pluspro.bleservice.BleTools
 import com.zjw.apps3pluspro.bleservice.BtSerializeation
+import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent
+import com.zjw.apps3pluspro.eventbus.tools.EventTools
+import com.zjw.apps3pluspro.utils.AppUtils
 import com.zjw.apps3pluspro.utils.GpsSportManager
 import com.zjw.apps3pluspro.utils.SysUtils
 import kotlinx.android.synthetic.main.weather_main_activity.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class WeatherMainActivity : BaseActivity() {
@@ -32,6 +38,7 @@ class WeatherMainActivity : BaseActivity() {
 
     override fun initViews() {
         super.initViews()
+        EventTools.SafeRegisterEventBus(this)
         setTvTitle(R.string.weather_title)
         handler = Handler()
     }
@@ -51,8 +58,9 @@ class WeatherMainActivity : BaseActivity() {
         }
     }
     override fun onDestroy() {
-        super.onDestroy()
+        EventTools.SafeUnregisterEventBus(this)
         handler.removeCallbacksAndMessages(null)
+        super.onDestroy()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -195,5 +203,23 @@ class WeatherMainActivity : BaseActivity() {
         msg!!.setText(resources.getString(R.string.weather_positioning))
         progressDialog!!.show()
         progressDialog!!.setOnDismissListener({ })
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun blueToothStateEvent(event: BlueToothStateEvent) {
+        when (event.state) {
+            BleConstant.STATE_CONNECTING -> {
+            }
+            BleConstant.STATE_DISCONNECTED -> {
+                AppUtils.showToast(context, R.string.no_connection_notification)
+                finish()
+            }
+            BleConstant.STATE_CONNECTED_TIMEOUT -> {
+            }
+            BleConstant.STATE_CONNECTED -> {
+            }
+            else -> {
+            }
+        }
     }
 }

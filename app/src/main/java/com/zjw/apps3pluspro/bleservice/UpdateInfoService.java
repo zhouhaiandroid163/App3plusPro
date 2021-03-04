@@ -13,11 +13,13 @@ import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import com.zjw.apps3pluspro.R;
+import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.utils.log.MyLog;
@@ -133,18 +135,19 @@ public class UpdateInfoService {
                         checkIsAndroidO();
                     });
 
-                } catch (
-                        IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
-                } catch (
-                        Exception e) {
-                    e.printStackTrace();
+
+                    handler.post(() -> {
+                        if (progressDialog != null && progressDialog.isShowing()) {
+                            progressDialog.cancel();
+                        }
+                        AppUtils.showToast(context, R.string.net_worse_try_again);
+                    });
+
                 }
             }
-
-        }.
-
-                start();
+        }.start();
 
     }
 
@@ -279,16 +282,16 @@ public class UpdateInfoService {
                     context.sendBroadcast(intent);
                     MyLog.i(TAG, "DFU 下好了");
 
-                } catch (IOException e) {
+                }  catch (Exception e) {
                     e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    pDialog.dismiss();
+                    Intent intent = new Intent();
+                    intent.setAction(BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_ERROR);
+                    context.sendBroadcast(intent);
                 }
-
             }
 
         }.start();
-
     }
 
     public void downLoadNewFile(final String url, final String file_name, final String file_path, final Dialog pDialog) {

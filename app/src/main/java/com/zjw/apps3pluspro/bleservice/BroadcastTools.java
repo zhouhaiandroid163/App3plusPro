@@ -134,6 +134,7 @@ public class BroadcastTools {
 
     //DFU升级成功广播
     public static final String ACTION_UPDATE_DEVICE_FILE_STATE_SUCCESS = APP_NAME + "_" + "TAG_UPDATE_DEVICE_FILE_STATE_SUCCESS";
+    public static final String ACTION_UPDATE_DEVICE_FILE_STATE_ERROR = APP_NAME + "_" + "ACTION_UPDATE_DEVICE_FILE_STATE_ERROR";
 
     //LTO升级成功广播
     public static final String ACTION_UPDATE_LTO_SUCCESS = APP_NAME + "_" + "ACTION_UPDATE_LTO_SUCCESS";

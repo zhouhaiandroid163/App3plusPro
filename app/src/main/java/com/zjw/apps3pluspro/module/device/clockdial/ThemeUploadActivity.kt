@@ -77,6 +77,7 @@ class ThemeUploadActivity : BaseActivity() {
     override fun initViews() {
         super.initViews()
         EventTools.SafeRegisterEventBus(this)
+        SysUtils.makeRootDirectory(Constants.HEAD_IMG)
         public_head_title.text = resources.getText(R.string.custom_sync)
         layountInflater = LayoutInflater.from(context)
         handler = Handler()

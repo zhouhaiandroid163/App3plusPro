@@ -361,6 +361,7 @@ public class ProtobufActivity extends BaseActivity {
     private void initBroadcast() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_SUCCESS);
+        filter.addAction(BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_ERROR);
         filter.setPriority(1000);
         registerReceiver(broadcastReceiver, filter);
     }
@@ -387,6 +388,9 @@ public class ProtobufActivity extends BaseActivity {
                     } else {
                         startDfu();
                     }
+                case BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_ERROR:
+                    AppUtils.showToast(context, R.string.net_worse_try_again);
+                    finish();
                     break;
             }
         }
