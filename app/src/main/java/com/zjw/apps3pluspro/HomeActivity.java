@@ -383,7 +383,6 @@ public class HomeActivity extends BaseActivity {
             });
         }
         initGooglefit();
-        BluetoothUtil.enableBluetooth(HomeActivity.this, BleStateResult);
         getConnectStatus();
 
         DeviceSportManager.Companion.getInstance().getIsUploadMoreSport(1);
@@ -399,6 +398,8 @@ public class HomeActivity extends BaseActivity {
 
         if (JavaUtil.checkIsNull(mBleDeviceTools.get_ble_mac())) {
             startActivity(new Intent(this, ScanDeviceTypeActivity.class));
+        } else {
+            BluetoothUtil.enableBluetooth(HomeActivity.this, BleStateResult);
         }
     }
 
@@ -1785,8 +1786,8 @@ public class HomeActivity extends BaseActivity {
 
     private LocationManager locationManager;
     private String locationProvider = null;
-    public static double phoneLat = 0;
-    public static double phoneLon = 0;
+    public static double phoneLat = 0.0;
+    public static double phoneLon = 0.0;
 
     private void stopLocation() {
         if (locationManager != null && locationListener != null) {

@@ -763,8 +763,13 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
                 height = heightValue;
             }
             // 之前版本设置的英寸最大范围超出协议，此处将用户最大设置的值强行缩小到协议范围内，（只对身高超过241cm的用户生效）
-            if(MyUtils.CmToInInt(heightValue) > 95){
-                heightValue = "241";
+            try {
+                if(MyUtils.CmToInInt(height) > 95){
+                    heightValue = "241";
+                    height = "241";
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
             int in = MyUtils.CmToInInt(height);
             pv_height_ft.setData(dataHeight1, (in / 12 - 2));

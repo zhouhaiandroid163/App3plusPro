@@ -1,35 +1,59 @@
 package com.zjw.apps3pluspro.module.device
 
+import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.view.View
 import android.widget.TextView
 import butterknife.OnClick
+import com.zjw.apps3pluspro.HomeActivity
 import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.base.BaseActivity
 import com.zjw.apps3pluspro.bleservice.BleConstant
+import com.zjw.apps3pluspro.utils.BluetoothUtil
 
 class ScanDeviceTypeActivity : BaseActivity() {
     override fun setLayoutId(): Int {
         return R.layout.scan_device_type_activity
     }
 
+    //适配器
+    var mBluetoothAdapter: BluetoothAdapter? = null
+
+    override fun initDatas() {
+        super.initDatas()
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+    }
+
     @OnClick(R.id.layoutType1, R.id.layoutType2)
     fun viewOnClick(view: View) {
         when (view.id) {
             R.id.layoutType1 -> {
-                val mIntent = Intent(this, ScanDeviceNoBindActivity::class.java)
-                mIntent.putExtra("type", BleConstant.PLUS_HR)
-                startActivity(mIntent)
-                finish()
+                if (isOpenBluetooth()) {
+                    val mIntent = Intent(this, ScanDeviceNoBindActivity::class.java)
+                    mIntent.putExtra("type", BleConstant.PLUS_HR)
+                    startActivity(mIntent)
+                    finish()
+                } else {
+                    BluetoothUtil.enableBluetooth(this@ScanDeviceTypeActivity, HomeActivity.BleStateResult)
+                }
             }
             R.id.layoutType2 -> {
-                val mIntent = Intent(this, ScanDeviceActivity::class.java)
-                mIntent.putExtra("type", BleConstant.PLUS_Vibe)
-                startActivity(mIntent)
-                finish()
+                if (isOpenBluetooth()) {
+                    val mIntent = Intent(this, ScanDeviceActivity::class.java)
+                    mIntent.putExtra("type", BleConstant.PLUS_Vibe)
+                    startActivity(mIntent)
+                    finish()
+                } else {
+                    BluetoothUtil.enableBluetooth(this@ScanDeviceTypeActivity, HomeActivity.BleStateResult)
+                }
             }
         }
     }
+
+    private fun isOpenBluetooth(): Boolean {
+        return mBluetoothAdapter?.isEnabled!!
+    }
+
 
     override fun initViews() {
         super.initViews()

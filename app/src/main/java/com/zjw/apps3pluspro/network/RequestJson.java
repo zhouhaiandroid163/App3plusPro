@@ -1597,8 +1597,10 @@ public class RequestJson {
             request_json.put("city", HomeActivity.cityName);
             request_json.put("internetType", SysUtils.getNetWorkType(context));
             request_json.put("simType", SysUtils.getSubscriptionOperatorType(context));
-            request_json.put("longitude", HomeActivity.phoneLon);
-            request_json.put("latitude", HomeActivity.phoneLat);
+            if (HomeActivity.phoneLon != 0.0 || HomeActivity.phoneLat != 0.0) {
+                request_json.put("longitude", HomeActivity.phoneLon);
+                request_json.put("latitude", HomeActivity.phoneLat);
+            }
             request_json.put("ip", SysUtils.getIPAddress(context));
         } catch (JSONException e) {
             e.printStackTrace();
