@@ -33,6 +33,7 @@
                     android:layout_marginEnd="15dp"
                     android:background="@drawable/white_corner_bg"
                     android:hint="@string/weather_search_city"
+                    android:maxLength="50"
                     android:paddingStart="30dp"
                     android:paddingLeft="30dp"
                     android:singleLine="true"
