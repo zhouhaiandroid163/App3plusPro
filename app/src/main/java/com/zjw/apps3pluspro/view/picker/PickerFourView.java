@@ -165,14 +165,13 @@ public class PickerFourView extends View {
 
         canvas.drawText(mDataList.get(mCurrentSelected), x, baseline, mPaint);
         // 绘制上方data
-        for (int i = 1; (mCurrentSelected - i) >= 0; i++) {
+        for (int i = 1; (mCurrentSelected - i) >= 0 - 2; i++) {
             drawOtherText(canvas, i, -1);
         }
         // 绘制下方data
-        for (int i = 1; (mCurrentSelected + i) < mDataList.size(); i++) {
+        for (int i = 1; (mCurrentSelected + i) < mDataList.size() + 2; i++) {
             drawOtherText(canvas, i, 1);
         }
-
     }
 
     /**
@@ -190,8 +189,15 @@ public class PickerFourView extends View {
         float y = (float) (mViewHeight / 2.0 + type * d);
         FontMetricsInt fmi = mPaint.getFontMetricsInt();
         float baseline = (float) (y - (fmi.bottom / 2.0 + fmi.top / 2.0));
-        canvas.drawText(mDataList.get(mCurrentSelected + type * position),
-                (float) (mViewWidth / 2.0), baseline, mPaint);
+
+        int index = mCurrentSelected + type * position;
+        if (index > mDataList.size() - 1) {
+            index = index - mDataList.size();
+        }
+        if (index < 0) {
+            index = mDataList.size() + index;
+        }
+        canvas.drawText(mDataList.get(index), (float) (mViewWidth / 2.0), baseline, mPaint);
     }
 
     /**
