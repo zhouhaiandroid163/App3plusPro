@@ -107,6 +107,7 @@ public class AGpsUpdateActivity extends BaseActivity {
         IntentFilter filter = new IntentFilter();
 
         filter.addAction(BroadcastTools.ACTION_UPDATE_LTO_SUCCESS);
+        filter.addAction(BroadcastTools.ACTION_DOWN_CLOCK_FILE_STATE_ERROR);
         filter.addAction(ThemeManager.ACTION_CMD_APP_START);
         filter.addAction(ThemeManager.ACTION_CMD_DEVICE_START);
         filter.addAction(ThemeManager.ACTION_CMD_APP_CONFIRM);
@@ -132,6 +133,11 @@ public class AGpsUpdateActivity extends BaseActivity {
                 case BroadcastTools.ACTION_UPDATE_LTO_SUCCESS:
                     MyLog.i(TAG, "lto 收到下载固件成功！");
                     startDfu();
+                    break;
+                case BroadcastTools.ACTION_DOWN_CLOCK_FILE_STATE_ERROR:
+                    MyLog.i(TAG, "lto 收到下载固件失败！");
+                    AppUtils.showToast(context, R.string.net_worse_try_again);
+                    finish();
                     break;
                 case ThemeManager.ACTION_CMD_APP_START:
                     switch (curCmd) {

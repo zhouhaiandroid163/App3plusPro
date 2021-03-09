@@ -402,10 +402,12 @@ public class UpdateInfoService {
                     context.sendBroadcast(intent);
                     MyLog.i(TAG, "文件下载 下好了");
 
-                } catch (IOException e) {
-                    e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
+                    pDialog.dismiss();
+                    Intent intent = new Intent();
+                    intent.setAction(BroadcastTools.ACTION_DOWN_CLOCK_FILE_STATE_ERROR);
+                    context.sendBroadcast(intent);
                 }
 
             }
