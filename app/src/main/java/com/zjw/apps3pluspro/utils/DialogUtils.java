@@ -90,8 +90,8 @@ public class DialogUtils {
         void OnCancel();
     }
 
-    public static void BaseDialog(Context context, String title, String content, Drawable bg, DialogClickListener dialogClickListener) {
-        showBaseDialog(context, title, content, bg, dialogClickListener, true, false, null);
+    public static Dialog BaseDialog(Context context, String title, String content, Drawable bg, DialogClickListener dialogClickListener) {
+       return showBaseDialog(context, title, content, bg, dialogClickListener, true, false, null);
     }
 
     public static void BaseDialog(Context context, String title, String content, Drawable bg, DialogClickListener dialogClickListener, String okString) {

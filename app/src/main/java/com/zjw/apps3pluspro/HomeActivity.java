@@ -434,6 +434,15 @@ public class HomeActivity extends BaseActivity {
                 radio_today.setChecked(true);
             }
         }
+
+        try {
+            if(aGpsDialog != null && aGpsDialog.isShowing()){
+                aGpsDialog.dismiss();
+                aGpsDialog.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -981,7 +990,7 @@ public class HomeActivity extends BaseActivity {
         if (isFirstConnect) {
             MyLog.w(TAG, " deviceSportStatusEvent is first connect");
             isFirstConnect = false;
-            if(event.sportType != 0){
+            if (event.sportType != 0) {
                 curCmd = APP_GPS_READY;
                 initGpsSport();
             }
@@ -989,6 +998,7 @@ public class HomeActivity extends BaseActivity {
             MyLog.w(TAG, " no initGpsSport");
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void deviceNoSportEvent(DeviceNoSportEvent event) {
         MyLog.w(TAG, " init agps request");
@@ -1194,18 +1204,20 @@ public class HomeActivity extends BaseActivity {
             curCmd = APP_REQUEST_GPS_SPORT_STATE;
             sendAppStart(BtSerializeation.appStartCmd(1));
         } else {
-            if(mBleDeviceTools.getIsGpsSensor()){
+            if (mBleDeviceTools.getIsGpsSensor()) {
                 EventBus.getDefault().post(new DeviceNoSportEvent());
             }
         }
     }
+
+    private Dialog aGpsDialog;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getDeviceProtoAGpsPrepareStatusSuccessEvent(GetDeviceProtoAGpsPrepareStatusSuccessEvent event) {
         protoHandler.removeCallbacksAndMessages(null);
         if (event.needGpsInfo) {
             // download file
-            DialogUtils.BaseDialog(context,
+            aGpsDialog =  DialogUtils.BaseDialog(homeActivity,
                     context.getResources().getString(R.string.dialog_prompt),
                     context.getResources().getString(R.string.update_AGPS_date),
                     context.getDrawable(R.drawable.black_corner_bg),
@@ -1213,13 +1225,16 @@ public class HomeActivity extends BaseActivity {
                         @Override
                         public void OnOK() {
                             startActivity(new Intent(HomeActivity.this, AGpsUpdateActivity.class));
+                            aGpsDialog = null;
                         }
 
                         @Override
                         public void OnCancel() {
+                            aGpsDialog = null;
                         }
                     }
             );
+            aGpsDialog.setCancelable(false);
         }
     }
 
