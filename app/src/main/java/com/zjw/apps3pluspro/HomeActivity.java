@@ -436,7 +436,7 @@ public class HomeActivity extends BaseActivity {
         }
 
         try {
-            if(aGpsDialog != null && aGpsDialog.isShowing()){
+            if (aGpsDialog != null && aGpsDialog.isShowing()) {
                 aGpsDialog.dismiss();
                 aGpsDialog.show();
             }
@@ -668,6 +668,7 @@ public class HomeActivity extends BaseActivity {
                         break;
                     //已断开
                     case BroadcastTools.ACTION_GATT_DISCONNECTED:
+                        aGpsDialog = null;
                         isFirstConnect = false;
                         currentGpsSportState = -1;
                         appGpsInfo = null;
@@ -1217,7 +1218,7 @@ public class HomeActivity extends BaseActivity {
         protoHandler.removeCallbacksAndMessages(null);
         if (event.needGpsInfo) {
             // download file
-            aGpsDialog =  DialogUtils.BaseDialog(homeActivity,
+            aGpsDialog = DialogUtils.BaseDialog(homeActivity,
                     context.getResources().getString(R.string.dialog_prompt),
                     context.getResources().getString(R.string.update_AGPS_date),
                     context.getDrawable(R.drawable.black_corner_bg),

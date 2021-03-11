@@ -164,12 +164,17 @@ public class PickerView extends View {
         float baseline = (float) (y - (fmi.bottom / 2.0 + fmi.top / 2.0));
 
         canvas.drawText(mDataList.get(mCurrentSelected), x, baseline, mPaint);
+
+        int index = 0;
+        if(boundaryType == 2){
+            index = 2;
+        }
         // 绘制上方data
-        for (int i = 1; (mCurrentSelected - i) >= 0 - 2; i++) {
+        for (int i = 1; (mCurrentSelected - i) >= 0 - index; i++) {
             drawOtherText(canvas, i, -1);
         }
         // 绘制下方data
-        for (int i = 1; (mCurrentSelected + i) < mDataList.size() + 2; i++) {
+        for (int i = 1; (mCurrentSelected + i) < mDataList.size() + index; i++) {
             drawOtherText(canvas, i, 1);
         }
     }
@@ -191,13 +196,20 @@ public class PickerView extends View {
         float baseline = (float) (y - (fmi.bottom / 2.0 + fmi.top / 2.0));
 
         int index = mCurrentSelected + type * position;
-        if (index > mDataList.size() - 1) {
-            index = index - mDataList.size();
-        }
-        if (index < 0) {
-            index = mDataList.size() + index;
+        if(this.boundaryType == 2){
+            if (index > mDataList.size() - 1) {
+                index = index - mDataList.size();
+            }
+            if (index < 0) {
+                index = mDataList.size() + index;
+            }
         }
         canvas.drawText(mDataList.get(index), (float) (mViewWidth / 2.0), baseline, mPaint);
+    }
+
+    private int boundaryType = 2;// 显示上下边界值
+    public void setBoundary(int type){
+        this.boundaryType = type;
     }
 
     /**

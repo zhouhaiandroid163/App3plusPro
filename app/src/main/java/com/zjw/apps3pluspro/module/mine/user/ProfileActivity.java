@@ -430,6 +430,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
         wl.height = LayoutParams.WRAP_CONTENT;
 
         PickerView pv_sex = (PickerView) view.findViewById(R.id.pv_sex);
+        pv_sex.setBoundary(1);
 
         if (sexValue == null || sexValue.equals("")) {
             sexValue = "0";
@@ -748,7 +749,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
             }
             // 之前版本设置的英寸最大范围超出协议，此处将用户最大设置的值强行缩小到协议范围内，（只对身高超过241cm的用户生效）
             try {
-                if(MyUtils.CmToInInt(heightValue) > 95){
+                if (MyUtils.CmToInInt(heightValue) > 95) {
                     heightValue = "241";
                 }
             } catch (Exception e) {
