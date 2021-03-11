@@ -388,6 +388,7 @@ public class ProtobufActivity extends BaseActivity {
                     } else {
                         startDfu();
                     }
+                    break;
                 case BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_ERROR:
                     AppUtils.showToast(context, R.string.net_worse_try_again);
                     finish();

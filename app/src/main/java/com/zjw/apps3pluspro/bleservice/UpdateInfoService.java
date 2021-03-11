@@ -138,12 +138,16 @@ public class UpdateInfoService {
                 } catch (Exception e) {
                     e.printStackTrace();
 
-                    handler.post(() -> {
-                        if (progressDialog != null && progressDialog.isShowing()) {
-                            progressDialog.cancel();
-                        }
-                        AppUtils.showToast(context, R.string.net_worse_try_again);
-                    });
+                    try {
+                        handler.post(() -> {
+                            if (progressDialog != null && progressDialog.isShowing()) {
+                                progressDialog.cancel();
+                            }
+                            AppUtils.showToast(context, R.string.net_worse_try_again);
+                        });
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
 
                 }
             }
@@ -284,10 +288,14 @@ public class UpdateInfoService {
 
                 }  catch (Exception e) {
                     e.printStackTrace();
-                    pDialog.dismiss();
-                    Intent intent = new Intent();
-                    intent.setAction(BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_ERROR);
-                    context.sendBroadcast(intent);
+                    try {
+                        pDialog.dismiss();
+                        Intent intent = new Intent();
+                        intent.setAction(BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_ERROR);
+                        context.sendBroadcast(intent);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
 
@@ -343,10 +351,14 @@ public class UpdateInfoService {
                     context.sendBroadcast(intent);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    pDialog.dismiss();
-                    Intent intent = new Intent();
-                    intent.setAction(BroadcastTools.ACTION_DOWN_CLOCK_FILE_STATE_ERROR);
-                    context.sendBroadcast(intent);
+                    try {
+                        pDialog.dismiss();
+                        Intent intent = new Intent();
+                        intent.setAction(BroadcastTools.ACTION_DOWN_CLOCK_FILE_STATE_ERROR);
+                        context.sendBroadcast(intent);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
 
@@ -404,10 +416,14 @@ public class UpdateInfoService {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    pDialog.dismiss();
-                    Intent intent = new Intent();
-                    intent.setAction(BroadcastTools.ACTION_DOWN_CLOCK_FILE_STATE_ERROR);
-                    context.sendBroadcast(intent);
+                    try {
+                        pDialog.dismiss();
+                        Intent intent = new Intent();
+                        intent.setAction(BroadcastTools.ACTION_DOWN_CLOCK_FILE_STATE_ERROR);
+                        context.sendBroadcast(intent);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
 
             }

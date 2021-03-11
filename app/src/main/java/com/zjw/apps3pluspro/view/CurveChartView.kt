@@ -156,7 +156,7 @@ class CurveChartView(context: Context?, attrs: AttributeSet?) : View(context, at
             }
             return
         }
-        var dataBlockIndex = (touchPos / (width / (data.size - 1))).toInt()
+        var dataBlockIndex = (touchPos / (width * 1f / (data.size - 1))).toInt()
 
         if (dataBlockIndex > data.size - 1) {
             dataBlockIndex = data.size - 1

@@ -64,6 +64,7 @@ import com.zjw.apps3pluspro.eventbus.DeviceNoSportEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceSportStatusEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceToAppSportStateEvent;
 import com.zjw.apps3pluspro.eventbus.DialInfoCompleteEvent;
+import com.zjw.apps3pluspro.eventbus.DismissAGpsUpdateDialogEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoAGpsPrepareStatusSuccessEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoWatchFacePrepareStatusEvent;
@@ -657,6 +658,7 @@ public class HomeActivity extends BaseActivity {
                     //已连接
                     case BroadcastTools.ACTION_GATT_CONNECTED:
                         isFirstConnect = true;
+                        isFirstShowAGpsDialog = true;
                         mConnectionState = BleConstant.STATE_CONNECTED;
                         EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_CONNECTED));
                         MyLog.i(TAG, "已连接");
@@ -670,6 +672,7 @@ public class HomeActivity extends BaseActivity {
                     case BroadcastTools.ACTION_GATT_DISCONNECTED:
                         aGpsDialog = null;
                         isFirstConnect = false;
+                        isFirstShowAGpsDialog = false;
                         currentGpsSportState = -1;
                         appGpsInfo = null;
                         curSportState = BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO;
@@ -1213,10 +1216,13 @@ public class HomeActivity extends BaseActivity {
 
     private Dialog aGpsDialog;
 
+    private boolean isFirstShowAGpsDialog = false;
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getDeviceProtoAGpsPrepareStatusSuccessEvent(GetDeviceProtoAGpsPrepareStatusSuccessEvent event) {
         protoHandler.removeCallbacksAndMessages(null);
-        if (event.needGpsInfo) {
+        if (event.needGpsInfo && isFirstShowAGpsDialog) {
+            isFirstShowAGpsDialog = false;
             // download file
             aGpsDialog = DialogUtils.BaseDialog(homeActivity,
                     context.getResources().getString(R.string.dialog_prompt),
@@ -1236,6 +1242,18 @@ public class HomeActivity extends BaseActivity {
                     }
             );
             aGpsDialog.setCancelable(false);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void dismissAGpsUpdateDialogEvent(DismissAGpsUpdateDialogEvent event) {
+        try {
+            if (aGpsDialog != null && aGpsDialog.isShowing()) {
+                aGpsDialog.dismiss();
+                aGpsDialog = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

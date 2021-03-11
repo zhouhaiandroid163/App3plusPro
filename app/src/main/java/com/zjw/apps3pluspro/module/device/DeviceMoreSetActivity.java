@@ -27,7 +27,9 @@ import com.zjw.apps3pluspro.bleservice.BleConstant;
 import com.zjw.apps3pluspro.bleservice.BleTools;
 import com.zjw.apps3pluspro.bleservice.BroadcastTools;
 import com.zjw.apps3pluspro.bleservice.BtSerializeation;
+import com.zjw.apps3pluspro.eventbus.DismissAGpsUpdateDialogEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoAGpsPrepareStatusSuccessEvent;
+import com.zjw.apps3pluspro.eventbus.tools.EventTools;
 import com.zjw.apps3pluspro.module.device.dfu.BleDfuActivity;
 import com.zjw.apps3pluspro.module.device.dfu.ProtobufActivity;
 import com.zjw.apps3pluspro.module.device.dfurtk.RtkDfuActivity;
@@ -51,6 +53,7 @@ import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 import com.zjw.apps3pluspro.view.dialog.WaitDialog;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
@@ -114,7 +117,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
     protected void initViews() {
         super.initViews();
         setTvTitle(R.string.more_set_tip);
-
+        EventTools.SafeRegisterEventBus(this);
         tvMacAdress.setText(mBleDeviceTools.get_ble_mac());
         tvDeviceName.setText(mBleDeviceTools.get_ble_name());
 
@@ -365,6 +368,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         unregisterReceiver(broadcastReceiver);
+        EventTools.SafeUnregisterEventBus(this);
         if (protoHandler != null) {
             protoHandler.removeCallbacksAndMessages(null);
         }
@@ -559,6 +563,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
         protoHandler.removeCallbacksAndMessages(null);
         if (event.needGpsInfo) {
             // download file
+            EventBus.getDefault().post(new DismissAGpsUpdateDialogEvent());
             startActivity(new Intent(DeviceMoreSetActivity.this, AGpsUpdateActivity.class));
         } else {
             waitDialog.show(getResources().getString(R.string.update_AGPS_date_no));
