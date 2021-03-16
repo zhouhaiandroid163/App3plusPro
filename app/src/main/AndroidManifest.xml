@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zjw.apps3pluspro"
-    android:versionCode="10"
-    android:versionName="1.0.10">
+    android:versionCode="12"
+    android:versionName="1.0.12">
     <!-- 监听通话 -->
     <!-- 用于读取手机当前的状态 -->
     <!-- 读取电话状态 = 来电提醒 -->

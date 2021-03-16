@@ -3,6 +3,8 @@ package com.zjw.apps3pluspro.base;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -406,5 +408,13 @@ public abstract class BaseActivity extends FragmentActivity {
     public void stopLocationService() {
         Intent intent = new Intent(this, ForegroundLocationService.class);
         stopService(intent);
+    }
+
+    public Resources getResources() {
+        Resources resources = super.getResources();
+        Configuration configuration = new Configuration();
+        configuration.setToDefaults();
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        return resources;
     }
 }
