@@ -1810,7 +1810,7 @@ public class RequestJson {
                 mJSONObject.put("reportHeartWarmUp", mSportModleInfo.getReportHeartWarmUp());
                 mJSONObject.put("gpsDataValid1", mSportModleInfo.getReportGpsValid1());
                 mJSONObject.put("gpsEncryption", mSportModleInfo.getReportGpsEncryption());
-                mJSONObject.put("gpsUnixDatas", mSportModleInfo.getRecordGpsTime());
+//                mJSONObject.put("gpsUnixDatas", mSportModleInfo.getRecordGpsTime());
                 jsonArray.put(mJSONObject);
             }
             request_json = new JSONObject();

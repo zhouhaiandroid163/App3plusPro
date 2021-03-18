@@ -404,7 +404,7 @@ class DeviceSportManager private constructor() {
                             sportModleInfo.recordPointTimeZone = recordPointInfo.optInt("timeZone")
                             sportModleInfo.reportGpsValid1 = recordPointInfo.optInt("gpsDataValid1")
                             sportModleInfo.reportGpsEncryption = recordPointInfo.optInt("gpsEncryption")
-                            sportModleInfo.recordGpsTime = recordPointInfo.optString("gpsUnixDatas")
+//                            sportModleInfo.recordGpsTime = recordPointInfo.optString("gpsUnixDatas")
                         }
                         mSportModleInfoUtils.updateData(sportModleInfo)
 
