@@ -285,6 +285,9 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                         var height: Double = 0.0
                         var step: Int = 0
                         var cal: Double = 0.0
+
+                        var heartIndex: Int = 0
+
                         for (j in i * oneGroup until (i + 1) * oneGroup) {
                             var deviceSportEntity = deviceSportList[j];
                             heart += deviceSportEntity.heart
@@ -292,8 +295,17 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                             height += deviceSportEntity.height
                             step += deviceSportEntity.step
                             cal += deviceSportEntity.cal
+
+                            if (deviceSportEntity.heart != 0) {
+                                heartIndex++
+                            }
                         }
-                        yHeartData.add(heart / oneGroup)
+
+                        if (heartIndex == 0) {
+                            heartIndex = 1
+                        }
+
+                        yHeartData.add(heart / heartIndex)
                         if (distance == 0.0) {
                             yPaceData.add(0.0)
                         } else {
@@ -349,6 +361,9 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                         var height: Double = 0.0
                         var step: Int = 0
                         var cal: Double = 0.0
+
+                        var heartIndex: Int = 0
+
                         for (j in i * oneGroup until (i + 1) * oneGroup) {
                             var deviceSportEntity = deviceSportList[j];
                             heart += deviceSportEntity.heart
@@ -356,8 +371,17 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                             height += deviceSportEntity.height
                             step += deviceSportEntity.step
                             cal += deviceSportEntity.cal
+
+                            if (deviceSportEntity.heart != 0) {
+                                heartIndex++
+                            }
                         }
-                        yHeartData.add(heart / oneGroup)
+
+                        if (heartIndex == 0) {
+                            heartIndex = 1
+                        }
+
+                        yHeartData.add(heart / heartIndex)
                         if (distance == 0.0) {
                             yPaceData.add(0.0)
                         } else {
@@ -390,6 +414,9 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                     var height: Double = 0.0
                     var step: Int = 0
                     var cal: Double = 0.0
+
+                    var heartIndex: Int = 0
+
                     for (j in 16 * oneGroup until 16 * oneGroup + lastData) {
                         var deviceSportEntity = deviceSportList[j];
                         heart += deviceSportEntity.heart
@@ -397,8 +424,17 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                         height += deviceSportEntity.height
                         step += deviceSportEntity.step
                         cal += deviceSportEntity.cal
+
+                        if (deviceSportEntity.heart != 0) {
+                            heartIndex++
+                        }
                     }
-                    yHeartData.add(heart / lastData)
+
+                    if (heartIndex == 0) {
+                        heartIndex = 1
+                    }
+
+                    yHeartData.add(heart / heartIndex)
                     if (distance == 0.0) {
                         yPaceData.add(0.0)
                     } else {
@@ -424,7 +460,6 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                         ySpeedData.add(distance * 3600 / (lastData * 1000 * 1.61f))
                         yHeightData.add(height * 3.28f)
                     }
-
 
                     mHeartCurveChartView.setParameter(xData, yHeartData)
                     mPaceCurveChartView.setParameter(xData, yPaceData)
