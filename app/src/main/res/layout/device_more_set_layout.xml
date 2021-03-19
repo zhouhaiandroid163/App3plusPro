@@ -307,7 +307,8 @@
 
                     <RelativeLayout
                         android:id="@+id/layoutWearType"
-                        style="@style/device_more_set_style">
+                        style="@style/device_more_set_style"
+                        android:visibility="gone">
 
                         <TextView
                             style="@style/public_text_title2_style"
@@ -321,9 +322,9 @@
                             android:layout_centerVertical="true"
                             android:background="@mipmap/icon_enter" />
 
+                        <include layout="@layout/line_layout" />
                     </RelativeLayout>
 
-                    <include layout="@layout/line_layout" />
 
                     <RelativeLayout style="@style/device_more_set_style">
 

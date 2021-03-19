@@ -649,7 +649,7 @@
     <string name="connect_message">Please rebind the device</string>
     <!--表盘相关-->
     <string name="custom_title">Custom dial</string>
-    <string name="custom_sync">Synchronized dial</string>
+    <string name="custom_sync">Synchronization</string>
     <!--新交互-->
     <!--数据-->
     <string name="device_title">Settings</string>
