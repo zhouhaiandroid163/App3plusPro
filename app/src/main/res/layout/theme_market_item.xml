@@ -61,8 +61,8 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="100dp"
-                    android:layout_height="100dp">
+                    android:layout_width="92dp"
+                    android:layout_height="92dp">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -100,8 +100,8 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="100dp"
-                    android:layout_height="100dp">
+                    android:layout_width="92dp"
+                    android:layout_height="92dp">
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -139,8 +139,8 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="100dp"
-                    android:layout_height="100dp">
+                    android:layout_width="92dp"
+                    android:layout_height="92dp">
 
                     <ImageView
                         android:layout_width="match_parent"

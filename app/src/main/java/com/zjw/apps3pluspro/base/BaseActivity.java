@@ -410,11 +410,29 @@ public abstract class BaseActivity extends FragmentActivity {
         stopService(intent);
     }
 
+//    /**
+//     * 重写 getResource 方法，防止系统字体影响
+//     */
+//    @Override
+//    public Resources getResources() {
+//        Resources resources = super.getResources();
+//        Configuration configuration = new Configuration();
+//        configuration.setToDefaults();
+//        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+//        return resources;
+//    }
+
+    /**
+     * 重写 getResource 方法，防止系统字体影响
+     */
+    @Override
     public Resources getResources() {
         Resources resources = super.getResources();
-        Configuration configuration = new Configuration();
-        configuration.setToDefaults();
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        if (resources != null && resources.getConfiguration().fontScale != 1) {
+            Configuration configuration = resources.getConfiguration();
+            configuration.fontScale = 1;
+            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        }
         return resources;
     }
 }

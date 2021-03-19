@@ -39,7 +39,7 @@
     <string name="code_get_is_old">Verification code has expired</string>
     <string name="resend">Resend</string>
     <string name="create_an_account">Sign Up Here</string>
-    <string name="btn_regist">Registered</string>
+    <string name="btn_regist">SIGN UP</string>
     <string name="the_account_is_not_registered">This account is not registered</string>
     <string name="user_already_exists">This account is already registered</string>
     <string name="pasword_verification_fail">Incorrect username or password</string>
@@ -94,7 +94,7 @@
     <string name="device_help">Using help</string>
     <string name="request">Request</string>
     <string name="exit">Logout</string>
-    <string name="exite_account">Do you want to quit your current account?</string>
+    <string name="exite_account">Are you sure to log out?</string>
     <string name="skin_colour_title">Skin color selection</string>
     <string name="skin_colour_tip">The selected skin tone will affect the accuracy of the daily measurement information. Please choose a color that is similar to your skin.</string>
     <string name="target_complete">Goal accomplished</string>
@@ -277,7 +277,7 @@
     <string name="calibration">During calibration:</string>
     <string name="measurement_time">Measure time</string>
     <!-- 关爱界面 -->
-    <string name="title_care">Friends</string>
+    <string name="title_care">Friend</string>
     <string name="search_friend">Search for</string>
     <string name="search_friend_tip">Go to the "My" page, where you can view the ID of the other party.</string>
     <string name="stay_up">Stay up late</string>
@@ -557,7 +557,7 @@
     <string name="dialog_send_pos7">Left</string>
     <string name="dialog_send_pos8">Right</string>
     <!-- 主题音频相关 -->
-    <string name="my_theme_title">Dial market</string>
+    <string name="my_theme_title">Watch Face</string>
     <string name="my_theme_content">Personalized dial</string>
     <string name="my_theme_dialog_count">After connecting the bracelet, click on the dial of your favorite and then transfer the APP to the bracelet.</string>
     <string name="my_music_dialog_count">After connecting the bracelet, click on the favorite song and then transfer the APP to the bracelet.</string>
@@ -652,7 +652,7 @@
     <string name="custom_sync">Synchronized dial</string>
     <!--新交互-->
     <!--数据-->
-    <string name="device_title">Setting</string>
+    <string name="device_title">Settings</string>
     <string name="data_cyc_set_tip">Setting the physiological cycle is more conducive to understanding your health</string>
     <string name="ecg_heart">ECG HR</string>
     <string name="ecg_bp">ECG BP</string>

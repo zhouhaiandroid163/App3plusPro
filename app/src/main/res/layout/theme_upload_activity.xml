@@ -58,46 +58,58 @@
 
                 </RelativeLayout>
 
-
-                <TextView
-                    android:id="@+id/tvThemeName"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="164dp"
                     android:layout_marginEnd="12dp"
-                    android:ellipsize="end"
-                    android:text="@string/sleep_gang"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:orientation="vertical"
                     app:layout_constraintLeft_toRightOf="@+id/rlBgView"
-                    app:layout_constraintTop_toTopOf="@+id/rlBgView" />
+                    app:layout_constraintTop_toTopOf="@+id/rlBgView">
 
-                <TextView
-                    android:id="@+id/tvThemeSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="2dp"
-                    android:text="@string/sleep_gang"
-                    android:textColor="@color/text_color"
-                    android:textSize="14sp"
-                    app:layout_constraintLeft_toLeftOf="@+id/tvThemeName"
-                    app:layout_constraintTop_toBottomOf="@+id/tvThemeName" />
+                    <TextView
+                        android:id="@+id/tvThemeName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/sleep_gang"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/tvThemeUpload"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/theme_upload_bg"
-                    android:gravity="center"
-                    android:paddingStart="24dp"
-                    android:paddingTop="8dp"
-                    android:paddingEnd="24dp"
-                    android:paddingBottom="8dp"
-                    android:text="@string/custom_sync"
-                    android:textColor="@drawable/white"
-                    app:layout_constraintLeft_toLeftOf="@+id/tvThemeSize"
-                    app:layout_constraintTop_toBottomOf="@+id/tvThemeSize" />
+                    <TextView
+                        android:id="@+id/tvThemeSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="12dp"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="@string/sleep_gang"
+                        android:textColor="@color/text_color"
+                        android:textSize="14sp"
+                        app:layout_constraintLeft_toLeftOf="@+id/tvThemeName"
+                        app:layout_constraintTop_toBottomOf="@+id/tvThemeName" />
+
+                    <TextView
+                        android:id="@+id/tvThemeUpload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/theme_upload_bg"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:paddingStart="24dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="24dp"
+                        android:paddingBottom="8dp"
+                        android:text="@string/custom_sync"
+                        android:textColor="@drawable/white"
+                        app:layout_constraintLeft_toLeftOf="@+id/tvThemeSize"
+                        app:layout_constraintTop_toBottomOf="@+id/tvThemeSize" />
+
+                </LinearLayout>
 
 
                 <TextView

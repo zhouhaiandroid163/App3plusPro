@@ -32,7 +32,9 @@
         <TextView
             android:id="@+id/tv_handle_fullname"
             style="@style/public_text_title2_style"
+            android:layout_marginLeft="2dp"
             android:layout_marginTop="4dp"
+            android:layout_marginRight="2dp"
             android:text="@string/sleep_gang"
             android:textSize="22sp" />
 
@@ -83,28 +85,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:gravity="center"
-
-        android:minHeight="60dp"
-        android:orientation="horizontal">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="15dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical">
+            android:layout_weight="1">
 
             <TextView
                 style="@style/public_text_title2_style"
-                android:layout_centerVertical="true"
                 android:text="@string/remarks_name" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center|right">
 
             <TextView
                 android:id="@+id/tv_handle_remarks"
                 style="@style/public_text_company2_style"
-                android:layout_marginLeft="10dip"
                 android:hint="@string/no_set"
-                android:maxWidth="180dp"
                 android:text=""
                 android:textColor="@color/white_50"
                 android:textColorHint="@color/white_50" />
@@ -113,12 +117,7 @@
         <ImageView
             android:layout_width="15dip"
             android:layout_height="15dip"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="60dp"
             android:background="@drawable/icon_right_enable_on" />
-
-
     </LinearLayout>
 
 

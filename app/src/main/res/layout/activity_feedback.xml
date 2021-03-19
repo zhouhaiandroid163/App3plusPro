@@ -87,20 +87,15 @@
                 android:textColorHint="#989CA0"
                 android:textSize="14sp" />
 
+            <Button
+                android:id="@+id/bt_feedback_submit"
+                style="@style/big_button_stytle"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="25dp"
+                android:text="@string/conmmit" />
+
         </LinearLayout>
     </ScrollView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom|center">
-
-        <Button
-            android:id="@+id/bt_feedback_submit"
-            style="@style/big_button_stytle"
-            android:layout_marginBottom="36dp"
-            android:text="@string/conmmit" />
-    </RelativeLayout>
 
 
 </LinearLayout>

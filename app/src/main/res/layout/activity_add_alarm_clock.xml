@@ -58,43 +58,43 @@
             <TextView
                 android:id="@+id/tv_add_alarm_clock_7"
                 style="@style/alarm_clock"
-                android:layout_marginLeft="5dip"
+                android:layout_marginLeft="3dip"
                 android:text="@string/sunday" />
 
             <TextView
                 android:id="@+id/tv_add_alarm_clock_1"
                 style="@style/alarm_clock"
-                android:layout_marginLeft="5dip"
+                android:layout_marginLeft="3dip"
                 android:text="@string/monday" />
 
             <TextView
                 android:id="@+id/tv_add_alarm_clock_2"
                 style="@style/alarm_clock"
-                android:layout_marginLeft="5dip"
+                android:layout_marginLeft="3dip"
                 android:text="@string/tuesday" />
 
             <TextView
                 android:id="@+id/tv_add_alarm_clock_3"
                 style="@style/alarm_clock"
-                android:layout_marginLeft="5dip"
+                android:layout_marginLeft="3dip"
                 android:text="@string/wednesday" />
 
             <TextView
                 android:id="@+id/tv_add_alarm_clock_4"
                 style="@style/alarm_clock"
-                android:layout_marginLeft="5dip"
+                android:layout_marginLeft="3dip"
                 android:text="@string/thursday" />
 
             <TextView
                 android:id="@+id/tv_add_alarm_clock_5"
                 style="@style/alarm_clock"
-                android:layout_marginLeft="5dip"
+                android:layout_marginLeft="3dip"
                 android:text="@string/friday" />
 
             <TextView
                 android:id="@+id/tv_add_alarm_clock_6"
                 style="@style/alarm_clock"
-                android:layout_marginLeft="5dip"
+                android:layout_marginLeft="3dip"
                 android:text="@string/saturday" />
 
 
