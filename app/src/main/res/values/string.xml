@@ -967,10 +967,10 @@
     <string name="device_prepare4">The battery is low...</string>
     <string name="update_AGPS_date">Update AGPS data</string>
     <string name="update_AGPS_date_no">No need to update AGPS data</string>
-    <string name="goal_cal">Objectif calorique</string>
-    <string name="goal_activity_time">Objectif de temps d\'exercice</string>
-    <string name="goal_distance">Objectif de distance</string>
-    <string name="no_account">Vous n\'avez pas de compte?</string>
+    <string name="goal_cal">Calorie Goal</string>
+    <string name="goal_activity_time">Exercise time Goal</string>
+    <string name="goal_distance">Distance Goal</string>
+    <string name="no_account">Don\'t have an account?</string>
     <!-- 默认英文 -->
 
     <!-- ========================其他======================== -->
