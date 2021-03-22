@@ -264,7 +264,9 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 检查隐私协议 -->
-        <activity android:name=".CheckAgreementActivity" /> <!-- 用户使用帮助 -->
+        <activity
+            android:name=".CheckAgreementActivity"
+            android:launchMode="singleTask" /> <!-- 用户使用帮助 -->
         <activity
             android:name=".module.mine.user.UserHelpActivity"
             android:launchMode="singleTask"
