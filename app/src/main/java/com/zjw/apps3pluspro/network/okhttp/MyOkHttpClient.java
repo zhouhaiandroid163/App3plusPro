@@ -212,8 +212,8 @@ public class MyOkHttpClient {
         mUserSetTools.set_user_weight(0);//体重
         mUserSetTools.set_user_head_bast64("");
         mUserSetTools.set_is_par(0);//校准标志位-设置成未校准
-        mUserSetTools.set_user_exercise_target(String.valueOf(DefaultVale.USER_SPORT_TARGET));//运动目标
-        mUserSetTools.set_user_sleep_target(String.valueOf(DefaultVale.USER_SLEEP_TARGET));//睡眠目标
+//        mUserSetTools.set_user_exercise_target(String.valueOf(DefaultVale.USER_SPORT_TARGET));//运动目标
+//        mUserSetTools.set_user_sleep_target(String.valueOf(DefaultVale.USER_SLEEP_TARGET));//睡眠目标
         mUserSetTools.set_blood_grade(DefaultVale.USER_BP_LEVEL);//血压等级
         mUserSetTools.set_calibration_heart(DefaultVale.USER_HEART);//校准心率
         mUserSetTools.set_calibration_systolic(DefaultVale.USER_SYSTOLIC);//校准高压-收缩压
