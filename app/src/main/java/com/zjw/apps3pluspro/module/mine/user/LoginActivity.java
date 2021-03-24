@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.umeng.socialize.UMAuthListener;
@@ -92,7 +93,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         AppUtils.initEditTextFocusChange(edit_login_username, loginView, "#ffffff", "#1Effffff");
         AppUtils.initEditTextFocusChange(edit_login_password, passwordView, "#ffffff", "#1Effffff");
+
+        tv_login_regist.setText(getResources().getString(R.string.no_account) + " " + getResources().getString(R.string.create_an_account));
     }
+
+    @BindView(R.id.tv_login_regist)
+    TextView tv_login_regist;
 
     @Override
     protected void onStop() {

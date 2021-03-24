@@ -237,7 +237,7 @@ public class MeFragment extends BaseFragment {
 
     private void quitUserDialog() {
         DialogUtils.BaseDialog(context,
-                context.getResources().getString(R.string.dialog_prompt),
+                context.getResources().getString(R.string.exit),
                 context.getResources().getString(R.string.exite_account),
                 context.getDrawable(R.drawable.black_corner_bg),
                 new DialogUtils.DialogClickListener() {

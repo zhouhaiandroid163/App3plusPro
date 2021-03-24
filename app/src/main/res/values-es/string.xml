@@ -93,7 +93,7 @@
     <string name="ble_address">Dirección bluetooth</string>
     <string name="device_help">Usa la ayuda</string>
     <string name="request">Solicitud</string>
-    <string name="exit">Salir de cuenta corriente</string>
+    <string name="exit">Cerrar sesión</string>
     <string name="exite_account">¿Quieres salir de tu cuenta corriente?</string>
     <string name="skin_colour_title">Selección de color de piel</string>
     <string name="skin_colour_tip">El tono de piel seleccionado afectará la precisión de la información de medición diaria. Elige un color que sea similar a tu piel.</string>

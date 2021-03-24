@@ -44,7 +44,7 @@
     <string name="user_already_exists">This account is already registered</string>
     <string name="pasword_verification_fail">Incorrect username or password</string>
     <string name="pasword_verification_no">Wrong password</string>
-    <string name="title_forget_pas">Forget password</string>
+    <string name="title_forget_pas">Forget your password</string>
     <string name="send_code">Get Code</string>
     <string name="complete">Carry out</string>
     <string name="more_login_type">Other ways to log in</string>
