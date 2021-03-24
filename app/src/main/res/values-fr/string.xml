@@ -955,7 +955,7 @@
     <!--以下定制app翻译-->
     <string name="device_name">nom de l\'appareil</string>
     <string name="device_power">puissance de l\'appareil</string>
-    <string name="device_version">numéro de version de l\'appareil</string>
+    <string name="device_version">Version de l\'appareil</string>
     <string name="device_get_version">lire le numéro de version ...</string>
     <string name="qr_code">Veuillez utiliser la caméra du téléphone portable pour scanner le code QR sur la montre pour la relier</string>
     <string name="qr_code_next">Étape suivante</string>
@@ -965,7 +965,7 @@
     <string name="device_prepare1">Le périphérique est occupé ...</string>
     <string name="device_prepare2">La demande a échoué</string>
     <string name="device_prepare4">équipement basse consommation ...</string>
-    <string name="update_AGPS_date">mettre à jour les données AGPS</string>
+    <string name="update_AGPS_date">Mettre à jour AGPS</string>
     <string name="update_AGPS_date_no">n\'a pas besoin de mettre à jour les données AGPS</string>
     <string name="goal_cal">Objectif calorique</string>
     <string name="goal_activity_time">Objectif de temps d\'exercice</string>
