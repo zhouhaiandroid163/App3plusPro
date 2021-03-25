@@ -101,12 +101,12 @@ public class PrivacyProtocolActivity extends Activity implements View.OnClickLis
 //        wv_privacy_protocol.loadUrl("http://www.baidu.com/");
 //        wv_privacy_protocol.loadUrl("http://www.wearheart.cn/yinsi_FFit_en.html");
 
-        if (AppUtils.isZh(mContext)) {
-            wv_privacy_protocol.loadUrl("http://www.wearheart.cn/yinsi_3+PRO_zh.html");
-        }
-        else {
+//        if (AppUtils.isZh(mContext)) {
+//            wv_privacy_protocol.loadUrl("http://www.wearheart.cn/yinsi_3+PRO_zh.html");
+//        }
+//        else {
             wv_privacy_protocol.loadUrl("http://www.wearheart.cn/yinsi_3+PRO_en.html");
-        }
+//        }
 
 
     }

@@ -1913,11 +1913,11 @@ public class RequestJson {
 //            request_json.put("productVersion", deviceWidth);
             request_json.put("userId", BaseApplication.getUserId());
 
-            if (Locale.getDefault().getLanguage().contains("zh")) {
-                request_json.put("languageCode", "1");
-            } else {
-                request_json.put("languageCode", "0");
-            }
+//            if (Locale.getDefault().getLanguage().contains("zh")) {
+//                request_json.put("languageCode", "1");
+//            } else {
+            request_json.put("languageCode", "0");
+//            }
             request_json.put("clockDialDataFormat", mBleDeviceTools.getClockDialDataFormat());
             request_json.put("clockDialDataGenerationMode", mBleDeviceTools.getClockDialGenerationMode());
         } catch (JSONException e) {
@@ -1941,11 +1941,11 @@ public class RequestJson {
 //            request_json.put("productVersion", deviceWidth);
             request_json.put("userId", BaseApplication.getUserId());
 
-            if (Locale.getDefault().getLanguage().contains("zh")) {
-                request_json.put("languageCode", "1");
-            } else {
-                request_json.put("languageCode", "0");
-            }
+//            if (Locale.getDefault().getLanguage().contains("zh")) {
+//                request_json.put("languageCode", "1");
+//            } else {
+            request_json.put("languageCode", "0");
+//            }
             request_json.put("clockDialDataFormat", mBleDeviceTools.getClockDialDataFormat());
             request_json.put("clockDialDataGenerationMode", mBleDeviceTools.getClockDialGenerationMode());
             request_json.put("dialTypeId", dialTypeId);
@@ -2012,7 +2012,7 @@ public class RequestJson {
         JSONObject request_json = new JSONObject();
         try {
             request_json.put("location", mBleDeviceTools.getWeatherCityID());
-            request_json.put("lang", SysUtils.getLanguage(context));
+            request_json.put("lang", SysUtils.getNewLanguage(context));
             request_json.put("unit", "m");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -2025,7 +2025,7 @@ public class RequestJson {
         JSONObject request_json = new JSONObject();
         try {
             request_json.put("location", mBleDeviceTools.getWeatherCityID());
-            request_json.put("lang", SysUtils.getLanguage(context));
+            request_json.put("lang", SysUtils.getNewLanguage(context));
             request_json.put("unit", "m");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -2038,7 +2038,7 @@ public class RequestJson {
         JSONObject request_json = new JSONObject();
         try {
             request_json.put("location", mBleDeviceTools.getWeatherGps());
-            request_json.put("lang", SysUtils.getLanguage(context));
+            request_json.put("lang", SysUtils.getNewLanguage(context));
             request_json.put("unit", "m");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -2051,7 +2051,7 @@ public class RequestJson {
         JSONObject request_json = new JSONObject();
         try {
             request_json.put("location", city);
-            request_json.put("lang", SysUtils.getLanguage(context));
+            request_json.put("lang", SysUtils.getNewLanguage(context));
             request_json.put("unit", "m");
         } catch (JSONException e) {
             e.printStackTrace();

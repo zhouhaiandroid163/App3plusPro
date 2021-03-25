@@ -637,6 +637,21 @@ public class SysUtils {
         return result;
     }
 
+    public static String getNewLanguage(Context context) {
+        String result = "en";
+        Locale locale = context.getResources().getConfiguration().locale;
+        String language = locale.getLanguage();
+        //法语
+        if (language.endsWith("fr")) {
+            result = "fr";
+        }
+        //西班牙语
+        else if (language.endsWith("es")) {
+            result = "es";
+        }
+        return result;
+    }
+
     public static boolean isLocServiceEnable(Context context) {
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
