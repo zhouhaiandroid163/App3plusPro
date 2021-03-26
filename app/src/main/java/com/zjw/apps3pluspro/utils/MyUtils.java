@@ -980,9 +980,15 @@ public class MyUtils {
      * @return
      */
     public static String encryptionUid(String user_id) {
-        long uid = Long.valueOf(user_id);
+        long result;
+        try {
+            long uid = Long.parseLong(user_id);
 
-        long result = uid * multiple + differential;
+            result = uid * multiple + differential;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
 
         return String.valueOf(result);
     }
@@ -993,12 +999,18 @@ public class MyUtils {
      * @return
      */
     public static String decryptionUid(String user_id) {
-        long uid = Long.valueOf(user_id);
+        long result;
+        try {
+            long uid = Long.parseLong(user_id);
 
-        long result = (uid - differential) / multiple;
+            result = (uid - differential) / multiple;
 
-        if (result <= 0) {
-            result = 0;
+            if (result <= 0) {
+                result = 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
         }
 
         return String.valueOf(result);

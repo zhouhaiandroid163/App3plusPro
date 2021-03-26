@@ -58,6 +58,11 @@ public class MusicSyncManager {
             Log.i(TAG, "mediaController = null");
         }
 
+        if (!MyNotificationsListenerService.isEnabled(BaseApplication.getmContext())) {
+            Log.i(TAG, "NotificationListenerService is not start");
+            return;
+        }
+
         MediaSessionManager mm = (MediaSessionManager) BaseApplication.getmContext().getSystemService(Context.MEDIA_SESSION_SERVICE);
         if (mm != null && MyNotificationsListenerService.context != null) {
             List<MediaController> controllers = mm.getActiveSessions(new ComponentName(MyNotificationsListenerService.context, MyNotificationsListenerService.class));
@@ -86,6 +91,9 @@ public class MusicSyncManager {
             String artist = metadata.getString(MediaMetadata.METADATA_KEY_ARTIST);
             String title = metadata.getString(MediaMetadata.METADATA_KEY_TITLE);
             SysUtils.logContentI(TAG, "init metadata title =" + title);
+            if (title == null) {
+                return;
+            }
             musicSyncListener.onMetadataChanged(title);
         }
 

@@ -370,7 +370,10 @@ class ThemeUploadActivity : BaseActivity() {
 
         if (isCustom) {
 //            byte = CustomClockDialUtils.getCustonClockDialDataByFile(this@ThemeUploadActivity, curThemeName, color_r, color_g, color_b, newBgBitmap)
-            byteTheme = CustomClockDialNewUtils.getNewCustomClockDialData(curThemeName, color_r, color_g, color_b, newBgBitmap, newTextBitmap);
+            if(newBgBitmap == null || newTextBitmap == null){
+                return
+            }
+            byteTheme = CustomClockDialNewUtils.getNewCustomClockDialData(curThemeName, color_r, color_g, color_b, newBgBitmap, newTextBitmap)
         } else {
             byteTheme = ThemeUtils.getBytes(Constants.DOWN_THEME_FILE + curThemeName)
         }
@@ -490,14 +493,6 @@ class ThemeUploadActivity : BaseActivity() {
     private var curCmd: String? = ""
     private var protoHandler: Handler? = null
     private fun startSendThemeDataByProto(byte: ByteArray?) {
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(ThemeManager.ACTION_CMD_APP_START)
-        intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_START)
-        intentFilter.addAction(ThemeManager.ACTION_CMD_APP_CONFIRM)
-        intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_CONFIRM)
-        intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK)
-        registerReceiver(receiver, intentFilter)
-
         DialMarketManager.getInstance().uploadDialDownloadRecording(themeDetails.dialId, DialMarketManager.uploadDialDownloadRecordingType2_transport, this)
         curPiece = 0
         type = "watch"
@@ -525,7 +520,6 @@ class ThemeUploadActivity : BaseActivity() {
     private var uploadProtoThemeTimeOut = Runnable {
         Log.w("ble", " uploadProtoTheme Time Out")
         Toast.makeText(this@ThemeUploadActivity, resources.getText(R.string.send_fail), Toast.LENGTH_SHORT).show()
-        unregisterReceiver(receiver)
         if (loading_dialog != null && loading_dialog!!.isShowing) {
             loading_dialog!!.dismiss()
         }
@@ -559,7 +553,6 @@ class ThemeUploadActivity : BaseActivity() {
                     "btUploadTheme" -> if (curPiece == ThemeManager.getInstance().dataPackTotalPieceLength) {
                         DialMarketManager.getInstance().uploadDialDownloadRecording(themeDetails.dialId, DialMarketManager.uploadDialDownloadRecordingType3_success, this@ThemeUploadActivity)
                         Toast.makeText(this@ThemeUploadActivity, resources.getText(R.string.send_success), Toast.LENGTH_SHORT).show()
-                        unregisterReceiver(this)
                         if (loading_dialog != null && loading_dialog!!.isShowing) {
                             loading_dialog!!.dismiss()
                         }
@@ -1099,6 +1092,14 @@ class ThemeUploadActivity : BaseActivity() {
         filter.addAction(BroadcastTools.ACTION_THEME_SUSPENSION_INTERVAL)
         filter.priority = 1000
         registerReceiver(broadcastReceiverTheme, filter)
+
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(ThemeManager.ACTION_CMD_APP_START)
+        intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_START)
+        intentFilter.addAction(ThemeManager.ACTION_CMD_APP_CONFIRM)
+        intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_CONFIRM)
+        intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK)
+        registerReceiver(receiver, intentFilter)
     }
 
     /**
@@ -1322,6 +1323,7 @@ class ThemeUploadActivity : BaseActivity() {
         EventTools.SafeUnregisterEventBus(this)
         unregisterReceiver(broadcastReceiver)
         unregisterReceiver(broadcastReceiverTheme)
+        unregisterReceiver(receiver)
         TimerTwoHandler?.removeCallbacksAndMessages(null)
         TimerThreeHandler?.removeCallbacksAndMessages(null)
         TimerFourHandler?.removeCallbacksAndMessages(null)
