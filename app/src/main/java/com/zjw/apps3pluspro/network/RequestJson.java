@@ -1066,7 +1066,7 @@ public class RequestJson {
      *
      * @return
      */
-    public static RequestInfo bindDeviceInfo(Context context) {
+    public static RequestInfo bindDeviceInfo(Context context, boolean isUpload) {
         JSONObject request_json = new JSONObject();
         JSONObject request_deviceInfo_json = new JSONObject();
         BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
@@ -1210,8 +1210,9 @@ public class RequestJson {
                 request_deviceInfo_json.put("clockValid", 0);
             }
 
-
-            request_deviceInfo_json.put("deviceUnixTime", System.currentTimeMillis());
+            if(isUpload){
+                request_deviceInfo_json.put("deviceUnixTime", System.currentTimeMillis());
+            }
 
             if (mBleDeviceTools.get_device_is_music_transmission()) {
                 request_deviceInfo_json.put("deviceAudio", 1);

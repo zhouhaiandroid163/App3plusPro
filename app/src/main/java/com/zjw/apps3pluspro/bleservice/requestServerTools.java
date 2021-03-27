@@ -59,14 +59,12 @@ public class requestServerTools {
     private static final String TAG = requestServerTools.class.getSimpleName();
 
     public static void uploadDeviceData(Context context) {
-
-        RequestInfo mRequestInfo = RequestJson.bindDeviceInfo(context);
-
         UserSetTools mUserSetTools = BaseApplication.getUserSetTools();
-
-        if (TextUtils.isEmpty(mUserSetTools.get_service_upload_device_info()) || !mRequestInfo.toString().equalsIgnoreCase(mUserSetTools.get_service_upload_device_info())) {
+        RequestInfo upload_device_info = RequestJson.bindDeviceInfo(context, false);
+        if (TextUtils.isEmpty(mUserSetTools.get_service_upload_device_info()) || !upload_device_info.toString().equalsIgnoreCase(mUserSetTools.get_service_upload_device_info())) {
 
             mUserSetTools.set_service_upload_un_device_info("");
+            RequestInfo mRequestInfo = RequestJson.bindDeviceInfo(context, true);
             NewVolleyRequest.RequestPost(mRequestInfo, TAG, new VolleyInterface(context, VolleyInterface.mListener, VolleyInterface.mErrorListener) {
 
                 @Override
@@ -81,7 +79,7 @@ public class requestServerTools {
                     if (mCurrencyBean.isRequestSuccess()) {
 
                         if (mCurrencyBean.uploadSuccess() == 1) {
-                            mUserSetTools.set_service_upload_device_info(mRequestInfo.toString());
+                            mUserSetTools.set_service_upload_device_info(upload_device_info.toString());
 
                             MyLog.i(TAG, "请求接口-上传设备信息 成功");
 
