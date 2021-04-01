@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -142,7 +141,6 @@ public class FriendRankFragment extends BaseFragment implements OnClickListener,
         friend_is_new.setOnClickListener(this);
 
         view.findViewById(R.id.btn_fragment_friend_add).setOnClickListener(this);
-
 
 
         return view;
@@ -422,29 +420,33 @@ public class FriendRankFragment extends BaseFragment implements OnClickListener,
      * @param state 0 = 没有好友 1=没网络 2=有好友
      */
     void updateUi(int state) {
-        tvErrorTip.setText(getResources().getString(R.string.no_friend_tip_title));
-        switch (state) {
-            case 0:
-                friend_listview.setVisibility(View.GONE);
-                btAdd.setVisibility(View.GONE);
-                ll_frgment_friend_no_data.setVisibility(View.VISIBLE);
-                break;
-            case 1:
-                friend_listview.setVisibility(View.GONE);
-                btAdd.setVisibility(View.GONE);
-                ll_frgment_friend_no_data.setVisibility(View.VISIBLE);
-                if(!MyOkHttpClient.getInstance().isConnect(getActivity())){
-                    tvErrorTip.setText(getResources().getString(R.string.no_net_work));
-                    tvErrorTip.setVisibility(View.VISIBLE);
-                } else {
-                    tvErrorTip.setVisibility(View.GONE);
-                }
-                break;
-            case 2:
-                friend_listview.setVisibility(View.VISIBLE);
-                btAdd.setVisibility(View.VISIBLE);
-                ll_frgment_friend_no_data.setVisibility(View.GONE);
-                break;
+        try {
+            tvErrorTip.setText(getResources().getString(R.string.no_friend_tip_title));
+            switch (state) {
+                case 0:
+                    friend_listview.setVisibility(View.GONE);
+                    btAdd.setVisibility(View.GONE);
+                    ll_frgment_friend_no_data.setVisibility(View.VISIBLE);
+                    break;
+                case 1:
+                    friend_listview.setVisibility(View.GONE);
+                    btAdd.setVisibility(View.GONE);
+                    ll_frgment_friend_no_data.setVisibility(View.VISIBLE);
+                    if (!MyOkHttpClient.getInstance().isConnect(getActivity())) {
+                        tvErrorTip.setText(getResources().getString(R.string.no_net_work));
+                        tvErrorTip.setVisibility(View.VISIBLE);
+                    } else {
+                        tvErrorTip.setVisibility(View.GONE);
+                    }
+                    break;
+                case 2:
+                    friend_listview.setVisibility(View.VISIBLE);
+                    btAdd.setVisibility(View.VISIBLE);
+                    ll_frgment_friend_no_data.setVisibility(View.GONE);
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
