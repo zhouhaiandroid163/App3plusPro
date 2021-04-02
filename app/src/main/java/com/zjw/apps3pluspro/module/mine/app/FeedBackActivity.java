@@ -1,23 +1,32 @@
 package com.zjw.apps3pluspro.module.mine.app;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
+import com.zjw.apps3pluspro.base.BaseActivity;
 import com.zjw.apps3pluspro.network.NewVolleyRequest;
 import com.zjw.apps3pluspro.network.RequestJson;
 import com.zjw.apps3pluspro.network.ResultJson;
 import com.zjw.apps3pluspro.network.VolleyInterface;
 import com.zjw.apps3pluspro.network.entity.RequestInfo;
 import com.zjw.apps3pluspro.network.javabean.OldBean;
+import com.zjw.apps3pluspro.network.okhttp.RequestParams;
+import com.zjw.apps3pluspro.network.okhttp.UploadProgressListener;
+import com.zjw.apps3pluspro.utils.Constants;
+import com.zjw.apps3pluspro.utils.DialogUtils;
+import com.zjw.apps3pluspro.utils.MyUtils;
 import com.zjw.apps3pluspro.view.dialog.WaitDialog;
 import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.JavaUtil;
@@ -25,24 +34,27 @@ import com.zjw.apps3pluspro.utils.log.MyLog;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 
 /**
  * 意见反馈
  */
-public class FeedBackActivity extends Activity implements OnClickListener {
+public class FeedBackActivity extends BaseActivity implements OnClickListener {
     private final String TAG = FeedBackActivity.class.getSimpleName();
     private Context mContext;
     private WaitDialog waitDialog;
     private EditText ed_feedback_advice, et_feedback_email;
 
-
+    @Override
+    protected int setLayoutId() {
+        return R.layout.activity_feedback;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        super.onCreate(savedInstanceState);
-        AppUtils.setStatusBarMode(this, true, R.color.base_activity_bg);
-        setContentView(R.layout.activity_feedback);
+    protected void initViews() {
+        super.initViews();
         mContext = FeedBackActivity.this;
         waitDialog = new WaitDialog(mContext);
         initView();
@@ -110,29 +122,71 @@ public class FeedBackActivity extends Activity implements OnClickListener {
     /**
      * 提交意见到服务器
      */
+    private Dialog progressDialogDownFile;
     private void FeedBackToServer(String advice, String email) {
-
         waitDialog.show(getString(R.string.loading0));
 
+//        Handler handler = new Handler();
+//        progressDialogDownFile = DialogUtils.BaseDialogShowProgress(context,
+//                context.getResources().getString(R.string.download_title),
+//                context.getResources().getString(R.string.loading0),
+//                context.getDrawable(R.drawable.black_corner_bg)
+//        );
+//        ProgressBar progressBar = progressDialogDownFile.findViewById(R.id.progress);
+//        try {
+//            File mFile = new File(Constants.P_LOG_PATH + Constants.P_LOG_BLE_FILENAME);
+//            RequestParams params = new RequestParams();
+//            params.put("file", mFile);
+//            params.put("userId", BaseApplication.getUserId());
+//            params.put("feedbackContent", advice);
+//            params.put("feedbackEmail", email);
+//            params.put("phoneModel", "Android");
+//            params.put("appMsg", MyUtils.getAppName() + "_" + MyUtils.getAppInfo());
+//            params.put("phoneSystem", MyUtils.getPhoneModel());
+//            params.put("appId", "02");
+////            params.put("feekBackType", 3);
+//            NewVolleyRequest.RequestMultiPostRequest(params, new VolleyInterface(mContext, VolleyInterface.mListener, VolleyInterface.mErrorListener) {
+//                @Override
+//                public void onMySuccess(JSONObject result) {
+//                    if (waitDialog != null) {
+//                        waitDialog.close();
+//                    }
+//                    MyLog.i(TAG, "请求接口-意见反馈 result = " + result);
+//                    AppUtils.showToast(mContext, R.string.conmit_ok);
+//                    finish();
+//                }
+//
+//                @Override
+//                public void onMyError(VolleyError arg0) {
+//                    if (waitDialog != null) {
+//                        waitDialog.close();
+//                    }
+//                    MyLog.i(TAG, "onMyError result = " + arg0);
+//                }
+//            }, RequestJson.feedbackUrl2, new UploadProgressListener() {
+//                @Override
+//                public void onProgress(long contentLength, int mCurrentLength) {
+//                    handler.post(() -> {
+//                        progressBar.setMax((int) contentLength);
+//                        progressBar.setProgress(mCurrentLength);
+//                    });
+//                }
+//            });
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         RequestInfo mRequestInfo = RequestJson.feedback(mContext, advice, email, 0);
-
         MyLog.i(TAG, "请求接口-意见反馈 mRequestInfo = " + mRequestInfo.toString());
-
         NewVolleyRequest.RequestPost(mRequestInfo, TAG,
                 new VolleyInterface(mContext, VolleyInterface.mListener, VolleyInterface.mErrorListener) {
-
                     @Override
                     public void onMySuccess(JSONObject result) {
                         // TODO Auto-generated method stub
-
-
                         MyLog.i(TAG, "请求接口-意见反馈 result = " + result);
-
                         waitDialog.close();
-
                         OldBean mOldBean = ResultJson.OldBean(result);
-
                         if (mOldBean.isRequestSuccess()) {
                             MyLog.i(TAG, "请求接口-意见反馈 成功");
                             AppUtils.showToast(mContext, R.string.conmit_ok);
@@ -157,8 +211,5 @@ public class FeedBackActivity extends Activity implements OnClickListener {
                         return;
                     }
                 });
-
     }
-
-
 }

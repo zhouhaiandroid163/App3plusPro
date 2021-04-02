@@ -17,15 +17,21 @@ import com.zjw.apps3pluspro.sharedpreferences.UserSetTools;
 import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.utils.DefaultVale;
 import com.zjw.apps3pluspro.utils.MyActivityManager;
+import com.zjw.apps3pluspro.utils.SysUtils;
+import com.zjw.apps3pluspro.utils.ThemeManager;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 import com.zjw.apps3pluspro.utils.network.AESUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.Proxy;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
@@ -33,17 +39,18 @@ import okhttp3.Callback;
 import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
 
 public class MyOkHttpClient {
     private static final String TAG = MyOkHttpClient.class.getSimpleName();
-    private static final int TIME_OUT = 15;// 超时时间
+    private static final int TIME_OUT = 100;// 超时时间
     private volatile static MyOkHttpClient mClient = null;
     private static OkHttpClient mOkHttpClient;
-
 
 
     public static MyOkHttpClient getInstance() {
@@ -111,7 +118,35 @@ public class MyOkHttpClient {
         call.enqueue(jsonCallback);
     }
 
-    public void asynGetCall( VolleyInterface vif, String url) {
+    public void createMultiPostRequest(RequestParams params, VolleyInterface vif, String url, UploadProgressListener uploadProgressListener) {
+        MultipartBody.Builder requestBody = new MultipartBody.Builder();
+        requestBody.setType(MultipartBody.FORM);
+        if (params != null) {
+            for (Map.Entry<String, Object> entry : params.fileParams.entrySet()) {
+                if (entry.getValue() instanceof File) {
+//                    requestBody.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + entry.getKey() + "\""),
+//                            RequestBody.create(FILE_TYPE, (File) entry.getValue()));
+                    File file = (File) entry.getValue();
+                    requestBody.addFormDataPart(entry.getKey(), file.getName(), RequestBody.create(null, file));
+                } else if (entry.getValue() instanceof String) {
+                    requestBody.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + entry.getKey() + "\""),
+                            RequestBody.create(null, (String) entry.getValue()));
+                }
+            }
+        }
+
+        ExMultipartBody exMultipartBody = new ExMultipartBody(requestBody.build(), uploadProgressListener);
+
+        Request request = new Request.Builder()
+                .addHeader("content-type", "application/json")
+                .addHeader("cache-control", "no-cache")
+                .url(url).post(exMultipartBody).build();
+        Call call = mOkHttpClient.newCall(request);
+        jsonCallback = new CommonJsonCallback(vif);
+        call.enqueue(jsonCallback);
+    }
+
+    public void asynGetCall(VolleyInterface vif, String url) {
         Request request = new Request.Builder()
                 .addHeader("content-type", "application/json")
                 .addHeader("cache-control", "no-cache")
@@ -197,6 +232,7 @@ public class MyOkHttpClient {
 
 
     private UserSetTools mUserSetTools = BaseApplication.getUserSetTools();
+
     public void quitApp(Context context) {
         mUserSetTools.set_user_login(false);
         mUserSetTools.set_user_id("");

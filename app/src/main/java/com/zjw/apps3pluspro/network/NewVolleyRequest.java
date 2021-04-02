@@ -3,6 +3,8 @@ package com.zjw.apps3pluspro.network;
 
 import com.zjw.apps3pluspro.network.entity.RequestInfo;
 import com.zjw.apps3pluspro.network.okhttp.MyOkHttpClient;
+import com.zjw.apps3pluspro.network.okhttp.RequestParams;
+import com.zjw.apps3pluspro.network.okhttp.UploadProgressListener;
 import com.zjw.apps3pluspro.utils.network.AESUtils;
 
 import org.json.JSONObject;
@@ -38,5 +40,12 @@ public class NewVolleyRequest {
         vif.loadingListener();
         vif.errorListener();
         MyOkHttpClient.getInstance().asynGetCall(vif, mRequestInfo.getRequestUrl());
+    }
+
+
+    public static void RequestMultiPostRequest(RequestParams params, VolleyInterface vif, String url, UploadProgressListener uploadProgressListener) {
+        vif.loadingListener();
+        vif.errorListener();
+        MyOkHttpClient.getInstance().createMultiPostRequest(params, vif, url, uploadProgressListener);
     }
 }

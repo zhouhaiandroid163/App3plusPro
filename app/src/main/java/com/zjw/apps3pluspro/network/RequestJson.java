@@ -59,7 +59,7 @@ public class RequestJson {
     //测试地址
     public static final String requestUrl = "http://47.106.117.114:8090/zh_watch/";
     //本地地址
-//    public static final String requestUrl = "http://192.168.0.13:8080/zh_watch/";
+//    public static final String requestUrl = "http://192.168.0.12:8080/zh_watch/";
 
 
     //    public static final String userLoginUrl = requestUrl + "/userApi/userLogin";
@@ -135,6 +135,7 @@ public class RequestJson {
     public static final String downLoadBindDevice = requestUrl + "ffit/device/info";//用户设备信息
 
     public static final String feedbackUrl = requestUrl + "feekBackApi/feedback";//意见反馈//沿用老接口
+    public static final String feedbackUrl2 = requestUrl + "ffit/feedBack/opinionSubmission";//意见反馈//沿用老接口
     public static final String getDeviceUpdateInfoUrl = requestUrl + "ffit/firmware/getFirewareUpgradeVersion";//固件升级//沿用老接口
 
     public static final String getThemePageList = requestUrl + "ffit/theme/getPageList";//获取主题列表
