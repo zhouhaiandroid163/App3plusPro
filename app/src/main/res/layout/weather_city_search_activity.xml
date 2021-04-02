@@ -33,8 +33,9 @@
                     android:layout_marginEnd="15dp"
                     android:background="@drawable/white_corner_bg"
                     android:hint="@string/weather_search_city"
+                    android:imeOptions="actionSearch"
                     android:maxLength="50"
-                    android:paddingStart="30dp"
+                    android:paddingStart="18dp"
                     android:paddingLeft="30dp"
                     android:singleLine="true"
                     android:textColor="@color/white"
@@ -45,7 +46,24 @@
                     android:layout_height="20dip"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dip"
-                    android:background="@drawable/icon_search_blue" />
+                    android:background="@drawable/icon_search_blue"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/layoutSearch"
+                    android:layout_width="40dip"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="12dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="20dip"
+                        android:layout_height="20dip"
+                        android:background="@mipmap/search_bg" />
+
+                </LinearLayout>
             </RelativeLayout>
 
             <TextView

@@ -88,7 +88,8 @@
         <activity
             android:name=".module.device.weather.WeatherCitySearchActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" />
         <activity
             android:name=".module.device.ScanDeviceTypeActivity"
             android:launchMode="singleTask"

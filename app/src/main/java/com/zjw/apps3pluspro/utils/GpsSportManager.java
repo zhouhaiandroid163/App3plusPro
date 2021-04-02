@@ -350,6 +350,7 @@ public class GpsSportManager {
 
     public interface onWeatherCitySearchListener {
         void onSuccess(ArrayList<WeatherCityEntity> list);
+        void onError();
     }
 
     public void getWeatherCityBySearch(Context context, onWeatherCitySearchListener onWeatherCitySearchListener, String city) {
@@ -374,16 +375,18 @@ public class GpsSportManager {
                             list.add(weatherCityEntity);
                         }
                         onWeatherCitySearchListener.onSuccess(list);
+                    } else {
+                        onWeatherCitySearchListener.onSuccess(null);
                     }
-
                 } catch (Exception e) {
                     e.printStackTrace();
+                    onWeatherCitySearchListener.onSuccess(null);
                 }
             }
-
             @Override
             public void onMyError(VolleyError arg0) {
                 MyLog.i(TAG, "getWeatherCityBySearch arg0 = " + arg0);
+                onWeatherCitySearchListener.onError();
             }
         });
     }

@@ -1,19 +1,26 @@
 package com.zjw.apps3pluspro.module.device.weather
 
 import android.app.Activity
+import android.content.Context
 import android.os.Handler
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import butterknife.OnClick
 import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.application.BaseApplication
 import com.zjw.apps3pluspro.base.BaseActivity
 import com.zjw.apps3pluspro.utils.GpsSportManager
 import kotlinx.android.synthetic.main.weather_city_search_activity.*
+import java.util.ArrayList
+
 
 class WeatherCitySearchActivity : BaseActivity() {
     override fun setLayoutId(): Int {
@@ -30,7 +37,7 @@ class WeatherCitySearchActivity : BaseActivity() {
         handler.removeCallbacksAndMessages(null)
     }
 
-    @OnClick(R.id.layoutResetLocation, R.id.tvCityName)
+    @OnClick(R.id.layoutResetLocation, R.id.tvCityName, R.id.layoutSearch)
     fun viewOnClick(view: View) {
         when (view.id) {
             R.id.layoutResetLocation -> {
@@ -43,6 +50,9 @@ class WeatherCitySearchActivity : BaseActivity() {
                     setResult(Activity.RESULT_OK)
                     finish()
                 }
+            }
+            R.id.layoutSearch -> {
+                requestCityList(etSearchCity.text.toString())
             }
         }
     }
@@ -80,20 +90,47 @@ class WeatherCitySearchActivity : BaseActivity() {
         etSearchCity.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                requestCityList(s.toString())
+//                requestCityList(s.toString())
+                if (TextUtils.isEmpty(s.toString())) {
+                    layoutSearch.visibility = View.GONE
+                } else {
+                    layoutSearch.visibility = View.VISIBLE
+                }
             }
+
             override fun afterTextChanged(s: Editable) {}
+        })
+
+        etSearchCity.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) { // 先隐藏键盘
+                (etSearchCity.getContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+                        .hideSoftInputFromWindow(this@WeatherCitySearchActivity.currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+
+                requestCityList(etSearchCity.text.toString())
+                return@OnEditorActionListener true
+            }
+            false
         })
     }
 
     private var mLayoutInflater: LayoutInflater? = null
     private fun requestCityList(city: String) {
-        GpsSportManager.getInstance().getWeatherCityBySearch(this, { list ->
-            layoutParent.removeAllViews()
-            for (i in 0 until list.size) {
-                val mLinearLayout = mLayoutInflater?.inflate(R.layout.city_item_layout, null) as LinearLayout
-                findViewById(mLinearLayout, i, list[i])
-                layoutParent.addView(mLinearLayout)
+        GpsSportManager.getInstance().getWeatherCityBySearch(this, object : GpsSportManager.onWeatherCitySearchListener {
+            override fun onError() {
+                Toast.makeText(context, resources.getText(R.string.net_worse_try_again), Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onSuccess(list: ArrayList<WeatherCityEntity>?) {
+                layoutParent.removeAllViews()
+                if (list == null) {
+                    Toast.makeText(context, resources.getText(R.string.no_data), Toast.LENGTH_SHORT).show()
+                } else {
+                    for (i in 0 until list.size) {
+                        val mLinearLayout = mLayoutInflater?.inflate(R.layout.city_item_layout, null) as LinearLayout
+                        findViewById(mLinearLayout, i, list[i])
+                        layoutParent.addView(mLinearLayout)
+                    }
+                }
             }
         }, city)
     }
