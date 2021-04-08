@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
     android:background="@color/base_activity_bg"
     android:minHeight="170dp"
     android:orientation="horizontal"
     android:paddingTop="24dp"
-    android:layout_marginTop="16dp"
     android:paddingBottom="24dp">
 
 
@@ -37,7 +37,7 @@
                 android:id="@+id/tvExerciseCal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dip"
+                android:layout_marginLeft="4dip"
                 android:text="  "
                 android:textColor="#96ADB8"
                 android:textSize="15sp" />
@@ -45,6 +45,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
                 android:text="@string/big_calory"
                 android:textColor="#96ADB8"
                 android:textSize="15sp"
@@ -73,6 +74,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
                 android:text="@string/steps"
                 android:textColor="@color/white"
                 android:textSize="13sp" />
@@ -98,6 +100,7 @@
                 android:id="@+id/tvExerciseDistance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
                 android:textColor="#989CA0"
                 android:textSize="15sp" />
 
@@ -105,6 +108,7 @@
                 android:id="@+id/tvDistanceUnit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
                 android:textColor="#989CA0"
                 android:textSize="15sp" />
 

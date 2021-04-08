@@ -2293,10 +2293,10 @@ public class BleDeviceTools {
         return settin.getBoolean("IsSupportDrinkWater", false);
     }
 
-    public void setIsSupportDrinkWater(boolean IsCoronaNotiface) {
+    public void setIsSupportDrinkWater(boolean IsSupportDrinkWater) {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
-        editor.putBoolean("IsSupportDrinkWater", IsCoronaNotiface);
+        editor.putBoolean("IsSupportDrinkWater", IsSupportDrinkWater);
         editor.apply();
     }
 
@@ -2305,10 +2305,10 @@ public class BleDeviceTools {
         return settin.getBoolean("IsSupportLongSit", false);
     }
 
-    public void setIsSupportLongSit(boolean IsCoronaNotiface) {
+    public void setIsSupportLongSit(boolean IsSupportLongSit) {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
-        editor.putBoolean("IsSupportLongSit", IsCoronaNotiface);
+        editor.putBoolean("IsSupportLongSit", IsSupportLongSit);
         editor.apply();
     }
 
@@ -2317,10 +2317,10 @@ public class BleDeviceTools {
         return settin.getBoolean("IsSupportMeeting", false);
     }
 
-    public void setIsSupportMeeting(boolean IsCoronaNotiface) {
+    public void setIsSupportMeeting(boolean IsSupportMeeting) {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
-        editor.putBoolean("IsSupportMeeting", IsCoronaNotiface);
+        editor.putBoolean("IsSupportMeeting", IsSupportMeeting);
         editor.apply();
     }
 
@@ -2329,10 +2329,10 @@ public class BleDeviceTools {
         return settin.getBoolean("IsSupportDrug", false);
     }
 
-    public void setIsSupportDrug(boolean IsCoronaNotiface) {
+    public void setIsSupportDrug(boolean IsSupportDrug) {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
-        editor.putBoolean("IsSupportDrug", IsCoronaNotiface);
+        editor.putBoolean("IsSupportDrug", IsSupportDrug);
         editor.apply();
     }
 
@@ -2341,10 +2341,10 @@ public class BleDeviceTools {
         return settin.getBoolean("IsSupportAlarmClock", false);
     }
 
-    public void setIsSupportAlarmClock(boolean IsCoronaNotiface) {
+    public void setIsSupportAlarmClock(boolean IsSupportAlarmClock) {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
-        editor.putBoolean("IsSupportAlarmClock", IsCoronaNotiface);
+        editor.putBoolean("IsSupportAlarmClock", IsSupportAlarmClock);
         editor.apply();
     }
 
@@ -2353,10 +2353,10 @@ public class BleDeviceTools {
         return settin.getBoolean("IsSupportTakePicture", false);
     }
 
-    public void setIsSupportTakePicture(boolean IsCoronaNotiface) {
+    public void setIsSupportTakePicture(boolean IsSupportTakePicture) {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
-        editor.putBoolean("IsSupportTakePicture", IsCoronaNotiface);
+        editor.putBoolean("IsSupportTakePicture", IsSupportTakePicture);
         editor.apply();
     }
 
@@ -2365,23 +2365,23 @@ public class BleDeviceTools {
         return settin.getBoolean("IsSupportRaiseWristBrightenScreen", false);
     }
 
-    public void setIsSupportRaiseWristBrightenScreen(boolean IsCoronaNotiface) {
+    public void setIsSupportRaiseWristBrightenScreen(boolean IsSupportRaiseWristBrightenScreen) {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
-        editor.putBoolean("IsSupportRaiseWristBrightenScreen", IsCoronaNotiface);
+        editor.putBoolean("IsSupportRaiseWristBrightenScreen", IsSupportRaiseWristBrightenScreen);
         editor.apply();
     }
 
     //设备是否支持获取状态，判断是或否可以升级ota表盘电量足够
     public boolean getIsSupportGetDeviceProtoStatus() {
         SharedPreferences settin = getSharedPreferencesCommon();
-        return settin.getBoolean("getIsSupportGetDeviceProtoStatus", false);
+        return settin.getBoolean("IsSupportGetDeviceProtoStatus", false);
     }
 
-    public void setIsSupportGetDeviceProtoStatus(boolean getIsSupportGetDeviceProtoStatus) {
+    public void setIsSupportGetDeviceProtoStatus(boolean IsSupportGetDeviceProtoStatus) {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
-        editor.putBoolean("getIsSupportGetDeviceProtoStatus", getIsSupportGetDeviceProtoStatus);
+        editor.putBoolean("IsSupportGetDeviceProtoStatus", IsSupportGetDeviceProtoStatus);
         editor.apply();
     }
 

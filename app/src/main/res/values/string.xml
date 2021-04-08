@@ -433,7 +433,7 @@
     <string name="device_refresh">Refresh</string>
     <!-- APP相关-->
     <string name="app_verson_name">App version</string>
-    <string name="app_verson_update">Version update</string>
+    <string name="app_verson_update">App Version</string>
     <!-- 意见反馈-->
     <string name="feedback_null">Feedback cannot be empty</string>
     <string name="conmit_ok">Submitted successfully</string>
@@ -441,7 +441,7 @@
     <string name="your_advice">Your suggestion</string>
     <string name="feedback_content">Please leave your suggestions or problems with us</string>
     <string name="contact_Email">Contact email</string>
-    <string name="feedback_mail">Please leave your email address so that we can give back in time.</string>
+    <string name="feedback_mail">Please provide your email address so that we can get back to you as soon as possible.</string>
     <string name="conmmit">submit</string>
     <string name="problem_description">Problem Description</string>
     <string name="feedback_tip">If you have any problems with the use of APP and equipment, and experience less refined, please give us better suggestions, your feedback will help us grow faster. provide better service.</string>
@@ -809,7 +809,7 @@
     <string name="temp_normal_tip11">The temperature inside the human body is called body temperature. The normal body temperature of the human body is between 96.8～98.96℉6 on average, exceeding 98.96℉ is fever, 99.14～100.4℉ is low fever, 100.58～104℉ is high fever, and above 104℉ is life-threatening.</string>
     <string name="blood_oxygen_tip1">The normal blood oxygen saturation of the human body is 95%-100%. The higher the oxygen content in the blood, the better the human metabolism. Of course, high blood oxygen content is not a good phenomenon. The blood oxygen in the human body has a certain degree of saturation. Too low will cause insufficient oxygen supply in the body, and too high will cause cell aging in the body. </string>
     <string name="tourist_login">visitor login</string>
-    <string name="consume">Calories burnt</string>
+    <string name="consume">Calories burned</string>
     <string name="read_contacts_permission"> Please open the application settings to enable access to contact permissions</string>
     <!-- 表盘 -->
     <string name="summary">Summary</string>
