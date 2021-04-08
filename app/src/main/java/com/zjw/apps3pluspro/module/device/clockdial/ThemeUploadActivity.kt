@@ -307,6 +307,7 @@ class ThemeUploadActivity : BaseActivity() {
                     showImgDialog()
                 } else {
                     MyLog.i(TAG, "SD卡权限 未获取")
+                    SysUtils.logAppRunning(TAG, "SD卡权限 未获取 ")
                 }
             }
         }
@@ -359,6 +360,7 @@ class ThemeUploadActivity : BaseActivity() {
                     }
                 BroadcastTools.ACTION_DOWN_CLOCK_FILE_STATE_ERROR -> {
                     AppUtils.showToast(context, R.string.net_worse_try_again)
+                    SysUtils.logAppRunning(TAG, "ACTION_DOWN_CLOCK_FILE_STATE_ERROR ")
                 }
             }
         }
@@ -370,7 +372,7 @@ class ThemeUploadActivity : BaseActivity() {
 
         if (isCustom) {
 //            byte = CustomClockDialUtils.getCustonClockDialDataByFile(this@ThemeUploadActivity, curThemeName, color_r, color_g, color_b, newBgBitmap)
-            if(newBgBitmap == null || newTextBitmap == null){
+            if (newBgBitmap == null || newTextBitmap == null) {
                 return
             }
             byteTheme = CustomClockDialNewUtils.getNewCustomClockDialData(curThemeName, color_r, color_g, color_b, newBgBitmap, newTextBitmap)
@@ -396,6 +398,7 @@ class ThemeUploadActivity : BaseActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun getDeviceProtoWatchFacePrepareStatusSuccessEvent(event: GetDeviceProtoWatchFacePrepareStatusSuccessEvent) {
         protoHandler?.removeCallbacksAndMessages(null)
+        SysUtils.logAppRunning(TAG, "GetDeviceProtoWatchFacePrepareStatusSuccessEvent = " + event.status)
         when (event.status) {
             0 -> {
                 waitDialog?.close()
@@ -1260,7 +1263,7 @@ class ThemeUploadActivity : BaseActivity() {
             }
             Constants.TailoringResult -> {
                 MyLog.i(TAG, "回调 裁剪完成 imageUri = $imageUri")
-                if(resultCode == Activity.RESULT_OK){
+                if (resultCode == Activity.RESULT_OK) {
                     if (imageUri != null) {
                         val bitmap = BmpUtils.decodeUriAsBitmap(context, imageUri)
                         //                    setPicToView(bitmap);// 保存在SD卡中

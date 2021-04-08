@@ -264,6 +264,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 startActivity(new Intent(context, WearTypeActivity.class));
                 break;
             case R.id.tvUnitGongzhi:
+                SysUtils.logAppRunning(TAG, "unit type = Gongzhi");
                 tvUnitGongzhi.setChecked(true);
                 tvUnitYingzhi.setChecked(false);
                 mUserSetTools.set_user_unit_type(true);
@@ -274,6 +275,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 }
                 break;
             case R.id.tvUnitYingzhi:
+                SysUtils.logAppRunning(TAG, "unit type = Yingzhi");
                 tvUnitYingzhi.setChecked(true);
                 tvUnitGongzhi.setChecked(false);
                 mUserSetTools.set_user_unit_type(false);
@@ -285,6 +287,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 break;
             //摄氏度
             case R.id.tvCentigrade:
+                SysUtils.logAppRunning(TAG, "temp type = Centigrade");
                 mBleDeviceTools.setTemperatureType(0);
                 tvCentigrade.setChecked(true);
                 tvFahrenheitDegree.setChecked(false);
@@ -294,6 +297,8 @@ public class DeviceMoreSetActivity extends BaseActivity {
                 break;
             // 华氏度
             case R.id.tvFahrenheitDegree:
+                SysUtils.logAppRunning(TAG, "temp type = FahrenheitDegree");
+                mBleDeviceTools.setTemperatureType(0);
                 tvFahrenheitDegree.setChecked(true);
                 tvCentigrade.setChecked(false);
                 mBleDeviceTools.setTemperatureType(1);

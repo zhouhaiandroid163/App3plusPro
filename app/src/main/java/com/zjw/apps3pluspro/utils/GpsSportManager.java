@@ -113,9 +113,11 @@ public class GpsSportManager {
                 EventBus.getDefault().post(new ShowDialogEvent(1));
             }
             if (MyUtils.isGoogle(context)) {
+                SysUtils.logAppRunning(TAG, "is google gps");
                 //加载google 定位
                 initGoogleMap(context);
             } else {
+                SysUtils.logAppRunning(TAG, "is amap gps");
                 initAMap(context);
             }
         } catch (Exception e) {
@@ -394,10 +396,12 @@ public class GpsSportManager {
     public void getWeatherArea(Context context, onWeatherListener onWeatherListener) {
         RequestInfo mRequestInfo = RequestJson.getWeatherArea(context);
         SysUtils.logAmapGpsE(TAG, "getWeatherArea = " + mRequestInfo.toString());
+        SysUtils.logAppRunning(TAG, "getWeatherArea = " + mRequestInfo.toString());
         NewVolleyRequest.RequestPost(mRequestInfo, TAG, new VolleyInterface(BaseApplication.getmContext(), VolleyInterface.mListener, VolleyInterface.mErrorListener) {
             @Override
             public void onMySuccess(JSONObject result) {
                 SysUtils.logAmapGpsE(TAG, "getWeatherArea result = " + result);
+                SysUtils.logAppRunning(TAG, "getWeatherArea result = " + result);
                 try {
                     String code = result.optString("code");
                     if (code.equalsIgnoreCase(ResultJson.Code_operation_success)) {
@@ -413,6 +417,7 @@ public class GpsSportManager {
             @Override
             public void onMyError(VolleyError arg0) {
                 SysUtils.logAmapGpsE(TAG, "getWeatherArea arg0 = " + arg0);
+                SysUtils.logAppRunning(TAG, "getWeatherArea arg0 = " + arg0);
             }
         });
     }

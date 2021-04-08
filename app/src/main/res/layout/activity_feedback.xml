@@ -42,18 +42,29 @@
             <EditText
                 android:id="@+id/ed_feedback_advice"
                 android:layout_width="match_parent"
-                android:layout_height="200dip"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:background="@drawable/selector_white_bg"
                 android:gravity="top"
                 android:hint="@string/feedback_content"
                 android:imeOptions="actionDone"
                 android:maxLength="100"
+                android:minHeight="200dp"
                 android:padding="8dip"
                 android:singleLine="false"
                 android:textColor="#ffffff"
                 android:textColorHint="#989CA0"
                 android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/layoutPicture"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="-60dp"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+            </LinearLayout>
 
 
             <LinearLayout
@@ -86,6 +97,33 @@
                 android:textColor="#ffffff"
                 android:textColorHint="#989CA0"
                 android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/layoutAgree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp">
+
+                    <Button
+                        android:id="@+id/btAgree"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:background="@mipmap/agree" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_log"
+                    android:textColor="@color/white" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/bt_feedback_submit"

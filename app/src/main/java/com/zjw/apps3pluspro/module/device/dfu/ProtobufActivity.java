@@ -259,11 +259,13 @@ public class ProtobufActivity extends BaseActivity {
 
         RequestInfo mRequestInfo = RequestJson.getDeviceUpdateInfo(String.valueOf(model), String.valueOf(c_upgrade_version), device_platform_type);
         MyLog.i(TAG, "请求接口-获取设备版本号 mRequestInfo = " + mRequestInfo.toString());
+        SysUtils.logAppRunning(TAG, "请求接口 download device version" + mRequestInfo.toString());
         NewVolleyRequest.RequestPost(mRequestInfo, TAG,
                 new VolleyInterface(this, VolleyInterface.mListener, VolleyInterface.mErrorListener) {
                     @Override
                     public void onMySuccess(JSONObject result) {
                         MyLog.i(TAG, "请求接口-获取设备版本号 result = " + result);
+                        SysUtils.logAppRunning(TAG, "protobuf download device version" + result);
                         DeviceBean mDeviceBean = ResultJson.DeviceBean(result);
                         //请求成功
                         if (mDeviceBean.isRequestSuccess()) {
@@ -376,6 +378,7 @@ public class ProtobufActivity extends BaseActivity {
             switch (action) {
                 case BroadcastTools.ACTION_UPDATE_DEVICE_FILE_STATE_SUCCESS:
                     MyLog.i(TAG, "DFU 收到下载固件成功！");
+                    SysUtils.logAppRunning(TAG, "DFU 收到下载固件成功！");
                     // send cmd get device status
                     if (mBleDeviceTools.getIsSupportGetDeviceProtoStatus()) {
                         waitDialog.show(getResources().getString(R.string.ignored));
@@ -415,6 +418,7 @@ public class ProtobufActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getDeviceProtoOtaPrepareStatusSuccessEvent(GetDeviceProtoOtaPrepareStatusSuccessEvent event) {
+        SysUtils.logAppRunning(TAG, "GetDeviceProtoOtaPrepareStatusSuccessEvent = " + event.status);
         protoHandler.removeCallbacksAndMessages(null);
         switch (event.status) {
             case 0:

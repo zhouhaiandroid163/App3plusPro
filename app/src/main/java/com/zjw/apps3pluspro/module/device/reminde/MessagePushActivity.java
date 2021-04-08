@@ -20,6 +20,7 @@ import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.AuthorityManagement;
 import com.zjw.apps3pluspro.utils.DialogUtils;
 import com.zjw.apps3pluspro.utils.PhoneUtil;
+import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 
 
@@ -67,6 +68,7 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
 
                 }
             });
+
         }
     }
 
@@ -76,6 +78,9 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void onDestroy() {
+        if (!MyNotificationsListenerService.isEnabled(mContext)) {
+            SysUtils.logAppRunning(TAG, "onDestroy and MyNotificationsListenerService.isEnabled = " + false);
+        }
         super.onDestroy();
     }
 

@@ -119,6 +119,7 @@ public class DialMarketManager {
     public void getMainDialList(GetListOnFinishListen getListOnFinishListen) {
         RequestInfo mRequestInfo = RequestJson.getMainDialList();
         MyLog.i(TAG, "getMainDialList = " + mRequestInfo.toString());
+        SysUtils.logAppRunning(TAG, "getMainDialList = " + mRequestInfo.toString());
         NewVolleyRequest.RequestPost(mRequestInfo, TAG, new VolleyInterface(BaseApplication.getmContext(), VolleyInterface.mListener, VolleyInterface.mErrorListener) {
             @Override
             public void onMySuccess(JSONObject result) {
@@ -140,6 +141,7 @@ public class DialMarketManager {
                         }
 
                         if (getListOnFinishListen != null) {
+                            SysUtils.logAppRunning(TAG, "getMainDialList size = " + themeMarketItems.size());
                             getListOnFinishListen.success();
                         }
                     } else {

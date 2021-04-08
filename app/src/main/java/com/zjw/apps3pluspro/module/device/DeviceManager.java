@@ -17,6 +17,7 @@ import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
 import com.zjw.apps3pluspro.sharedpreferences.UserSetTools;
 import com.zjw.apps3pluspro.utils.DialMarketManager;
 import com.zjw.apps3pluspro.utils.PageManager;
+import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 
 import org.json.JSONObject;
@@ -125,6 +126,8 @@ public class DeviceManager {
                             BleService.curBleName = deviceName;
                             BleService.curBleAddress = deviceMac;
                             deviceManagerListen.onSuccess();
+
+                            SysUtils.logAppRunning(TAG, "curBleName = " + deviceName + " curBleAddress = " + deviceMac);
                         } else {
                             deviceManagerListen.onError();
                         }

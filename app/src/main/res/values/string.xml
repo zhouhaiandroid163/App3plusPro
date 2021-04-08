@@ -971,6 +971,7 @@
     <string name="goal_activity_time">Exercise time Goal</string>
     <string name="goal_distance">Distance Goal</string>
     <string name="no_account">Don\'t have an account?</string>
+    <string name="add_log">Submit logs at the same time</string>
     <!-- 默认英文 -->
 
     <!-- ========================其他======================== -->

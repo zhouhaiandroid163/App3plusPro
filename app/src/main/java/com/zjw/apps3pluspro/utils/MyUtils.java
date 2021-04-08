@@ -1063,10 +1063,7 @@ public class MyUtils {
                 //谷歌
                 result = true;
             }
-
-
         }
-
         return result;
     }
 

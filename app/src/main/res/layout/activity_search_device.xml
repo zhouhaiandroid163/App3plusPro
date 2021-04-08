@@ -62,7 +62,7 @@
                         <ImageView
                             android:layout_width="28dip"
                             android:layout_height="28dip"
-                            android:background="@drawable/my_icon_dengpao_black" />
+                            android:background="@drawable/my_icon_dengpao_white" />
                     </LinearLayout>
 
 

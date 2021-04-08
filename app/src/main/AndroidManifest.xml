@@ -580,6 +580,14 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeWhite" /> <!-- 使用说明 -->
+
+        <activity
+            android:name="com.yanzhenjie.album.AlbumActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Picture"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|stateHidden" />
+
         <activity
             android:name=".module.mine.app.CommonProblemActivity"
             android:launchMode="singleTask"

@@ -27,6 +27,7 @@ import android.view.KeyEvent;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
@@ -169,6 +170,28 @@ public class SysUtils {
         Log.i(tag, content);
         if (Constants.SAVE_LOG) {
             SysUtils.writeTxtToFile("【info】" + tag + ":" + content, Constants.P_LOG_PATH, Constants.P_DEVICE_LOG_BLE_FILENAME);
+        }
+    }
+
+    public static void logAppRunning(String tag, String content) {
+        if (Constants.SAVE_APP_RUNNING_LOG) {
+            try {
+                String strFilePath = Constants.P_LOG_PATH + Constants.P_LOG_APP_RUNNING;
+                makeFilePath(Constants.P_LOG_PATH, Constants.P_LOG_APP_RUNNING);
+
+                File file = new File(strFilePath);
+                if (!file.exists()) {
+                    file.getParentFile().mkdirs();
+                    file.createNewFile();
+                }
+                if(file.length() > 5 * 1024 * 1000L){
+                    file.delete();
+                    Log.i("xxxxx", "删除文件");
+                }
+                SysUtils.writeTxtToFile(tag + ":" + content, Constants.P_LOG_PATH, Constants.P_LOG_APP_RUNNING);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

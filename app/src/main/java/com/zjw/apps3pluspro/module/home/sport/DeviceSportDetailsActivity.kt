@@ -768,6 +768,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
         mAMap.uiSettings.isRotateGesturesEnabled = false
         mAMap.moveCamera(CameraUpdateFactory.zoomBy(6f))
         mAMap.uiSettings.isZoomControlsEnabled = false
+        mAMap.setMapLanguage("en")
 
         AmapGpsUtils.init()
 

@@ -137,6 +137,9 @@ dependencies {
     implementation files('libs/zxing.jar')
 
     implementation 'org.dom4j:dom4j:2.1.1'
+
+    //https://blog.csdn.net/yanzhenjie1003/article/details/52975922
+    implementation 'com.yanzhenjie:album:1.0.0'
 }
 protobuf {
     //配置protoc编译器

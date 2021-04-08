@@ -36,6 +36,7 @@ import com.zjw.apps3pluspro.network.javabean.UserBean;
 import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
 import com.zjw.apps3pluspro.sharedpreferences.UserSetTools;
 import com.zjw.apps3pluspro.utils.Constants;
+import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.view.dialog.WaitDialog;
 import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.DefaultVale;
@@ -465,6 +466,7 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
 
 
     void updateUnit() {
+        SysUtils.logAppRunning(TAG, "unit type = " + unitTag);
 
         if (unitTag.equals("0")) {
             mUserSetTools.set_user_unit_type(true);

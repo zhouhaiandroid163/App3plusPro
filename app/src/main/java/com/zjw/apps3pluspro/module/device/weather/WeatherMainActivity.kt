@@ -104,6 +104,7 @@ class WeatherMainActivity : BaseActivity() {
     var getLocationTimeOut = Runnable {
         GpsSportManager.getInstance().stopGps(this)
         msg?.text = resources.getString(R.string.weather_location_error)
+        SysUtils.logAppRunning(TAG, "weather_location_error")
 
         val handler = Handler()
         handler.postDelayed({
@@ -117,6 +118,7 @@ class WeatherMainActivity : BaseActivity() {
     private fun initSwitch() {
         if (switchCompat.isChecked) {
             SysUtils.logAmapGpsE(TAG, "switchCompat is checked")
+            SysUtils.logAppRunning(TAG, "switchCompat is checked")
             if (!SysUtils.isLocServiceEnable(this)) {
                 switchCompat.isChecked = false
                 val toast: Toast = Toast.makeText(this, resources.getString(R.string.gps_switch_close), Toast.LENGTH_SHORT)
@@ -142,8 +144,10 @@ class WeatherMainActivity : BaseActivity() {
                 handler.removeCallbacksAndMessages(null)
                 handler.postDelayed(getLocationTimeOut, 10 * 1000)
                 SysUtils.logAmapGpsE(TAG, "getLatLon")
+                SysUtils.logAppRunning(TAG, "getLatLon")
                 GpsSportManager.getInstance().getLatLon(this) { gpsInfo: GpsSportManager.GpsInfo ->
                     SysUtils.logAmapGpsE(TAG, "getLatLon success and stopGps getWeatherCity")
+                    SysUtils.logAppRunning(TAG, "getLatLon success and stopGps getWeatherCity")
                     GpsSportManager.getInstance().stopGps(this)
                     GpsSportManager.getInstance().getWeatherCity(this) {
                         SysUtils.logAmapGpsE(TAG, "getWeatherCity success and startRequestWeather")

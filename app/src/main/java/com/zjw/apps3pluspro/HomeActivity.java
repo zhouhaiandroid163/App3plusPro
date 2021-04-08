@@ -352,6 +352,7 @@ public class HomeActivity extends BaseActivity {
         mContext = this;
         registerHomeKeyReceiver(this);
         SysUtils.logContentE(TAG, "onCreate");
+        SysUtils.logAppRunning(TAG, "onCreate  app version = " + MyUtils.getAppInfo());
         initBleData();
         EventTools.SafeRegisterEventBus(this);
         waitDialog = new WaitDialog(mContext);
@@ -786,6 +787,7 @@ public class HomeActivity extends BaseActivity {
                         break;
                     case BroadcastTools.ACTION_CMD_APP_START:
                         SysUtils.logContentI("ble", " BroadcastTools.ACTION_CMD_APP_START = " + curCmd);
+                        SysUtils.logAppRunning("ble", " BroadcastTools.ACTION_CMD_APP_START = " + curCmd);
                         switch (curCmd) {
                             case GET_SPORT_IDS_TODAY:
                                 refreshProtobufSportTimeOut();
@@ -842,6 +844,7 @@ public class HomeActivity extends BaseActivity {
                                 if (FitnessTools.deleteIndex == FitnessTools.bleIdsList.size()) {
                                     //delete history over
                                     SysUtils.logContentW("ble", " delete history over");
+                                    SysUtils.logAppRunning("ble", " delete history over");
                                     startSyncTodayDeviceSport();
                                 } else {
                                     deleteDeviceSport(DELETE_DEVICE_SPORT_HISTORY);
@@ -852,6 +855,7 @@ public class HomeActivity extends BaseActivity {
                                 if (FitnessTools.deleteIndex == FitnessTools.bleIdsList.size()) {
                                     //delete today over
                                     SysUtils.logContentW("ble", " delete today over");
+                                    SysUtils.logAppRunning("ble", " delete today over");
                                     syncDeviceSportOver();
                                 } else {
                                     deleteDeviceSport(DELETE_DEVICE_SPORT_TODAY);
@@ -865,6 +869,7 @@ public class HomeActivity extends BaseActivity {
                     case BroadcastTools.ACTION_CMD_GET_SPORT:
                         refreshProtobufSportTimeOut();
                         SysUtils.logContentI("ble", " BroadcastTools.ACTION_CMD_GET_SPORT = " + curCmd);
+                        SysUtils.logAppRunning("ble", " BroadcastTools.ACTION_CMD_GET_SPORT = " + curCmd);
                         switch (curCmd) {
                             case GET_SPORT_IDS_TODAY:
                                 curCmd = REQUEST_FITNESS_ID_TODAY;
@@ -887,6 +892,7 @@ public class HomeActivity extends BaseActivity {
                                 // over
                                 if (curCmd.equalsIgnoreCase(REQUEST_FITNESS_ID_HISTORY)) {
                                     SysUtils.logContentW("ble", "REQUEST_FITNESS_ID_HISTORY sync over");
+                                    SysUtils.logAppRunning("ble", "REQUEST_FITNESS_ID_HISTORY sync over");
                                     // history is over and delete the ids
                                     FitnessTools.deleteIndex = 0;
                                     deleteDeviceSport(DELETE_DEVICE_SPORT_HISTORY);
@@ -894,6 +900,7 @@ public class HomeActivity extends BaseActivity {
 
                                 } else if (curCmd.equalsIgnoreCase(REQUEST_FITNESS_ID_TODAY)) {
                                     SysUtils.logContentW("ble", "REQUEST_FITNESS_ID_TODAY sync over");
+                                    SysUtils.logAppRunning("ble", "REQUEST_FITNESS_ID_TODAY sync over");
                                     DeviceSportManager.Companion.getInstance().uploadMoreSportData();
                                     // delete the ids
                                     FitnessTools.deleteIndex = 0;
@@ -909,11 +916,13 @@ public class HomeActivity extends BaseActivity {
                             switch (curCmd) {
                                 case REQUEST_FITNESS_ID_TODAY:
                                     SysUtils.logContentW("ble", " today is no data , sync over");
+                                    SysUtils.logAppRunning("ble", " today is no data , sync over");
                                     DeviceSportManager.Companion.getInstance().uploadMoreSportData();
                                     syncDeviceSportOver();
                                     break;
                                 case REQUEST_FITNESS_ID_HISTORY:
                                     SysUtils.logContentW("ble", " HISTORY is no data");
+                                    SysUtils.logAppRunning("ble", " HISTORY is no data");
                                     startSyncTodayDeviceSport();
                                     break;
                             }
@@ -1167,6 +1176,7 @@ public class HomeActivity extends BaseActivity {
     private int timeOut = 20 * 1000;
     Runnable getProtoSportTimeOut = () -> {
         SysUtils.logContentW("ble", " getProtoSportTimeOut");
+        SysUtils.logAppRunning("ble", " getProtoSportTimeOut");
         syncDeviceSportOver();
     };
 
@@ -1222,6 +1232,7 @@ public class HomeActivity extends BaseActivity {
     public void getDeviceProtoAGpsPrepareStatusSuccessEvent(GetDeviceProtoAGpsPrepareStatusSuccessEvent event) {
         protoHandler.removeCallbacksAndMessages(null);
         if (event.needGpsInfo && isFirstShowAGpsDialog) {
+            SysUtils.logAppRunning(TAG, "GetDeviceProtoAGpsPrepareStatusSuccessEvent = " + true);
             isFirstShowAGpsDialog = false;
             // download file
             aGpsDialog = DialogUtils.BaseDialog(homeActivity,
@@ -1373,6 +1384,7 @@ public class HomeActivity extends BaseActivity {
                     MyLog.i(TAG, "获取定位权限 回调允许");
                 } else {
                     MyLog.i(TAG, "获取定位权限 回调拒绝");
+                    SysUtils.logAppRunning(TAG, "获取定位权限 回调拒绝");
                     showSettingDialog(getString(R.string.setting_dialog_location));
                 }
             }
@@ -1382,6 +1394,7 @@ public class HomeActivity extends BaseActivity {
                     MyLog.i(TAG, "SD卡权限 回调允许");
                 } else {
                     MyLog.i(TAG, "SD卡权限 回调拒绝");
+                    SysUtils.logAppRunning(TAG, "SD卡权限 回调拒绝");
                     showSettingDialog(getString(R.string.setting_dialog_storage));
                 }
             }
@@ -1615,6 +1628,7 @@ public class HomeActivity extends BaseActivity {
                                 MyLog.i(TAG, "请求接口-获取APP版本号 成功");
                                 if (mAppVerionBean.isAppUpdate(mContext)) {
                                     MyLog.i(TAG, "请求接口-获取APP版本号 需要升级");
+                                    SysUtils.logAppRunning(TAG, "请求接口-获取APP版本号 需要升级");
                                     GetAppVersionResultDataParsing(mAppVerionBean.getData());
                                 } else {
                                     MyLog.i(TAG, "请求接口-获取APP版本号 不需要升级");

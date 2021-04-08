@@ -10,6 +10,7 @@ import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.base.BaseActivity
 import com.zjw.apps3pluspro.bleservice.BleConstant
 import com.zjw.apps3pluspro.utils.BluetoothUtil
+import com.zjw.apps3pluspro.utils.SysUtils
 
 class ScanDeviceTypeActivity : BaseActivity() {
     override fun setLayoutId(): Int {
@@ -33,6 +34,7 @@ class ScanDeviceTypeActivity : BaseActivity() {
                     mIntent.putExtra("type", BleConstant.PLUS_HR)
                     startActivity(mIntent)
                     finish()
+                    SysUtils.logAppRunning("ScanDeviceTypeActivity.class", "scan = " + BleConstant.PLUS_HR)
                 } else {
                     BluetoothUtil.enableBluetooth(this@ScanDeviceTypeActivity, HomeActivity.BleStateResult)
                 }
@@ -43,6 +45,7 @@ class ScanDeviceTypeActivity : BaseActivity() {
                     mIntent.putExtra("type", BleConstant.PLUS_Vibe)
                     startActivity(mIntent)
                     finish()
+                    SysUtils.logAppRunning("ScanDeviceTypeActivity.class", "scan = " + BleConstant.PLUS_Vibe)
                 } else {
                     BluetoothUtil.enableBluetooth(this@ScanDeviceTypeActivity, HomeActivity.BleStateResult)
                 }

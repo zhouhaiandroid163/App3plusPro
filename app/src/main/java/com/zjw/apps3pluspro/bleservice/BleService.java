@@ -280,6 +280,7 @@ public class BleService extends Service {
     @Override
     public void onCreate() {
         SysUtils.logContentI(TAG, "onCreate");
+        SysUtils.logAppRunning(TAG, "service is onCreate");
 
         if (mProcessCmdThread == null) {
             mProcessCmdThread = new Thread(process_cmd_runnable);
@@ -370,6 +371,7 @@ public class BleService extends Service {
 
     protected void onStop() {
         SysUtils.logContentI(TAG, "onStop");
+        SysUtils.logAppRunning(TAG, "service is onStop");
         // TODO Auto-generated method stub
         if (BaseApplication.getHttpQueue() != null) {
             BaseApplication.getHttpQueue().cancelAll(TAG);
@@ -398,7 +400,6 @@ public class BleService extends Service {
 //            wakeLock = null;
 //        }
 
-        SysUtils.logContentI(TAG, "onDestroy");
         //移除来电监听
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
@@ -421,7 +422,7 @@ public class BleService extends Service {
         unregisterReceiver(mBroadcastReceiver);
         disconnect();
         SysUtils.logContentI(TAG, "onDestroy");
-
+        SysUtils.logAppRunning(TAG, "service is onDestroy");
         super.onDestroy();
     }
 
@@ -729,6 +730,7 @@ public class BleService extends Service {
 
                 if (!JavaUtil.checkIsNull(mBleDeviceTools.get_ble_mac())) {
                     SysUtils.logContentI(TAG, "reconnectDevcie mac =" + mBleDeviceTools.get_ble_mac());
+                    SysUtils.logAppRunning(TAG, "reconnectDevcie mac =" + mBleDeviceTools.get_ble_mac());
 
                     baseBleScanner = new NordicsemiBleScanner(this, simpleScanCallback);
                     baseBleScanner.onStartBleScan();
@@ -740,9 +742,11 @@ public class BleService extends Service {
 
                 } else {
                     SysUtils.logContentI(TAG, "reconnectDevcie mac = null");
+                    SysUtils.logAppRunning(TAG, "reconnectDevcie mac = null");
                 }
             } else {
                 SysUtils.logContentI(TAG, "尝试连接 未登录");
+                SysUtils.logAppRunning(TAG, "尝试连接 未登录");
             }
         }
     }
@@ -751,12 +755,14 @@ public class BleService extends Service {
         @Override
         public void run() {
             SysUtils.logContentI(TAG, "try to reconnect");
+            SysUtils.logAppRunning(TAG, "try to reconnect");
             if (baseBleScanner != null) {
                 baseBleScanner.onStopBleScan();
             }
 
             if (ISBlueToothConnect()) {
                 SysUtils.logContentI(TAG, "stopScanRunable device connect state =true");
+                SysUtils.logAppRunning(TAG, "stopScanRunable device connect state =true");
                 return;
             }
 
@@ -800,12 +806,13 @@ public class BleService extends Service {
             timeOutNum = 0;
             if (reTryTimes < Constants.CONNECT_TIMES) {
                 SysUtils.logContentI(TAG, "bindDeviceRunable retry reTryTimes = " + reTryTimes);
+                SysUtils.logAppRunning(TAG, "bindDeviceRunable retry reTryTimes = " + reTryTimes);
                 reTryTimes++;
                 connect(bindAddress);
                 bindHandler.postDelayed(bindDeviceRunable, Constants.CONNECT_TIMEOUT);
             } else {
-
                 SysUtils.logContentI(TAG, "connectDeviceRunable overtime");
+                SysUtils.logAppRunning(TAG, "connectDeviceRunable overtime");
 
                 // 连接三次失败
                 isBindConnect = false;
@@ -813,7 +820,8 @@ public class BleService extends Service {
                 removeConnectTimeOutHandler();
 
                 if (ISBlueToothConnect()) {
-                    SysUtils.logContentI(TAG, "connectDeviceRunable device connect state =true");
+                    SysUtils.logContentI(TAG, "connectDeviceRunable device connect state = is connect");
+                    SysUtils.logAppRunning(TAG, "connectDeviceRunable device connect state = is connect");
                     return;
                 } else {
                     SysUtils.logContentI(TAG, "蓝牙未连接");
@@ -847,6 +855,7 @@ public class BleService extends Service {
 //        }
 
         SysUtils.logContentI(TAG, "connect() address = " + address);
+        SysUtils.logAppRunning(TAG, "connect() address = " + address);
 
         mBluetoothManager = null;
         mBluetoothAdapter = null;
@@ -855,22 +864,25 @@ public class BleService extends Service {
 
         if (mBluetoothAdapter == null) {
             SysUtils.logContentI(TAG, "connect() mBluetoothAdapter = null");
+            SysUtils.logAppRunning(TAG, "connect() mBluetoothAdapter = null");
             return false;
         }
 
         if (address == null) {
             SysUtils.logContentI(TAG, "connect() ddress = null");
+            SysUtils.logAppRunning(TAG, "connect() ddress = null");
             return false;
         }
-
         try {
             BluetoothDevice device;
 
             SysUtils.logContentW(TAG, "connect() timeOutNum =" + timeOutNum);
+            SysUtils.logAppRunning(TAG, "connect() timeOutNum =" + timeOutNum);
 
             if (timeOutNum >= 3) {
                 device = mBluetoothAdapter.getRemoteDevice("AA:BB:CC:DD:EE:FF");
                 SysUtils.logContentE(TAG, "connect() timeOutNum = changeGatt");
+                SysUtils.logAppRunning(TAG, "connect() timeOutNum = changeGatt");
                 timeOutNum = 0;
             } else {
                 device = mBluetoothAdapter.getRemoteDevice(address);
@@ -879,6 +891,7 @@ public class BleService extends Service {
 
             if (device == null) {
                 SysUtils.logContentE(TAG, "getRemoteDevice device is null");
+                SysUtils.logAppRunning(TAG, "getRemoteDevice device is null");
                 return false;
             }
 
@@ -887,6 +900,7 @@ public class BleService extends Service {
             BroadcastTools.broadcastDeviceConnecting(getApplicationContext());
         } catch (Exception e) {
             SysUtils.logContentE(TAG, "getRemoteDevice e=" + e);
+            SysUtils.logAppRunning(TAG, "getRemoteDevice e=" + e);
             e.printStackTrace();
             return false;
         }
@@ -900,6 +914,7 @@ public class BleService extends Service {
      */
     public void disconnect() {
         SysUtils.logContentI(TAG, "disconnect()");
+        SysUtils.logAppRunning(TAG, "disconnect()");
         setBlueToothStatus(BleConstant.STATE_DISCONNECTED);
         BroadcastTools.broadcastDeviceDisconnected(getApplicationContext());
         try {
@@ -1107,6 +1122,7 @@ public class BleService extends Service {
                             // 发送中....
                             if (System.currentTimeMillis() - lastSendTime > 3000) {
                                 SysUtils.logContentE(TAG, "process_cmd_runnable cmd send time out");
+                                SysUtils.logAppRunning(TAG, "process_cmd_runnable cmd send time out");
                                 isSending = false;
                             }
                         }
@@ -1115,6 +1131,7 @@ public class BleService extends Service {
                 } catch (Exception e) {
                     resetBleCmdState(false);
                     SysUtils.logContentE(TAG, "process_cmd_runnable e=" + e);
+                    SysUtils.logAppRunning(TAG, "process_cmd_runnable e=" + e);
                 }
             }
         }
@@ -1160,6 +1177,7 @@ public class BleService extends Service {
     private void displayData3(String data) {
         if (data != null) {
             SysUtils.logContentI(TAG, TAG_CONTENT + "displayData3 : " + data);
+            SysUtils.logAppRunning(TAG, TAG_CONTENT + "displayData3 : " + data);
 
             String[] strCmd;
             strCmd = data.split(" ");
@@ -1193,18 +1211,21 @@ public class BleService extends Service {
                 }
                 if (curPiece < maxPiece) {
                     SysUtils.logContentI(TAG, TAG_CONTENT + " app confirm");
+                    SysUtils.logAppRunning(TAG, TAG_CONTENT + " app confirm");
 //                    intent.setAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
 //                    sendBroadcast(intent);
                     bleCmdList_proto.add(BtSerializeation.appConfirm());
                     return;
                 }
                 SysUtils.logContentI(TAG, TAG_CONTENT + " app confirm");
+                SysUtils.logAppRunning(TAG, TAG_CONTENT + " app confirm");
 //                intent.setAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
 //                sendBroadcast(intent);
                 bleCmdList_proto.add(BtSerializeation.appConfirm());
                 //解析
                 String[] sportData = recvData3.split(" ");
                 SysUtils.logContentI(TAG, TAG_CONTENT + " recvData3 =" + sportData.length);
+                SysUtils.logAppRunning(TAG, TAG_CONTENT + " recvData3 =" + sportData.length);
                 FitnessTools.parsing(sportData);
 
             } catch (Exception e) {
@@ -1218,6 +1239,7 @@ public class BleService extends Service {
     private void displayData2(String data) {
         if (data != null) {
             SysUtils.logContentI(TAG, TAG_CONTENT + "displayData2 : " + data);
+            SysUtils.logAppRunning(TAG, TAG_CONTENT + "displayData2 : " + data);
             recvData = data;
             String[] strCmd;
             strCmd = recvData.split(" ");
@@ -1248,8 +1270,10 @@ public class BleService extends Service {
     private void displayData1(String data) {
         if (data != null) {
             SysUtils.logContentI(TAG, TAG_CONTENT + "displayData1 : " + data);
+            SysUtils.logAppRunning(TAG, TAG_CONTENT + "displayData1 : " + data);
             if (System.currentTimeMillis() - lastDisplayTime < 5 && lastData.equalsIgnoreCase(data)) {
                 SysUtils.logContentI(TAG, TAG_CONTENT + "displayData1 : repeat data");
+                SysUtils.logAppRunning(TAG, TAG_CONTENT + "displayData1 : repeat data");
             } else {
                 lastData = data;
                 String[] strCmd;
@@ -1318,6 +1342,7 @@ public class BleService extends Service {
     public void writeCharacteristic(byte[] value, UUID serviceUUid, UUID uuid) {
         try {
             SysUtils.logContentI(TAG, "writeRXCharacteristic =" + BleTools.bytes2HexString(value));
+            SysUtils.logAppRunning(TAG, "writeRXCharacteristic =" + BleTools.bytes2HexString(value));
             if (mBluetoothGatt == null) {
                 return;
             }
@@ -1338,6 +1363,7 @@ public class BleService extends Service {
                     break;
                 }
                 SysUtils.logContentI(TAG, "uuid = " + uuid + " writeCharacteristic status =  number of reissues " + i + " status = " + status);
+                SysUtils.logAppRunning(TAG, "uuid = " + uuid + " writeCharacteristic status =  number of reissues " + i + " status = " + status);
                 try {
                     Thread.sleep(Constants.detectBleCmdReissuePeriod);
                 } catch (InterruptedException e) {
@@ -1346,8 +1372,10 @@ public class BleService extends Service {
                 status = mBluetoothGatt.writeCharacteristic(dev_name);
             }
             SysUtils.logContentI(TAG, "uuid = " + uuid + " writeCharacteristic status end = " + status);
+            SysUtils.logAppRunning(TAG, "uuid = " + uuid + " writeCharacteristic status end = " + status);
         } catch (Exception e) {
             e.printStackTrace();
+            SysUtils.logAppRunning(TAG, "writeCharacteristic Exception = " + e);
         }
 
     }
@@ -1364,6 +1392,7 @@ public class BleService extends Service {
         public void onConnectionStateChange(final BluetoothGatt gatt, final int status, final int newState) {
 
             SysUtils.logContentW(TAG, "onConnectionStateChange status =" + status + "   newState =" + newState);
+            SysUtils.logAppRunning(TAG, "onConnectionStateChange status =" + status + "   newState =" + newState);
 
             if (mBluetoothGatt != null) {
                 if (mBluetoothGatt != gatt) {
@@ -1402,6 +1431,7 @@ public class BleService extends Service {
                     mSyncTimeoutHandle.removeCallbacksAndMessages(null);
                 }
                 SysUtils.logContentW(TAG, "onConnectionStateChange Disconnected");
+                SysUtils.logAppRunning(TAG, "onConnectionStateChange Disconnected");
                 gatt.close();
                 disconnect();
                 removeConnectTimeOutHandler();
@@ -1466,11 +1496,7 @@ public class BleService extends Service {
             //调用这个来初始化,不能去掉！
             boolean isSuccess = mBluetoothGatt.discoverServices();
             SysUtils.logContentI(TAG, "discoverServices isSuccess = " + isSuccess);
-
-
         }
-
-
         /**
          * 处理断开设备
          */
@@ -1519,6 +1545,7 @@ public class BleService extends Service {
             initDeviceParameter();
 
             SysUtils.logContentI(TAG, "onServicesDiscovered ");
+            SysUtils.logAppRunning(TAG, "onServicesDiscovered ");
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 new Thread(() -> {
                     try {
@@ -1545,6 +1572,7 @@ public class BleService extends Service {
 
                                 if (gattService.getUuid().equals(BleConstant.UUID_BASE_SERVICE)) {
                                     SysUtils.logContentI(TAG, "初始化 系统(小包) ===== = 发现服务");
+                                    SysUtils.logAppRunning(TAG, "初始化 系统(小包) ===== = 发现服务");
                                     flag_sys = true;
                                     mSYSTEMervice = gattService;
                                     setServicesDiscovered(true);
@@ -1552,6 +1580,7 @@ public class BleService extends Service {
 
                                 if (gattService.getUuid().equals(BleConstant.UUID_BIG_SERVICE)) {
                                     SysUtils.logContentI(TAG, " 初始化 系统(大包) ===== = 发现服务");
+                                    SysUtils.logAppRunning(TAG, " 初始化 系统(大包) ===== = 发现服务");
                                     mBigService = gattService;
                                     setServicesDiscovered(true);
                                     isSupportBigMtu = true;
@@ -1560,17 +1589,20 @@ public class BleService extends Service {
 
                                 if (gattService.getUuid().equals(BleConstant.UUID_ECG_SERVICE)) {
                                     SysUtils.logContentI(TAG, "初始化 ECG ===== = 发现服务");
+                                    SysUtils.logAppRunning(TAG, "初始化 ECG ===== = 发现服务");
                                     flag_ecg = true;
                                     mECGService = gattService;
                                 }
                                 if (gattService.getUuid().equals(BleConstant.UUID_PPG_SERVICE)) {
                                     SysUtils.logContentI(TAG, "初始化 PPG ===== = 发现服务");
+                                    SysUtils.logAppRunning(TAG, "初始化 PPG ===== = 发现服务");
                                     flag_ppg = true;
                                     mPPGService = gattService;
                                 }
 
                                 if (gattService.getUuid().equals(BleConstant.UUID_THEME_SERVICE)) {
                                     SysUtils.logContentI(TAG, "初始化 THEME ===== 发现服务");
+                                    SysUtils.logAppRunning(TAG, "初始化 THEME ===== 发现服务");
                                     flag_theme = true;
                                     mThemeService = gattService;
                                 }
@@ -1583,6 +1615,7 @@ public class BleService extends Service {
 
                                 if (gattService.getUuid().equals(BleConstant.UUID_PROTOBUF_SERVICE)) {
                                     SysUtils.logContentI(TAG, "初始化 protobuf service");
+                                    SysUtils.logAppRunning(TAG, "初始化 protobuf service");
                                     flag_protobuf = true;
                                     mProtobufService = gattService;
                                 }
@@ -1597,8 +1630,10 @@ public class BleService extends Service {
                                     characteristic_system_read = mSYSTEMervice.getCharacteristic(BleConstant.UUID_BASE_READ);
                                     if (enableNotifacationSysRead()) {
                                         SysUtils.logContentI(TAG, "系统数据(小包) = 使能成功");
+                                        SysUtils.logAppRunning(TAG, "系统数据(小包) = 使能成功");
                                     } else {
                                         SysUtils.logContentI(TAG, "系统数据(小包) = 使能失败");
+                                        SysUtils.logAppRunning(TAG, "系统数据(小包) = 使能失败");
                                     }
                                 }
                             }, delayTime);
@@ -1611,8 +1646,10 @@ public class BleService extends Service {
                                     characteristic_big_3 = mBigService.getCharacteristic(BleConstant.CHAR_BIG_UUID_03);
                                     if (enableNotifacationSysRead()) {
                                         SysUtils.logContentI(TAG, "系统数据(大包) = 使能成功");
+                                        SysUtils.logAppRunning(TAG, "系统数据(大包) = 使能成功");
                                     } else {
                                         SysUtils.logContentI(TAG, "系统数据(大包) = 使能失败");
+                                        SysUtils.logAppRunning(TAG, "系统数据(大包) = 使能失败");
                                     }
                                 }
                             }, delayTime);
@@ -1627,8 +1664,10 @@ public class BleService extends Service {
                                     characteristic_ecg_read = mECGService.getCharacteristic(BleConstant.UUID_ECG_READ);
                                     if (enableNotifacationEcgRead()) {
                                         SysUtils.logContentI(TAG, "ECG数据 = 使能成功");
+                                        SysUtils.logAppRunning(TAG, "ECG数据 = 使能成功");
                                     } else {
                                         SysUtils.logContentI(TAG, "ECG数据 = 使能失败");
+                                        SysUtils.logAppRunning(TAG, "ECG数据 = 使能失败");
                                     }
                                 }
                             }, delayTime);
@@ -1643,8 +1682,10 @@ public class BleService extends Service {
                                     characteristic_ppg_read = mPPGService.getCharacteristic(BleConstant.UUID_PPG_READ);
                                     if (enableNotifacationPpgRead()) {
                                         SysUtils.logContentI(TAG, "PPG数据 = 使能成功");
+                                        SysUtils.logAppRunning(TAG, "PPG数据 = 使能成功");
                                     } else {
                                         SysUtils.logContentI(TAG, "PPG数据 = 使能失败");
+                                        SysUtils.logAppRunning(TAG, "PPG数据 = 使能失败");
                                     }
                                 }
                             }, delayTime);
@@ -1660,8 +1701,10 @@ public class BleService extends Service {
                                     characteristic_theme_write = mThemeService.getCharacteristic(BleConstant.UUID_THEME_WRITE);
                                     if (enableNotifacationThemeRead()) {
                                         SysUtils.logContentI(TAG, "主题数据 = 使能成功");
+                                        SysUtils.logAppRunning(TAG, "主题数据 = 使能成功");
                                     } else {
                                         SysUtils.logContentI(TAG, "主题数据 = 使能失败");
+                                        SysUtils.logAppRunning(TAG, "主题数据 = 使能失败");
                                     }
                                 }
                             }, delayTime);
@@ -1698,6 +1741,7 @@ public class BleService extends Service {
                                 SysUtils.logContentI(TAG, "characteristic_protobuf_1 on success");
                             } else {
                                 SysUtils.logContentI(TAG, "characteristic_protobuf_1  error");
+                                SysUtils.logAppRunning(TAG, "characteristic_protobuf_1  error");
                                 connectBleRXError();
                                 return;
                             }
@@ -1707,6 +1751,7 @@ public class BleService extends Service {
                                 SysUtils.logContentI(TAG, "characteristic_protobuf_2 on success");
                             } else {
                                 SysUtils.logContentI(TAG, "characteristic_protobuf_2 error");
+                                SysUtils.logAppRunning(TAG, "characteristic_protobuf_2 error");
                                 connectBleRXError();
                                 return;
                             }
@@ -1715,6 +1760,7 @@ public class BleService extends Service {
                                 SysUtils.logContentI(TAG, "characteristic_protobuf_3 on success");
                             } else {
                                 SysUtils.logContentI(TAG, "characteristic_protobuf_3  error");
+                                SysUtils.logAppRunning(TAG, "characteristic_protobuf_3  error");
                                 connectBleRXError();
                                 return;
                             }
@@ -1724,6 +1770,7 @@ public class BleService extends Service {
                                 SysUtils.logContentI(TAG, "characteristic_protobuf_4 on success");
                             } else {
                                 SysUtils.logContentI(TAG, "characteristic_protobuf_4  error");
+                                SysUtils.logAppRunning(TAG, "characteristic_protobuf_4  error");
                                 connectBleRXError();
                                 return;
                             }
@@ -1756,6 +1803,7 @@ public class BleService extends Service {
 
             } else {
                 SysUtils.logContentI(TAG, "onServicesDiscovered is error");
+                SysUtils.logAppRunning(TAG, "onServicesDiscovered is error");
             }
         }
 
@@ -1793,10 +1841,12 @@ public class BleService extends Service {
                     //                }
 
                     SysUtils.logContentI(TAG, "onCharacteristicChanged  uuid = " + characteristic.getUuid() + " data = " + my_hexString);
+                    SysUtils.logAppRunning(TAG, "onCharacteristicChanged  uuid = " + characteristic.getUuid() + " data = " + my_hexString);
                     if (mydata != null && mydata.length > 0) {
                         readingBleData(characteristic);
                     } else {
                         SysUtils.logContentE(TAG, "onCharacteristicChanged = mydata = null");
+                        SysUtils.logAppRunning(TAG, "onCharacteristicChanged = mydata = null");
                     }
 
                 }
@@ -1810,6 +1860,7 @@ public class BleService extends Service {
         public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
             super.onMtuChanged(gatt, mtu, status);
             SysUtils.logContentI(TAG, " onMtuChanged = " + mtu + " status = " + status);
+            SysUtils.logAppRunning(TAG, " onMtuChanged = " + mtu + " status = " + status);
         }
     }
 
@@ -1858,6 +1909,7 @@ public class BleService extends Service {
             String Key = String.format("%02X ", data[10]);
 
             SysUtils.logContentI(TAG, "parseRcvData Magic=" + Magic + "  Command=" + Command + "  Key=" + Key);
+            SysUtils.logAppRunning(TAG, "parseRcvData Magic=" + Magic + "  Command=" + Command + "  Key=" + Key);
 
             if (data[0] != (byte) 0xab)
                 return;
@@ -2204,6 +2256,7 @@ public class BleService extends Service {
         int type = data[13] & 0xff;
         int result = data[14] & 0xff;
         MyLog.i(TAG, "Key_DeviceSendUnbind = device send bind info " + " type = " + type + " result = " + result);
+        SysUtils.logAppRunning(TAG, "Key_DeviceSendUnbind = device send bind info " + " type = " + type + " result = " + result);
 
         if (0 == type) { // 绑定
             switch (result) {
@@ -2327,11 +2380,13 @@ public class BleService extends Service {
             if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
                 if (mBluetoothAdapter.getState() == BluetoothAdapter.STATE_OFF) {
                     SysUtils.logContentW(TAG, "BluetoothAdapter.ACTION_STATE_CHANGED STATE_OFF");
+                    SysUtils.logAppRunning(TAG, "BluetoothAdapter.ACTION_STATE_CHANGED STATE_OFF");
                     broadcastUpdate(BroadcastTools.ACTION_BLUE_STATE_CHANGED, BluetoothAdapter.STATE_OFF);
 //                    disconnect();
                 }
                 if (mBluetoothAdapter.getState() == BluetoothAdapter.STATE_ON) {
                     SysUtils.logContentW(TAG, "BluetoothAdapter.ACTION_STATE_CHANGED STATE_ON");
+                    SysUtils.logAppRunning(TAG, "BluetoothAdapter.ACTION_STATE_CHANGED STATE_ON");
                     broadcastUpdate(BroadcastTools.ACTION_BLUE_STATE_CHANGED, BluetoothAdapter.STATE_ON);
                     timeOutNum = 0;
                     reconnectDevcie();
@@ -3540,6 +3595,7 @@ public class BleService extends Service {
      */
     public boolean endSleepTag() {
         MyLog.i(TAG, "发送结束睡眠指令");
+        SysUtils.logAppRunning(TAG, "发送结束睡眠指令");
         return writeRXCharacteristic(BtSerializeation.endDeviceSleepTag());
     }
 
@@ -3772,6 +3828,7 @@ public class BleService extends Service {
      */
     public void changeDeviceGatt() {
         SysUtils.logContentW(TAG, "changeDeviceGatt()");
+        SysUtils.logAppRunning(TAG, "changeDeviceGatt()");
         connect("AA:BB:CC:DD:EE:FF");
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -3788,9 +3845,11 @@ public class BleService extends Service {
     private void displayData4(String data) {
         if (data != null) {
             SysUtils.logContentI(TAG, "displayData4 : " + data);
+            SysUtils.logAppRunning(TAG, "displayData4 : " + data);
 
             if (System.currentTimeMillis() - lastDisplayTime < 5 && lastData.equalsIgnoreCase(data)) {
                 SysUtils.logContentI(TAG, "displayData4 : repeat data");
+                SysUtils.logAppRunning(TAG, "displayData4 : repeat data");
             } else {
                 lastData = data;
 
@@ -3813,6 +3872,7 @@ public class BleService extends Service {
                     int packNum = Integer.parseInt(strCmd[5] + strCmd[4], 16);
                     if (packNum > 0) {
                         SysUtils.logContentI(TAG, "displayData4 reissue data : " + data);
+                        SysUtils.logAppRunning(TAG, "displayData4 reissue data : " + data);
                         intent.setAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK);
                         intent.putExtra("packNum", packNum);
                         sendBroadcast(intent);
@@ -3877,6 +3937,7 @@ public class BleService extends Service {
             } catch (Exception e) {
                 resetBleCmdState(false);
                 SysUtils.logContentE(TAG, "process_cmd_runnable_proto e=" + e);
+                SysUtils.logAppRunning(TAG, "process_cmd_runnable_proto e=" + e);
             }
         }
     };

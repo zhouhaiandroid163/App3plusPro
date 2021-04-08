@@ -32,6 +32,7 @@ import com.zjw.apps3pluspro.network.javabean.AccountBean;
 import com.zjw.apps3pluspro.network.javabean.CalibrationBean;
 import com.zjw.apps3pluspro.network.javabean.UserBean;
 import com.zjw.apps3pluspro.sharedpreferences.UserSetTools;
+import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.view.dialog.WaitDialog;
 import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.JavaUtil;
@@ -308,8 +309,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 intent = new Intent(LoginActivity.this, PrivacyProtocolActivity.class);
                 startActivity(intent);
                 break;
-
-
         }
     }
 
@@ -469,6 +468,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         getUserInfo();
 
+        SysUtils.logAppRunning(TAG, "app login user id = " + user_id);
 
     }
 

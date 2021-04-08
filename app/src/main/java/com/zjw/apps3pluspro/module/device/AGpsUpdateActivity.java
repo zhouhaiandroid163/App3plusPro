@@ -222,10 +222,12 @@ public class AGpsUpdateActivity extends BaseActivity {
     private void requestLtoUrl() {
         RequestInfo mRequestInfo = RequestJson.getLto();
         MyLog.i(TAG, "requestLtoUrl = " + mRequestInfo.toString());
+        SysUtils.logAppRunning(TAG, "requestLtoUrl = " + mRequestInfo.toString());
         NewVolleyRequest.RequestGet(mRequestInfo, TAG, new VolleyInterface(BaseApplication.getmContext(), VolleyInterface.mListener, VolleyInterface.mErrorListener) {
             @Override
             public void onMySuccess(JSONObject result) {
-                MyLog.i(TAG, "getWeatherCityBySearch result = " + result);
+                MyLog.i(TAG, "requestLtoUrl result = " + result);
+                SysUtils.logAppRunning(TAG, "requestLtoUrl result = " + result);
                 try {
                     String code = result.optString("code");
                     if (code.equalsIgnoreCase(ResultJson.Code_operation_success)) {
