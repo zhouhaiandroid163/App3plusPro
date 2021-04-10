@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,6 +44,7 @@ import com.zjw.apps3pluspro.view.dialog.WaitDialog;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -313,6 +315,11 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener {
                     AppUtils.showToast(mContext, R.string.conmit_ok);
                     if (progressDialogDownFile.isShowing()) {
                         progressDialogDownFile.dismiss();
+                    }
+                    String strFilePath = Constants.P_LOG_PATH + Constants.P_LOG_APP_RUNNING;
+                    File file = new File(strFilePath);
+                    if (file.exists()) {
+                        file.delete();
                     }
                     finish();
                 }
