@@ -1557,13 +1557,13 @@ public class HomeActivity extends BaseActivity {
      * 升级对话框
      */
     private void showDeviceUpdateDialog() {
-        new android.app.AlertDialog.Builder(mContext)
-                .setTitle(getString(R.string.dialog_prompt))//设置对话框标题
-                .setMessage(getString(R.string.force_upgrade_is_update_title))//设置显示的内容
-                .setPositiveButton(getString(R.string.dialog_yes), new DialogInterface.OnClickListener() {//添加确定按钮
-
-                    public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
-
+        DialogUtils.BaseDialog(context,
+                context.getResources().getString(R.string.dialog_prompt),
+                context.getResources().getString(R.string.force_upgrade_is_update_title),
+                context.getDrawable(R.drawable.black_corner_bg),
+                new DialogUtils.DialogClickListener() {
+                    @Override
+                    public void OnOK() {
                         if (mBleDeviceTools.getIsSupportProtobuf() && mBleDeviceTools.getDeviceUpdateType()) {
                             if (mBleDeviceTools.getIsSupportGetDeviceProtoStatus()) {
                                 Intent intent = new Intent(mContext, ProtobufActivity.class);
@@ -1590,17 +1590,12 @@ public class HomeActivity extends BaseActivity {
                             }
                         }
                     }
-                }).setNegativeButton(getString(R.string.dialog_no), new DialogInterface.OnClickListener() {//添加返回按钮
 
-            @Override
-
-            public void onClick(DialogInterface dialog, int which) {//响应事件
-                // TODO Auto-generated method stub
-
-            }
-
-        }).show();//在按键响应事件中显示此对话框
-
+                    @Override
+                    public void OnCancel() {
+                    }
+                }
+        );
     }
 
 
