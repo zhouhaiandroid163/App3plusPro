@@ -1,11 +1,16 @@
 package com.zjw.apps3pluspro.module.mine.app;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +26,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.android.volley.VolleyError;
@@ -28,9 +35,11 @@ import com.yanzhenjie.album.Album;
 import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.base.BaseActivity;
+import com.zjw.apps3pluspro.module.mine.user.ProfileActivity;
 import com.zjw.apps3pluspro.network.NewVolleyRequest;
 import com.zjw.apps3pluspro.network.RequestJson;
 import com.zjw.apps3pluspro.network.VolleyInterface;
+import com.zjw.apps3pluspro.network.okhttp.MyOkHttpClient;
 import com.zjw.apps3pluspro.network.okhttp.RequestParams;
 import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.AuthorityManagement;
@@ -44,7 +53,6 @@ import com.zjw.apps3pluspro.view.dialog.WaitDialog;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,16 +151,76 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener {
                 @Override
                 public void onClick(View v) {
                     if (AuthorityManagement.verifyStoragePermissions(FeedBackActivity.this)) {
-//                        showDialog();
-                        Album.startAlbum(FeedBackActivity.this, ACTIVITY_REQUEST_SELECT_PHOTO
-                                , 4 - listBitmaps.size()
-                                , ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg)
-                                , ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg));
+                        MyLog.i(TAG, "SD卡权限 已获取");
+                        if (AuthorityManagement.verifyStoragePermissions(FeedBackActivity.this)) {
+                            MyLog.i(TAG, "SD卡权限 已获取");
+                        } else {
+                            MyLog.i(TAG, "SD卡权限 未获取");
+                        }
+
+                        if (AuthorityManagement.verifyPhotogrAuthority(FeedBackActivity.this)) {
+                            MyLog.i(TAG, "拍照权限 已获取");
+                            //  showDialog();
+                            Album.startAlbum(FeedBackActivity.this, ACTIVITY_REQUEST_SELECT_PHOTO
+                                    , 4 - listBitmaps.size()
+                                    , ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg)
+                                    , ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg));
+                        } else {
+                            MyLog.i(TAG, "拍照权限 未获取");
+                        }
+                    } else {
+                        MyLog.i(TAG, "SD卡权限 未获取");
                     }
                 }
             });
             layoutPicture.addView(mLinearLayout);
         }
+    }
+
+    //================权限相关===================
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case AuthorityManagement.REQUEST_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    MyLog.i(TAG, "SD卡权限 回调允许");
+                } else {
+                    MyLog.i(TAG, "SD卡权限 回调拒绝");
+                    showSettingDialog(getString(R.string.setting_dialog_storage));
+                }
+            }
+            break;
+            case AuthorityManagement.REQUEST_EXTERNAL_CALL_CAMERA:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    MyLog.i(TAG, "拍照权限 回调允许");
+//                    TakingPictures();
+                } else {
+                    MyLog.i(TAG, "拍照权限 回调拒绝");
+                    showSettingDialog(getString(R.string.setting_dialog_call_camera));
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                break;
+        }
+    }
+
+    void showSettingDialog(String title) {
+        DialogUtils.showBaseDialog(mContext, mContext.getResources().getString(R.string.dialog_prompt), title,
+                mContext.getDrawable(R.drawable.black_corner_bg), new DialogUtils.DialogClickListener() {
+                    @Override
+                    public void OnOK() {
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+                        intent.setData(uri);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void OnCancel() {
+
+                    }
+                }, true, false, getResources().getString(R.string.setting_dialog_setting));
     }
 
     @Override
@@ -184,7 +252,10 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener {
             AppUtils.showToast(mContext, R.string.wrong_input_format_email);
             return;
         }
-        FeedBackToServer(advice, email);
+        if (MyOkHttpClient.getInstance().isConnect(context)) {
+            FeedBackToServer(advice, email);
+        } else
+            AppUtils.showToast(this, R.string.no_net_work);
     }
 
     private Dialog dialog;

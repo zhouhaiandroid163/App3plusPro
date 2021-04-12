@@ -62,6 +62,7 @@ import com.zjw.apps3pluspro.utils.BmpUtils;
 import com.zjw.apps3pluspro.utils.CalibrationUtils;
 import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.utils.DefaultVale;
+import com.zjw.apps3pluspro.utils.DialogUtils;
 import com.zjw.apps3pluspro.utils.FileUtil;
 import com.zjw.apps3pluspro.utils.GZIPUtil;
 import com.zjw.apps3pluspro.utils.IntentConstants;
@@ -1460,35 +1461,22 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
     }
 
     void showSettingDialog(String title) {
-        new android.app.AlertDialog.Builder(mContext)
-                .setTitle(getString(R.string.dialog_prompt))//设置对话框标题
-                .setMessage(title)//设置显示的内容
-                .setPositiveButton(getString(R.string.setting_dialog_setting), new DialogInterface.OnClickListener() {//添加确定按钮
-
-                    public void onClick(DialogInterface dialog, int which) {//确定按钮的响应事件
-
+        DialogUtils.showBaseDialog(mContext, mContext.getResources().getString(R.string.dialog_prompt), title,
+                mContext.getDrawable(R.drawable.black_corner_bg), new DialogUtils.DialogClickListener() {
+                    @Override
+                    public void OnOK() {
                         Intent intent = new Intent();
                         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                         Uri uri = Uri.fromParts("package", getPackageName(), null);
                         intent.setData(uri);
                         startActivity(intent);
-
                     }
 
-                }).setNegativeButton(getString(R.string.setting_dialog_cancel), new DialogInterface.OnClickListener() {//添加返回按钮
+                    @Override
+                    public void OnCancel() {
 
-
-            @Override
-
-            public void onClick(DialogInterface dialog, int which) {//响应事件
-
-                // TODO Auto-generated method stub
-
-
-            }
-
-        }).show();//在按键响应事件中显示此对话框
-
+                    }
+                }, true, false, getResources().getString(R.string.setting_dialog_setting));
     }
 
     //==================校准对话框=========================

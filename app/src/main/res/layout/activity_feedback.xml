@@ -23,13 +23,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/feedback_tip"
                 android:textColor="@color/white"
+                android:visibility="gone"
                 android:textSize="16sp" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dip"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -48,7 +48,7 @@
                 android:gravity="top"
                 android:hint="@string/feedback_content"
                 android:imeOptions="actionDone"
-                android:maxLength="100"
+                android:maxLength="200"
                 android:minHeight="200dp"
                 android:padding="8dip"
                 android:singleLine="false"
@@ -60,7 +60,8 @@
                 android:id="@+id/layoutPicture"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginTop="-60dp"
+                android:layout_marginTop="-30dp"
+                android:background="@drawable/selector_white_bg"
                 android:orientation="horizontal"
                 android:padding="4dp">
 

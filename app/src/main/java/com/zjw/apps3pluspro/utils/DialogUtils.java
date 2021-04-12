@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.provider.Settings;
 import android.view.View;
 import android.view.animation.Animation;
@@ -106,7 +107,7 @@ public class DialogUtils {
         return showBaseDialog(context, title, content, bg, null, false, true, null);
     }
 
-    private static Dialog showBaseDialog(Context context, String title, String content, Drawable bg, DialogClickListener dialogClickListener, boolean isShowCancel, boolean isShowProgress, String okString) {
+    public static Dialog showBaseDialog(Context context, String title, String content, Drawable bg, DialogClickListener dialogClickListener, boolean isShowCancel, boolean isShowProgress, String okString) {
         Dialog baseDialog = new Dialog(context, R.style.progress_dialog);
         baseDialog.setContentView(R.layout.base_dialog_layout);
         baseDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -168,5 +169,4 @@ public class DialogUtils {
                     }
                 }, true, false, activity.getResources().getString(R.string.setting_dialog_setting));
     }
-
 }
