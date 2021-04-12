@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Parcel;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,13 +27,19 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.android.volley.VolleyError;
+import com.yanzhenjie.album.Action;
 import com.yanzhenjie.album.Album;
+import com.yanzhenjie.album.AlbumFile;
+import com.yanzhenjie.album.api.widget.Widget;
+import com.yanzhenjie.album.api.widget.Widget.ButtonStyle;
+import com.yanzhenjie.album.util.AlbumUtils;
 import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.base.BaseActivity;
@@ -58,6 +66,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 
 /**
  * 意见反馈
@@ -124,7 +133,10 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener {
 
         mLayoutInflater = LayoutInflater.from(this);
         initPictureView();
+//        ButtonStyle.Builder xx = ButtonStyle.Builder.setButtonSelector(ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg), ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg));
     }
+
+    private ArrayList<AlbumFile> mAlbumFiles;
 
     private void initPictureView() {
         layoutPicture.removeAllViews();
@@ -161,10 +173,45 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener {
                         if (AuthorityManagement.verifyPhotogrAuthority(FeedBackActivity.this)) {
                             MyLog.i(TAG, "拍照权限 已获取");
                             //  showDialog();
-                            Album.startAlbum(FeedBackActivity.this, ACTIVITY_REQUEST_SELECT_PHOTO
-                                    , 4 - listBitmaps.size()
-                                    , ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg)
-                                    , ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg));
+                            Album.image(FeedBackActivity.this)
+                                    .multipleChoice()
+                                    .camera(true)
+                                    .columnCount(4)
+                                    .selectCount(4 - listBitmaps.size())
+//                                    .checkedList(mAlbumFiles)
+                                    .widget(Widget.newDarkBuilder(context)
+                                            .navigationBarColor(ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg))
+                                            .statusBarColor(ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg))
+                                            .toolBarColor(ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg))
+                                            .title(getResources().getString(R.string.select_picture))
+                                            .build()
+                                    )
+                                    .onResult(new Action<ArrayList<AlbumFile>>() {
+                                        @Override
+                                        public void onAction(@NonNull ArrayList<AlbumFile> result) {
+                                            mAlbumFiles = result;
+                                            List<String> paths = new ArrayList<>();
+                                            for (int i = 0; i < mAlbumFiles.size(); i++) {
+                                                paths.add(mAlbumFiles.get(i).getPath());
+                                            }
+                                            if (paths.size() == 0) {
+                                                return;
+                                            }
+                                            for (int i = 0; i < paths.size(); i++) {
+                                                Bitmap bitmap = BitmapFactory.decodeFile(paths.get(i), getBitmapOption(2)); //将图片的长和宽缩小味原来的1/2
+                                                listBitmaps.add(bitmap);
+                                                pathList.add(paths.get(i));
+                                            }
+                                            initPictureView();
+                                        }
+                                    })
+                                    .onCancel(new Action<String>() {
+                                        @Override
+                                        public void onAction(@NonNull String result) {
+//                                            Toast.makeText(context, "cancel", Toast.LENGTH_LONG).show();
+                                        }
+                                    })
+                                    .start();
                         } else {
                             MyLog.i(TAG, "拍照权限 未获取");
                         }
@@ -284,11 +331,11 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener {
         view.findViewById(R.id.albums).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Album.startAlbum(FeedBackActivity.this, ACTIVITY_REQUEST_SELECT_PHOTO
-                        , 4 - listBitmaps.size()
-                        , ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg)
-                        , ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg));
-                dialog.dismiss();
+//                Album.startAlbum(FeedBackActivity.this, ACTIVITY_REQUEST_SELECT_PHOTO
+//                        , 4 - listBitmaps.size()
+//                        , ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg)
+//                        , ContextCompat.getColor(FeedBackActivity.this, R.color.base_activity_bg));
+//                dialog.dismiss();
             }
         });
         view.findViewById(R.id.cancel).setOnClickListener(new OnClickListener() {
@@ -310,29 +357,6 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener {
             listBitmaps.clear();
         }
         super.onDestroy();
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ACTIVITY_REQUEST_SELECT_PHOTO) {
-            if (resultCode == RESULT_OK) {
-                // 拿到用户选择的图片路径List：
-                List<String> paths = Album.parseResult(data);
-                if (paths.size() == 0) {
-                    return;
-                }
-                for (int i = 0; i < paths.size(); i++) {
-                    Bitmap bitmap = BitmapFactory.decodeFile(paths.get(i), getBitmapOption(2)); //将图片的长和宽缩小味原来的1/2
-                    listBitmaps.add(bitmap);
-                    pathList.add(paths.get(i));
-                }
-                initPictureView();
-            } else if (resultCode == RESULT_CANCELED) {
-
-            }
-        }
     }
 
     private BitmapFactory.Options getBitmapOption(int inSampleSize) {

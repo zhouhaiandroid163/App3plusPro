@@ -15,6 +15,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.umeng.socialize.PlatformConfig;
 
+import com.yanzhenjie.album.Album;
+import com.yanzhenjie.album.AlbumConfig;
 import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.bleservice.BleService;
 import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
@@ -32,6 +34,8 @@ import com.zjw.apps3pluspro.sql.dbmanager.SleepInfoUtils;
 import com.zjw.apps3pluspro.sql.dbmanager.SportModleInfoUtils;
 import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.utils.NotificationUtils;
+
+import java.util.Locale;
 
 import no.nordicsemi.android.dfu.DfuServiceInitiator;
 
@@ -83,6 +87,12 @@ public class BaseApplication extends MultiDexApplication {
             NotificationUtils notificationUtils = new NotificationUtils(this);
             notificationUtils.createNotificationChannel();
         }
+
+        Album.initialize(AlbumConfig.newBuilder(this)
+                .setAlbumLoader(new MediaLoader())
+                .setLocale(Locale.getDefault())
+                .build()
+        );
 
         mContext = getApplicationContext();
         // 主线线程id
