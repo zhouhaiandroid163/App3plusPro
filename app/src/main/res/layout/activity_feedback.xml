@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:padding="4dp">
 
-                    <Button
+                    <TextView
                         android:id="@+id/btAgree"
                         android:layout_width="16dp"
                         android:layout_height="16dp"

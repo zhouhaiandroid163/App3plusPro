@@ -81,7 +81,7 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener {
     @BindView(R.id.layoutPicture)
     LinearLayout layoutPicture;
     @BindView(R.id.btAgree)
-    Button btAgree;
+    TextView btAgree;
     private LayoutInflater mLayoutInflater;
     private ArrayList<Bitmap> listBitmaps = new ArrayList<>();
     private ArrayList<String> pathList = new ArrayList<>();
