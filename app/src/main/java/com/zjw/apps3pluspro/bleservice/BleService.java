@@ -1791,8 +1791,8 @@ public class BleService extends Service {
                         } else {
                             if (!mBleDeviceTools.get_ble_name().contains(BleConstant.PLUS_HR)) {
                                 connectBleRXError();
+                                return;
                             }
-                            return;
                         }
                         //发送初始化数据
                         Thread.sleep(400);
