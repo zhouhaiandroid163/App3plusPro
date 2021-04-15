@@ -2382,7 +2382,7 @@ public class BleService extends Service {
                     SysUtils.logContentW(TAG, "BluetoothAdapter.ACTION_STATE_CHANGED STATE_OFF");
                     SysUtils.logAppRunning(TAG, "BluetoothAdapter.ACTION_STATE_CHANGED STATE_OFF");
                     broadcastUpdate(BroadcastTools.ACTION_BLUE_STATE_CHANGED, BluetoothAdapter.STATE_OFF);
-//                    disconnect();
+                    disconnect();
                 }
                 if (mBluetoothAdapter.getState() == BluetoothAdapter.STATE_ON) {
                     SysUtils.logContentW(TAG, "BluetoothAdapter.ACTION_STATE_CHANGED STATE_ON");

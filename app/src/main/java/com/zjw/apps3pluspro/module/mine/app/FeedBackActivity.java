@@ -1,20 +1,15 @@
 package com.zjw.apps3pluspro.module.mine.app;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Handler;
-import android.os.Parcel;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,10 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.android.volley.VolleyError;
@@ -38,12 +31,9 @@ import com.yanzhenjie.album.Action;
 import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.AlbumFile;
 import com.yanzhenjie.album.api.widget.Widget;
-import com.yanzhenjie.album.api.widget.Widget.ButtonStyle;
-import com.yanzhenjie.album.util.AlbumUtils;
 import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.base.BaseActivity;
-import com.zjw.apps3pluspro.module.mine.user.ProfileActivity;
 import com.zjw.apps3pluspro.network.NewVolleyRequest;
 import com.zjw.apps3pluspro.network.RequestJson;
 import com.zjw.apps3pluspro.network.VolleyInterface;
@@ -55,6 +45,7 @@ import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.utils.DialogUtils;
 import com.zjw.apps3pluspro.utils.JavaUtil;
 import com.zjw.apps3pluspro.utils.MyUtils;
+import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 import com.zjw.apps3pluspro.view.dialog.WaitDialog;
 
@@ -380,101 +371,87 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener {
                 context.getDrawable(R.drawable.black_corner_bg)
         );
         ProgressBar progressBar = progressDialogDownFile.findViewById(R.id.progress);
-        try {
-            File mFile = new File(Constants.P_LOG_PATH + Constants.P_LOG_APP_RUNNING);
-            RequestParams params = new RequestParams();
-            if (isAgree) {
-                params.put("file", mFile);
-            }
-            for (int i = 1; i < pathList.size() + 1; i++) {
-                File img = new File(pathList.get(i - 1));
-                if (img.exists() && img.length() > 0) {
-                    params.put("img" + i, img);
-                }
-            }
-            params.put("userId", BaseApplication.getUserId());
-            params.put("feedbackContent", advice);
-            params.put("feedbackEmail", email);
-            params.put("phoneModel", "Android");
-            params.put("appMsg", MyUtils.getAppName() + "_" + MyUtils.getAppInfo());
-            params.put("phoneSystem", MyUtils.getPhoneModel());
-            params.put("appId", "02");
+
+        new Thread(
+                () -> {
+                    ArrayList<String> resultPathList = new ArrayList<>();
+                    long time = System.currentTimeMillis();
+                    SysUtils.makeRootDirectory(Constants.P_PICTURE);
+                    for (int i = 0; i < pathList.size(); i++) {
+                        SysUtils.compressBitmap(pathList.get(i), 200, Constants.P_PICTURE + time + "_" + i + ".png");
+                        resultPathList.add(Constants.P_PICTURE + time + "_" + i + ".png");
+                    }
+                    try {
+                        File mFile = new File(Constants.P_LOG_PATH + Constants.P_LOG_APP_RUNNING);
+                        RequestParams params = new RequestParams();
+                        if (isAgree && mFile.exists()) {
+                            params.put("file", mFile);
+                        }
+                        for (int i = 1; i < resultPathList.size() + 1; i++) {
+                            File img = new File(resultPathList.get(i - 1));
+                            if (img.exists() && img.length() > 0) {
+                                params.put("img" + i, img);
+                            }
+                        }
+                        params.put("userId", BaseApplication.getUserId());
+                        params.put("feedbackContent", advice);
+                        params.put("feedbackEmail", email);
+                        params.put("phoneModel", "Android");
+                        params.put("appMsg", MyUtils.getAppName() + "_" + MyUtils.getAppInfo());
+                        params.put("phoneSystem", MyUtils.getPhoneModel());
+                        params.put("appId", "02");
 //            params.put("feekBackType", 3);
-            NewVolleyRequest.RequestMultiPostRequest(params, new VolleyInterface(mContext, VolleyInterface.mListener, VolleyInterface.mErrorListener) {
-                @Override
-                public void onMySuccess(JSONObject result) {
-                    if (waitDialog != null) {
-                        waitDialog.close();
-                    }
-                    MyLog.i(TAG, "请求接口-意见反馈 result = " + result);
-                    AppUtils.showToast(mContext, R.string.conmit_ok);
-                    if (progressDialogDownFile.isShowing()) {
-                        progressDialogDownFile.dismiss();
-                    }
-                    String strFilePath = Constants.P_LOG_PATH + Constants.P_LOG_APP_RUNNING;
-                    File file = new File(strFilePath);
-                    if (file.exists()) {
-                        file.delete();
-                    }
-                    finish();
-                }
+                        NewVolleyRequest.RequestMultiPostRequest(params, new VolleyInterface(mContext, VolleyInterface.mListener, VolleyInterface.mErrorListener) {
+                            @Override
+                            public void onMySuccess(JSONObject result) {
+                                runOnUiThread(() -> {
+                                    if (waitDialog != null) {
+                                        waitDialog.close();
+                                    }
+                                    MyLog.i(TAG, "请求接口-意见反馈 result = " + result);
+                                    AppUtils.showToast(mContext, R.string.conmit_ok);
+                                    if (progressDialogDownFile.isShowing()) {
+                                        progressDialogDownFile.dismiss();
+                                    }
+                                    String strFilePath = Constants.P_LOG_PATH + Constants.P_LOG_APP_RUNNING;
+                                    File file = new File(strFilePath);
+                                    if (file.exists()) {
+                                        file.delete();
+                                    }
+                                    finish();
+                                });
+                            }
 
-                @Override
-                public void onMyError(VolleyError arg0) {
-                    if (waitDialog != null) {
-                        waitDialog.close();
-                    }
-                    MyLog.i(TAG, "onMyError result = " + arg0);
-                    finish();
-                }
-            }, RequestJson.feedbackUrl2, (contentLength, mCurrentLength) -> handler.post(() -> {
-                progressBar.setMax((int) contentLength);
-                progressBar.setProgress(mCurrentLength);
-                if (mCurrentLength >= contentLength) {
-                    if (progressDialogDownFile.isShowing()) {
-                        progressDialogDownFile.dismiss();
-                    }
-                    waitDialog.show(getString(R.string.loading0));
-                }
-            }));
+                            @Override
+                            public void onMyError(VolleyError arg0) {
+                                runOnUiThread(() -> {
+                                    if (waitDialog != null) {
+                                        waitDialog.close();
+                                    }
+                                    if (progressDialogDownFile.isShowing()) {
+                                        progressDialogDownFile.dismiss();
+                                    }
+                                    MyLog.i(TAG, "onMyError result = " + arg0);
+                                    finish();
+                                });
+                            }
+                        }, RequestJson.feedbackUrl2, (contentLength, mCurrentLength) -> handler.post(() -> {
+                            runOnUiThread(() -> {
+                                progressBar.setMax((int) contentLength);
+                                progressBar.setProgress(mCurrentLength);
+                                if (mCurrentLength >= contentLength) {
+                                    if (progressDialogDownFile.isShowing()) {
+                                        progressDialogDownFile.dismiss();
+                                    }
+                                    waitDialog.show(getString(R.string.loading0));
+                                }
+                            });
+                        }));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-//        RequestInfo mRequestInfo = RequestJson.feedback(mContext, advice, email, 0);
-//        MyLog.i(TAG, "请求接口-意见反馈 mRequestInfo = " + mRequestInfo.toString());
-//        NewVolleyRequest.RequestPost(mRequestInfo, TAG,
-//                new VolleyInterface(mContext, VolleyInterface.mListener, VolleyInterface.mErrorListener) {
-//                    @Override
-//                    public void onMySuccess(JSONObject result) {
-//                        // TODO Auto-generated method stub
-//                        MyLog.i(TAG, "请求接口-意见反馈 result = " + result);
-//                        waitDialog.close();
-//                        OldBean mOldBean = ResultJson.OldBean(result);
-//                        if (mOldBean.isRequestSuccess()) {
-//                            MyLog.i(TAG, "请求接口-意见反馈 成功");
-//                            AppUtils.showToast(mContext, R.string.conmit_ok);
-//                            finish();
-//                        } else {
-//                            MyLog.i(TAG, "请求接口-意见反馈 失败");
-//                            AppUtils.showToast(mContext, R.string.server_try_again_code0);
-//                        }
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onMyError(VolleyError arg0) {
-//                        // TODO Auto-generated method stub
-//
-//
-//                        MyLog.i(TAG, "请求接口-意见反馈 请求失败 = message = " + arg0.getMessage());
-//                        waitDialog.close();
-//                        AppUtils.showToast(mContext, R.string.net_worse_try_again);
-//
-//                        return;
-//                    }
-//                });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+        ).start();
     }
 }
