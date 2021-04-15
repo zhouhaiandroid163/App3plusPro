@@ -15,9 +15,17 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/ivE08"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@mipmap/iv_qr_code_device_bg" />
+            android:background="@mipmap/iv_qr_code_device_bg_e08" />
+
+        <ImageView
+            android:id="@+id/ivW004"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/iv_qr_code_device_bg_w004"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
