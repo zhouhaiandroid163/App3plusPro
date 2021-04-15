@@ -1187,8 +1187,9 @@ public class BleService extends Service {
                 if (strCmd[0].equalsIgnoreCase("00") && strCmd[1].equalsIgnoreCase("00")) {
                     if (strCmd[2].equalsIgnoreCase("00") && strCmd[3].equalsIgnoreCase("00")) {
                         recvMaxPacket = Integer.parseInt(strCmd[5] + strCmd[4], 16);
-                        intent.setAction(BroadcastTools.ACTION_CMD_DEVICE_START);
-                        sendBroadcast(intent);
+//                        intent.setAction(BroadcastTools.ACTION_CMD_DEVICE_START);
+//                        sendBroadcast(intent);
+                        writeCharacteristic(BtSerializeation.deviceStartCmd(), BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_03);
 
                         bBleCmdSessionCompleted = true;
                         return;
@@ -1214,14 +1215,14 @@ public class BleService extends Service {
                     SysUtils.logAppRunning(TAG, TAG_CONTENT + " app confirm");
 //                    intent.setAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
 //                    sendBroadcast(intent);
-                    bleCmdList_proto.add(BtSerializeation.appConfirm());
+                    writeCharacteristic(BtSerializeation.appConfirm(), BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_03);
                     return;
                 }
                 SysUtils.logContentI(TAG, TAG_CONTENT + " app confirm");
                 SysUtils.logAppRunning(TAG, TAG_CONTENT + " app confirm");
 //                intent.setAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
 //                sendBroadcast(intent);
-                bleCmdList_proto.add(BtSerializeation.appConfirm());
+                writeCharacteristic(BtSerializeation.appConfirm(), BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_03);
                 //解析
                 String[] sportData = recvData3.split(" ");
                 SysUtils.logContentI(TAG, TAG_CONTENT + " recvData3 =" + sportData.length);
@@ -1307,7 +1308,7 @@ public class BleService extends Service {
 
 //                    intent.setAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
 //                    sendBroadcast(intent);
-                    bleCmdList_proto.add(BtSerializeation.appConfirm());
+                    writeCharacteristic(BtSerializeation.appConfirm(), BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_01);
 
                     strCmd = recvData.split(" ");
                     byte[] valueByte = new byte[strCmd.length];
@@ -3923,14 +3924,10 @@ public class BleService extends Service {
                 } else {
                     if (cmdSize > 0) {
                         byte[] paramCmd = bleCmdList_proto.remove(0);
-                        if (currentUuid_proto.equals(BleConstant.CHAR_PROTOBUF_UUID_03)) {
-                            writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_03);
+                        if (isReplyDevice(paramCmd)) {
+                            writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_01);
                         } else {
-                            if (isReplyDevice(paramCmd)) {
-                                writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_01);
-                            } else {
-                                writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_02);
-                            }
+                            writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_02);
                         }
                     }
                 }
