@@ -670,7 +670,7 @@ public class UserSetTools {
 
     public boolean get_is_privacy_protocol() {
         SharedPreferences settin = getSharedPreferencesCommon();
-        return settin.getBoolean("is_privacy_protocol", true);
+        return settin.getBoolean("is_privacy_protocol", false);
     }
 
     //是否同意隐私协议

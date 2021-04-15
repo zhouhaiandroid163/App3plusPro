@@ -142,12 +142,16 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
         initView();
         initData();
         setPersonalData();
-
-        if (MyUtils.isGoogle(context)) {
+        if (mUserSetTools.get_map_enable()) {
             updateUnitUi(text_map_google, text_map_gaode, mUserSetTools.get_is_google_map());
         } else {
-            updateUnitUi(text_map_google, text_map_gaode, false);
+            if (AppUtils.isZh(mContext)) {
+                updateUnitUi(text_map_google, text_map_gaode, false);
+            } else {
+                updateUnitUi(text_map_google, text_map_gaode, true);
+            }
         }
+
         // 创建
         SysUtils.makeRootDirectory(Constants.HEAD_IMG);
     }
@@ -373,7 +377,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
                     mUserSetTools.set_map_enable(true);
                     mUserSetTools.set_is_google_map(true);
                 } else {
-                    AppUtils.showToast(mContext, R.string.google_service_not_support);
+                    AppUtils.showToast(mContext, R.string.my_mail_list_temporary_support);
                 }
                 break;
             //切换高德额地图
