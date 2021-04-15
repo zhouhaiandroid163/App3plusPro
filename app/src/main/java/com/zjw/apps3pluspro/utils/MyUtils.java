@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
@@ -1042,24 +1044,11 @@ public class MyUtils {
     }
 
     public static boolean isGoogle(Context context) {
-
-        boolean result = true;
-
+        boolean result = false;
         UserSetTools mUserSetTools = new UserSetTools(context);
-
-        if (mUserSetTools.get_map_enable()) {
+        int code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context);
+        if (code == ConnectionResult.SUCCESS) {
             if (mUserSetTools.get_is_google_map()) {
-                //谷歌
-                result = true;
-            } else {
-                //高德
-                result = false;
-            }
-        } else {
-            if (AppUtils.isZh(context)) {
-                //高德
-                result = false;
-            } else {
                 //谷歌
                 result = true;
             }
