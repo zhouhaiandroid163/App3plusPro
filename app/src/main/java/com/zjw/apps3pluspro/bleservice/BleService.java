@@ -1574,7 +1574,7 @@ public class BleService extends Service {
                             connectBleRXError();
                             return;
                         }
-                        if(gattServices == null){
+                        if (gattServices == null) {
                             connectBleRXError();
                             return;
                         }

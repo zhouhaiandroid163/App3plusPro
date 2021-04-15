@@ -983,6 +983,7 @@
     <string name="data_init">Inicialización de datos, espere </string>
     <string name="call_us1">Necesita ayuda? Llámenos al</string>
     <string name="call_us2">O correo electrónico:</string>
+
     <!--以下定制app翻译-->
     <string name="device_name">nombre del dispositivo</string>
     <string name="device_power">alimentación del dispositivo</string>
@@ -1002,6 +1003,7 @@
     <string name="goal_activity_time">objetivo de tiempo de ejercicio</string>
     <string name="goal_distance">objetivo de distancia</string>
     <string name="no_account">No tienes una cuenta?</string>
+    <string name="add_log">Envíe los registros al mismo tiempo</string>
     <string name="google_service_not_support">El servicio Google Play no es compatible</string>
     <!-- 西班牙 -->
 </resources>
