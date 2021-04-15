@@ -281,14 +281,14 @@
     <string name="search_friend">Search for</string>
     <string name="search_friend_tip">Go to the "My" page, where you can view the ID of the other party.</string>
     <string name="stay_up">Stay up late</string>
-    <string name="delete_friend">Delete friend</string>
+    <string name="delete_friend">Delete</string>
     <string name="title_add_friend">Add friend</string>
     <string name="add">Add to</string>
     <string name="already_added">Added</string>
     <string name="already_issued">Has been sent</string>
     <string name="new_friend_tip">Send a "Caring" request to you!</string>
     <string name="accept_friend_tip">After agreeing, your friends can view your sports, sleep, and other data separately.</string>
-    <string name="friend_accept">Agree</string>
+    <string name="friend_accept">Accept</string>
     <string name="rank_no_friend">No friends</string>
     <string name="no_friend_tip_title">No friends, please add</string>
     <string name="no_friend_tip_context">After paying attention to your friends, you can view your friends\' related data, including the number of steps, sleep and other data.</string>
@@ -952,6 +952,11 @@
     <string name="device_sport_paused">Exercise is paused</string>
     <string name="device_sport_runing">In motion</string>
     <string name="device_sport_over">Exercise is over</string>
+
+    <string name="call_us1">Need help？Call Us at</string>
+    <string name="call_us2">Or email:</string>
+    <string name="call_us3">service@3plususa.com</string>
+    <string name="call_us4">(866)592–0184</string>
     <!--以下定制app翻译-->
     <string name="device_name">Device name</string>
     <string name="device_power">Battery level</string>

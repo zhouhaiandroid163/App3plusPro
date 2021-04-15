@@ -11,80 +11,159 @@
     <include layout="@layout/public_head" />
 
 
-    <LinearLayout
-        android:id="@+id/layoutType1"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:minHeight="80dp"
-        android:orientation="horizontal"
-        android:padding="12dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/plus_hr" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="3PLUS HR+"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center|right">
+            android:orientation="vertical">
 
-            <ImageView
-                style="@style/device_fragment_right_image"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:background="@mipmap/icon_enter" />
+            <LinearLayout
+                android:id="@+id/layoutType1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="80dp"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/plus_hr" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="3PLUS HR+"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|right">
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:background="@mipmap/icon_enter" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <include layout="@layout/line_layout" />
+
+            <LinearLayout
+                android:id="@+id/layoutType2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="80dp"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/plus_vibe" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="3PLUS Vibe+"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center|right">
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:background="@mipmap/icon_enter" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <include layout="@layout/line_layout" />
+
         </LinearLayout>
-    </LinearLayout>
-
-    <include layout="@layout/line_layout" />
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
-        android:id="@+id/layoutType2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:minHeight="80dp"
-        android:orientation="horizontal"
+        android:gravity="center"
+        android:minHeight="64dp"
+        android:orientation="vertical"
         android:padding="12dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/plus_vibe" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="3PLUS Vibe+"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center|right">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            <ImageView
-                style="@style/device_fragment_right_image"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:background="@mipmap/icon_enter" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center|end"
+                android:text="@string/call_us1"
+                android:textColor="#ffffffff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvCallNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_weight="1"
+                android:gravity="center|start"
+                android:text="@string/call_us4"
+                android:textColor="#ff1592e6"
+                android:textSize="15sp" />
         </LinearLayout>
 
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    <include layout="@layout/line_layout" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center|end"
+                android:text="@string/call_us2"
+                android:textColor="#ffffffff"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_weight="1"
+                android:gravity="center|start"
+                android:text="@string/call_us3"
+                android:textColor="#ffffffff"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

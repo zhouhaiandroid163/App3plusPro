@@ -1,7 +1,11 @@
 package com.zjw.apps3pluspro.module.device
 
+import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.view.View
 import android.widget.TextView
 import butterknife.OnClick
@@ -25,7 +29,7 @@ class ScanDeviceTypeActivity : BaseActivity() {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
     }
 
-    @OnClick(R.id.layoutType1, R.id.layoutType2)
+    @OnClick(R.id.layoutType1, R.id.layoutType2, R.id.tvCallNumber)
     fun viewOnClick(view: View) {
         when (view.id) {
             R.id.layoutType1 -> {
@@ -49,6 +53,24 @@ class ScanDeviceTypeActivity : BaseActivity() {
                 } else {
                     BluetoothUtil.enableBluetooth(this@ScanDeviceTypeActivity, HomeActivity.BleStateResult)
                 }
+            }
+            R.id.tvCallNumber -> {
+                if (Build.VERSION.SDK_INT >= 23) {
+                    val REQUEST_CODE_CONTACT = 101
+                    val permissions = arrayOf<String>(Manifest.permission.CALL_PHONE)
+                    //验证是否许可权限
+                    for (str in permissions) {
+                        if (checkSelfPermission(str) !== PackageManager.PERMISSION_GRANTED) { //申请权限
+                            requestPermissions(permissions, REQUEST_CODE_CONTACT)
+                            return
+                        }
+                    }
+                }
+                //如果需要手动拨号将Intent.ACTION_CALL改为Intent.ACTION_DIAL（跳转到拨号界面，用户手动点击拨打）
+                val intent = Intent(Intent.ACTION_DIAL)
+                val data: Uri = Uri.parse("tel:" + resources.getString(R.string.call_us4))
+                intent.data = data
+                startActivity(intent)
             }
         }
     }
