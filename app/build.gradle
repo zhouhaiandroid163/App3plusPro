@@ -67,7 +67,8 @@ greendao {
 //    schemaVersion 3//添加四张表，连续血氧，连续体温，单次测量离线血氧，单次测量离线体温
 //    schemaVersion 4//给每张表添加新字段
 //    schemaVersion 5    //多运动
-    schemaVersion 6    //多运动
+//    schemaVersion 6    //多运动
+    schemaVersion 7    //多运动 游泳字段
     daoPackage 'com.zjw.apps3pluspro.sql.gen'
     targetGenDir 'src/main/java'
 }

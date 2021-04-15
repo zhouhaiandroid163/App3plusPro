@@ -15,6 +15,7 @@ class DeviceSportChartView(context: Context?, attrs: AttributeSet?) : View(conte
     private var type: Int = 0
     private var y0: Int = 0
     private var maxY: Float = 0f
+    private var min: Double = 0.0
     private var lineColor: Int = 0
     private var gradientColorStart: Int = 0
     private var gradientColorEnd: Int = 0
@@ -105,13 +106,19 @@ class DeviceSportChartView(context: Context?, attrs: AttributeSet?) : View(conte
             canvas.drawText(text1, startX - textWidth1, padding + 3 * spaceingY + textHeight * 1 / 3, paintText)
         } else {
             if (maxY < 30) {
-                canvas.drawText(String.format("%.1f", (maxY * 3.0 / 4)), padding.toFloat(), padding + 1 * spaceingY + textHeight * 1 / 3, paintText)
-                canvas.drawText(String.format("%.1f", (maxY * 2.0 / 4)), padding.toFloat(), padding + 2 * spaceingY + textHeight * 1 / 3, paintText)
-                canvas.drawText(String.format("%.1f", (maxY * 1.0 / 4)), padding.toFloat(), padding + 3 * spaceingY + textHeight * 1 / 3, paintText)
+                canvas.drawText(String.format("%.1f", (maxY * 3.0 / 4) + min), padding.toFloat(), padding + 1 * spaceingY + textHeight * 1 / 3, paintText)
+                canvas.drawText(String.format("%.1f", (maxY * 2.0 / 4) + min), padding.toFloat(), padding + 2 * spaceingY + textHeight * 1 / 3, paintText)
+                canvas.drawText(String.format("%.1f", (maxY * 1.0 / 4) + min), padding.toFloat(), padding + 3 * spaceingY + textHeight * 1 / 3, paintText)
+                if (type == 3) {
+                    canvas.drawText(String.format("%.1f", min), padding.toFloat(), padding + 4 * spaceingY + textHeight * 1 / 3, paintText)
+                }
             } else {
-                canvas.drawText((maxY * 3 / 4).toInt().toString(), padding.toFloat(), padding + 1 * spaceingY + textHeight * 1 / 3, paintText)
-                canvas.drawText((maxY * 2 / 4).toInt().toString(), padding.toFloat(), padding + 2 * spaceingY + textHeight * 1 / 3, paintText)
-                canvas.drawText((maxY * 1 / 4).toInt().toString(), padding.toFloat(), padding + 3 * spaceingY + textHeight * 1 / 3, paintText)
+                canvas.drawText((maxY * 3 / 4 + min).toInt().toString(), padding.toFloat(), padding + 1 * spaceingY + textHeight * 1 / 3, paintText)
+                canvas.drawText((maxY * 2 / 4 + min).toInt().toString(), padding.toFloat(), padding + 2 * spaceingY + textHeight * 1 / 3, paintText)
+                canvas.drawText((maxY * 1 / 4 + min).toInt().toString(), padding.toFloat(), padding + 3 * spaceingY + textHeight * 1 / 3, paintText)
+                if (type == 3) {
+                    canvas.drawText(min.toInt().toString(), padding.toFloat(), padding + 4 * spaceingY + textHeight * 1 / 3, paintText)
+                }
             }
         }
 
@@ -125,6 +132,9 @@ class DeviceSportChartView(context: Context?, attrs: AttributeSet?) : View(conte
         if (type == 2) {
             val y: Double = baseline - (baseline - padding) * yData[0] * 0.95 / maxY
             mPoints[0] = Point(startX.roundToInt(), y.toInt())
+        } else if (type == 3) {
+            val y: Double = baseline - (baseline - padding) * (-min) / maxY
+            mPoints[0] = Point(startX.roundToInt(), y.roundToInt())
         } else {
             mPoints[0] = Point(startX.roundToInt(), baseline.roundToInt())
         }
@@ -234,6 +244,9 @@ class DeviceSportChartView(context: Context?, attrs: AttributeSet?) : View(conte
             if (yData.get(i) > max) {
                 max = yData.get(i)
             }
+            if (yData.get(i) < min) {
+                min = yData.get(i);
+            }
         }
         maxY = (max * 1.2).toFloat()
         if (maxY == 0f) {
@@ -250,7 +263,23 @@ class DeviceSportChartView(context: Context?, attrs: AttributeSet?) : View(conte
             val second1: Int = (maxY * 1 * 60f / 4).toInt()
             text1 = String.format("%1$02d'%2$02d\"", (second1 / 60), (second1 % 60))
         }
+        if (type == 3) { // 高度变化
+            if (min < 0) {
+                for (i in yData.indices) {
+                    yData[i] = yData[i] - min
 
+                    if (yData.get(i) > max) {
+                        max = yData.get(i)
+                    }
+                }
+                maxY = (max * 1.2).toFloat()
+                if (maxY == 0f) {
+                    maxY = 1f
+                }
+            }
+        } else {
+            min = 0.0
+        }
         invalidate()
     }
 

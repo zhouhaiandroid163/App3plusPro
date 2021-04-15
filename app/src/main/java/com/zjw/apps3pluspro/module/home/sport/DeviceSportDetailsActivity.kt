@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import butterknife.OnClick
@@ -22,6 +23,7 @@ import com.zjw.apps3pluspro.application.BaseApplication
 import com.zjw.apps3pluspro.base.BaseActivity
 import com.zjw.apps3pluspro.bleservice.BleTools
 import com.zjw.apps3pluspro.module.home.entity.DeviceSportEntity
+import com.zjw.apps3pluspro.module.home.entity.DeviceSportSwimEntity
 import com.zjw.apps3pluspro.module.home.sport.amap.PathSmoothTool
 import com.zjw.apps3pluspro.sql.entity.SportModleInfo
 import com.zjw.apps3pluspro.utils.*
@@ -31,10 +33,17 @@ import kotlinx.android.synthetic.main.device_sport_details_activity.*
 import kotlinx.android.synthetic.main.device_sport_effect.*
 import kotlinx.android.synthetic.main.device_sport_heart.*
 import kotlinx.android.synthetic.main.device_sport_height.*
+import kotlinx.android.synthetic.main.device_sport_height.mHeightCurveChartView
+import kotlinx.android.synthetic.main.device_sport_height.tvCumulativeDecline
+import kotlinx.android.synthetic.main.device_sport_height.tvCumulativeRise
 import kotlinx.android.synthetic.main.device_sport_map.*
 import kotlinx.android.synthetic.main.device_sport_pace.*
 import kotlinx.android.synthetic.main.device_sport_speed.*
 import kotlinx.android.synthetic.main.device_sport_step_speed.*
+import kotlinx.android.synthetic.main.device_sport_step_speed.tvAvgStepLength
+import kotlinx.android.synthetic.main.device_sport_step_speed.tvMaxStepSpeed
+import kotlinx.android.synthetic.main.device_sport_swim_frequency.*
+import kotlinx.android.synthetic.main.device_sport_swim_swolf.*
 import kotlinx.android.synthetic.main.public_head_white_text.*
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -110,7 +119,11 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
             val avgPaceString: String
             var avgPace: Double = 0.0
             if (sportModleInfo?.reportDistance!! != 0L) {
-                avgPace = sportModleInfo?.reportDuration!! / ((sportModleInfo?.reportDistance!! / 1000.0))
+                if (isUserM(sportType)) {
+                    avgPace = sportModleInfo?.reportDuration!! / ((sportModleInfo?.reportDistance!! / 100.0))
+                } else {
+                    avgPace = sportModleInfo?.reportDuration!! / ((sportModleInfo?.reportDistance!! / 1000.0))
+                }
             }
             val minute = (avgPace / 60).toInt()
             val second = (avgPace % 60).toInt()
@@ -120,14 +133,24 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                 if (mBleDeviceTools._device_unit == 1) {
                     avgPaceString = String.format("%1$02d'%2$02d\"", (avgPace / 60).toInt(), (avgPace % 60).toInt())
                 } else {
-                    avgPace = sportModleInfo?.reportDuration!! / ((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f))
+                    if (isUserM(sportType)) {
+                        avgPace = sportModleInfo?.reportDuration!! / ((sportModleInfo?.reportDistance!! * 3.28 / 100))
+                    } else {
+                        avgPace = sportModleInfo?.reportDuration!! / ((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f))
+                    }
                     avgPaceString = String.format("%1$02d'%2$02d\"", (avgPace / 60).toInt(), (avgPace % 60).toInt())
                 }
             }
 
             tvTitleValue1.text = NewTimeUtils.getTimeString(sportModleInfo?.reportDuration!!)
             tvTitleValue2.text = NewTimeUtils.getStringDate(sportModleInfo?.reportSportStartTime!!, NewTimeUtils.HHMMSS) + " - " + NewTimeUtils.getStringDate(sportModleInfo?.reportSportEndTime!!, NewTimeUtils.HHMMSS)
-            tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0) + resources.getString(R.string.sport_distance_unit)
+
+            if (isUserM(sportType)) {
+                tvTitleValue3.text = sportModleInfo?.reportDistance.toString() + resources.getString(R.string.device_sport_unit)
+            } else {
+                tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0) + resources.getString(R.string.sport_distance_unit)
+            }
+
             tvTitleValue4.text = sportModleInfo?.reportCal.toString() + resources.getString(R.string.big_calory)
             tvTitleValue5.text = avgPaceString
             tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + resources.getString(R.string.speed_unit)
@@ -137,9 +160,15 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
             tvTitleValue10.text = (sportModleInfo?.reportTotalStep!! / (sportModleInfo?.reportDuration!! / 60.0)).toInt().toString() + resources.getString(R.string.device_sport_step_speed_unit)
             tvTitleValue11.text = sportModleInfo?.reportCumulativeRise!!.toString() + resources.getString(R.string.device_sport_unit)
             tvTitleValue12.text = sportModleInfo?.reportCumulativeDecline!!.toString() + resources.getString(R.string.device_sport_unit)
+            tvTitleValue13.text = DeviceSportManager.instance.getSwimStyle(sportModleInfo?.reportSwimStyle, context)
 
             if (unitType != 1) {
-                tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) + resources.getString(R.string.unit_mi)
+                if (isUserM(sportType)) {
+                    tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! * 3.28f) + resources.getString(R.string.unit_ft)
+                } else {
+                    tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) + resources.getString(R.string.unit_mi)
+                }
+
                 tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + resources.getString(R.string.speed_unit_mi)
                 tvTitleValue11.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f) + resources.getString(R.string.unit_ft)
                 tvTitleValue12.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + resources.getString(R.string.unit_ft)
@@ -248,15 +277,48 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
             tvCumulativeRise.text = sportModleInfo?.reportCumulativeRise!!.toString()
             tvCumulativeDecline.text = sportModleInfo?.reportCumulativeDecline!!.toString()
             if (unitType != 1) {
-                tvCumulativeRise.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f) + resources.getString(R.string.unit_ft)
-                tvCumulativeDecline.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + resources.getString(R.string.unit_ft)
+                tvCumulativeRise.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f)
+                tvCumulativeDecline.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f)
+                tvHeightUnit1.text = resources.getString(R.string.unit_ft)
+                tvHeightUnit2.text = resources.getString(R.string.unit_ft)
             }
+
+            tvAvgSwimFrequency.text = (sportModleInfo!!.reportTotalSwimNum / (sportModleInfo?.reportDuration!! / 60.0)).toInt().toString()
+            tvMaxSwimFrequency.text = sportModleInfo?.reportMaxSwimFrequency.toString()
+            tvTotalSwimNum.text = sportModleInfo?.reportTotalSwimNum.toString()
+            tvAvgSwolf.text = sportModleInfo?.reportAvgSwolf.toString()
+            tvOptimalSwolf.text = sportModleInfo?.reportOptimalSwolf.toString()
 
             mPaceCurveChartView.setType(1)
             mHeartCurveChartView.setType(2)
+            mHeightCurveChartView.setType(3)
 
-            val sportDataString = sportModleInfo?.recordPointSportData
+            var sportDataString = sportModleInfo?.recordPointSportData
             val sportData = sportDataString?.split("-")
+
+            if (sportType == 200 || sportType == 201) {
+                var deviceSportList = ArrayList<DeviceSportSwimEntity>()
+                if (sportData != null) {
+                    deviceSportList = DeviceSportManager.instance.parsingFitnessNew(sportType, sportData)
+                }
+                tvTitleValue14.text = deviceSportList.size.toString()
+
+                var xTime = sportModleInfo!!.reportDuration / 60.0 / 16.0
+                if (deviceSportList.size > 0) {
+                    xTime = (deviceSportList[deviceSportList.size - 1].endTime - deviceSportList[0].startTime) / 1000 / 60.0 / 16.0
+                }
+
+                val xData = ArrayList<Double>()
+                for (i in 0 until 16) {
+                    xData.add((xTime * (i + 1)))
+                }
+
+                mSwimFrequencyChartView.setParameter(deviceSportList, xData, 1)
+                mSwimSwolfChartView.setParameter(deviceSportList, xData, 2)
+
+                return
+            }
+
             var deviceSportList = ArrayList<DeviceSportEntity>()
             if (sportData != null) {
                 deviceSportList = DeviceSportManager.instance.parsingFitness(sportType, sportData)
@@ -498,6 +560,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                 mHeightCurveChartView.setParameter(xData, yData)
             }
         } catch (e: Exception) {
+            Log.e("Exception", "Exception = $e")
         }
     }
 
@@ -521,10 +584,28 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
             10 -> goneType4(recordPointDataValid1, recordPointDataValid2)
             11 -> goneType4(recordPointDataValid1, recordPointDataValid2)
             12 -> goneType4(recordPointDataValid1, recordPointDataValid2)
+            27 -> goneType4(recordPointDataValid1, recordPointDataValid2)
+            39 -> goneType4(recordPointDataValid1, recordPointDataValid2)
+
+            200 -> goneType5(recordPointDataValid1, recordPointDataValid2)
+            201 -> goneType5(recordPointDataValid1, recordPointDataValid2)
         }
     }
 
+    private fun goneType5(recordPointDataValid1: String?, recordPointDataValid2: String?) {
+        goneStep()
+        goneSpeed()
+        goneHeight()
+        goneHeart()
+        layoutPace.visibility = View.GONE
+        layoutCal.visibility = View.GONE
+
+        tvTitle3.visibility = View.VISIBLE
+        tvTitleValue3.visibility = View.VISIBLE
+    }
+
     private fun goneType4(recordPointDataValid1: String, recordPointDataValid2: String) {
+        goneSwim()
         goneStep()
         goneSpeed()
         gonePace()
@@ -538,6 +619,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun goneType3(recordPointDataValid1: String, recordPointDataValid2: String) {
+        goneSwim()
         goneStep()
         goneSpeed()
         gonePace()
@@ -573,6 +655,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun goneType2(recordPointDataValid1: String, recordPointDataValid2: String) {
+        goneSwim()
         goneHeight()
         if (recordPointDataValid1.substring(0, 1) == "1") {
             if (recordPointDataValid1.substring(1, 2) == "0") {
@@ -608,6 +691,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun goneType1(recordPointDataValid1: String, recordPointDataValid2: String) {
+        goneSwim()
         if (recordPointDataValid1.substring(0, 1) == "1") {
             if (recordPointDataValid1.substring(1, 2) == "0") {
                 goneCal()
@@ -695,6 +779,15 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
         tvTitleValue9.visibility = View.GONE
         tvTitle10.visibility = View.GONE
         tvTitleValue10.visibility = View.GONE
+    }
+
+    private fun goneSwim() {
+        tvTitle13.visibility = View.GONE
+        tvTitleValue13.visibility = View.GONE
+        tvTitle14.visibility = View.GONE
+        tvTitleValue14.visibility = View.GONE
+        layoutSwimFrequency.visibility = View.GONE
+        layoutSwimSwolf.visibility = View.GONE
     }
 
     @OnClick(R.id.layoutMapTitle)
@@ -882,5 +975,8 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
         return b.build()
     }
 
+    private fun isUserM(sportType: Int): Boolean {
+        return sportType == 200 || sportType == 201
+    }
 
 }

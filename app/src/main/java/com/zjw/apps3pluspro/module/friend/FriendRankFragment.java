@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -141,6 +142,7 @@ public class FriendRankFragment extends BaseFragment implements OnClickListener,
         friend_is_new.setOnClickListener(this);
 
         view.findViewById(R.id.btn_fragment_friend_add).setOnClickListener(this);
+
 
 
         return view;

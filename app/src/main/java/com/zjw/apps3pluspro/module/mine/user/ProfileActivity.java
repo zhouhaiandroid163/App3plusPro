@@ -171,9 +171,9 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 
     @Override
     public void onDestroy() {
+        waitDialog.dismiss();
         super.onDestroy();
     }
-
 
     // 初始化控件
     private void initView() {

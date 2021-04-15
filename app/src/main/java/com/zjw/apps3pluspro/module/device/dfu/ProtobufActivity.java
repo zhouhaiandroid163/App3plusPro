@@ -93,7 +93,7 @@ public class ProtobufActivity extends BaseActivity {
 
         SysUtils.makeRootDirectory(Constants.UPDATE_DEVICE_FILE);
 
-        findViewById(R.id.public_head_back).setVisibility(View.INVISIBLE);
+//        findViewById(R.id.public_head_back).setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -104,6 +104,7 @@ public class ProtobufActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        waitDialog.dismiss();
         EventTools.SafeUnregisterEventBus(this);
         unregisterReceiver(receiver);
         if (broadcastReceiver != null) {

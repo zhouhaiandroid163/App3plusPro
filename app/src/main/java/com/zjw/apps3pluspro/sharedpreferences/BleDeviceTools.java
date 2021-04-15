@@ -2173,7 +2173,6 @@ public class BleDeviceTools {
         return settin.getBoolean("SupporDeviceSubVersion", false);
     }
 
-
     //是否需要单包回应
     public void setisReplyOnePack(boolean isReplyOnePack) {
         SharedPreferences settin = getSharedPreferencesCommon();
@@ -2448,5 +2447,70 @@ public class BleDeviceTools {
         SharedPreferences.Editor editor = settin.edit();
         editor.putBoolean("IsSupportSleepTarget", IsSupportSleepTarget);
         editor.apply();
+    }
+
+    //设置天气规则
+    public void setWeatherMode(int mode) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putInt("setWeatherMode", mode);
+        editor.apply();
+    }
+
+    public int getWeatherMode() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getInt("setWeatherMode", 0);
+    }
+
+    //是否支持alexa 语音
+    public void setSupportAlexa(boolean b) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("setSupportAlexa", b);
+        editor.apply();
+    }
+
+    public boolean getSupportAlexa() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("setSupportAlexa", false);
+    }
+
+    //是否启用新的protobuf运动解析
+    public void setSupportProtoNewSport(boolean b) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("SupportProtoNewSport", b);
+        editor.apply();
+    }
+
+    public boolean getSupportProtoNewSport() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("SupportProtoNewSport", false);
+    }
+
+    //表盘木兰规则版本号
+    public void setClockDialMuLanVersion(int ClockDialMuLanVersion) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putInt("ClockDialMuLanVersion", ClockDialMuLanVersion);
+        editor.commit();
+    }
+
+    public int getClockDialMuLanVersion() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getInt("ClockDialMuLanVersion", 0);
+    }
+
+    //表盘木兰规则版本号
+    public void setSupportBatteryPercentage(boolean b) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("setSupportBatteryPercentage", b);
+        editor.commit();
+    }
+
+    public boolean getSupportBatteryPercentage() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("setSupportBatteryPercentage", false);
     }
 }

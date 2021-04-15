@@ -23,7 +23,7 @@
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/title_bg_spo2"
+            android:background="@color/base_activity_bg"
             app:calendar_height="40dp"
             app:current_day_text_color="#ffffff"
             app:current_month_lunar_text_color="#000000"
@@ -35,9 +35,9 @@
             app:scheme_text_color="#ffffff"
             app:scheme_theme_color="#ffffff"
             app:selected_lunar_text_color="#CFCFCF"
-            app:selected_text_color="@color/title_bg_spo2"
-            app:selected_theme_color="@color/white"
-            app:week_background="@color/title_bg_spo2"
+            app:selected_text_color="@color/white"
+            app:selected_theme_color="@color/dialog_bg"
+            app:week_background="@color/base_activity_bg"
             app:week_text_color="#ffffff"
             app:week_view="com.zjw.apps3pluspro.view.mycalendar.SimpleWeekView"
             app:year_view_day_text_color="@color/year_is_now_no_biaoji_month_text_color"
@@ -60,8 +60,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="28dp"
-                    android:background="@color/title_bg_spo2" />
+                    android:layout_height="7dp"
+                    android:background="@mipmap/shadow_bg" />
 
                 <include
                     android:id="@+id/layoutNoData"
@@ -72,10 +72,8 @@
                     android:id="@+id/layoutData"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="-14dp"
+                    android:layout_marginTop="6dp"
                     android:orientation="vertical"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
                     android:paddingBottom="24dp">
 
                     <ListView

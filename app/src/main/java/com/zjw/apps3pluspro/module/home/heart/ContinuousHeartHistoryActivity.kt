@@ -90,6 +90,11 @@ class ContinuousHeartHistoryActivity : BaseActivity() {
         }
     }
 
+    override fun onDestroy() {
+        waitDialog!!.dismiss()
+        super.onDestroy()
+    }
+
     override fun initViews() {
         super.initViews()
         tvAvgHeart.text = resources.getString(R.string.average_heart) + "  " + resources.getString(R.string.no_data_default) + resources.getString(R.string.bpm)

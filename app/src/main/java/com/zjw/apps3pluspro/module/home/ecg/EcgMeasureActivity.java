@@ -185,6 +185,7 @@ public class EcgMeasureActivity extends BaseActivity implements OnClickListener 
 
     private boolean isDestroy = false;
     protected void onDestroy() {
+        waitDialog.dismiss();
         isDestroy = true;
         setEcgMeasure(false);
 

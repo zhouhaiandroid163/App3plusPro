@@ -48,13 +48,13 @@ public class HandleUtilsV1 {
             if (mDataList != null && mDataList.size() > 0) {
                 for (int i = 0; i < mDataList.size(); i++) {
                     CustomDataModle mCustomDataModle = mDataList.get(i);
-                    MyLog.i(TAG, "getNewCustomClockDialData i = " + i + " mCustomDataModle = " + mCustomDataModle.toString());
+//                    MyLog.i(TAG, "getNewCustomClockDialData i = " + i + " mCustomDataModle = " + mCustomDataModle.toString());
                     //数据格式等于A
                     if (mCustomDataModle.getDataType() == 0) {
                         //图片格式=BMP
                         if (mCustomDataModle.getImgType() == 0) {
                             CustomModleDataA mCustomModleDataA = new CustomModleDataA(mCustomDataModle.getData());
-                            MyLog.i(TAG, "getNewCustomClockDialData i = " + i + " mCustomModleDataA = " + mCustomModleDataA.toString());
+//                            MyLog.i(TAG, "getNewCustomClockDialData i = " + i + " mCustomModleDataA = " + mCustomModleDataA.toString());
                             byte[] new_data = mCustomModleDataA.getColorData(color_R, color_G, color_B, source_data, bg_bmp);
                             if (new_data != null) {
 //                                    MyLog.i(TAG, "getNewCustomClockDialData 有数据");

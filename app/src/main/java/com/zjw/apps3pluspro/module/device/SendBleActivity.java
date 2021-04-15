@@ -192,6 +192,7 @@ public class SendBleActivity extends BaseActivity implements View.OnClickListene
     private boolean isOnDestroy = false;
     @Override
     public void onDestroy() {
+        waitDialog.dismiss();
         if (myHandler != null) {
             myHandler.removeCallbacksAndMessages(null);
         }

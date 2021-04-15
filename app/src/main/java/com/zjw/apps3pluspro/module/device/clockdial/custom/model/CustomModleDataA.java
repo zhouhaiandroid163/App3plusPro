@@ -96,7 +96,7 @@ public class CustomModleDataA {
 
     public CustomModleDataA(byte[] data) {
 
-        MyLog.i(TAG, "CustomModleDataA data = " + BleTools.printHexString(data) + " len = " + data.length);
+//        MyLog.i(TAG, "CustomModleDataA data = " + BleTools.printHexString(data) + " len = " + data.length);
 
         if (data.length == DataLen) {
             int pos = 0;

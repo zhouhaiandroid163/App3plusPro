@@ -95,6 +95,12 @@ public class Spo2DetailsActivity extends BaseActivity implements
     }
 
     @Override
+    protected void onDestroy() {
+        waitDialog.dismiss();
+        super.onDestroy();
+    }
+
+    @Override
     protected void onStop() {
         // TODO Auto-generated method stub
         super.onStop();

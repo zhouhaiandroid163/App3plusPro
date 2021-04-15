@@ -83,6 +83,7 @@ public class UpdatePasswordActivity extends BaseActivity implements OnClickListe
 
     @Override
     public void onDestroy() {
+        waitDialog.dismiss();
         super.onDestroy();
     }
 

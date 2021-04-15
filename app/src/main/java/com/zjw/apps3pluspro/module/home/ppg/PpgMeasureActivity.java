@@ -144,6 +144,7 @@ public class PpgMeasureActivity extends BaseActivity implements OnClickListener 
     private boolean isDestroy = false;
     @Override
     protected void onDestroy() {
+        waitDialog.dismiss();
         isDestroy = true;
 
         setEcgMeasure(false);

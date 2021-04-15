@@ -109,6 +109,12 @@ public class TempDetailsActivity extends BaseActivity implements
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        waitDialog.dismiss();
+        super.onDestroy();
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void initView() {
 

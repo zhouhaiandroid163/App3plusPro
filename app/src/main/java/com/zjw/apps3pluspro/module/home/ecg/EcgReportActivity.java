@@ -395,10 +395,10 @@ public class EcgReportActivity extends BaseActivity implements OnClickListener {
     }
 
     protected void onDestroy() {
+        waitDialog.dismiss();
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
         }
-
         super.onDestroy();
     }
 

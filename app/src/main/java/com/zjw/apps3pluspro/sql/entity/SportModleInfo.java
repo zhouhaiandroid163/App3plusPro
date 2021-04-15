@@ -153,6 +153,14 @@ public class SportModleInfo implements Parcelable {
 
     private long serviceId; // 服务器数据id
     private String deviceMac; // mac id
+    // DBMigrationHelper7 db  update
+    private int reportTotalSwimNum;                        //总划水次数
+    private int reportSwimStyle;                           //泳姿
+    private int reportMaxSwimFrequency;                      //最大划频
+    private int reportFaceAboutNum;                      //转身次数
+    private int reportAvgSwolf;                      //平均swolf
+    private int reportOptimalSwolf;                      //最佳swolf
+    private int reportPoolWidth;                      //泳池宽度
 
     @Generated(hash = 925053204)
     public SportModleInfo() {
@@ -167,17 +175,17 @@ public class SportModleInfo implements Parcelable {
             int n = 4;
             int sport_time = Integer.parseInt(dataString[n] + dataString[n + 1] + dataString[n + 2] + dataString[n + 3], 16);
             n = n + 4;
-            int spor_type = Integer.parseInt(dataString[n],16);
+            int spor_type = Integer.parseInt(dataString[n], 16);
             n = n + 1;
-            int ui_type = Integer.parseInt(dataString[n],16);
+            int ui_type = Integer.parseInt(dataString[n], 16);
             n = n + 1;
             int sport_step = Integer.parseInt(dataString[n] + dataString[n + 1] + dataString[n + 2] + dataString[n + 3], 16);
             n = n + 4;
             int sport_kcal = Integer.parseInt(dataString[n] + dataString[n + 1] + dataString[n + 2] + dataString[n + 3], 16);
             n = n + 4;
-            int sport_distance= Integer.parseInt(dataString[n] + dataString[n + 1] + dataString[n + 2] + dataString[n + 3], 16);
+            int sport_distance = Integer.parseInt(dataString[n] + dataString[n + 1] + dataString[n + 2] + dataString[n + 3], 16);
             n = n + 4;
-            int spor_hr =Integer.parseInt(dataString[n],16);
+            int spor_hr = Integer.parseInt(dataString[n], 16);
 
             setData(sport_date, sport_time, spor_type, ui_type, sport_step, sport_kcal, sport_distance, spor_hr);
         } else {
@@ -439,7 +447,7 @@ public class SportModleInfo implements Parcelable {
         serviceId = in.readInt();
     }
 
-    @Generated(hash = 377549718)
+    @Generated(hash = 1920733112)
     public SportModleInfo(Long _id, @NotNull String user_id, String time, String map_data, String calorie, String disance, String total_step,
             String sport_duration, String speed, String heart, String map_type, String sport_type, String ui_type, String warehousing_time,
             String sync_state, int dataSourceType, String recordPointDataId, long recordPointIdTime, int recordPointTimeZone, int recordPointVersion,
@@ -450,7 +458,9 @@ public class SportModleInfo implements Parcelable {
             float reportFastSpeed, long reportTotalStep, int reportMaxStepSpeed, int reportAvgHeart, int reportMaxHeart, int reportMinHeart,
             float reportCumulativeRise, float reportCumulativeDecline, float reportAvgHeight, float reportMaxHeight, float reportMinHeight,
             float reportTrainingEffect, int reportMaxOxygenIntake, int reportEnergyConsumption, long reportRecoveryTime, long reportHeartLimitTime,
-            long reportHeartAnaerobic, long reportHeartAerobic, long reportHeartFatBurning, long reportHeartWarmUp, long serviceId, String deviceMac) {
+            long reportHeartAnaerobic, long reportHeartAerobic, long reportHeartFatBurning, long reportHeartWarmUp, long serviceId, String deviceMac,
+            int reportTotalSwimNum, int reportSwimStyle, int reportMaxSwimFrequency, int reportFaceAboutNum, int reportAvgSwolf, int reportOptimalSwolf,
+            int reportPoolWidth) {
         this._id = _id;
         this.user_id = user_id;
         this.time = time;
@@ -515,12 +525,14 @@ public class SportModleInfo implements Parcelable {
         this.reportHeartWarmUp = reportHeartWarmUp;
         this.serviceId = serviceId;
         this.deviceMac = deviceMac;
+        this.reportTotalSwimNum = reportTotalSwimNum;
+        this.reportSwimStyle = reportSwimStyle;
+        this.reportMaxSwimFrequency = reportMaxSwimFrequency;
+        this.reportFaceAboutNum = reportFaceAboutNum;
+        this.reportAvgSwolf = reportAvgSwolf;
+        this.reportOptimalSwolf = reportOptimalSwolf;
+        this.reportPoolWidth = reportPoolWidth;
     }
-
-
-
-
-
 
     public static List<SportModleInfo> getBleSportModleList(byte[] data) {
 
@@ -663,6 +675,21 @@ public class SportModleInfo implements Parcelable {
         this.recordPointDataValid2 = recordPointDataValid2;
     }
 
+    public int getReportTotalSwimNum() {
+        return reportTotalSwimNum;
+    }
+
+    public int getReportSwimStyle() {
+        return reportSwimStyle;
+    }
+
+    public void setReportTotalSwimNum(int reportTotalSwimNum) {
+        this.reportTotalSwimNum = reportTotalSwimNum;
+    }
+
+    public void setReportSwimStyle(int swimStyle) {
+        this.reportSwimStyle = swimStyle;
+    }
 
     public int getReportEncryption() {
         return this.reportEncryption;
@@ -1022,5 +1049,45 @@ public class SportModleInfo implements Parcelable {
 
     public void setRecordGpsTime(String recordGpsTime) {
         this.recordGpsTime = recordGpsTime;
+    }
+
+    public int getReportMaxSwimFrequency() {
+        return reportMaxSwimFrequency;
+    }
+
+    public void setReportMaxSwimFrequency(int reportMaxSwimFrequency) {
+        this.reportMaxSwimFrequency = reportMaxSwimFrequency;
+    }
+
+    public int getReportFaceAboutNum() {
+        return reportFaceAboutNum;
+    }
+
+    public void setReportFaceAboutNum(int reportFaceAboutNum) {
+        this.reportFaceAboutNum = reportFaceAboutNum;
+    }
+
+    public int getReportAvgSwolf() {
+        return reportAvgSwolf;
+    }
+
+    public void setReportAvgSwolf(int reportAvgSwolf) {
+        this.reportAvgSwolf = reportAvgSwolf;
+    }
+
+    public int getReportOptimalSwolf() {
+        return reportOptimalSwolf;
+    }
+
+    public void setReportOptimalSwolf(int reportOptimalSwolf) {
+        this.reportOptimalSwolf = reportOptimalSwolf;
+    }
+
+    public int getReportPoolWidth() {
+        return reportPoolWidth;
+    }
+
+    public void setReportPoolWidth(int reportPoolWidth) {
+        this.reportPoolWidth = reportPoolWidth;
     }
 }

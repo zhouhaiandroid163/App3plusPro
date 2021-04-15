@@ -70,6 +70,12 @@ public class SkinColourActivity extends BaseActivity implements View.OnClickList
     }
 
     @Override
+    protected void onDestroy() {
+        waitDialog.dismiss();
+        super.onDestroy();
+    }
+
+    @Override
     protected void onStop() {
         // TODO Auto-generated method stub
         super.onStop();

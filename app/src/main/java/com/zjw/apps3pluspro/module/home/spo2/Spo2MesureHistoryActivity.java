@@ -2,6 +2,7 @@ package com.zjw.apps3pluspro.module.home.spo2;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -77,7 +78,6 @@ public class Spo2MesureHistoryActivity extends BaseActivity implements View.OnCl
     @Override
     protected int setLayoutId() {
         isTextDark = false;
-        bgColor = R.color.title_bg_spo2;
         return R.layout.activity_spo2_mesure_history;
     }
 
@@ -91,6 +91,12 @@ public class Spo2MesureHistoryActivity extends BaseActivity implements View.OnCl
         //        模拟，清除所有数据
 //        mMeasureSpo2InfoUtils.deleteAllData();
         initData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        waitDialog.dismiss();
+        super.onDestroy();
     }
 
     @Override
@@ -111,7 +117,8 @@ public class Spo2MesureHistoryActivity extends BaseActivity implements View.OnCl
     private void initView() {
         public_head_title = (TextView) findViewById(R.id.public_head_title);
         public_head_title.setText(getResources().getString(R.string.measure_record));
-        findViewById(R.id.layoutTitle) .setBackground(ContextCompat.getDrawable(this, R.color.title_bg_spo2));
+        ImageView ivTitleType = findViewById(R.id.ivTitleType);
+        ivTitleType.setBackground(getResources().getDrawable(R.mipmap.title_spo2_icon));
 
         layoutNoData = (LinearLayout) findViewById(R.id.layoutNoData);
         layoutData = (LinearLayout) findViewById(R.id.layoutData);

@@ -43,7 +43,7 @@
 
 
     <LinearLayout
-        android:id="@+id/layoutHeart"
+        android:id="@+id/layoutText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -73,6 +73,7 @@
                     android:textSize="24sp" />
 
                 <TextView
+                    android:id="@+id/tvHeightUnit1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
@@ -115,6 +116,7 @@
                     android:textSize="24sp" />
 
                 <TextView
+                    android:id="@+id/tvHeightUnit2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
@@ -141,7 +143,7 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:background="@color/transparent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutHeart"
+        app:layout_constraintTop_toBottomOf="@+id/layoutText"
         curveChartView:curveChartView_LineColor="#57FFB5"
         curveChartView:gradientColorEnd="#0057FFB5"
         curveChartView:gradientColorStart="#7f57FFB5" />

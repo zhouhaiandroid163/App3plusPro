@@ -57,7 +57,11 @@ class WeatherMainActivity : BaseActivity() {
             }
         }
     }
+
     override fun onDestroy() {
+        if (progressDialog != null && progressDialog!!.isShowing) {
+            progressDialog!!.dismiss()
+        }
         EventTools.SafeUnregisterEventBus(this)
         handler.removeCallbacksAndMessages(null)
         super.onDestroy()
@@ -83,9 +87,9 @@ class WeatherMainActivity : BaseActivity() {
     }
 
     private fun initTvLatLon() {
-        if(switchCompat.isChecked){
+        if (switchCompat.isChecked) {
             layoutCity.visibility = View.VISIBLE
-        } else{
+        } else {
             layoutCity.visibility = View.GONE
         }
         if (mBleDeviceTools.weatherCity.isNotEmpty()) {
@@ -109,7 +113,7 @@ class WeatherMainActivity : BaseActivity() {
         val handler = Handler()
         handler.postDelayed({
             if (progressDialog != null && progressDialog!!.isShowing) {
-                progressDialog?.dismiss()
+                progressDialog!!.dismiss()
             }
         }, 1500)
     }
@@ -174,7 +178,13 @@ class WeatherMainActivity : BaseActivity() {
                 val t2: ByteArray? = WeatherBean.getWaeatherListData(myWeatherModle)
                 System.out.println("请求天气  t2 = " + BleTools.printHexString(t2))
 
-                val t3: ByteArray? = BtSerializeation.setWeather(t2)
+                var atmosphericPressure = 0f
+                try {
+                    atmosphericPressure = myWeatherModle[0].getPressure().toFloat()
+                } catch (e: NumberFormatException) {
+                    e.printStackTrace()
+                }
+                val t3: ByteArray? = BtSerializeation.setWeather(atmosphericPressure, t2)
                 System.out.println("请求天气  t3 = " + BleTools.printHexString(t3))
 
                 sendData(t3)
@@ -183,7 +193,11 @@ class WeatherMainActivity : BaseActivity() {
             msg?.text = resources.getString(R.string.weather_send_over)
 
             val handler = Handler()
-            handler.postDelayed({ progressDialog?.dismiss() }, 2000)
+            handler.postDelayed({
+                if (progressDialog != null && progressDialog!!.isShowing) {
+                    progressDialog!!.dismiss()
+                }
+            }, 2000)
         }
     }
 

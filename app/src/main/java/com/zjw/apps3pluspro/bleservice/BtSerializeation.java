@@ -3,6 +3,7 @@ package com.zjw.apps3pluspro.bleservice;
 import android.graphics.Color;
 import android.util.Log;
 
+import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.bleservice.anaylsis.FitnessTools;
 import com.zjw.apps3pluspro.bleservice.anaylsis.SystemTools;
 import com.zjw.apps3pluspro.bleservice.anaylsis.WatchFaceTools;
@@ -1308,24 +1309,16 @@ public class BtSerializeation {
     }
 
     //设置天气
-    public static byte[] setWeather(byte[] wather_data) {
-
-        int data_len = wather_data.length;
-
-        int length = 13 + data_len;
-        byte[] wather = new byte[length];
-        wather[0] = (byte) 0xab;
-        wather[3] = (byte) (5 + data_len);//L1长度
-        wather[8] = 0x01;
-        wather[10] = KEY_SET_WATHER;
-        wather[12] = (byte) (data_len);
-
-
-        for (int i = 0; i < data_len; i++) {
-            wather[13 + i] = wather_data[i];
+    public static byte[] setWeather(float atmosphericPressure, byte[] weatherData) {
+        BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
+        if (mBleDeviceTools.getWeatherMode() == 1) {
+            byte[] atmosphericPressureByte = BleTools.float2byte(atmosphericPressure);
+            byte[] dataValue = new byte[4 + weatherData.length];
+            System.arraycopy(atmosphericPressureByte, 0, dataValue, 0, 4);
+            System.arraycopy(weatherData, 0, dataValue, 4, weatherData.length);
+            return getBleData(dataValue, CMD_01, KEY_SET_WATHER);
         }
-        return wather;
-
+        return getBleData(weatherData, CMD_01, KEY_SET_WATHER);
     }
 
 

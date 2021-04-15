@@ -325,6 +325,7 @@ public class BleService extends Service {
                     case MSG_FIND_PHONE_Media:
                         if (mMediaPlayer != null) {
                             mMediaPlayer.stop();
+                            mMediaPlayer.release();
                         }
 
                         mMediaPlayer = MediaPlayer.create(BleService.this, R.raw.fail);
@@ -380,6 +381,7 @@ public class BleService extends Service {
 
     @Override
     public void onDestroy() {
+        bluetoothLeService = null;
         mProcessCmd = false;
         if (mProcessCmdThread != null) {
             mProcessCmdThread.interrupt();
@@ -400,6 +402,7 @@ public class BleService extends Service {
 //            wakeLock = null;
 //        }
 
+        SysUtils.logContentI(TAG, "onDestroy");
         //移除来电监听
         if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
@@ -1266,62 +1269,59 @@ public class BleService extends Service {
     }
 
     private long lastDisplayTime = 0;
-    private String lastData = "";
+//    private String lastData = "";
 
     private void displayData1(String data) {
         if (data != null) {
             SysUtils.logContentI(TAG, TAG_CONTENT + "displayData1 : " + data);
-            SysUtils.logAppRunning(TAG, TAG_CONTENT + "displayData1 : " + data);
-            if (System.currentTimeMillis() - lastDisplayTime < 5 && lastData.equalsIgnoreCase(data)) {
-                SysUtils.logContentI(TAG, TAG_CONTENT + "displayData1 : repeat data");
-                SysUtils.logAppRunning(TAG, TAG_CONTENT + "displayData1 : repeat data");
-            } else {
-                lastData = data;
-                String[] strCmd;
-                strCmd = data.split(" ");
-                Intent intent = new Intent();
-                try {
-                    currentUuid_proto = BleConstant.CHAR_PROTOBUF_UUID_01;
-                    if (strCmd[0].equalsIgnoreCase("00") && strCmd[1].equalsIgnoreCase("00")) {
-                        if (strCmd[2].equalsIgnoreCase("00") && strCmd[3].equalsIgnoreCase("00")) {
-                            recvMaxPacket = Integer.parseInt(strCmd[5] + strCmd[4], 16);
+//            if (System.currentTimeMillis() - lastDisplayTime < 5 && lastData.equalsIgnoreCase(data)) {
+//                SysUtils.logContentI(TAG, TAG_CONTENT + "displayData1 : repeat data");
+//            } else {
+//                lastData = data;
+            String[] strCmd;
+            strCmd = data.split(" ");
+            Intent intent = new Intent();
+            try {
+                currentUuid_proto = BleConstant.CHAR_PROTOBUF_UUID_01;
+                if (strCmd[0].equalsIgnoreCase("00") && strCmd[1].equalsIgnoreCase("00")) {
+                    if (strCmd[2].equalsIgnoreCase("00") && strCmd[3].equalsIgnoreCase("00")) {
+                        recvMaxPacket = Integer.parseInt(strCmd[5] + strCmd[4], 16);
 
-                            intent.setAction(BroadcastTools.ACTION_CMD_DEVICE_START);
-                            sendBroadcast(intent);
-                            resetBleCmdState(false);
-                            return;
-                        }
-                    } else {
-                        curPacket = Integer.parseInt(strCmd[1] + strCmd[0], 16);
-                        if (curPacket == 1) {
-                            recvData = data.substring(6);
-                        } else {
-                            recvData = recvData + data.substring(6);
-                        }
-                    }
-
-                    if (curPacket < recvMaxPacket) {
-                        intent.setAction(BroadcastTools.ACTION_CMD_DEVICE_TRANSMISSION_DATA);
+                        intent.setAction(BroadcastTools.ACTION_CMD_DEVICE_START);
                         sendBroadcast(intent);
+                        resetBleCmdState(false);
                         return;
                     }
+                } else {
+                    curPacket = Integer.parseInt(strCmd[1] + strCmd[0], 16);
+                    if (curPacket == 1) {
+                        recvData = data.substring(6);
+                    } else {
+                        recvData = recvData + data.substring(6);
+                    }
+                }
+
+                if (curPacket < recvMaxPacket) {
+                    intent.setAction(BroadcastTools.ACTION_CMD_DEVICE_TRANSMISSION_DATA);
+                    sendBroadcast(intent);
+                    return;
+                }
 
 //                    intent.setAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
 //                    sendBroadcast(intent);
-                    writeCharacteristic(BtSerializeation.appConfirm(), BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_01);
+                writeCharacteristic(BtSerializeation.appConfirm(), BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_01);
 
-                    strCmd = recvData.split(" ");
-                    byte[] valueByte = new byte[strCmd.length];
-                    for (int i = 0; i < strCmd.length; i++) {
-                        valueByte[i] = (byte) Integer.parseInt(strCmd[i], 16);
-                    }
-                    String analysisProtoData = AnalysisProtoData.getInstance().analysisData(valueByte);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                strCmd = recvData.split(" ");
+                byte[] valueByte = new byte[strCmd.length];
+                for (int i = 0; i < strCmd.length; i++) {
+                    valueByte[i] = (byte) Integer.parseInt(strCmd[i], 16);
                 }
-                resetBleCmdState(false);
+                String analysisProtoData = AnalysisProtoData.getInstance().analysisData(valueByte);
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            resetBleCmdState(false);
         }
     }
 
@@ -1497,7 +1497,11 @@ public class BleService extends Service {
             //调用这个来初始化,不能去掉！
             boolean isSuccess = mBluetoothGatt.discoverServices();
             SysUtils.logContentI(TAG, "discoverServices isSuccess = " + isSuccess);
+
+
         }
+
+
         /**
          * 处理断开设备
          */
@@ -1566,6 +1570,14 @@ public class BleService extends Service {
                         boolean flag_log = false;
                         boolean flag_protobuf = false;
                         // 如果找到这个特定的服务ID就初始化一些东西
+                        if (gattServices != null && gattServices.size() == 0) {
+                            connectBleRXError();
+                            return;
+                        }
+                        if(gattServices == null){
+                            connectBleRXError();
+                            return;
+                        }
                         for (BluetoothGattService gattService : gattServices) {
 
                             if (gattService.getUuid() != null) {
@@ -1776,6 +1788,11 @@ public class BleService extends Service {
                                 return;
                             }
                             Thread.sleep(400);
+                        } else {
+                            if (!mBleDeviceTools.get_ble_name().contains(BleConstant.PLUS_HR)) {
+                                connectBleRXError();
+                            }
+                            return;
                         }
                         //发送初始化数据
                         Thread.sleep(400);
@@ -3846,44 +3863,40 @@ public class BleService extends Service {
     private void displayData4(String data) {
         if (data != null) {
             SysUtils.logContentI(TAG, "displayData4 : " + data);
-            SysUtils.logAppRunning(TAG, "displayData4 : " + data);
 
-            if (System.currentTimeMillis() - lastDisplayTime < 5 && lastData.equalsIgnoreCase(data)) {
-                SysUtils.logContentI(TAG, "displayData4 : repeat data");
-                SysUtils.logAppRunning(TAG, "displayData4 : repeat data");
-            } else {
-                lastData = data;
+//            if (System.currentTimeMillis() - lastDisplayTime < 5 && lastData.equalsIgnoreCase(data)) {
+//                SysUtils.logContentI(TAG, "displayData4 : repeat data");
+//                lastData = data;
 
-                recvData = data;
+            recvData = data;
 
-                String strCmd[];
-                strCmd = recvData.split(" ");
-                Intent intent = new Intent();
-                try {
-                    //设备回复成功，
-                    if (Arrays.equals("00 00 01 01 00 00".split(" "), strCmd)) {
-                        intent.setAction(ThemeManager.ACTION_CMD_APP_START);
-                        sendBroadcast(intent);
-                    }
-                    if (Arrays.equals("00 00 01 00 00 00".split(" "), strCmd)) {
-                        intent.setAction(ThemeManager.ACTION_CMD_DEVICE_CONFIRM);
-                        sendBroadcast(intent);
-                    }
-
-                    int packNum = Integer.parseInt(strCmd[5] + strCmd[4], 16);
-                    if (packNum > 0) {
-                        SysUtils.logContentI(TAG, "displayData4 reissue data : " + data);
-                        SysUtils.logAppRunning(TAG, "displayData4 reissue data : " + data);
-                        intent.setAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK);
-                        intent.putExtra("packNum", packNum);
-                        sendBroadcast(intent);
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+            String strCmd[];
+            strCmd = recvData.split(" ");
+            Intent intent = new Intent();
+            try {
+                //设备回复成功，
+                if (Arrays.equals("00 00 01 01 00 00".split(" "), strCmd)) {
+                    intent.setAction(ThemeManager.ACTION_CMD_APP_START);
+                    sendBroadcast(intent);
                 }
-                resetBleCmdState(false);
+                if (Arrays.equals("00 00 01 00 00 00".split(" "), strCmd)) {
+                    intent.setAction(ThemeManager.ACTION_CMD_DEVICE_CONFIRM);
+                    sendBroadcast(intent);
+                }
+
+                int packNum = Integer.parseInt(strCmd[5] + strCmd[4], 16);
+                if (packNum > 0) {
+                    SysUtils.logContentI(TAG, "displayData4 reissue data : " + data);
+                    SysUtils.logAppRunning(TAG, "displayData4 reissue data : " + data);
+                    intent.setAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK);
+                    intent.putExtra("packNum", packNum);
+                    sendBroadcast(intent);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            resetBleCmdState(false);
         }
     }
 

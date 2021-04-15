@@ -29,7 +29,7 @@ class ScanDeviceTypeActivity : BaseActivity() {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
     }
 
-    @OnClick(R.id.layoutType1, R.id.layoutType2, R.id.tvCallNumber)
+    @OnClick(R.id.layoutType1, R.id.layoutType2, R.id.layoutType3, R.id.tvCallNumber)
     fun viewOnClick(view: View) {
         when (view.id) {
             R.id.layoutType1 -> {
@@ -49,7 +49,17 @@ class ScanDeviceTypeActivity : BaseActivity() {
                     mIntent.putExtra("type", BleConstant.PLUS_Vibe)
                     startActivity(mIntent)
                     finish()
-                    SysUtils.logAppRunning("ScanDeviceTypeActivity.class", "scan = " + BleConstant.PLUS_Vibe)
+		    SysUtils.logAppRunning("ScanDeviceTypeActivity.class", "scan = " + BleConstant.PLUS_Vibe)
+                } else {
+                    BluetoothUtil.enableBluetooth(this@ScanDeviceTypeActivity, HomeActivity.BleStateResult)
+                }
+            }
+            R.id.layoutType3 -> {
+                if (isOpenBluetooth()) {
+                    val mIntent = Intent(this, ScanDeviceActivity::class.java)
+                    mIntent.putExtra("type", BleConstant.PLUS_Vibe_Pro)
+                    startActivity(mIntent)
+                    finish()
                 } else {
                     BluetoothUtil.enableBluetooth(this@ScanDeviceTypeActivity, HomeActivity.BleStateResult)
                 }

@@ -530,8 +530,7 @@ public class WeixinActivity extends Activity implements OnClickListener {
 
     @Override
     protected void onDestroy() {
-
-
+        waitDialog.dismiss();
         super.onDestroy();
     }
 }

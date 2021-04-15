@@ -129,9 +129,9 @@ public class PpgMesureHistoryActivity extends BaseActivity implements View.OnCli
     }
 
     protected void onDestroy() {
+        waitDialog.dismiss();
         super.onDestroy();
     }
-
 
     private void initView() {
 

@@ -465,6 +465,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        waitDialog.dismiss();
         unregisterHomeKeyReceiver(this);
         SysUtils.logContentE(TAG, "onDestroy");
         EventTools.SafeUnregisterEventBus(this);
@@ -2026,7 +2027,13 @@ public class HomeActivity extends BaseActivity {
                 byte[] t2 = WeatherBean.getWaeatherListData(myWeatherModle);
                 System.out.println("请求天气  t2 = " + BleTools.printHexString(t2));
 
-                byte[] t3 = BtSerializeation.setWeather(t2);
+                float atmosphericPressure = 0;
+                try {
+                    atmosphericPressure = Float.parseFloat(myWeatherModle.get(0).getPressure());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                byte[] t3 = BtSerializeation.setWeather(atmosphericPressure, t2);
                 System.out.println("请求天气  t3 = " + BleTools.printHexString(t3));
 
                 sendData(t3);

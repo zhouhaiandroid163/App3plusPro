@@ -12,7 +12,7 @@
         <ImageView
             android:id="@+id/ivTitle"
             style="@style/data_page_img"
-            android:background="@mipmap/data_blood_oxygen"
+            android:background="@mipmap/data_spo2"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

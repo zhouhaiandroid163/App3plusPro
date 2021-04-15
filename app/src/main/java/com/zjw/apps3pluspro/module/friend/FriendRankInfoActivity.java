@@ -125,6 +125,11 @@ public class FriendRankInfoActivity extends BaseActivity implements OnClickListe
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        waitDialog.dismiss();
+        super.onDestroy();
+    }
 
     private void initView() {
         // TODO Auto-generated method stub

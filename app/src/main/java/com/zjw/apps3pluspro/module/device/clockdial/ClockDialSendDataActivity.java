@@ -147,6 +147,7 @@ public class ClockDialSendDataActivity extends BaseActivity implements View.OnCl
 
     @Override
     protected void onDestroy() {
+        waitDialog.dismiss();
         if (broadcastReceiver != null) {
             try {
                 unregisterReceiver(broadcastReceiver);

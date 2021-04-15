@@ -1323,6 +1323,7 @@ class ThemeUploadActivity : BaseActivity() {
     }
 
     override fun onDestroy() {
+        waitDialog!!.dismiss()
         EventTools.SafeUnregisterEventBus(this)
         unregisterReceiver(broadcastReceiver)
         unregisterReceiver(broadcastReceiverTheme)

@@ -174,6 +174,7 @@ public class MyThemeActivity extends BaseActivity implements View.OnClickListene
 
 
     protected void onDestroy() {
+        waitDialog.dismiss();
         if (broadcastReceiver != null) {
             try {
                 unregisterReceiver(broadcastReceiver);

@@ -124,9 +124,9 @@ public class EcgMesureHistoryActivity extends BaseActivity implements View.OnCli
     }
 
     protected void onDestroy() {
+        waitDialog.dismiss();
         super.onDestroy();
     }
-
 
     private void initView() {
 

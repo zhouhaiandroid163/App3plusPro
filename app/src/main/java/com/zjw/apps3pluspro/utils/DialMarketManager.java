@@ -49,13 +49,6 @@ public class DialMarketManager {
 
     public List<ThemeBean.DataBean.ListBean> dialMarketList = new ArrayList<>();
 
-    int device_width = 0;
-    int device_height = 0;
-    int device_shape = 0;
-    int it_bin_size = 0;
-    boolean device_is_heart;
-    boolean is_scanf_type_is_ver = false;
-
     boolean is_send_data = false;
     boolean is_send_fial = false;
 
@@ -64,12 +57,12 @@ public class DialMarketManager {
     }
 
     public void getPageList(final GetListOnFinishListen getListOnFinishListen) {
-        device_width = mBleDeviceTools.get_device_theme_resolving_power_width();
-        device_height = mBleDeviceTools.get_device_theme_resolving_power_height();
-        device_shape = mBleDeviceTools.get_device_theme_shape();
-        it_bin_size = mBleDeviceTools.get_device_theme_available_space();
-        device_is_heart = mBleDeviceTools.get_device_theme_is_support_heart();
-        is_scanf_type_is_ver = mBleDeviceTools.get_device_theme_scanning_mode();
+        int device_width = mBleDeviceTools.get_device_theme_resolving_power_width();
+        int device_height = mBleDeviceTools.get_device_theme_resolving_power_height();
+        int device_shape = mBleDeviceTools.get_device_theme_shape();
+        int it_bin_size = mBleDeviceTools.get_device_theme_available_space();
+        boolean device_is_heart = mBleDeviceTools.get_device_theme_is_support_heart();
+        boolean is_scanf_type_is_ver = mBleDeviceTools.get_device_theme_scanning_mode();
 
         RequestInfo mRequestInfo = RequestJson.getThemePageList(device_width, device_height, device_shape, device_is_heart, it_bin_size);
 
@@ -114,10 +107,81 @@ public class DialMarketManager {
         void error();
     }
 
+    public String themeVersion = "-1";
+    public static final String themeVersion_V1 = "V1";
+    public static final String themeVersion_V2 = "V2";
+    public static final String themeVersion_V3 = "V3";
+
+    public interface QueryDialProductListen {
+        void success();
+
+        void fail();
+
+        void error();
+    }
+
+    public void queryDialProduct(QueryDialProductListen queryDialProductListen) {
+        if (mBleDeviceTools.get_ble_device_type() < 2) {
+            if (queryDialProductListen != null) {
+                AppUtils.showToast(BaseApplication.getmContext(), R.string.data_init);
+            }
+            return;
+        }
+        RequestInfo mRequestInfo = RequestJson.queryDialProduct();
+        MyLog.i(TAG, "queryDialProduct mRequestInfo = " + mRequestInfo.toString());
+        NewVolleyRequest.RequestPost(mRequestInfo, TAG, new VolleyInterface(BaseApplication.getmContext(), VolleyInterface.mListener, VolleyInterface.mErrorListener) {
+            @Override
+            public void onMySuccess(JSONObject result) {
+                MyLog.i(TAG, "queryDialProduct result = " + result);
+                try {
+                    String code = result.optString("code");
+                    if (code.equalsIgnoreCase(ResultJson.Code_operation_success)) {
+                        JSONObject jsonobject = result.optJSONObject("data");
+                        JSONObject product = Objects.requireNonNull(jsonobject).optJSONObject("product");
+
+                        themeVersion = product.optString("dialVersion");
+                        if (queryDialProductListen != null) {
+                            queryDialProductListen.success();
+                        }
+                    } else if (code.equalsIgnoreCase(ResultJson.Code_no_data)) {
+                        themeVersion = themeVersion_V1;
+                        if (queryDialProductListen != null) {
+                            queryDialProductListen.success();
+                        }
+                    } else {
+                        if (queryDialProductListen != null) {
+                            queryDialProductListen.fail();
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (queryDialProductListen != null) {
+                        queryDialProductListen.fail();
+                    }
+                }
+            }
+
+            @Override
+            public void onMyError(VolleyError arg0) {
+                MyLog.i(TAG, "queryDialProduct arg0 = " + arg0);
+                if (queryDialProductListen != null) {
+                    queryDialProductListen.error();
+                }
+            }
+        });
+    }
+
     public ArrayList<ThemeMarketItem> themeMarketItems = new ArrayList<>();
 
     public void getMainDialList(GetListOnFinishListen getListOnFinishListen) {
-        RequestInfo mRequestInfo = RequestJson.getMainDialList();
+        RequestInfo mRequestInfo = null;
+        if (themeVersion.equalsIgnoreCase(themeVersion_V1)) {
+            return;
+        } else if (themeVersion.equalsIgnoreCase(themeVersion_V2)) {
+            mRequestInfo = RequestJson.getMainDialList(); // v2
+        } else if (themeVersion.equalsIgnoreCase(themeVersion_V3)) {
+            mRequestInfo = RequestJson.getHomeByProductList(); // v3
+        }
         MyLog.i(TAG, "getMainDialList = " + mRequestInfo.toString());
         SysUtils.logAppRunning(TAG, "getMainDialList = " + mRequestInfo.toString());
         NewVolleyRequest.RequestPost(mRequestInfo, TAG, new VolleyInterface(BaseApplication.getmContext(), VolleyInterface.mListener, VolleyInterface.mErrorListener) {
@@ -173,7 +237,17 @@ public class DialMarketManager {
         if (dialInfos != null && pageNum == 1) {
             dialInfos.clear();
         }
-        RequestInfo mRequestInfo = RequestJson.getMoreDialPageList(pageNum, dialTypeId);
+        //
+
+        RequestInfo mRequestInfo = null;
+        if (themeVersion.equalsIgnoreCase(themeVersion_V1)) {
+            return;
+        } else if (themeVersion.equalsIgnoreCase(themeVersion_V2)) {
+            mRequestInfo = RequestJson.getMoreDialPageList(pageNum, dialTypeId);
+        } else if (themeVersion.equalsIgnoreCase(themeVersion_V3)) {
+            mRequestInfo = RequestJson.moreDialPageByProductList(pageNum, dialTypeId);
+        }
+
         MyLog.i(TAG, "getMoreDialPageList = " + mRequestInfo.toString());
         NewVolleyRequest.RequestPost(mRequestInfo, TAG, new VolleyInterface(BaseApplication.getmContext(), VolleyInterface.mListener, VolleyInterface.mErrorListener) {
             @Override

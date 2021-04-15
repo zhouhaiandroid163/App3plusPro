@@ -90,9 +90,9 @@ public class RegistActivity extends BaseActivity implements OnClickListener {
 
     @Override
     protected void onDestroy() {
+        waitDialog.dismiss();
         super.onDestroy();
     }
-
 
     private void initView() {
 
@@ -167,7 +167,7 @@ public class RegistActivity extends BaseActivity implements OnClickListener {
     @BindView(R.id.btn_regist_ok)
     Button btn_regist_ok;
 
-    private void initOkButton(){
+    private void initOkButton() {
         if (isAgree) {
             btAgree.setBackground(getResources().getDrawable(R.mipmap.agree));
             btn_regist_ok.setBackground(getResources().getDrawable(R.mipmap.white_bt_bg));

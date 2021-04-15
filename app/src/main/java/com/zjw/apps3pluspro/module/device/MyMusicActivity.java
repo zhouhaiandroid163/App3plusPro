@@ -115,6 +115,7 @@ public class MyMusicActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void onDestroy() {
+        waitDialog.dismiss();
         if (broadcastReceiver != null) {
             try {
                 unregisterReceiver(broadcastReceiver);

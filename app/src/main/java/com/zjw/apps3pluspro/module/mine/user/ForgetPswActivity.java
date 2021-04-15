@@ -99,6 +99,7 @@ public class ForgetPswActivity extends BaseActivity implements OnClickListener {
 
     @Override
     protected void onDestroy() {
+        waitDialog.dismiss();
         if (handler_phone != null) {
             handler_phone.removeCallbacksAndMessages(null);
         }

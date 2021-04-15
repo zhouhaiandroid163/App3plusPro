@@ -1,6 +1,7 @@
 package com.zjw.apps3pluspro.module.device.clockdial
 
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.adapter.ThemeMarketRecyclerAdapter
 import com.zjw.apps3pluspro.application.BaseApplication
@@ -34,6 +35,34 @@ class ThemeMarketActivity : BaseActivity() {
 //        mBleDeviceTools.setClockDialDataFormat(1);
 //        mBleDeviceTools.setClockDialGenerationMode(1);
 
+        if (DialMarketManager.getInstance().themeVersion == "-1") {
+            DialMarketManager.getInstance().queryDialProduct(object : DialMarketManager.QueryDialProductListen {
+                override fun success() {
+                    getData()
+                }
+
+                override fun fail() {
+                    AppUtils.showToast(context, R.string.server_try_again_code0)
+                }
+
+                override fun error() {
+                    AppUtils.showToast(context, R.string.net_worse_try_again)
+                }
+            })
+        } else {
+            getData()
+        }
+
+//        if (DialMarketManager.getInstance().themeMarketItems.size > 0) {
+//            loadData()
+//        } else {
+//            DialMarketManager.getInstance().getMainDialList {
+//                loadData()
+//            }
+//        }
+    }
+
+    private fun getData() {
         DialMarketManager.getInstance().getMainDialList(object : DialMarketManager.GetListOnFinishListen {
             override fun success() {
                 loadData()
@@ -47,13 +76,6 @@ class ThemeMarketActivity : BaseActivity() {
                 AppUtils.showToast(context, R.string.net_worse_try_again)
             }
         })
-//        if (DialMarketManager.getInstance().themeMarketItems.size > 0) {
-//            loadData()
-//        } else {
-//            DialMarketManager.getInstance().getMainDialList {
-//                loadData()
-//            }
-//        }
     }
 
     private fun loadData() {

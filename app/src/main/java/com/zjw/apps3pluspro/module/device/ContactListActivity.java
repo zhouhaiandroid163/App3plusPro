@@ -123,6 +123,7 @@ public class ContactListActivity extends BaseActivity implements View.OnClickLis
 
 
     protected void onDestroy() {
+        waitDialog.dismiss();
         if (broadcastReceiver != null) {
             try {
                 unregisterReceiver(broadcastReceiver);

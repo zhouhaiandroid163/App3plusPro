@@ -99,7 +99,6 @@ public class TempHistoryActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onPause() {
         super.onPause();
-
     }
 
     @Override
@@ -112,9 +111,9 @@ public class TempHistoryActivity extends BaseActivity implements View.OnClickLis
     }
 
     protected void onDestroy() {
+        waitDialog.dismiss();
         super.onDestroy();
     }
-
 
     private void initView() {
 

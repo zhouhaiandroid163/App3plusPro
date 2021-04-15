@@ -21,6 +21,7 @@ import com.zjw.apps3pluspro.sql.entity.MeasureTempInfo;
 import com.zjw.apps3pluspro.sql.entity.MovementInfo;
 import com.zjw.apps3pluspro.sql.entity.SleepInfo;
 import com.zjw.apps3pluspro.sql.entity.SportModleInfo;
+import com.zjw.apps3pluspro.utils.DialMarketManager;
 import com.zjw.apps3pluspro.utils.GoogleFitManager;
 import com.zjw.apps3pluspro.utils.JavaUtil;
 import com.zjw.apps3pluspro.utils.MyTime;
@@ -898,6 +899,9 @@ public class HandleDeviceDataTools {
                 mBleDeviceTools.set_ble_device_version(DeviceVersion);
                 mBleDeviceTools.set_ble_device_type(deviceType);
                 mBleDeviceTools.set_ble_device_sub_version(subVersion);
+                if (DialMarketManager.getInstance().themeVersion.equalsIgnoreCase("-1")) {
+                    DialMarketManager.getInstance().queryDialProduct(null);
+                }
             }
             //上传手环版本号
             requestServerTools.uploadBraceletVersion();
@@ -1188,6 +1192,10 @@ public class HandleDeviceDataTools {
             MyLog.i(TAG, "主题传输信息 = 传输方式 = 舟海");
             mBleDeviceTools.setClockDialTransmissionMode(0);
         }
+
+        int clockDialMuLanVersion = data[20] & 0x0f;
+        MyLog.i(TAG, "主题传输信息 = 木兰版本号 = " + clockDialMuLanVersion);
+        mBleDeviceTools.setClockDialMuLanVersion(clockDialMuLanVersion);
 
     }
 
@@ -1507,8 +1515,6 @@ public class HandleDeviceDataTools {
         mBleDeviceTools.set_device_mtu_num(mtuVal);
 
         int CrcType = data[15] & 0xff;
-        int[] deviceParams1 = MyUtils.BinstrToIntArray(data[16]); // 参数10
-
         if (CrcType == 0) {
             MyLog.i(TAG, "蓝牙回调 处理设备基本信息 = 校验方式 = 老规则(CRC8)");
             mBleDeviceTools.setSupportNewDeviceCrc(false);
@@ -1517,12 +1523,43 @@ public class HandleDeviceDataTools {
             mBleDeviceTools.setSupportNewDeviceCrc(true);
         }
 
+        int[] deviceParams1 = MyUtils.BinstrToIntArray(data[16]);
+
         if (deviceParams1[0] == 1) {
             MyLog.i(TAG, "蓝牙回调 处理设备基本信息 = 是否需要单包回应 = 是");
             mBleDeviceTools.setisReplyOnePack(true);
         } else {
             MyLog.i(TAG, "蓝牙回调 处理设备基本信息 = 是否需要单包回应 = 否");
             mBleDeviceTools.setisReplyOnePack(false);
+        }
+
+        if (deviceParams1[1] == 1) {
+            MyLog.i(TAG, "蓝牙回调 处理设备基本信息 = 是否支持Alexa功能 = 是");
+            mBleDeviceTools.setSupportAlexa(true);
+        } else {
+            MyLog.i(TAG, "蓝牙回调 处理设备基本信息 = 是否支持Alexa功能 = 否");
+            mBleDeviceTools.setSupportAlexa(false);
+        }
+
+        if (deviceParams1[2] == 1) {
+            MyLog.i(TAG, "蓝牙回调 处理设备基本信息 = 是否启用新的protobuf运动解析= 是");
+            mBleDeviceTools.setSupportProtoNewSport(true);
+        } else {
+            MyLog.i(TAG, "蓝牙回调 处理设备基本信息 = 是否启用新的protobuf运动解析 = 否");
+            mBleDeviceTools.setSupportProtoNewSport(false);
+        }
+
+        int weatherMode = data[17] & 0xff;
+        MyLog.i(TAG, "蓝牙回调 处理设备基本信息 = 天气规则 = " + weatherMode);
+        mBleDeviceTools.setWeatherMode(weatherMode);
+
+        int[] deviceParams2 = MyUtils.BinstrToIntArray(data[18]);
+
+        if (deviceParams2[6] == 1) {
+            MyLog.i(TAG, "蓝牙回调 处理设备基本信息 = setSupportBatteryPercentage = 支持精确百分比");
+            mBleDeviceTools.setSupportBatteryPercentage(true);
+        } else {
+            mBleDeviceTools.setSupportBatteryPercentage(false);
         }
 
         return mtuVal;

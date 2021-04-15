@@ -80,16 +80,19 @@ public class TargetSleepActivity extends Activity implements View.OnClickListene
         }
     }
 
-    private void initView() {
+    @Override
+    protected void onDestroy() {
+        waitDialog.dismiss();
+        super.onDestroy();
+    }
 
+    private void initView() {
         ((TextView) findViewById(R.id.public_head_title)).setText(getString(R.string.sleep_target));
         findViewById(R.id.public_head_back).setOnClickListener(this);
 
         tv_target_sleep_time = (TextView) findViewById(R.id.tv_target_sleep_time);
         sb_target_sleep_time = (SeekBar) findViewById(R.id.sb_target_sleep_time);
         findViewById(R.id.bton_sleep_target_ok).setOnClickListener(this);
-
-
     }
 
     List<String> data = new ArrayList<String>();

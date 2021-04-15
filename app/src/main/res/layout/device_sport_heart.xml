@@ -43,7 +43,7 @@
 
 
     <LinearLayout
-        android:id="@+id/layoutHeart"
+        android:id="@+id/layoutText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -183,7 +183,7 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:background="@color/transparent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutHeart"
+        app:layout_constraintTop_toBottomOf="@+id/layoutText"
         curveChartView:curveChartView_LineColor="#FC4D4D"
         curveChartView:gradientColorEnd="#00464E58"
         curveChartView:gradientColorStart="#7fFF6457" />

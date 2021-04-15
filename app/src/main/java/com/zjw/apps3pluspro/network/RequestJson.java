@@ -59,7 +59,7 @@ public class RequestJson {
     //测试地址
     public static final String requestUrl = "http://47.106.117.114:8090/zh_watch/";
     //本地地址
-//    public static final String requestUrl = "http://192.168.0.12:8080/zh_watch/";
+//    public static final String requestUrl = "http://192.168.0.13:8080/zh_watch/";
 
 
     //    public static final String userLoginUrl = requestUrl + "/userApi/userLogin";
@@ -177,6 +177,11 @@ public class RequestJson {
     //
     public static final String getLto = requestUrl + "ffit/bream/downloadLto";
 
+    //new version theme
+    public static final String getHomeByProductList = requestUrl + "ffit/dial/getHomeByProductList";
+    public static final String moreDialPageByProductList = requestUrl + "ffit/dial/moreDialPageByProductList";
+    public static final String queryDialProduct = requestUrl + "ffit/dial/queryDialProduct";
+
 
     //====================================检查服务器============================================
 
@@ -188,7 +193,6 @@ public class RequestJson {
             return false;
         }
     }
-
 
     //=====================================登录注册============================================
 
@@ -1813,6 +1817,13 @@ public class RequestJson {
                 mJSONObject.put("gpsDataValid1", mSportModleInfo.getReportGpsValid1());
                 mJSONObject.put("gpsEncryption", mSportModleInfo.getReportGpsEncryption());
 //                mJSONObject.put("gpsUnixDatas", mSportModleInfo.getRecordGpsTime());
+                mJSONObject.put("numberOfSwims", mSportModleInfo.getReportTotalSwimNum());
+                mJSONObject.put("description", mSportModleInfo.getReportSwimStyle());
+                mJSONObject.put("maximumStrokeFrequency", mSportModleInfo.getReportMaxSwimFrequency());
+                mJSONObject.put("numberOfTurns", mSportModleInfo.getReportFaceAboutNum());
+                mJSONObject.put("averageSwolf", mSportModleInfo.getReportAvgSwolf());
+                mJSONObject.put("bestSwolf", mSportModleInfo.getReportOptimalSwolf());
+                mJSONObject.put("poolWidth", mSportModleInfo.getReportPoolWidth());
                 jsonArray.put(mJSONObject);
             }
             request_json = new JSONObject();
@@ -2103,5 +2114,57 @@ public class RequestJson {
         }
         return new RequestInfo(requestJson, downLoadBindDevice);
     }
+
+    public static RequestInfo moreDialPageByProductList(int pageNum, int dialTypeId) {
+        BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
+        JSONObject request_json = new JSONObject();
+        try {
+            request_json.put("productNo", mBleDeviceTools.get_device_theme_resolving_power_width());
+            request_json.put("productVersion", mBleDeviceTools.get_device_theme_resolving_power_height());
+            request_json.put("userId", BaseApplication.getUserId());
+//            if (Locale.getDefault().getLanguage().contains("zh")) {
+//                request_json.put("languageCode", "1");
+//            } else {
+            request_json.put("languageCode", "0");
+//            }
+            request_json.put("dialTypeId", dialTypeId);
+            request_json.put("pageIndex", pageNum);
+            request_json.put("pageSize", 15);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return new RequestInfo(request_json, moreDialPageByProductList);
+    }
+
+    public static RequestInfo getHomeByProductList() {
+        BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
+        JSONObject request_json = new JSONObject();
+        try {
+            request_json.put("productNo", mBleDeviceTools.get_ble_device_type());
+            request_json.put("productVersion", mBleDeviceTools.get_ble_device_version());
+            request_json.put("userId", BaseApplication.getUserId());
+//            if (Locale.getDefault().getLanguage().contains("zh")) {
+//                request_json.put("languageCode", "1");
+//            } else {
+            request_json.put("languageCode", "0");
+//            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return new RequestInfo(request_json, getHomeByProductList);
+    }
+
+    public static RequestInfo queryDialProduct() {
+        BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
+        JSONObject request_json = new JSONObject();
+        try {
+            request_json.put("productNo", mBleDeviceTools.get_ble_device_type());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return new RequestInfo(request_json, queryDialProduct);
+    }
+
+
 }
 

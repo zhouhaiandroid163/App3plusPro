@@ -208,17 +208,12 @@ public class MeasureSpo2Info {
 
 
     public static List<MeasureSpo2Info> HandleNoData(List<MeasureSpo2Info> my_list) {
-
         List<MeasureSpo2Info> result_list = new ArrayList<>();
-
         if (my_list.size() > 0) {
             for (int i = 0; i < my_list.size(); i++) {
-
-
                 if (my_list.get(i).getMeasure_spo2() != null && !my_list.get(i).getMeasure_spo2().equals("")) {
                     result_list.add(my_list.get(i));
                 }
-
             }
         }
         return result_list;

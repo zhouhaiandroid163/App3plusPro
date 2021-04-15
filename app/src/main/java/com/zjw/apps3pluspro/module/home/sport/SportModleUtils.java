@@ -264,27 +264,34 @@ public class SportModleUtils {
             case "8":
                 result = context.getString(R.string.more_sport_8);
                 break;
-            //泳池游泳，
             case "9":
                 result = context.getString(R.string.more_sport_9);
                 break;
-            //开放水域游泳，
             case "10":
                 result = context.getString(R.string.more_sport_10);
                 break;
-            //泳池游泳，
             case "11":
                 result = context.getString(R.string.more_sport_11);
                 break;
-            //开放水域游泳，
             case "12":
                 result = context.getString(R.string.more_sport_12);
                 break;
+            case "27":
+                result = context.getString(R.string.more_sport_27);
+                break;
+            case "39":
+                result = context.getString(R.string.more_sport_39);
+                break;
+            case "200":
+                result = context.getString(R.string.more_sport_200);
+                break;
+            case "201":
+                result = context.getString(R.string.more_sport_201);
+                break;
+
         }
         return result;
-
     }
-
 
     public static Drawable getDeviceSportTypeImg(Context context, int recordPointSportType) {
         Drawable imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_1);
@@ -321,20 +328,29 @@ public class SportModleUtils {
             case "8":
                 imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_8);
                 break;
-            //泳池游泳，
             case "9":
                 imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_9);
                 break;
-            //开放水域游泳，
             case "10":
                 imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_10);
                 break;
             case "11":
                 imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_11);
                 break;
-            //开放水域游泳，
             case "12":
                 imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_12);
+                break;
+            case "27":
+                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_27);
+                break;
+            case "39":
+                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_39);
+                break;
+            case "200":
+                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_200);
+                break;
+            case "201":
+                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_201);
                 break;
         }
         return imageDrawable;

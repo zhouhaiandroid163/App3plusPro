@@ -362,6 +362,7 @@
     // app 定制
     <color name="top_bar">#07B8F3</color>
     <color name="top_bar_base">#2F353E</color>
+    <color name="white_30">#1effffff</color>
     <color name="white_50">#7fffffff</color>
     <color name="white_70">#B2ffffff</color>
     <color name="white_12">#0Cffffff</color>
@@ -370,5 +371,8 @@
     <color name="dialog_bg">#464E58</color>
     <color name="text_color">#989CA0</color>
     <color name="color_71757A">#71757A</color>
+    <color name="color_3AFF68">#3AFF68</color>
+    <color name="color_F8E754">#F8E754</color>
+
 
 </resources>

@@ -65,6 +65,7 @@ import com.zjw.apps3pluspro.module.home.ppg.PpgMesureHistoryActivity;
 import com.zjw.apps3pluspro.module.home.sleep.SleepHistoryActivity;
 import com.zjw.apps3pluspro.module.home.spo2.Spo2DetailsActivity;
 import com.zjw.apps3pluspro.module.home.spo2.Spo2MesureHistoryActivity;
+import com.zjw.apps3pluspro.module.home.spo2.Spo2OfflineDataDetailsActivity;
 import com.zjw.apps3pluspro.module.home.sport.MoreSportActivity;
 import com.zjw.apps3pluspro.module.home.sport.SportModleUtils;
 import com.zjw.apps3pluspro.module.home.temp.TempDetailsActivity;
@@ -805,7 +806,7 @@ public class DataFragment extends BaseFragment {
         layoutHeartNoData = mLinearLayout.findViewById(R.id.layoutHeartNoData);
         layoutHeartValue = mLinearLayout.findViewById(R.id.layoutHeartValue);
 
-        mLinearLayout.findViewById(R.id.layoutHeart).setOnClickListener(new View.OnClickListener() {
+        mLinearLayout.findViewById(R.id.layoutText).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mBleDeviceTools.get_is_support_persist_heart() == 1) {
@@ -1031,12 +1032,10 @@ public class DataFragment extends BaseFragment {
                     case 3:
                     case 4:
                     case 5:
-                        tvValue1.setText(mSportModleInfo.getReportTotalStep() + getResources().getString(R.string.steps) + "  " + getResources().getString(R.string.sport_time) + " " +
-                                NewTimeUtils.getTimeString(mSportModleInfo.getReportDuration()));
+                        tvValue1.setText(mSportModleInfo.getReportTotalStep() + getResources().getString(R.string.steps) + "  " + getResources().getString(R.string.sport_time) + " " + NewTimeUtils.getTimeString(mSportModleInfo.getReportDuration()));
                         break;
                     default:
-                        tvValue1.setText(getResources().getString(R.string.consume) + mSportModleInfo.getReportCal() + getResources().getString(R.string.big_calory) + "  " + getResources().getString(R.string.sport_time) + " " +
-                                NewTimeUtils.getTimeString(mSportModleInfo.getReportDuration()));
+                        tvValue1.setText(getResources().getString(R.string.consume) + mSportModleInfo.getReportCal() + getResources().getString(R.string.big_calory) + "  " + getResources().getString(R.string.sport_time) + " " + NewTimeUtils.getTimeString(mSportModleInfo.getReportDuration()));
                         break;
                 }
             }
@@ -1389,11 +1388,12 @@ public class DataFragment extends BaseFragment {
         mLinearLayout.findViewById(R.id.layoutBloodOxygenCard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mBleDeviceTools.getSupportContinuousBloodOxygen()) {
-                    startActivity(new Intent(homeActivity, Spo2DetailsActivity.class));
-                } else if (mBleDeviceTools.getSupportOfflineBloodOxygen()) {
-                    startActivity(new Intent(homeActivity, Spo2MesureHistoryActivity.class));
-                }
+                startActivity(new Intent(homeActivity, Spo2OfflineDataDetailsActivity.class));
+//                if (mBleDeviceTools.getSupportContinuousBloodOxygen()) {
+//                    startActivity(new Intent(homeActivity, Spo2DetailsActivity.class));
+//                } else if (mBleDeviceTools.getSupportOfflineBloodOxygen()) {
+//                    startActivity(new Intent(homeActivity, Spo2MesureHistoryActivity.class));
+//                }
             }
         });
     }
@@ -1430,7 +1430,7 @@ public class DataFragment extends BaseFragment {
         if (object != null) {
             String last_value = object.getMeasure_spo2();
             if (!JavaUtil.checkIsNull(last_value)) {
-                tvBloodOxygenTitle.setText(getResources().getString(R.string.spo2_str) + last_value + "%");
+                tvBloodOxygenTitle.setText(getResources().getString(R.string.spo2_str) + " " + last_value + "%");
                 layoutBloodOxygenNoData.setVisibility(View.GONE);
                 layoutBloodOxygenShowData.setVisibility(View.VISIBLE);
             } else {
@@ -1756,7 +1756,7 @@ public class DataFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void deviceSportStatusEvent(DeviceSportStatusEvent event) {
-        if(event.sportType != 0){
+        if (event.sportType != 0) {
             layoutDeviceGps.setVisibility(View.VISIBLE);
             if (event.paused) {
                 tvDeviceGpsSport.setText(context.getResources().getString(R.string.device_sport_paused));

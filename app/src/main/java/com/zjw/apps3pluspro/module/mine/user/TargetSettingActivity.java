@@ -76,6 +76,12 @@ public class TargetSettingActivity extends BaseActivity {
         waitDialog = new WaitDialog(context);
     }
 
+    @Override
+    protected void onDestroy() {
+        waitDialog.dismiss();
+        super.onDestroy();
+    }
+
     @BindView(R.id.layoutCal)
     LinearLayout layoutCal;
     @BindView(R.id.layoutDistance)

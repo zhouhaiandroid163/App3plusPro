@@ -19,6 +19,4 @@ public class DBMigrationHelper6 extends AbstractDBMigratorHelper {
         DbMigrationUtils.addColumn(db, "SPORT_MODLE_INFO", "RECORD_GPS_TIME");
         SysUtils.logContentE(TAG, "数据库升级完成，版本 5 升级至 6");
     }
-
-
 }

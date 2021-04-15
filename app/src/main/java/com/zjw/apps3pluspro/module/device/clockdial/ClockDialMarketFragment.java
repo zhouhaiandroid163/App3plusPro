@@ -52,9 +52,9 @@ public class ClockDialMarketFragment extends BaseFragment implements SwipeRefres
     }
     @Override
     public void onDestroy() {
+        waitDialog.dismiss();
         super.onDestroy();
     }
-
 
     @Override
     public View initView() {

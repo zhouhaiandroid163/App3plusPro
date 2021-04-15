@@ -104,6 +104,8 @@ public class DeviceMoreSetActivity extends BaseActivity {
     ImageView ivPower;
     @BindView(R.id.layoutUpdateAGpsDate)
     Button layoutUpdateAGpsDate;
+    @BindView(R.id.tvBattery)
+    TextView tvBattery;
 
     private UserSetTools mUserSetTools = BaseApplication.getUserSetTools();
     private BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
@@ -120,20 +122,6 @@ public class DeviceMoreSetActivity extends BaseActivity {
         EventTools.SafeRegisterEventBus(this);
         tvMacAdress.setText(mBleDeviceTools.get_ble_mac());
         tvDeviceName.setText(mBleDeviceTools.get_ble_name());
-
-        int power = mBleDeviceTools.get_ble_device_power();
-        MyLog.i(TAG, "电量 power = " + power);
-        if (power >= 90) {
-            ivPower.setBackgroundResource(R.mipmap.electricity_100);
-        } else if (power >= 75) {
-            ivPower.setBackgroundResource(R.mipmap.electricity_75);
-        } else if (power >= 50) {
-            ivPower.setBackgroundResource(R.mipmap.electricity_50);
-        } else if (power >= 25) {
-            ivPower.setBackgroundResource(R.mipmap.electricity_25);
-        } else if (power >= 0) {
-            ivPower.setBackgroundResource(R.mipmap.electricity_0);
-        }
 
         String version_name = BleTools.getDeviceVersionName(mBleDeviceTools);
         if (!JavaUtil.checkIsNull(version_name)) {
@@ -180,6 +168,31 @@ public class DeviceMoreSetActivity extends BaseActivity {
             layoutUpdateAGpsDate.setVisibility(View.VISIBLE);
         } else {
             layoutUpdateAGpsDate.setVisibility(View.GONE);
+        }
+        refreshBattery();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void refreshBattery() {
+        tvBattery.setVisibility(View.GONE);
+        ivPower.setVisibility(View.GONE);
+        int power = mBleDeviceTools.get_ble_device_power();
+        if (mBleDeviceTools.getSupportBatteryPercentage()) {
+            tvBattery.setVisibility(View.VISIBLE);
+            tvBattery.setText(power + "%");
+        } else {
+            ivPower.setVisibility(View.VISIBLE);
+            if (power >= 90) {
+                ivPower.setBackgroundResource(R.mipmap.electricity_100);
+            } else if (power >= 75) {
+                ivPower.setBackgroundResource(R.mipmap.electricity_75);
+            } else if (power >= 50) {
+                ivPower.setBackgroundResource(R.mipmap.electricity_50);
+            } else if (power >= 25) {
+                ivPower.setBackgroundResource(R.mipmap.electricity_25);
+            } else if (power >= 0) {
+                ivPower.setBackgroundResource(R.mipmap.electricity_0);
+            }
         }
     }
 
@@ -372,6 +385,7 @@ public class DeviceMoreSetActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        waitDialog.dismiss();
         unregisterReceiver(broadcastReceiver);
         EventTools.SafeUnregisterEventBus(this);
         if (protoHandler != null) {

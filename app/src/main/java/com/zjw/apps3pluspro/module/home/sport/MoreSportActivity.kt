@@ -79,6 +79,11 @@ class MoreSportActivity : BaseActivity() {
         })
     }
 
+    override fun onDestroy() {
+        waitDialog!!.dismiss()
+        super.onDestroy()
+    }
+
     override fun onResume() {
         super.onResume()
 //        queryData()

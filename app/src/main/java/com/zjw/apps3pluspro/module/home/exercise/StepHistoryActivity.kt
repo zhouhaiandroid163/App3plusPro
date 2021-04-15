@@ -53,6 +53,11 @@ class StepHistoryActivity : BaseActivity() {
         }
     }
 
+    override fun onDestroy() {
+        waitDialog!!.dismiss()
+        super.onDestroy()
+    }
+
     @SuppressLint("SetTextI18n")
     override fun initViews() {
         super.initViews()
@@ -122,52 +127,49 @@ class StepHistoryActivity : BaseActivity() {
 
     private val mBleDeviceTools = BaseApplication.getBleDeviceTools()
     private val mUserSetTools = BaseApplication.getUserSetTools()
-    fun updateUi() {
-        val mMovementInfo = mMovementInfoUtils.MyQueryToDate(BaseApplication.getUserId(), selectionDate)
-        if (mMovementInfo != null) {
-            val steps = mMovementInfo.total_step
-            val calory = mMovementInfo.calorie
-            var distance = mMovementInfo.disance
-            val sport_data = mMovementInfo.data
-            if (!JavaUtil.checkIsNull(sport_data) && !JavaUtil.checkIsNull(steps)) {
-                val steps24 = mMovementInfo.data.split(",").toTypedArray()
-                var max = 0
-                val progress = FloatArray(24)
-                val progressStep = IntArray(24)
-                for (i in 0..23) {
-                    progress[i] = steps24[i].toFloat()
-                    progressStep[i] = steps24[i].toInt()
-                    if (progress[i] > max) {
-                        max = progress[i].toInt()
-                    }
+    fun updateUi(mMovementInfo: MovementInfo) {
+        val steps = mMovementInfo.total_step
+        val calory = mMovementInfo.calorie
+        var distance = mMovementInfo.disance
+        val sport_data = mMovementInfo.data
+        if (!JavaUtil.checkIsNull(sport_data) && !JavaUtil.checkIsNull(steps)) {
+            val steps24 = mMovementInfo.data.split(",").toTypedArray()
+            var max = 0
+            val progress = FloatArray(24)
+            val progressStep = IntArray(24)
+            for (i in 0..23) {
+                progress[i] = steps24[i].toFloat()
+                progressStep[i] = steps24[i].toInt()
+                if (progress[i] > max) {
+                    max = progress[i].toInt()
                 }
-                max = max / 100 * 100 + 100
-                stepHistogramView.start(progress, max.toFloat(), 1, null, progressStep, false)
-                tvExerciseStep.text = steps
-
-                if (mBleDeviceTools.get_device_unit() == 1) { // 公制
-                    distance = AppUtils.GetTwoFormat(java.lang.Float.valueOf(distance))
-                    tvDistanceUnit.text = resources.getString(R.string.sport_distance_unit)
-                } else {
-                    distance = AppUtils.GetTwoFormat(java.lang.Float.valueOf(BleTools.getBritishSystem(steps)))
-                    tvDistanceUnit.text = resources.getString(R.string.unit_mi)
-                }
-                tvExerciseDistance.text = distance
-                tvExerciseCal.text = calory
-                tvComplete.text = AnalyticalUtils.getCompletionRate(mUserSetTools, steps) + "%"
-
-                val target = mUserSetTools._user_exercise_target
-
-                tvStepProgress.text = AnalyticalUtils.getCompletionRate(mUserSetTools, steps) + "%"
-                roundViewStep.setProgress(0f, steps.toInt() / target.toFloat(), 0f)
-
-                targetProgress.progress = Integer.parseInt(AnalyticalUtils.getCompletionRate(mUserSetTools, steps))
-
-                layoutData.visibility = View.VISIBLE
-                layoutNoData.visibility = View.GONE
-            } else {
-                noData()
             }
+            max = max / 100 * 100 + 100
+            stepHistogramView.start(progress, max.toFloat(), 1, null, progressStep, false)
+            tvExerciseStep.text = steps
+
+            if (mBleDeviceTools.get_device_unit() == 1) { // 公制
+                distance = AppUtils.GetTwoFormat(java.lang.Float.valueOf(distance))
+                tvDistanceUnit.text = resources.getString(R.string.sport_distance_unit)
+            } else {
+                distance = AppUtils.GetTwoFormat(java.lang.Float.valueOf(BleTools.getBritishSystem(steps)))
+                tvDistanceUnit.text = resources.getString(R.string.unit_mi)
+            }
+            tvExerciseDistance.text = distance
+            tvExerciseCal.text = calory
+            tvComplete.text = AnalyticalUtils.getCompletionRate(mUserSetTools, steps) + "%"
+
+            val target = mUserSetTools._user_exercise_target
+
+            tvStepProgress.text = AnalyticalUtils.getCompletionRate(mUserSetTools, steps) + "%"
+            roundViewStep.setProgress(0f, steps.toInt() / target.toFloat(), 0f)
+
+            targetProgress.progress = Integer.parseInt(AnalyticalUtils.getCompletionRate(mUserSetTools, steps))
+
+            layoutData.visibility = View.VISIBLE
+            layoutNoData.visibility = View.GONE
+        } else {
+            noData()
         }
     }
 
@@ -209,11 +211,11 @@ class StepHistoryActivity : BaseActivity() {
             val end_date = week_list[week_list.size - 1]
             MyLog.i(TAG, "待处理 开始时间 = $start_date")
             MyLog.i(TAG, "待处理 结束时间 = $end_date")
-            val movementInfo_list: List<MovementInfo> = mMovementInfoUtils.MyQueryToPeriodTime(BaseApplication.getUserId(), start_date, end_date)
-            if (movementInfo_list.size >= week_list.size) {
+//            val movementInfo_list: List<MovementInfo> = mMovementInfoUtils.MyQueryToPeriodTime(BaseApplication.getUserId(), start_date, end_date)
+            val mMovementInfo = mMovementInfoUtils.MyQueryToDate(BaseApplication.getUserId(), selectionDate)
+            if (mMovementInfo != null) {
                 MyLog.i(TAG, "满足条件 更新UI")
-                MyLog.i(TAG, "movementInfo_list = $movementInfo_list")
-                updateUi()
+                updateUi(mMovementInfo)
             } else {
                 MyLog.i(TAG, "不满足条件，请求后台 is_cycle = $is_cycle")
                 if (is_cycle) {

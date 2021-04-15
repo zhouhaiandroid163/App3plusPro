@@ -585,9 +585,9 @@ public class EcgMesureDetailsActivity extends BaseActivity implements OnClickLis
     }
 
     protected void onDestroy() {
+        waitDialog.dismiss();
         super.onDestroy();
     }
-
 
     /**
      * 请求ECGPPG数据

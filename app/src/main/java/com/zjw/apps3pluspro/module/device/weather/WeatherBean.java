@@ -29,6 +29,16 @@ public class WeatherBean {
     String _c_high_temp;
     //最低温度
     String _c_low_temp;
+    //大气压
+    String pressure; //百帕
+
+    public String getPressure() {
+        return pressure;
+    }
+
+    public void setPressure(String pressure) {
+        this.pressure = pressure;
+    }
 
     public WeatherBean() {
         super();
@@ -270,9 +280,12 @@ public class WeatherBean {
                 String tmpMin1 = (jsonObject.isNull("tempMin")) ? "" : jsonObject.optString("tempMin");
                 String today1 = (jsonObject.isNull("fxDate")) ? "" : jsonObject.optString("fxDate");
 
+                String pressure = (jsonObject.isNull("pressure")) ? "" : jsonObject.optString("pressure");
+
                 if (i == 0) {
                     condCode1 = CondCodeMap.getCondCode(now.optString("icon"));
                     tmp1 = now.optString("temp");
+                    pressure = now.optString("pressure");
                 }
 
                 WeatherBean mWeatherModle = new WeatherBean();
@@ -283,6 +296,7 @@ public class WeatherBean {
                 mWeatherModle.set_c_now_temp(tmp1);
                 mWeatherModle.set_c_high_temp(tmpMax1);
                 mWeatherModle.set_c_low_temp(tmpMin1);
+                mWeatherModle.setPressure(pressure);
 
                 System.out.println("weather = " + i + "  =" + mWeatherModle.toString());
                 myWeatherModle.add(mWeatherModle);

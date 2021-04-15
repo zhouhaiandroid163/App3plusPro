@@ -78,6 +78,11 @@ public class FriendInfoHandleActivity extends BaseActivity implements OnClickLis
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        waitDialog.dismiss();
+        super.onDestroy();
+    }
 
     private void initView() {
         // TODO Auto-generated method stub

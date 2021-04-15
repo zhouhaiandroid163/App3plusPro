@@ -886,17 +886,17 @@
     <string name="gps_switch_close">The system location switch is not turned on</string>
     <string name="weather_location_reset">re-locate</string>
     <!--    打点多运动-->
-    <string name="more_sport_1">Outdoor Running</string>
+    <string name="more_sport_1">Outdoor running</string>
     <string name="more_sport_2">Walking</string>
     <string name="more_sport_3">Indoor running</string>
-    <string name="more_sport_4">Mountaineering</string>
-    <string name="more_sport_5">Offroad</string>
+    <string name="more_sport_4">Hiking</string>
+    <string name="more_sport_5">Trail running</string>
     <string name="more_sport_6">Outdoor cycling</string>
     <string name="more_sport_7">Indoor cycling</string>
-    <string name="more_sport_8">Free training</string>
-    <string name="more_sport_9">basketball</string>
-    <string name="more_sport_10">football</string>
-    <string name="more_sport_11">tableTennis</string>
+    <string name="more_sport_8">Freestyle</string>
+    <string name="more_sport_9">Basketball</string>
+    <string name="more_sport_10">Soccer</string>
+    <string name="more_sport_11">Pingpong</string>
     <string name="more_sport_12">Badminton</string>
     <string name="device_sport_summary">to sum up</string>
     <string name="device_sport_title1">Exercise time</string>
@@ -922,11 +922,11 @@
     <string name="device_sport_maxOxygenIntake">Maximal oxygen uptake</string>
     <string name="device_sport_maxOxygenIntake_unit">Ml/kg/min</string>
     <string name="device_sport_recoveryTime">Recovery Time</string>
-    <string name="device_sport_heart_limit">limit</string>
+    <string name="device_sport_heart_limit">VO₂ max</string>
     <string name="device_sport_heart_anaerobic">Anaerobic</string>
     <string name="device_sport_heart_Aerobic">Aerobic</string>
-    <string name="device_sport_heart_fat_burning">Fat burning</string>
-    <string name="device_sport_heart_warm_up">warm up</string>
+    <string name="device_sport_heart_fat_burning">Intensive</string>
+    <string name="device_sport_heart_warm_up">Light</string>
     <string name="device_sport_heart_distributedView">Heart rate distribution interval</string>
     <string name="device_sport_pace">Pace</string>
     <string name="device_sport_avg_pace">Average pace</string>
@@ -948,15 +948,42 @@
     <string name="device_sport_height">height</string>
     <string name="device_sport_rise">Cumulative climb</string>
     <string name="device_sport_decline">Cumulative decline</string>
-    <string name="device_sport_unit">Meter</string>
+    <string name="device_sport_unit">m</string>
     <string name="device_sport_paused">Exercise is paused</string>
     <string name="device_sport_runing">In motion</string>
     <string name="device_sport_over">Exercise is over</string>
-
+    <!-- w004 -->
+    <string name="more_sport_27">Stair climbing</string>
+    <string name="more_sport_39">Cricket</string>
+    <string name="more_sport_200">Pool swimming</string>
+    <string name="more_sport_201">Open water</string>
+    <string name="device_sport_swim_style">Main style</string>
+    <string name="device_sport_swim_style0">Medley</string>
+    <string name="device_sport_swim_style1">Breaststroke</string>
+    <string name="device_sport_swim_style2">Freestyle</string>
+    <string name="device_sport_swim_style3">Backstroke</string>
+    <string name="device_sport_swim_style4">Butterfly</string>
+    <string name="device_sport_swim_frequency">Stroke frequency</string>
+    <string name="device_sport_swim_max_frequency">Highest frequency</string>
+    <string name="device_sport_swim_avg_frequency">Average frequency</string>
+    <string name="device_sport_swim_total_Num">Total strokes</string>
+    <string name="device_sport_swim_swolf">Swolf</string>
+    <string name="device_sport_swim_avg_swolf">avg Swolf</string>
+    <string name="device_sport_swim_optimal_swolf">Best Swolf</string>
+    <string name="device_sport_swim_trip_num">Number of trips</string>
+    <string name="device_sport_swim_frequency_unit">Times/min</string>
+    <string name="spo2_description_title">What is SpO2</string>
+    <string name="spo2_description">SpO2, also known as oxygen saturation. Your blood oxygen level represents the percentage of oxygen your red blood cells carry from your lungs to the rest of your body. Knowing how well your blood performs this vital task can help you understand your overall wellness.</string>
+    <string name="spo2_description1">SpO2 levels:</string>
+    <string name="spo2_description2">95–100%: Average for the population</string>
+    <string name="spo2_description3">91–94%: Below average for the population</string>
+    <string name="spo2_description4">≥90%: Consider consult your doctor</string>
+    <string name="spo2_description5">Measurable range: 80–100%</string>
+    <string name="spo2_description6">Measurements taken with the Blood Oxygen app are not intended for medical use and are only designed for general fitness and wellness purposes.</string>
+    <string name="data_init">Data initialization, please wait</string>
     <string name="call_us1">Need help？Call Us at</string>
     <string name="call_us2">Or email:</string>
-    <string name="call_us3">service@3plususa.com</string>
-    <string name="call_us4">(866)592–0184</string>
+
     <!--以下定制app翻译-->
     <string name="device_name">Device name</string>
     <string name="device_power">Battery level</string>
@@ -1083,4 +1110,6 @@
     <string name="friday">Fri</string>
     <string name="saturday">Sat</string>
     <string name="sunday">Sun</string>
+    <string name="call_us4">(866)592–0184</string>
+    <string name="call_us3">service@3plususa.com</string>
 </resources>

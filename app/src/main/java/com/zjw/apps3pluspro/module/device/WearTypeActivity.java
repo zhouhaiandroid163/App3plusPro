@@ -61,6 +61,7 @@ public class WearTypeActivity extends BaseActivity implements View.OnClickListen
     }
 
     protected void onDestroy() {
+        waitDialog.dismiss();
         super.onDestroy();
     }
 

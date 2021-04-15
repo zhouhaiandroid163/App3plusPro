@@ -1,10 +1,14 @@
 package com.zjw.apps3pluspro.module.home.sport
 
+import android.content.Context
 import android.text.TextUtils
 import android.util.Log
 import com.android.volley.VolleyError
+import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.application.BaseApplication
+import com.zjw.apps3pluspro.bleservice.anaylsis.FitnessTools
 import com.zjw.apps3pluspro.module.home.entity.DeviceSportEntity
+import com.zjw.apps3pluspro.module.home.entity.DeviceSportSwimEntity
 import com.zjw.apps3pluspro.network.NewVolleyRequest
 import com.zjw.apps3pluspro.network.RequestJson
 import com.zjw.apps3pluspro.network.ResultJson
@@ -30,9 +34,52 @@ class DeviceSportManager private constructor() {
         }
     }
 
+    fun parsingFitnessNew(sportType: Int, sportData: List<String>): ArrayList<DeviceSportSwimEntity> {
+        val deviceSportList = ArrayList<DeviceSportSwimEntity>()
+        if (FitnessTools.isData5(sportType)) {
+            var i = 0
+            while (i < sportData.size) {
+                val dataNumber = (sportData[i + 3] + sportData[i + 2] + sportData[i + 1] + sportData[i]).toLong(16)
+                i += 4
+                val startTime = (sportData[i + 3] + sportData[i + 2] + sportData[i + 1] + sportData[i]).toLong(16)
+                i += 4
+                for (k in 0 until dataNumber) {
+                    var deviceSportSwimEntity = DeviceSportSwimEntity()
+                    var dataType = sportData[i].toInt(16)
+                    i += 1
+                    val endTime = (sportData[i + 3] + sportData[i + 2] + sportData[i + 1] + sportData[i]).toLong(16)
+                    i += 4
+                    if(k == 0L){
+                        deviceSportSwimEntity.startTime = startTime * 1000
+                    }
+                    deviceSportSwimEntity.endTime = endTime * 1000
+                    var swimStyle = sportData[i].toInt(16)
+                    i += 1
+                    deviceSportSwimEntity.swimStyle = swimStyle
+
+                    i += 2 // 省略
+
+                    val swolf = (sportData[i + 1] + sportData[i]).toInt(16)
+                    i += 2
+                    deviceSportSwimEntity.swimSwolf = swolf
+
+                    i += 8 // 省略
+
+                    var swimFrequency = sportData[i].toInt(16)
+                    i += 1
+                    deviceSportSwimEntity.swimFrequency = swimFrequency
+
+                    i += 5 // 省略
+                    deviceSportList.add(deviceSportSwimEntity)
+                }
+            }
+        }
+        return deviceSportList;
+    }
+
     fun parsingFitness(sportType: Int, sportData: List<String>): ArrayList<DeviceSportEntity> {
         val deviceSportList = ArrayList<DeviceSportEntity>()
-        if (sportType == 1 || sportType == 2 || sportType == 4 || sportType == 5) {
+        if (FitnessTools.isData1(sportType)) {
             var i = 0
             while (i < sportData.size) {
                 val altitude = (sportData[i + 3] + sportData[i + 2] + sportData[i + 1] + sportData[i]).toLong(16)
@@ -68,7 +115,7 @@ class DeviceSportManager private constructor() {
                     deviceSportList.add(deviceSportEntity)
                 }
             }
-        } else if (sportType == 3) {
+        } else if (FitnessTools.isData2(sportType)) {
             // At last 4 byte is check crc32
             var i = 0
             while (i < sportData.size) {
@@ -94,7 +141,7 @@ class DeviceSportManager private constructor() {
                     deviceSportList.add(deviceSportEntity)
                 }
             }
-        } else if (sportType == 6) {
+        } else if (FitnessTools.isData3(sportType)) {
             var i = 0
             while (i < sportData.size) {
                 val altitude = (sportData[i + 3] + sportData[i + 2] + sportData[i + 1] + sportData[i]).toLong(16)
@@ -125,7 +172,7 @@ class DeviceSportManager private constructor() {
                     deviceSportList.add(deviceSportEntity)
                 }
             }
-        } else if (sportType == 7 || sportType == 8 || sportType == 9 || sportType == 10 || sportType == 11 || sportType == 12) {
+        } else if (FitnessTools.isData4(sportType)) {
             // At last 4 byte is check crc32
             var i = 0
             while (i < sportData.size) {
@@ -187,9 +234,9 @@ class DeviceSportManager private constructor() {
 
             if (noUploadData1.size > 0 && isUploadDeviceSport == "0") {
                 val mRequestInfo = RequestJson.postRecordPointList(noUploadData1)
-                if(mRequestInfo == null){
+                if (mRequestInfo == null) {
                     mSportModleInfoUtils.updateNoUploadData(noUploadData1)
-                } else{
+                } else {
                     NewVolleyRequest.RequestPost(mRequestInfo, TAG, object : VolleyInterface(BaseApplication.getmContext(), mListener, mErrorListener) {
                         override fun onMySuccess(result: JSONObject) {
                             try {
@@ -405,6 +452,13 @@ class DeviceSportManager private constructor() {
                             sportModleInfo.reportGpsValid1 = recordPointInfo.optInt("gpsDataValid1")
                             sportModleInfo.reportGpsEncryption = recordPointInfo.optInt("gpsEncryption")
 //                            sportModleInfo.recordGpsTime = recordPointInfo.optString("gpsUnixDatas")
+                            sportModleInfo.reportTotalSwimNum = recordPointInfo.optInt("numberOfSwims")
+                            sportModleInfo.reportSwimStyle = recordPointInfo.optInt("description")
+                            sportModleInfo.reportMaxSwimFrequency = recordPointInfo.optInt("maximumStrokeFrequency")
+                            sportModleInfo.reportFaceAboutNum = recordPointInfo.optInt("numberOfTurns")
+                            sportModleInfo.reportAvgSwolf = recordPointInfo.optInt("averageSwolf")
+                            sportModleInfo.reportOptimalSwolf = recordPointInfo.optInt("bestSwolf")
+                            sportModleInfo.reportPoolWidth = recordPointInfo.optInt("poolWidth")
                         }
                         mSportModleInfoUtils.updateData(sportModleInfo)
 
@@ -444,6 +498,17 @@ class DeviceSportManager private constructor() {
             override fun onMyError(arg0: VolleyError) {
             }
         })
+    }
+
+    fun getSwimStyle(reportSwimStyle: Int?, context: Context): CharSequence? {
+        when (reportSwimStyle){
+            0 ->{return context.resources.getString(R.string.device_sport_swim_style0)}
+            1 ->{return context.resources.getString(R.string.device_sport_swim_style1)}
+            2 ->{return context.resources.getString(R.string.device_sport_swim_style2)}
+            3 ->{return context.resources.getString(R.string.device_sport_swim_style3)}
+            4 ->{return context.resources.getString(R.string.device_sport_swim_style4)}
+        }
+        return "Unknown"
     }
 
 }

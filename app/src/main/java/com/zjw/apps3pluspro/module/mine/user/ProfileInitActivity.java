@@ -112,6 +112,12 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
     }
 
     @Override
+    protected void onDestroy() {
+        waitDialog.dismiss();
+        super.onDestroy();
+    }
+
+    @Override
     protected void onStop() {
         // TODO Auto-generated method stub
         super.onStop();

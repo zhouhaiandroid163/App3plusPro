@@ -69,9 +69,10 @@ public class AGpsUpdateActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        waitDialog.dismiss();
         EventTools.SafeUnregisterEventBus(this);
         unregisterReceiverLto();
+        super.onDestroy();
     }
 
     @Override
@@ -91,7 +92,6 @@ public class AGpsUpdateActivity extends BaseActivity {
         if (HomeActivity.getBlueToothStatus() == BleConstant.STATE_CONNECTED) {
             if (MyOkHttpClient.getInstance().isConnect(context)) {
                 initBroadcastReceiverLto();
-                waitDialog.show(getResources().getString(R.string.ignored));
                 requestLtoUrl();
             } else {
                 AppUtils.showToast(context, R.string.net_worse_try_again);
@@ -231,7 +231,6 @@ public class AGpsUpdateActivity extends BaseActivity {
                 try {
                     String code = result.optString("code");
                     if (code.equalsIgnoreCase(ResultJson.Code_operation_success)) {
-                        waitDialog.close();
                         JSONObject dataJson = result.optJSONObject("data");
                         String dataUrl = dataJson.optString("dataUrl");
                         try {
@@ -252,12 +251,12 @@ public class AGpsUpdateActivity extends BaseActivity {
                             finish();
                         }
                     } else {
-                        waitDialog.show(getResources().getString(R.string.update_AGPS_date_no));
+                        AppUtils.showToast(context, R.string.update_AGPS_date_no);
                         finish();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    waitDialog.show(getResources().getString(R.string.update_AGPS_date_no));
+                    AppUtils.showToast(context, R.string.update_AGPS_date_no);
                     finish();
                 }
             }
@@ -265,9 +264,7 @@ public class AGpsUpdateActivity extends BaseActivity {
             @Override
             public void onMyError(VolleyError arg0) {
                 MyLog.i(TAG, "getWeatherCityBySearch arg0 = " + arg0);
-
-                waitDialog.show(getResources().getString(R.string.update_AGPS_date_no));
-                protoHandler.postDelayed(() -> waitDialog.close(), Constants.FINISH_ACTIVITY_DELAY_TIME);
+                AppUtils.showToast(context, R.string.data_try_again_code1);
                 finish();
             }
         });

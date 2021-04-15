@@ -54,6 +54,11 @@ class SleepHistoryActivity : BaseActivity() {
         }
     }
 
+    override fun onDestroy() {
+        waitDialog!!.dismiss()
+        super.onDestroy()
+    }
+
     override fun initViews() {
         super.initViews()
         public_head_title.text = resources.getString(R.string.title_sleep)
@@ -130,9 +135,9 @@ class SleepHistoryActivity : BaseActivity() {
 
     var sleep_list_data: List<SleepData>? = null
     @SuppressLint("SetTextI18n")
-    private fun updateUi(sleepinfoList: List<SleepInfo>) {
-        val mSleepInfo = mSleepInfoUtils.MyQueryToDate(BaseApplication.getUserId(), selectionDate)
-        if (mSleepInfo != null && !JavaUtil.checkIsNull(mSleepInfo.data)) {
+    private fun updateUi(mSleepInfo: SleepInfo) {
+//        val mSleepInfo = mSleepInfoUtils.MyQueryToDate(BaseApplication.getUserId(), selectionDate)
+        if (!JavaUtil.checkIsNull(mSleepInfo.data)) {
             MyLog.i(TAG, "mSleepInfo = $mSleepInfo")
             val mSleepModel = SleepModel(mSleepInfo)
             MyLog.i(TAG, "mSleepModel = $mSleepModel")
@@ -273,10 +278,11 @@ class SleepHistoryActivity : BaseActivity() {
             val end_date = week_list[week_list.size - 1]
             MyLog.i(TAG, "待处理 开始时间 = $start_date")
             MyLog.i(TAG, "待处理 结束时间 = $end_date")
-            val sleepInfo_list: List<SleepInfo> = mSleepInfoUtils.MyQueryToPeriodTime(BaseApplication.getUserId(), start_date, end_date)
-            if (sleepInfo_list.size >= week_list.size) {
+//            val sleepInfo_list: List<SleepInfo> = mSleepInfoUtils.MyQueryToPeriodTime(BaseApplication.getUserId(), start_date, end_date)
+            val mSleepInfo = mSleepInfoUtils.MyQueryToDate(BaseApplication.getUserId(), selectionDate)
+            if (mSleepInfo != null) {
                 MyLog.i(TAG, "待处理 数据够了 = 更新UI")
-                updateUi(sleepInfo_list)
+                updateUi(mSleepInfo)
             } else {
                 MyLog.i(TAG, "待处理 数据不够 = 获取数据")
                 if (is_cycle) {

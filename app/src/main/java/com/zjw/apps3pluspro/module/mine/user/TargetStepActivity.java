@@ -70,6 +70,12 @@ public class TargetStepActivity extends Activity implements View.OnClickListener
     }
 
     @Override
+    protected void onDestroy() {
+        waitDialog.dismiss();
+        super.onDestroy();
+    }
+
+    @Override
     public void onStop() {
         // TODO Auto-generated method stub
         super.onStop();

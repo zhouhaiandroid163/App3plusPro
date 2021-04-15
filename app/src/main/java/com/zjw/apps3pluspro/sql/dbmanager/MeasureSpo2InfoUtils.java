@@ -131,6 +131,7 @@ public class MeasureSpo2InfoUtils {
         QueryBuilder<MeasureSpo2Info> queryBuilder = mManager.getDaoSession().queryBuilder(MeasureSpo2Info.class);
         return queryBuilder
                 .where(MeasureSpo2InfoDao.Properties.User_id.eq(user_id))
+                .where(MeasureSpo2InfoDao.Properties.Measure_spo2.notEq(""))
                 //大于等于
                 .where(MeasureSpo2InfoDao.Properties.Measure_time.ge(date + " 00:00:00"))
                 //小于等于

@@ -75,6 +75,12 @@ public class NewFriendActivity extends BaseActivity implements OnClickListener, 
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        waitDialog.dismiss();
+        super.onDestroy();
+    }
+
     private void initView() {
 
         ((TextView) findViewById(R.id.public_head_title)).setText(getString(R.string.care_accept_frend));

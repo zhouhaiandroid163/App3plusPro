@@ -84,6 +84,12 @@ public class SearchFriendActivity extends BaseActivity implements OnClickListene
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        waitDialog.dismiss();
+        super.onDestroy();
+    }
+
     private void initView() {
 
         ((TextView) findViewById(R.id.public_head_title)).setText(getString(R.string.title_add_friend));

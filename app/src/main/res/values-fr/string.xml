@@ -952,6 +952,37 @@
     <string name="device_sport_paused">L\'exercice est mis en pause</string>
     <string name="device_sport_runing">En mouvement</string>
     <string name="device_sport_over">L\'exercice est terminé</string>
+    <!-- w004 -->
+    <string name="more_sport_27">Montée d\'escaliers </string>
+    <string name="more_sport_39">Cricket </string>
+    <string name="more_sport_200">Piscine en piscine </string>
+    <string name="more_sport_201">Eau libre </string>
+    <string name="device_sport_swim_style">Style principal </string>
+    <string name="device_sport_swim_style0">Medley </string>
+    <string name="device_sport_swim_style1">Brasse </string>
+    <string name="device_sport_swim_style2">Freestyle </string>
+    <string name="device_sport_swim_style3">Dos crawlé </string>
+    <string name="device_sport_swim_style4">Papillon </string>
+    <string name="device_sport_swim_frequency">Fréquence de course </string>
+    <string name="device_sport_swim_max_frequency">Fréquence la plus élevée </string>
+    <string name="device_sport_swim_avg_frequency">Fréquence moyenne </string>
+    <string name="device_sport_swim_total_Num">Nombre total de coups </string>
+    <string name="device_sport_swim_swolf">Swolf </string>
+    <string name="device_sport_swim_avg_swolf">avg Swolf </string>
+    <string name="device_sport_swim_optimal_swolf">Meilleur Swolf </string>
+    <string name="device_sport_swim_trip_num">Nombre de trajets </string>
+    <string name="device_sport_swim_frequency_unit">Heures / min </string>
+    <string name="spo2_description_title">Qu\'est-ce que SpO2 </string>
+    <string name="spo2_description">SpO2, également appelée saturation en oxygène. Votre taux d\'oxygène dans le sang représente le pourcentage d\'oxygène que vos globules rouges transportent de vos poumons vers le reste de votre corps. Savoir dans quelle mesure votre sang accomplit cette tâche vitale peut vous aider à comprendre votre bien-être général. </string>
+    <string name="spo2_description1">Niveaux de SpO2: </string>
+    <string name="spo2_description2">95-100%: moyenne pour la population </string>
+    <string name="spo2_description3">91–94%: sous la moyenne de la population </string>
+    <string name="spo2_description4">≥90%: pensez à consulter votre médecin </string>
+    <string name="spo2_description5">Plage mesurable: 80 à 100% </string>
+    <string name="spo2_description6">Les mesures prises avec l\'application Blood Oxygen ne sont pas destinées à un usage médical et sont uniquement destinées à des fins générales de remise en forme et de bien-être. </string>
+    <string name="data_init">Initialisation des données, veuillez patienter </string>
+    <string name="call_us1">Besoin d\'aide? Appelez-nous au </string>
+    <string name="call_us2">Ou par e-mail: </string>
     <!--以下定制app翻译-->
     <string name="device_name">nom de l\'appareil</string>
     <string name="device_power">puissance de l\'appareil</string>

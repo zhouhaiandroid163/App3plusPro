@@ -322,6 +322,48 @@
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/tvTitle12" />
 
+                    <TextView
+                        android:id="@+id/tvTitle13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/device_sport_swim_style"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintLeft_toLeftOf="@+id/tvTitle12"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle12" />
+
+                    <TextView
+                        android:id="@+id/tvTitleValue13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00:06:56"
+                        android:textColor="#989CA0"
+                        android:textSize="14sp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvTitle13" />
+
+                    <TextView
+                        android:id="@+id/tvTitle14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/device_sport_swim_trip_num"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintLeft_toLeftOf="@+id/tvTitle13"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle13" />
+
+                    <TextView
+                        android:id="@+id/tvTitleValue14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00:06:56"
+                        android:textColor="#989CA0"
+                        android:textSize="14sp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvTitle14" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -342,6 +384,10 @@
                 <include layout="@layout/device_sport_cal" />
 
                 <include layout="@layout/device_sport_height" />
+
+                <include layout="@layout/device_sport_swim_frequency" />
+
+                <include layout="@layout/device_sport_swim_swolf" />
             </LinearLayout>
 
             <LinearLayout

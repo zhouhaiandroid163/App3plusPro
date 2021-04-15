@@ -169,4 +169,5 @@ public class DialogUtils {
                     }
                 }, true, false, activity.getResources().getString(R.string.setting_dialog_setting));
     }
+
 }

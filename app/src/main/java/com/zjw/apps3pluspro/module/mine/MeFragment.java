@@ -77,7 +77,6 @@ public class MeFragment extends BaseFragment {
     public View initView() {
         homeActivity = (HomeActivity) this.getActivity();
         view = View.inflate(context, R.layout.me_fragment_layout, null);
-
         return view;
     }
 

@@ -147,6 +147,8 @@ public class BleConstant {
     public static final String PLUS_HR = "3PLUS HR+";
     public static final String E08 = "E08";
     public static final String PLUS_Vibe = "3PLUS Vibe+";
+    public static final String W004 = "W004";
+    public static final String PLUS_Vibe_Pro = "3PLUS Vibe+ Pro";
 
     public static final UUID SCAN_RECORD = UUID.fromString("0000fe68-0000-1000-8000-00805f9b34fb");
 

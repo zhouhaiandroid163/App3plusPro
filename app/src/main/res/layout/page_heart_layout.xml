@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutHeart"
+        android:id="@+id/layoutText"
         style="@style/data_page_constraint_layout">
 
         <ImageView

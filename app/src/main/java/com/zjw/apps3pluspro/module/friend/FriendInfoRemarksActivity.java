@@ -76,6 +76,12 @@ public class FriendInfoRemarksActivity extends BaseActivity implements OnClickLi
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        waitDialog.dismiss();
+        super.onDestroy();
+    }
+
     private void initView() {
         // TODO Auto-generated method stub
 

@@ -162,6 +162,7 @@ public class DeviceManager {
     }
 
     private void deleteDeviceInfo(Context context) {
+        DialMarketManager.getInstance().themeVersion = "-1";
         UserSetTools mUserSetTools = BaseApplication.getUserSetTools();
         BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
         mBleDeviceTools.setWeatherSyncTime(0);
