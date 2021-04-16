@@ -3959,6 +3959,7 @@ public class BleService extends Service {
     private void initDeviceParameter() {
         mBleDeviceTools.setSupportNewDeviceCrc(false);
         mBleBaseProtocol.setRcvDataState(0);
+        mBleDeviceTools.setWeatherMode(0);
         mBleDeviceTools.setSupportBatteryPercentage(false);
         mBleDeviceTools.setSupportProtoNewSport(false);
         mBleDeviceTools.setSupportAlexa(false);
