@@ -3018,15 +3018,19 @@ public class BleService extends Service {
 
             //挂电话
             case TelephonyManager.CALL_STATE_IDLE:
-                if (phoneNumber != null) {
-                    if ((System.currentTimeMillis() - IDLE_LAST_TIME > 2000)) {
-                        MyLog.i(TAG, "来电测试 = 通话结束");
-                        writeRXCharacteristic(BtSerializeation.sendCloseCall());
-                    }
-                    IDLE_LAST_TIME = System.currentTimeMillis();
+//                if (phoneNumber != null) {
+//                    if ((System.currentTimeMillis() - IDLE_LAST_TIME > 2000)) {
+//                        MyLog.i(TAG, "来电测试 = 通话结束");
+//                        writeRXCharacteristic(BtSerializeation.sendCloseCall());
+//                    }
+//                    IDLE_LAST_TIME = System.currentTimeMillis();
+//                }
+
+                if(!TextUtils.isEmpty(phoneNumber)){
+                    SysUtils.logContentW(TAG, "phoneNumber is not null and CloseCall cmd");
+                    writeRXCharacteristic(BtSerializeation.sendCloseCall());
                 }
                 break;
-
             // 接电话了！
             case TelephonyManager.CALL_STATE_OFFHOOK:
                 if (phoneNumber != null) {
@@ -3955,6 +3959,11 @@ public class BleService extends Service {
     private void initDeviceParameter() {
         mBleDeviceTools.setSupportNewDeviceCrc(false);
         mBleBaseProtocol.setRcvDataState(0);
+        mBleDeviceTools.setSupportBatteryPercentage(false);
+        mBleDeviceTools.setSupportProtoNewSport(false);
+        mBleDeviceTools.setSupportAlexa(false);
+        mBleDeviceTools.setisReplyOnePack(false);
+        mBleDeviceTools.setSupportNewDeviceCrc(false);
     }
 
     private void connectBleRXError() {
