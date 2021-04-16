@@ -2119,8 +2119,8 @@ public class RequestJson {
         BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
         JSONObject request_json = new JSONObject();
         try {
-            request_json.put("productNo", mBleDeviceTools.get_device_theme_resolving_power_width());
-            request_json.put("productVersion", mBleDeviceTools.get_device_theme_resolving_power_height());
+            request_json.put("productNo", mBleDeviceTools.get_ble_device_type());
+            request_json.put("productVersion", mBleDeviceTools.get_ble_device_version());
             request_json.put("userId", BaseApplication.getUserId());
 //            if (Locale.getDefault().getLanguage().contains("zh")) {
 //                request_json.put("languageCode", "1");
