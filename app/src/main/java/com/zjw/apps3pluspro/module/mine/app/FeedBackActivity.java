@@ -347,6 +347,9 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener {
         if (listBitmaps != null && listBitmaps.size() > 0) {
             listBitmaps.clear();
         }
+        if (waitDialog != null) {
+            waitDialog.dismiss();
+        }
         super.onDestroy();
     }
 
