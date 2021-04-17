@@ -317,7 +317,7 @@ public class ForgetPswActivity extends BaseActivity implements OnClickListener {
                     @Override
                     public void onMySuccess(JSONObject result) {
                         // TODO Auto-generated method stub
-                        waitDialog.close();
+                        waitDialog.dismiss();
 
 
                         MyLog.i(TAG, "请求接口-账号是否注册过 result = " + result.toString());
@@ -360,7 +360,7 @@ public class ForgetPswActivity extends BaseActivity implements OnClickListener {
                     @Override
                     public void onMyError(VolleyError arg0) {
                         // TODO Auto-generated method stub
-                        waitDialog.close();
+                        waitDialog.dismiss();
 
                         MyLog.i(TAG, "请求接口-账号是否注册过 请求失败 = message = " + arg0.getMessage());
 
@@ -390,7 +390,7 @@ public class ForgetPswActivity extends BaseActivity implements OnClickListener {
                     public void onMySuccess(JSONObject result) {
                         // TODO Auto-generated method stub
 
-                        waitDialog.close();
+                        waitDialog.dismiss();
 
 
                         MyLog.i(TAG, "请求接口-发送验证码 result = " + result.toString());
@@ -440,7 +440,7 @@ public class ForgetPswActivity extends BaseActivity implements OnClickListener {
                     public void onMyError(VolleyError arg0) {
                         // TODO Auto-generated method stub
 
-                        waitDialog.close();
+                        waitDialog.dismiss();
 
                         MyLog.i(TAG, "请求接口-发送验证码 请求失败 = message = " + arg0.getMessage());
 
