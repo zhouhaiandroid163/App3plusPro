@@ -977,7 +977,7 @@
     <string name="spo2_description1">SpO2 levels:</string>
     <string name="spo2_description2">95–100%: Average for the population</string>
     <string name="spo2_description3">91–94%: Below average for the population</string>
-    <string name="spo2_description4">≥90%: Consider consult your doctor</string>
+    <string name="spo2_description4">≤90%: Consider consult your doctor</string>
     <string name="spo2_description5">Measurable range: 80–100%</string>
     <string name="spo2_description6">Measurements taken with the Blood Oxygen app are not intended for medical use and are only designed for general fitness and wellness purposes.</string>
     <string name="data_init">Data initialization, please wait</string>

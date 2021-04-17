@@ -977,7 +977,7 @@
     <string name="spo2_description1">Niveles de SpO2: </string>
     <string name="spo2_description2">95–100%: promedio de la población </string>
     <string name="spo2_description3">91–94%: por debajo del promedio de la población </string>
-    <string name="spo2_description4">≥90%: considere consultar a su médico </string>
+    <string name="spo2_description4">≤90%: considere consultar a su médico </string>
     <string name="spo2_description5">Rango medible: 80–100% </string>
     <string name="spo2_description6">Las mediciones tomadas con la aplicación Blood Oxygen no están diseñadas para uso médico y solo están diseñadas para fines generales de bienestar y fitness. </string>
     <string name="data_init">Inicialización de datos, espere </string>
