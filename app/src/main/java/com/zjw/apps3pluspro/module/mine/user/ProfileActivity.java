@@ -1062,6 +1062,9 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
      */
     private void showHeadDialog() {
         // TODO Auto-generated method stub
+        if (dialog != null && dialog.isShowing()) {
+            return;
+        }
         View view = getLayoutInflater().inflate(
                 R.layout.photo_choose_dialog, null);
         dialog = new Dialog(mContext, R.style.transparentFrameWindowStyle);
