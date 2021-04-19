@@ -113,8 +113,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        waitDialog.dismiss();
         UMShareAPI.get(this).release();
+        super.onDestroy();
     }
 
 
