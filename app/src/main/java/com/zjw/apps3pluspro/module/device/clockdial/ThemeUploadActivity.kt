@@ -11,6 +11,7 @@ import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.Message
 import android.provider.MediaStore
@@ -1218,19 +1219,23 @@ class ThemeUploadActivity : BaseActivity() {
     }
 
     fun takingPictures() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                Uri.fromFile(File(Constants.HEAD_IMG, "head.png")))
-        startActivityForResult(intent, Constants.TakingTag) // 采用ForResult打开
+        val mIntent = Intent()
+        mIntent.action = MediaStore.ACTION_IMAGE_CAPTURE
+        mIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(File(Constants.HEAD_IMG, "head.png")))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            mIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0)
+        }
+        startActivityForResult(mIntent, Constants.TakingTag)
     }
 
     /**
      * 相册
      */
     fun PhotoAlbum() {
-        val intent2 = Intent(Intent.ACTION_PICK, null)
-        intent2.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
-        startActivityForResult(intent2, Constants.PhotoTag)
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_PICK
+        startActivityForResult(intent, Constants.PhotoTag)
     }
 
     //拍照相关
@@ -1241,13 +1246,19 @@ class ThemeUploadActivity : BaseActivity() {
             Constants.PhotoTag -> {
                 MyLog.i(TAG, "回调 裁剪图片")
                 if (resultCode == Activity.RESULT_OK) {
-                    try {
-                        if (data != null) {
-                            startCropIntent(data.data!!)
-                        }
-                    } catch (e: FileNotFoundException) {
-                        e.printStackTrace()
+                    val fileSrc: String?
+                    if ("file" == data!!.data!!.scheme) { // 有些低版本机型返回的Uri模式为file
+                        fileSrc = data.data!!.path
+                    } else { // Uri模型为content
+                        val proj = arrayOf(MediaStore.Images.Media.DATA)
+                        val cursor = contentResolver.query(data.data!!, proj, null, null, null)
+                        cursor!!.moveToFirst()
+                        val idx = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                        fileSrc = cursor.getString(idx)
+                        cursor.close()
                     }
+                    // 跳转到图片裁剪页面
+                    startCropIntent(Uri.fromFile(File(fileSrc)))
                 }
             }
             Constants.TakingTag -> {
@@ -1282,7 +1293,6 @@ class ThemeUploadActivity : BaseActivity() {
      * @param uri
      * @throws FileNotFoundException
      */
-    @Throws(FileNotFoundException::class)
     private fun startCropIntent(uri: Uri) {
         imageUri = Uri.parse(Constants.IMAGE_FILE_LOCATION);
         val intent = Intent("com.android.camera.action.CROP")

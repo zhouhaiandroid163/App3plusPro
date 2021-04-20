@@ -7,14 +7,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -1127,20 +1130,30 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
      * 拍照
      */
     void TakingPictures() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                Uri.fromFile(new File(Constants.HEAD_IMG, "head.png")));
-        startActivityForResult(intent, Constants.TakingTag);// 采用ForResult打开
+//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(Constants.HEAD_IMG, "head.png")));
+//        startActivityForResult(intent, Constants.TakingTag);// 采用ForResult打开
+        // 启动拍照,并保存到临时文件
+        Intent mIntent = new Intent();
+        mIntent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+        mIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Constants.HEAD_IMG, "head.png")));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            mIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+        }
+        startActivityForResult(mIntent, Constants.TakingTag);
     }
 
     /**
      * 相册
      */
     void PhotoAlbum() {
-        Intent intent2 = new Intent(Intent.ACTION_PICK, null);
-        intent2.setDataAndType(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        startActivityForResult(intent2, Constants.PhotoTag);
+//        Intent intent2 = new Intent(Intent.ACTION_PICK, null);
+//        intent2.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+//        startActivityForResult(intent2, Constants.PhotoTag);
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_PICK);
+        startActivityForResult(intent, Constants.PhotoTag);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1148,12 +1161,21 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
             case Constants.PhotoTag:
                 MyLog.i(TAG, "回调 裁剪图片");
                 if (resultCode == RESULT_OK) {
-//                    cropPhoto(data.getData());// 裁剪图片
-                    try {
-                        startCropIntent(data.getData());
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
+                    String fileSrc;
+                    if ("file".equals(data.getData().getScheme())) {
+                        // 有些低版本机型返回的Uri模式为file
+                        fileSrc = data.getData().getPath();
+                    } else {
+                        // Uri模型为content
+                        String[] proj = {MediaStore.Images.Media.DATA};
+                        Cursor cursor = getContentResolver().query(data.getData(), proj, null, null, null);
+                        cursor.moveToFirst();
+                        int idx = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                        fileSrc = cursor.getString(idx);
+                        cursor.close();
                     }
+                    // 跳转到图片裁剪页面
+                    startCropIntent(Uri.fromFile(new File(fileSrc)));
                 }
                 break;
             case Constants.TakingTag:
@@ -1162,13 +1184,9 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 //                    File temp = new File(Constants.HeadFilePath + "/head.png");
 //                    cropPhoto(Uri.fromFile(temp));// 裁剪图片
 
-
                     tempFile = new File(Constants.HEAD_IMG + "head.png");
-                    try {
-                        startCropIntent(Uri.fromFile(tempFile));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    String fileSrc = tempFile.getAbsolutePath();
+                    startCropIntent(Uri.fromFile(new File(fileSrc)));
                 }
 
                 break;
@@ -1282,8 +1300,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
      * @param uri
      * @throws FileNotFoundException
      */
-    private void startCropIntent(Uri uri) throws FileNotFoundException {
-
+    private void startCropIntent(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
