@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -35,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:ellipsize="end"
+            android:gravity="center_horizontal"
             android:lines="1"
             android:text="@string/sleep_gang"
             android:textColor="#ffffff"
