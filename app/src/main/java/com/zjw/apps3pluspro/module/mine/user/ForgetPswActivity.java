@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -132,29 +133,41 @@ public class ForgetPswActivity extends BaseActivity implements OnClickListener {
 
         btn_forget_account_getcode.setClickable(false);
 
-        new Thread(new Runnable() {
+//        new Thread(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                // TODO Auto-generated method stub
+//                for (; smsTime_phone > 0; smsTime_phone--) {
+//
+//                    handler_phone.sendEmptyMessage(1);
+//                    if (smsTime_phone <= 0) {
+//                        break;
+//                    }
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        // TODO Auto-generated catch block
+//                        e.printStackTrace();
+//                    }
+//                }
+//                handler_phone.sendEmptyMessage(2);
+//            }
+//        }).start();
 
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                for (; smsTime_phone > 0; smsTime_phone--) {
-
-                    handler_phone.sendEmptyMessage(1);
-                    if (smsTime_phone <= 0) {
-                        break;
-                    }
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-                handler_phone.sendEmptyMessage(2);
+        CountDownTimer timer = new CountDownTimer(smsTime_phone * 1000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                btn_forget_account_getcode.setText(getString(R.string.resend) + "(" + millisUntilFinished / 1000 + ")");
             }
-        }).start();
-    }
 
+            public void onFinish() {
+                btn_forget_account_getcode.setText(R.string.send_code);
+                btn_forget_account_getcode.setClickable(true);
+                smsTime_phone = 120;
+            }
+        };
+        timer.start();
+    }
 
     private void initView() {
 
