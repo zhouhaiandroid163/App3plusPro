@@ -520,7 +520,7 @@ public class DeviceFragment extends BaseFragment {
                 setDeviceEnable(true);
                 break;
             case BleConstant.STATE_CONNECTED_TIMEOUT:
-                setDeviceEnable(true);
+                setDeviceEnable(false);
                 MyLog.i(TAG, "setBattery() state = STATE_CONNECTED_TIMEOUT");
                 tvSyncState.setText(getResources().getString(R.string.connect_timeout));
                 break;

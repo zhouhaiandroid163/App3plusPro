@@ -1274,6 +1274,7 @@ public class BleService extends Service {
     private void displayData1(String data) {
         if (data != null) {
             SysUtils.logContentI(TAG, TAG_CONTENT + "displayData1 : " + data);
+            SysUtils.logAppRunning(TAG, TAG_CONTENT + "displayData1 : " + data);
 //            if (System.currentTimeMillis() - lastDisplayTime < 5 && lastData.equalsIgnoreCase(data)) {
 //                SysUtils.logContentI(TAG, TAG_CONTENT + "displayData1 : repeat data");
 //            } else {
@@ -3867,6 +3868,7 @@ public class BleService extends Service {
     private void displayData4(String data) {
         if (data != null) {
             SysUtils.logContentI(TAG, "displayData4 : " + data);
+            SysUtils.logAppRunning(TAG, "displayData4 : " + data);
 
 //            if (System.currentTimeMillis() - lastDisplayTime < 5 && lastData.equalsIgnoreCase(data)) {
 //                SysUtils.logContentI(TAG, "displayData4 : repeat data");
