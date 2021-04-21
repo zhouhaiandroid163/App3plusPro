@@ -93,7 +93,7 @@ public class FactoryTools {
                 result_str += "factory" + "factory/" + "FileInfo/data  = " + file_info.getData() + "\n";
                 result_str += "factory" + "factory/" + "FileInfo/data  = " + BleTools.printHexString(file_info.getData().toByteArray()) + "\n";
 
-                SysUtils.logDeviceContentI("Device log", file_info.getName());
+//                SysUtils.logDeviceContentI("Device log", file_info.getName());
                 SysUtils.logDeviceContentI("Device log", SysUtils.hexStr2Str(SysUtils.printHexString(file_info.getData().toByteArray()).replace(" ", "")));
                 break;
 

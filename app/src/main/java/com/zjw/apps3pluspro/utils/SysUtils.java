@@ -173,7 +173,7 @@ public class SysUtils {
     public static void logDeviceContentI(String tag, String content) {
         Log.i(tag, content);
         if (Constants.SAVE_LOG) {
-            SysUtils.writeTxtToFile("【info】" + tag + ":" + content, Constants.P_LOG_PATH, Constants.P_DEVICE_LOG_BLE_FILENAME);
+            SysUtils.writeTxtToFile(/*"【info】" + tag + ":" + */content, Constants.P_LOG_PATH, Constants.P_DEVICE_LOG_BLE_FILENAME);
         }
     }
 
@@ -188,7 +188,7 @@ public class SysUtils {
                     file.getParentFile().mkdirs();
                     file.createNewFile();
                 }
-                if(file.length() > 5 * 1024 * 1000L){
+                if (file.length() > 5 * 1024 * 1000L) {
                     file.delete();
                     Log.i("xxxxx", "删除文件");
                 }
@@ -806,7 +806,7 @@ public class SysUtils {
         if (scale < 1) {
             scale = 1;
         }
-        Log.i(TAG,"图片分辨率压缩比例：" + scale);
+        Log.i(TAG, "图片分辨率压缩比例：" + scale);
 
         opts.inSampleSize = scale;
 
