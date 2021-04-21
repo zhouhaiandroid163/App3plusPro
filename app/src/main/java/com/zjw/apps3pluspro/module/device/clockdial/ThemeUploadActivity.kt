@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
@@ -15,6 +16,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.Message
 import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -41,6 +43,7 @@ import com.zjw.apps3pluspro.module.device.entity.ThemeModle
 import com.zjw.apps3pluspro.network.okhttp.MyOkHttpClient
 import com.zjw.apps3pluspro.utils.*
 import com.zjw.apps3pluspro.utils.DialMarketManager.GetDialDetailsListen
+import com.zjw.apps3pluspro.utils.DialogUtils.DialogClickListener
 import com.zjw.apps3pluspro.utils.log.MyLog
 import com.zjw.apps3pluspro.view.ColorPickerView
 import com.zjw.apps3pluspro.view.ColorRoundView
@@ -1344,5 +1347,40 @@ class ThemeUploadActivity : BaseActivity() {
         TimerFiveHandler?.removeCallbacksAndMessages(null)
         protoHandler?.removeCallbacksAndMessages(null)
         super.onDestroy()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
+        when (requestCode) {
+            AuthorityManagement.REQUEST_EXTERNAL_STORAGE -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    MyLog.i(TAG, "SD卡权限 回调允许")
+                } else {
+                    MyLog.i(TAG, "SD卡权限 回调拒绝")
+                    showSettingDialog(getString(R.string.setting_dialog_storage))
+                }
+            }
+            AuthorityManagement.REQUEST_EXTERNAL_CALL_CAMERA -> if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                MyLog.i(TAG, "拍照权限 回调允许")
+                //                    TakingPictures();
+            } else {
+                MyLog.i(TAG, "拍照权限 回调拒绝")
+                showSettingDialog(getString(R.string.setting_dialog_call_camera))
+            }
+            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
+    fun showSettingDialog(title: String?) {
+        DialogUtils.showBaseDialog(this, this.getResources().getString(R.string.dialog_prompt), title, this.getDrawable(R.drawable.black_corner_bg), object : DialogClickListener {
+            override fun OnOK() {
+                val intent = Intent()
+                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                val uri = Uri.fromParts("package", packageName, null)
+                intent.data = uri
+                startActivity(intent)
+            }
+
+            override fun OnCancel() {}
+        }, true, false, resources.getString(R.string.setting_dialog_setting))
     }
 }
