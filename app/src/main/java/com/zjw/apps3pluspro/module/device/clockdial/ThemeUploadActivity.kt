@@ -1224,7 +1224,7 @@ class ThemeUploadActivity : BaseActivity() {
     fun takingPictures() {
         val mIntent = Intent()
         mIntent.action = MediaStore.ACTION_IMAGE_CAPTURE
-        mIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(File(Constants.HEAD_IMG, "head.png")))
+        mIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(File(Constants.HEAD_IMG, imageName)))
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             mIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0)
         }
@@ -1244,6 +1244,7 @@ class ThemeUploadActivity : BaseActivity() {
     //拍照相关
     private var imageUri: Uri? = null
     private var tempFile: File? = null
+    private val imageName = "theme.png"
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             Constants.PhotoTag -> {
@@ -1267,7 +1268,7 @@ class ThemeUploadActivity : BaseActivity() {
             Constants.TakingTag -> {
                 MyLog.i(TAG, "回调 拍摄照片")
                 if (resultCode == Activity.RESULT_OK) {
-                    tempFile = File(Constants.HEAD_IMG + "head.png")
+                    tempFile = File(Constants.HEAD_IMG + imageName)
                     try {
                         startCropIntent(Uri.fromFile(tempFile))
                     } catch (e: FileNotFoundException) {
@@ -1278,6 +1279,10 @@ class ThemeUploadActivity : BaseActivity() {
             Constants.TailoringResult -> {
                 MyLog.i(TAG, "回调 裁剪完成 imageUri = $imageUri")
                 if (resultCode == Activity.RESULT_OK) {
+                    val themePicture = File(Constants.HEAD_IMG + imageName)
+                    if (themePicture.exists()) {
+                        themePicture.delete()
+                    }
                     if (imageUri != null) {
                         val bitmap = BmpUtils.decodeUriAsBitmap(context, imageUri)
                         //                    setPicToView(bitmap);// 保存在SD卡中
