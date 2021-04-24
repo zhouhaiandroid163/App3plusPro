@@ -162,7 +162,7 @@ public class MeFragment extends BaseFragment {
         }
         if (!JavaUtil.checkIsNull(heightValue)) {
             if (mUserSetTools.get_user_unit_type()) {
-                tv_profile_height.setText(heightValue + getString(R.string.centimeter));
+                tv_profile_height.setText(heightValue + " " + getString(R.string.centimeter));
             } else {
                 int in = MyUtils.CmToInInt(heightValue);
                 tv_profile_height.setText(String.format("%1$2d'%2$2d\"", in / 12, in % 12));
@@ -170,9 +170,9 @@ public class MeFragment extends BaseFragment {
         }
         if (!JavaUtil.checkIsNull(weightValue)) {
             if (mUserSetTools.get_user_unit_type()) {
-                tv_profile_weight.setText(weightValue + getString(R.string.kg));
+                tv_profile_weight.setText(weightValue + " " + getString(R.string.kg));
             } else {
-                tv_profile_weight.setText(MyUtils.KGToLBString(weightValue, context) + getString(R.string.unit_lb));
+                tv_profile_weight.setText(MyUtils.KGToLBString(weightValue, context) + " " + getString(R.string.unit_lb));
             }
         }
     }

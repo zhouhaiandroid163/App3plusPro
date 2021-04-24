@@ -682,7 +682,7 @@ public class DataFragment extends BaseFragment {
 
         tvExerciseStep.setText(steps);
         tvExerciseDistance.setText(distance);
-        tvExerciseCal.setText(calory + " ");
+        tvExerciseCal.setText(calory);
 
         String[] steps24 = mMovementInfo.getData().split(",");
         int max = 0;
@@ -1005,16 +1005,16 @@ public class DataFragment extends BaseFragment {
                 ivGpsSportTitle.setBackgroundDrawable(imageDrawable);
                 tvUpdateTime.setText(mSportModleInfo.getTime());
                 if (mSportModleInfo.getUi_type().equals("0")) {
-                    tvValue0.setText(mSportModleInfo.getTotal_step() + getResources().getString(R.string.steps) + "  " + getResources().getString(R.string.sport_time) + " " +
+                    tvValue0.setText(mSportModleInfo.getTotal_step() + " " +  getResources().getString(R.string.steps) + "  " + getResources().getString(R.string.sport_time) + " " +
                             NewTimeUtils.getTimeString(Integer.valueOf(mSportModleInfo.getSport_duration())));
                 } else if (mSportModleInfo.getUi_type().equals("1")) {
-                    tvValue0.setText(getResources().getString(R.string.consume) + mSportModleInfo.getCalorie() + getResources().getString(R.string.big_calory) + "  " + getResources().getString(R.string.sport_time) + " " +
+                    tvValue0.setText(getResources().getString(R.string.consume) + " " + mSportModleInfo.getCalorie() + " " + getResources().getString(R.string.big_calory) + "  " + getResources().getString(R.string.sport_time) + " " +
                             NewTimeUtils.getTimeString(Integer.valueOf(mSportModleInfo.getSport_duration())));
                 } else if (mSportModleInfo.getUi_type().equals("2")) {
-                    tvValue0.setText(mSportModleInfo.getTotal_step() + getResources().getString(R.string.steps) + "  " + getResources().getString(R.string.sport_time) + " " +
+                    tvValue0.setText(mSportModleInfo.getTotal_step() + " " + getResources().getString(R.string.steps) + "  " + getResources().getString(R.string.sport_time) + " " +
                             NewTimeUtils.getTimeString(Integer.valueOf(mSportModleInfo.getSport_duration())));
                 } else {
-                    tvValue0.setText(getResources().getString(R.string.consume) + mSportModleInfo.getCalorie() + getResources().getString(R.string.big_calory) + "  " + getResources().getString(R.string.sport_time) + " " +
+                    tvValue0.setText(getResources().getString(R.string.consume) + " " + mSportModleInfo.getCalorie() + getResources().getString(R.string.big_calory) + "  " + getResources().getString(R.string.sport_time) + " " +
                             NewTimeUtils.getTimeString(Integer.valueOf(mSportModleInfo.getSport_duration())));
                 }
 
@@ -1032,10 +1032,10 @@ public class DataFragment extends BaseFragment {
                     case 3:
                     case 4:
                     case 5:
-                        tvValue1.setText(mSportModleInfo.getReportTotalStep() + getResources().getString(R.string.steps) + "  " + getResources().getString(R.string.sport_time) + " " + NewTimeUtils.getTimeString(mSportModleInfo.getReportDuration()));
+                        tvValue1.setText(mSportModleInfo.getReportTotalStep() + " " + getResources().getString(R.string.steps) + "  " + getResources().getString(R.string.sport_time) + " " + NewTimeUtils.getTimeString(mSportModleInfo.getReportDuration()));
                         break;
                     default:
-                        tvValue1.setText(getResources().getString(R.string.consume) + mSportModleInfo.getReportCal() + getResources().getString(R.string.big_calory) + "  " + getResources().getString(R.string.sport_time) + " " + NewTimeUtils.getTimeString(mSportModleInfo.getReportDuration()));
+                        tvValue1.setText(getResources().getString(R.string.consume) + mSportModleInfo.getReportCal() + " " + getResources().getString(R.string.big_calory) + "  " + getResources().getString(R.string.sport_time) + " " + NewTimeUtils.getTimeString(mSportModleInfo.getReportDuration()));
                         break;
                 }
             }
@@ -1410,7 +1410,7 @@ public class DataFragment extends BaseFragment {
             //最近一次数据
             String last_value = mContinuitySpo2Model.getLastValue();
             if (!JavaUtil.checkIsNull(last_value)) {
-                tvBloodOxygenTitle.setText(getResources().getString(R.string.spo2_str) + last_value + "%");
+                tvBloodOxygenTitle.setText(getResources().getString(R.string.spo2_str) + " " + last_value + "%");
                 layoutBloodOxygenNoData.setVisibility(View.GONE);
                 layoutBloodOxygenShowData.setVisibility(View.VISIBLE);
             } else {

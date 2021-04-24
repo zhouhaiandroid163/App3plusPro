@@ -81,7 +81,7 @@
                     android:id="@+id/tvValue2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="3dp"
+                    android:layout_marginStart="4dp"
                     android:text="@string/sleep_gang"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
@@ -160,7 +160,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/steps"
                             android:textColor="@color/white_70"
                             android:textSize="12sp" />
@@ -199,7 +199,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/big_calory"
                             android:textColor="@color/white_70"
                             android:textSize="12sp" />
@@ -250,7 +250,7 @@
                             android:id="@+id/tvDistanceUnit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="4dp"
                             android:text="km"
                             android:textColor="@color/white_70"
                             android:textSize="12sp" />
@@ -315,7 +315,7 @@
                             android:id="@+id/tvSpeedUnit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="4dp"
                             android:text="km/h"
                             android:textColor="@color/white_70"
                             android:textSize="12sp" />
@@ -401,7 +401,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/steps"
                             android:textColor="@color/white_70"
                             android:textSize="12sp" />
@@ -440,7 +440,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/big_calory"
                             android:textColor="@color/white_70"
                             android:textSize="12sp" />
@@ -491,7 +491,7 @@
                             android:id="@+id/tvDistanceUnit2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="4dp"
                             android:text="km"
                             android:textColor="@color/white_70"
                             android:textSize="12sp" />
@@ -575,7 +575,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/big_calory"
                             android:textColor="@color/white_70"
                             android:textSize="12sp" />
@@ -616,7 +616,7 @@
                             android:id="@+id/tvDistanceUnit5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="4dp"
                             android:text="km"
                             android:textColor="@color/white_70"
                             android:textSize="12sp" />
@@ -692,7 +692,7 @@
                             android:id="@+id/tvSpeedUnit5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="4dp"
                             android:text="km/h"
                             android:textColor="@color/white_70"
                             android:textSize="12sp" />
@@ -753,7 +753,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/steps"
                             android:textColor="@color/white_70"
                             android:textSize="12sp" />
@@ -847,7 +847,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
+                            android:layout_marginStart="4dp"
                             android:text="@string/big_calory"
                             android:textColor="@color/white_70"
                             android:textSize="12sp" />

@@ -480,11 +480,11 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
             tv_profile_init_unit.setText(R.string.Metric);
 
             if (!TextUtils.isEmpty(heightValue)) {
-                tv_profile_init_height.setText(heightValue + getString(R.string.centimeter));
+                tv_profile_init_height.setText(heightValue + " " + getString(R.string.centimeter));
             }
 
             if (!TextUtils.isEmpty(weightValue)) {
-                tv_profile_init_weight.setText(weightValue + getString(R.string.kg));
+                tv_profile_init_weight.setText(weightValue + " " + getString(R.string.kg));
             }
 
         } else {
@@ -500,7 +500,7 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
             }
 
             if (!TextUtils.isEmpty(weightValue)) {
-                tv_profile_init_weight.setText(MyUtils.KGToLBString(weightValue, this) + getString(R.string.unit_lb));
+                tv_profile_init_weight.setText(MyUtils.KGToLBString(weightValue, this) + " " + getString(R.string.unit_lb));
             }
 
 
@@ -673,9 +673,9 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
                     weightValue = String.valueOf(DefaultVale.USER_WEIGHT);
                 }
                 if (mUserSetTools.get_user_unit_type()) {
-                    tv_profile_init_weight.setText(weightValue + getString(R.string.kg));
+                    tv_profile_init_weight.setText(weightValue + " " + getString(R.string.kg));
                 } else {
-                    tv_profile_init_weight.setText(MyUtils.KGToLBString(weightValue, mContext) + getString(R.string.unit_lb));
+                    tv_profile_init_weight.setText(MyUtils.KGToLBString(weightValue, mContext) + " " + getString(R.string.unit_lb));
                 }
 
                 dialog.cancel();
@@ -809,7 +809,7 @@ public class ProfileInitActivity extends BaseActivity implements OnClickListener
                     heightValue = String.valueOf(DefaultVale.USER_HEIGHT);
                 }
                 if (mUserSetTools.get_user_unit_type()) {
-                    tv_profile_init_height.setText(heightValue + getString(R.string.centimeter));
+                    tv_profile_init_height.setText(heightValue + " " + getString(R.string.centimeter));
                 } else {
                     int inResult = pvFt * 12 + pvIn;
                     heightValue = String.valueOf((int) (inResult * 2.54));

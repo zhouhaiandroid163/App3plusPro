@@ -84,12 +84,12 @@ public class MoreSportRecyclerAdapter extends RecyclerView.Adapter implements Vi
                 case 3:
                 case 4:
                 case 5:
-                    itemHolder.tvValue1.setText(mSportModleInfo.getReportTotalStep() + "");
+                    itemHolder.tvValue1.setText(String.valueOf(mSportModleInfo.getReportTotalStep()));
                     itemHolder.tvValue2.setText(context.getResources().getString(R.string.steps) + "，" + context.getResources().getString(R.string.sport_time) + " " +
                             NewTimeUtils.getTimeString(mSportModleInfo.getReportDuration()));
                     break;
                 default:
-                    itemHolder.tvValue1.setText(mSportModleInfo.getReportCal() + "");
+                    itemHolder.tvValue1.setText(String.valueOf(mSportModleInfo.getReportCal()));
                     itemHolder.tvValue2.setText(context.getResources().getString(R.string.big_calory) + "，" + context.getResources().getString(R.string.sport_time) + " " +
                             NewTimeUtils.getTimeString(mSportModleInfo.getReportDuration()));
                     break;

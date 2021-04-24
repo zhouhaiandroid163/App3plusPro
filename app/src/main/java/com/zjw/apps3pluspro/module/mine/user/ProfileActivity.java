@@ -284,7 +284,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 
         if (!JavaUtil.checkIsNull(heightValue)) {
             if (mUserSetTools.get_user_unit_type()) {
-                tv_profile_height.setText(heightValue + getString(R.string.centimeter));
+                tv_profile_height.setText(heightValue + " " + getString(R.string.centimeter));
             } else {
                 tv_profile_height.setText(String.format("%1$2d'%2$2d\"", pvFt, pvIn));
             }
@@ -292,9 +292,9 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 
         if (!JavaUtil.checkIsNull(weightValue)) {
             if (mUserSetTools.get_user_unit_type()) {
-                tv_profile_weight.setText(weightValue + getString(R.string.kg));
+                tv_profile_weight.setText(weightValue + " " + getString(R.string.kg));
             } else {
-                tv_profile_weight.setText(MyUtils.KGToLBString(weightValue, mContext) + getString(R.string.unit_lb));
+                tv_profile_weight.setText(MyUtils.KGToLBString(weightValue, mContext) + " " + getString(R.string.unit_lb));
             }
         }
 
@@ -781,7 +781,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
                 dialog.cancel();
                 if (!JavaUtil.checkIsNull(heightValue)) {
                     if (mUserSetTools.get_user_unit_type()) {
-                        tv_profile_height.setText(heightValue + getString(R.string.centimeter));
+                        tv_profile_height.setText(heightValue +  " " +getString(R.string.centimeter));
                     } else {
                         int inResult = pvFt * 12 + pvIn;
                         heightValue = String.valueOf((int) (inResult * 2.54));
@@ -868,11 +868,11 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
             MyLog.i(TAG, "个人信息设置 = heightUnit_en = " + getString(R.string.centimeter));
 
             if (!TextUtils.isEmpty(heightValue)) {
-                tv_profile_height.setText(heightValue + getString(R.string.centimeter));
+                tv_profile_height.setText(heightValue + " " +getString(R.string.centimeter));
             }
 
             if (!TextUtils.isEmpty(weightValue)) {
-                tv_profile_weight.setText(weightValue + getString(R.string.kg));
+                tv_profile_weight.setText(weightValue +  " " +getString(R.string.kg));
             }
         } else {
 
@@ -891,7 +891,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
                 tv_profile_height.setText(String.format("%1$2d'%2$2d\"", pvFt, pvIn));
             }
             if (!TextUtils.isEmpty(weightValue)) {
-                tv_profile_weight.setText(MyUtils.KGToLBString(weightValue, this) + getString(R.string.unit_lb));
+                tv_profile_weight.setText(MyUtils.KGToLBString(weightValue, this) + " " + getString(R.string.unit_lb));
             }
         }
 
@@ -933,9 +933,9 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
         if (!JavaUtil.checkIsNull(weightValue)) {
 
             if (mUserSetTools.get_user_unit_type()) {
-                tv_profile_weight.setText(weightValue + getString(R.string.kg));
+                tv_profile_weight.setText(weightValue + " " + getString(R.string.kg));
             } else {
-                tv_profile_weight.setText(MyUtils.KGToLBString(weightValue, mContext) + getString(R.string.unit_lb));
+                tv_profile_weight.setText(MyUtils.KGToLBString(weightValue, mContext) + " " + getString(R.string.unit_lb));
             }
 
             mUserSetTools.set_user_weight(Integer.valueOf(weightValue));

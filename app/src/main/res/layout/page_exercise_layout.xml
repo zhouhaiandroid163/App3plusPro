@@ -45,6 +45,7 @@
 
             <TextView
                 style="@style/data_page_unit"
+                android:layout_marginStart="4dip"
                 android:text="@string/steps"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="@+id/tvExerciseStep"
@@ -92,12 +93,13 @@
                 <TextView
                     android:id="@+id/tvExerciseDistance"
                     style="@style/data_page_number"
-                    android:layout_marginLeft="4dip"
+                    android:layout_marginStart="4dip"
                     android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/tvDistanceUnit"
                     style="@style/data_page_unit"
+                    android:layout_marginStart="4dip"
                     android:text="@string/sport_distance_unit"
                     android:textColor="@color/white" />
 
@@ -110,11 +112,12 @@
                 <TextView
                     android:id="@+id/tvExerciseCal"
                     style="@style/data_page_number"
-                    android:layout_marginLeft="4dip"
+                    android:layout_marginStart="4dip"
                     android:textColor="@color/white" />
 
                 <TextView
                     style="@style/data_page_unit"
+                    android:layout_marginStart="4dip"
                     android:text="@string/big_calory"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="@+id/layoutTempStep"

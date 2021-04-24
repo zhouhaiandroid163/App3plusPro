@@ -146,37 +146,37 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
             tvTitleValue2.text = NewTimeUtils.getStringDate(sportModleInfo?.reportSportStartTime!!, NewTimeUtils.HHMMSS) + " - " + NewTimeUtils.getStringDate(sportModleInfo?.reportSportEndTime!!, NewTimeUtils.HHMMSS)
 
             if (isUserM(sportType)) {
-                tvTitleValue3.text = sportModleInfo?.reportDistance.toString() + resources.getString(R.string.device_sport_unit)
+                tvTitleValue3.text = sportModleInfo?.reportDistance.toString() + " " + resources.getString(R.string.device_sport_unit)
             } else {
-                tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0) + resources.getString(R.string.sport_distance_unit)
+                tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0) + " " + resources.getString(R.string.sport_distance_unit)
             }
 
-            tvTitleValue4.text = sportModleInfo?.reportCal.toString() + resources.getString(R.string.big_calory)
+            tvTitleValue4.text = sportModleInfo?.reportCal.toString() + " " + resources.getString(R.string.big_calory)
             tvTitleValue5.text = avgPaceString
-            tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + resources.getString(R.string.speed_unit)
-            tvTitleValue7.text = sportModleInfo?.reportAvgHeart!!.toString() + resources.getString(R.string.bpm)
-            tvTitleValue8.text = sportModleInfo?.reportMaxHeart!!.toString() + resources.getString(R.string.bpm)
-            tvTitleValue9.text = sportModleInfo?.reportTotalStep!!.toString() + resources.getString(R.string.steps)
-            tvTitleValue10.text = (sportModleInfo?.reportTotalStep!! / (sportModleInfo?.reportDuration!! / 60.0)).toInt().toString() + resources.getString(R.string.device_sport_step_speed_unit)
-            tvTitleValue11.text = sportModleInfo?.reportCumulativeRise!!.toString() + resources.getString(R.string.device_sport_unit)
-            tvTitleValue12.text = sportModleInfo?.reportCumulativeDecline!!.toString() + resources.getString(R.string.device_sport_unit)
+            tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + " " + resources.getString(R.string.speed_unit)
+            tvTitleValue7.text = sportModleInfo?.reportAvgHeart!!.toString() + " " + resources.getString(R.string.bpm)
+            tvTitleValue8.text = sportModleInfo?.reportMaxHeart!!.toString() + " " + resources.getString(R.string.bpm)
+            tvTitleValue9.text = sportModleInfo?.reportTotalStep!!.toString() + " " + resources.getString(R.string.steps)
+            tvTitleValue10.text = (sportModleInfo?.reportTotalStep!! / (sportModleInfo?.reportDuration!! / 60.0)).toInt().toString() + " " + resources.getString(R.string.device_sport_step_speed_unit)
+            tvTitleValue11.text = sportModleInfo?.reportCumulativeRise!!.toString() + " " + resources.getString(R.string.device_sport_unit)
+            tvTitleValue12.text = sportModleInfo?.reportCumulativeDecline!!.toString() + " " + resources.getString(R.string.device_sport_unit)
             tvTitleValue13.text = DeviceSportManager.instance.getSwimStyle(sportModleInfo?.reportSwimStyle, context)
 
             if (unitType != 1) {
                 if (isUserM(sportType)) {
-                    tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! * 3.28f) + resources.getString(R.string.unit_ft)
+                    tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
                 } else {
-                    tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) + resources.getString(R.string.unit_mi)
+                    tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) + " " + resources.getString(R.string.unit_mi)
                 }
 
-                tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + resources.getString(R.string.speed_unit_mi)
-                tvTitleValue11.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f) + resources.getString(R.string.unit_ft)
-                tvTitleValue12.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + resources.getString(R.string.unit_ft)
+                tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + " " + resources.getString(R.string.speed_unit_mi)
+                tvTitleValue11.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
+                tvTitleValue12.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
             }
 
             tvTrainingEffectScore.text = sportModleInfo?.reportTrainingEffect!!.toString()
-            tvMaxOxygenIntakeTitleValue.text = sportModleInfo?.reportMaxOxygenIntake!!.toString() + resources.getString(R.string.device_sport_maxOxygenIntake_unit)
-            tvRecoveryTimeValue.text = sportModleInfo?.reportRecoveryTime!!.toString() + resources.getString(R.string.hour)
+            tvMaxOxygenIntakeTitleValue.text = sportModleInfo?.reportMaxOxygenIntake!!.toString() + " " + resources.getString(R.string.device_sport_maxOxygenIntake_unit)
+            tvRecoveryTimeValue.text = sportModleInfo?.reportRecoveryTime!!.toString() + " " + resources.getString(R.string.hour)
 
             tvHeartAvgHeart.text = sportModleInfo?.reportAvgHeart!!.toString()
             tvHeartMaxHeart.text = sportModleInfo?.reportMaxHeart!!.toString()
