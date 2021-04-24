@@ -176,7 +176,7 @@
                             <TextView
                                 android:id="@+id/tv_temp_body_last_unit"
                                 style="@style/data_page_unit"
-                                android:layout_marginStart="2dp"
+                                android:layout_marginStart="4dp"
                                 android:text="@string/bpm"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />

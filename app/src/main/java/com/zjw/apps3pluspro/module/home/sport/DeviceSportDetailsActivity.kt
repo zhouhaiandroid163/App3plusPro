@@ -652,6 +652,8 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
             goneHeight()
         }
 
+        tvTitle3.visibility = View.VISIBLE
+        tvTitleValue3.visibility = View.VISIBLE
     }
 
     private fun goneType2(recordPointDataValid1: String, recordPointDataValid2: String) {

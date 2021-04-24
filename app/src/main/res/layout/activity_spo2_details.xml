@@ -124,6 +124,7 @@
                             <TextView
                                 android:id="@+id/tv_spo2_max_value"
                                 style="@style/data_page_number"
+                                android:layout_marginStart="4dp"
                                 android:textColor="#000011" />
 
                             <TextView
@@ -141,6 +142,7 @@
                             <TextView
                                 android:id="@+id/tv_spo2_min_value"
                                 style="@style/data_page_number"
+                                android:layout_marginStart="4dp"
                                 android:textColor="#000011" />
 
                             <TextView
