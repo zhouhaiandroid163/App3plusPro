@@ -76,6 +76,10 @@ public class AnalyticalUtils {
 
             float percent = Float.parseFloat(sleep_time) / Float.parseFloat(target);
             int percent_target = (int) (percent * 100);
+
+            if (percent_target > 100) {
+                percent_target = 100;
+            }
             result = String.valueOf(percent_target);
         }
 
