@@ -59,7 +59,7 @@ public class RequestJson {
     //测试地址
     public static final String requestUrl = "http://47.106.117.114:8090/zh_watch/";
     //本地地址
-//    public static final String requestUrl = "http://192.168.0.13:8080/zh_watch/";
+//    public static final String requestUrl = "http://192.168.0.12:8080/zh_watch/";
 
 
     //    public static final String userLoginUrl = requestUrl + "/userApi/userLogin";
@@ -1215,7 +1215,7 @@ public class RequestJson {
                 request_deviceInfo_json.put("clockValid", 0);
             }
 
-            if(isUpload){
+            if (isUpload) {
                 request_deviceInfo_json.put("deviceUnixTime", System.currentTimeMillis());
             }
 
@@ -2027,7 +2027,12 @@ public class RequestJson {
             request_json.put("location", mBleDeviceTools.getWeatherCityID());
             request_json.put("lang", SysUtils.getNewLanguage(context));
             request_json.put("unit", "m");
-        } catch (JSONException e) {
+            request_json.put("q", mBleDeviceTools.getWeatherCity());
+            if (mBleDeviceTools.getWeatherGps().split(",").length == 2) {
+                request_json.put("lon", mBleDeviceTools.getWeatherGps().split(",")[0]);
+                request_json.put("lat", mBleDeviceTools.getWeatherGps().split(",")[1]);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new RequestInfo(request_json, getWeatherArea);

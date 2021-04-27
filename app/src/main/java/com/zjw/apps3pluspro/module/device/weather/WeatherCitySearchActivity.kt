@@ -141,8 +141,8 @@ class WeatherCitySearchActivity : BaseActivity() {
         val layoutCity = mLinearLayout.findViewById<LinearLayout>(R.id.layoutCity)
         tvItemName.text = entity.name
         layoutCity.setOnClickListener { v: View? ->
-            mBleDeviceTools.setWeatherCity(entity.name)
-            mBleDeviceTools.setWeatherCityID(entity.id)
+            mBleDeviceTools.weatherCity = entity.name
+            mBleDeviceTools.weatherCityID = entity.id
             setResult(Activity.RESULT_OK)
             finish()
         }
