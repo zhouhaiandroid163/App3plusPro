@@ -65,6 +65,9 @@ public class WaitDialog {
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
             mDialog = null;
+            if (mHandler != null) {
+                mHandler.removeCallbacksAndMessages(null);
+            }
         }
     }
 
@@ -76,12 +79,14 @@ public class WaitDialog {
             if (mHandler == null) {
                 mHandler = new Handler();
             }
-            mHandler.postDelayed(() -> {
-                if (mDialog != null && mDialog.isShowing()) {
-                    mDialog.dismiss();
-                    mDialog = null;
-                }
-            }, 500);
+            if (mDialog != null && mDialog.isShowing()) {
+                mHandler.postDelayed(() -> {
+                    if (mDialog != null && mDialog.isShowing()) {
+                        mDialog.dismiss();
+                        mDialog = null;
+                    }
+                }, 500);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

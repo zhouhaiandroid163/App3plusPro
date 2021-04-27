@@ -38,6 +38,8 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -173,7 +175,26 @@ public class SysUtils {
     public static void logDeviceContentI(String tag, String content) {
         Log.i(tag, content);
         if (Constants.SAVE_LOG) {
-            SysUtils.writeTxtToFile(/*"【info】" + tag + ":" + */content, Constants.P_LOG_PATH, Constants.P_DEVICE_LOG_BLE_FILENAME);
+            String filePath = Constants.P_LOG_PATH;
+            String fileName = Constants.P_DEVICE_LOG_BLE_FILENAME;
+            //生成文件夹之后，再生成文件，不然会出错
+            makeFilePath(filePath, fileName);
+            String strFilePath = filePath + fileName;
+            try {
+                File file = new File(strFilePath);
+                if (!file.exists()) {
+                    Log.d("TestFile", "Create the file:" + strFilePath);
+                    file.getParentFile().mkdirs();
+                    file.createNewFile();
+                }
+                RandomAccessFile raf = new RandomAccessFile(file, "rwd");
+                raf.seek(file.length());
+                raf.write(content.getBytes(StandardCharsets.UTF_8));
+                raf.close();
+            } catch (Exception e) {
+                Log.e("TestFile", "Error on write File:" + e);
+            }
+
         }
     }
 
