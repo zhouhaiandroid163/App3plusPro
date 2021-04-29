@@ -44,7 +44,7 @@
             android:id="@+id/ivSync"
             android:layout_width="23dp"
             android:layout_height="23dp"
-            android:background="@mipmap/sync_image_white" />
+            android:background="@mipmap/icon_complete" />
     </LinearLayout>
 
     <LinearLayout
