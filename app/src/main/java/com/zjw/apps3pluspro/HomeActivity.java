@@ -1155,20 +1155,22 @@ public class HomeActivity extends BaseActivity {
         if (protoHandler == null) {
             protoHandler = new Handler();
         }
-        Calendar mCalendar = Calendar.getInstance();
-        mCalendar.set(Calendar.HOUR_OF_DAY, 0);
-        mCalendar.set(Calendar.MINUTE, 0);
-        mCalendar.set(Calendar.SECOND, 0);
-        mCalendar.set(Calendar.MILLISECOND, 0);
-        long time = mCalendar.getTimeInMillis();
-        if (mBleDeviceTools.getLastDeviceSportSyncTime() == 0 || mBleDeviceTools.getLastDeviceSportSyncTime() < time) {
-            // 获取历史
-            curCmd = GET_SPORT_IDS_HISTORY;
-            sendAppStart(BtSerializeation.appStartCmd(1));
-        } else {
-            curCmd = GET_SPORT_IDS_TODAY;
-            sendAppStart(BtSerializeation.appStartCmd(1));
-        }
+//        Calendar mCalendar = Calendar.getInstance();
+//        mCalendar.set(Calendar.HOUR_OF_DAY, 0);
+//        mCalendar.set(Calendar.MINUTE, 0);
+//        mCalendar.set(Calendar.SECOND, 0);
+//        mCalendar.set(Calendar.MILLISECOND, 0);
+//        long time = mCalendar.getTimeInMillis();
+//        if (mBleDeviceTools.getLastDeviceSportSyncTime() == 0 || mBleDeviceTools.getLastDeviceSportSyncTime() < time) {
+//            // 获取历史
+//            curCmd = GET_SPORT_IDS_HISTORY;
+//            sendAppStart(BtSerializeation.appStartCmd(1));
+//        } else {
+//            curCmd = GET_SPORT_IDS_TODAY;
+//            sendAppStart(BtSerializeation.appStartCmd(1));
+//        }
+        curCmd = GET_SPORT_IDS_HISTORY;
+        sendAppStart(BtSerializeation.appStartCmd(1));
         protoHandler.removeCallbacksAndMessages(null);
         protoHandler.postDelayed(getProtoSportTimeOut, timeOut);
     }

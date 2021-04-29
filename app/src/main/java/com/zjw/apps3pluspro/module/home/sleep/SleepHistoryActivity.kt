@@ -174,9 +174,9 @@ class SleepHistoryActivity : BaseActivity() {
 //            tvSleepHour.text = MyTime.getHoursInt(sleep_total_time)
             tvSleepMinute.text = MyTime.getSleepTime_M(sleep_total_time, resources.getString(R.string.sleep_gang))
 
-            tvDeepSleep.text = MyTime.getSleepTime_H(deep_time, resources.getString(R.string.sleep_gang)) + "H" + MyTime.getSleepTime_M(deep_time, resources.getString(R.string.sleep_gang)) + "M"
-            tvLightSleep.text = MyTime.getSleepTime_H(light_time, resources.getString(R.string.sleep_gang)) + "H" + MyTime.getSleepTime_M(light_time, resources.getString(R.string.sleep_gang)) + "M"
-            tvAwakeSleep.text = MyTime.getSleepTime_H(sober_time, resources.getString(R.string.sleep_gang)) + "H" + MyTime.getSleepTime_M(sober_time, resources.getString(R.string.sleep_gang)) + "M"
+            tvDeepSleep.text = MyTime.getSleepTime_H(deep_time, resources.getString(R.string.sleep_gang)) + " " + "H" + MyTime.getSleepTime_M(deep_time, resources.getString(R.string.sleep_gang)) + " " + "M"
+            tvLightSleep.text = MyTime.getSleepTime_H(light_time, resources.getString(R.string.sleep_gang)) + " " + "H" + MyTime.getSleepTime_M(light_time, resources.getString(R.string.sleep_gang)) + " " + "M"
+            tvAwakeSleep.text = MyTime.getSleepTime_H(sober_time, resources.getString(R.string.sleep_gang)) + " " + "H" + MyTime.getSleepTime_M(sober_time, resources.getString(R.string.sleep_gang)) + " " + "M"
 //            tvDeepSleep.text = MyTime.getHoursInt(deep_time)
 //            tvLightSleep.text = MyTime.getHoursInt(light_time)
 //            tvAwakeSleep.text = MyTime.getHoursInt(sober_time)

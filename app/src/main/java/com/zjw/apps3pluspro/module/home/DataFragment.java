@@ -733,8 +733,8 @@ public class DataFragment extends BaseFragment {
             if (!JavaUtil.checkIsNull(mSleepModel.getSleepSleepTime())) {
                 String sleep_time = mSleepModel.getSleepSleepTime();
 
-                tvSleepTitle.setText(getResources().getString(R.string.sleep_length_time) + " " + MyTime.getSleepTime_H(sleep_time, getResources().getString(R.string.sleep_gang))
-                        + getResources().getString(R.string.hour) + " " + MyTime.getSleepTime_M(sleep_time, getResources().getString(R.string.sleep_gang))
+                tvSleepTitle.setText(getResources().getString(R.string.sleep_length_time) + " " + MyTime.getSleepTime_H(sleep_time, getResources().getString(R.string.sleep_gang))+ " "
+                        + getResources().getString(R.string.hour) + " " + MyTime.getSleepTime_M(sleep_time, getResources().getString(R.string.sleep_gang))+ " "
                         + getResources().getString(R.string.minute));
             }
             int progress1 = Integer.parseInt(mSleepModel.getSleepDeep());
@@ -749,8 +749,8 @@ public class DataFragment extends BaseFragment {
 
             deepProportion = progress1 * 100 / total;
 
-            tvDeepSleepText.setText(getResources().getString(R.string.deep_sleep) + " " + MyTime.getSleepTime_H(String.valueOf(progress1), getResources().getString(R.string.sleep_gang))
-                    + getResources().getString(R.string.hour) + " " + MyTime.getSleepTime_M(String.valueOf(progress1), getResources().getString(R.string.sleep_gang))
+            tvDeepSleepText.setText(getResources().getString(R.string.deep_sleep) + " " + MyTime.getSleepTime_H(String.valueOf(progress1), getResources().getString(R.string.sleep_gang)) + " "
+                    + getResources().getString(R.string.hour) + " " + MyTime.getSleepTime_M(String.valueOf(progress1), getResources().getString(R.string.sleep_gang)) + " "
                     + getResources().getString(R.string.minute));
 
             if (progress3 == 0) {
@@ -1005,7 +1005,7 @@ public class DataFragment extends BaseFragment {
                 ivGpsSportTitle.setBackgroundDrawable(imageDrawable);
                 tvUpdateTime.setText(mSportModleInfo.getTime());
                 if (mSportModleInfo.getUi_type().equals("0")) {
-                    tvValue0.setText(mSportModleInfo.getTotal_step() + " " +  getResources().getString(R.string.steps) + "  " + getResources().getString(R.string.sport_time) + " " +
+                    tvValue0.setText(mSportModleInfo.getTotal_step() + " " + getResources().getString(R.string.steps) + "  " + getResources().getString(R.string.sport_time) + " " +
                             NewTimeUtils.getTimeString(Integer.valueOf(mSportModleInfo.getSport_duration())));
                 } else if (mSportModleInfo.getUi_type().equals("1")) {
                     tvValue0.setText(getResources().getString(R.string.consume) + " " + mSportModleInfo.getCalorie() + " " + getResources().getString(R.string.big_calory) + "  " + getResources().getString(R.string.sport_time) + " " +

@@ -1846,7 +1846,7 @@ public class RequestJson {
         try {
             request_json.put("userId", Long.parseLong(BaseApplication.getUserId()));
             request_json.put("sportDate", date);
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return new RequestInfo(request_json, getMoreSportData);

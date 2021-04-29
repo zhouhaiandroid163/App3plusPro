@@ -47,6 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:text="H"
                 android:textColor="@color/white_50"
                 android:textSize="16sp" />
@@ -55,6 +56,7 @@
                 android:id="@+id/tvSleepMinute"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:text="@string/sleep_gang"
                 android:textColor="@color/white"
                 android:textSize="34sp" />
@@ -62,6 +64,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:text="M"
                 android:textColor="@color/white_50"
                 android:textSize="16sp" />
