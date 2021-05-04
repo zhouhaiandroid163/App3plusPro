@@ -738,8 +738,8 @@ public class BleService extends Service {
                     baseBleScanner = new NordicsemiBleScanner(this, simpleScanCallback);
                     baseBleScanner.onStartBleScan();
 
-                    setBlueToothStatus(BleConstant.STATE_CONNECTING);
-                    BroadcastTools.broadcastDeviceConnecting(getApplicationContext());
+//                    setBlueToothStatus(BleConstant.STATE_CONNECTING);
+//                    BroadcastTools.broadcastDeviceConnecting(getApplicationContext());
 
                     mBleHandler.postDelayed(stopScanRunable, Constants.SCAN_PERIOD_BLE_SERVICE);
 
@@ -1989,7 +1989,7 @@ public class BleService extends Service {
                 // 遥控拍照
                 case BleConstant.Key_Photo: {
                     MyLog.i(TAG, "蓝牙回调 - 遥控拍照");
-                    BroadcastTools.broadcastDevicePhoto(getApplicationContext());
+                    initTakePhoto();
                 }
                 break;
 
@@ -3975,6 +3975,15 @@ public class BleService extends Service {
     private void connectBleRXError() {
         disconnect();
         reconnectDevcie();
+    }
+
+    private long lastTakePhotoTime = 0;
+
+    private void initTakePhoto() {
+        if (System.currentTimeMillis() - lastTakePhotoTime > 3500) {
+            lastTakePhotoTime = System.currentTimeMillis();
+            BroadcastTools.broadcastDevicePhoto(getApplicationContext());
+        }
     }
 }
 
