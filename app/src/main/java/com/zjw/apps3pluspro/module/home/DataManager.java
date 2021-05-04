@@ -81,19 +81,19 @@ public class DataManager {
         return dataManager;
     }
 
-    public void getSportDay(Context context, boolean isRequestService, GetDataSuccess getSportDaySuccess) {
-        MovementInfo mMovementInfo = mMovementInfoUtils.MyQueryToDate(BaseApplication.getUserId(), MyTime.getTime());
+    public void getSportDay(Context context, boolean isRequestService, String day, GetDataSuccess getSportDaySuccess) {
+        MovementInfo mMovementInfo = mMovementInfoUtils.MyQueryToDate(BaseApplication.getUserId(), day);
         if (mMovementInfo != null) {
             getSportDaySuccess.onSuccess(mMovementInfo);
         } else {
             if (isRequestService) {
-                requestSportData(getSportDaySuccess, context, MyTime.getTime());
+                requestSportData(getSportDaySuccess, context, day);
             }
         }
     }
 
-    private void requestSportData(final GetDataSuccess getSportDaySuccess, final Context context, final String date) {
-        RequestInfo mRequestInfo = RequestJson.getSportListData(date, date);
+    private void requestSportData(final GetDataSuccess getSportDaySuccess, final Context context, final String day) {
+        RequestInfo mRequestInfo = RequestJson.getSportListData(day, day);
         MyLog.i(TAG, "requestSportData = mRequestInfo = " + mRequestInfo.toString());
         NewVolleyRequest.RequestPost(mRequestInfo, TAG,
                 new VolleyInterface(context, VolleyInterface.mListener, VolleyInterface.mErrorListener) {
@@ -105,10 +105,10 @@ public class DataManager {
                         SportBean mSportBean = ResultJson.SportBean(result);
                         if (mSportBean.isRequestSuccess()) {
                             if (mSportBean.isGetSportSuccess() == 1) {
-                                ResultSportDataParsing(context, mSportBean, date, getSportDaySuccess);
+                                ResultSportDataParsing(context, mSportBean, day, getSportDaySuccess);
                             } else if (mSportBean.isGetSportSuccess() == 2) {
-                                SportBean.insertNullData(mMovementInfoUtils, date);
-                                getSportDay(context, false, getSportDaySuccess);
+                                SportBean.insertNullData(mMovementInfoUtils, day);
+                                getSportDay(context, false, day, getSportDaySuccess);
                             } else {
                                 getSportDaySuccess.onSuccess(null);
                             }
@@ -131,31 +131,18 @@ public class DataManager {
         } else {
             SportBean.insertNullData(mMovementInfoUtils, date);
         }
-        getSportDay(context, false, getSportDaySuccess);
+        getSportDay(context, false, date, getSportDaySuccess);
     }
 
-    public void getSleepDay(Context context, boolean isRequestService, GetDataSuccess getDataSuccess) {
-        SleepInfo mSleepInfo = mSleepInfoUtils.MyQueryToDate(BaseApplication.getUserId(), MyTime.getTime());
+    public void getSleepDay(Context context, boolean isRequestService, String day, GetDataSuccess getDataSuccess) {
+        SleepInfo mSleepInfo = mSleepInfoUtils.MyQueryToDate(BaseApplication.getUserId(), day);
         if (mSleepInfo != null) {
             getDataSuccess.onSuccess(mSleepInfo);
         } else {
             if (isRequestService) {
-                requestSleepData(MyTime.getTime(), context, getDataSuccess);
+                requestSleepData(day, context, getDataSuccess);
             }
         }
-    }
-
-    private void ResultSleepDataParsing(SleepBean mSleepBean, String date, Context context, GetDataSuccess getDataSuccess) {
-        if (mSleepBean.getData().size() > 0) {
-            SleepInfo mSleepInfo = mSleepBean.getSleepInfo(mSleepBean.getData().get(0));
-            boolean isSuccess = mSleepInfoUtils.MyUpdateData(mSleepInfo);
-            if (!isSuccess) {
-                MyLog.i(TAG, "插入睡眠表失败！");
-            }
-        } else {
-            SleepBean.insertNullData(mSleepInfoUtils, date);
-        }
-        getSleepDay(context, false, getDataSuccess);
     }
 
     private void requestSleepData(final String date, final Context context, final GetDataSuccess getDataSuccess) {
@@ -177,7 +164,7 @@ public class DataManager {
                                 getDataSuccess.onSuccess(null);
                             } else if (mSleepBean.isGetSleepSuccess() == 2) {
                                 SleepBean.insertNullData(mSleepInfoUtils, date);
-                                getSleepDay(context, false, getDataSuccess);
+                                getSleepDay(context, false, date, getDataSuccess);
                             } else {
                                 getDataSuccess.onSuccess(null);
                             }
@@ -191,6 +178,19 @@ public class DataManager {
                         getDataSuccess.onSuccess(null);
                     }
                 });
+    }
+
+    private void ResultSleepDataParsing(SleepBean mSleepBean, String date, Context context, GetDataSuccess getDataSuccess) {
+        if (mSleepBean.getData().size() > 0) {
+            SleepInfo mSleepInfo = mSleepBean.getSleepInfo(mSleepBean.getData().get(0));
+            boolean isSuccess = mSleepInfoUtils.MyUpdateData(mSleepInfo);
+            if (!isSuccess) {
+                MyLog.i(TAG, "插入睡眠表失败！");
+            }
+        } else {
+            SleepBean.insertNullData(mSleepInfoUtils, date);
+        }
+        getSleepDay(context, false, date, getDataSuccess);
     }
 
     //=============================获取连续心率=====================

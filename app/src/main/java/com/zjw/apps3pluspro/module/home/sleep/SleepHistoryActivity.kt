@@ -5,19 +5,14 @@ import android.view.View
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import butterknife.OnClick
-import com.android.volley.VolleyError
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView
 import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.application.BaseApplication
 import com.zjw.apps3pluspro.base.BaseActivity
+import com.zjw.apps3pluspro.module.home.DataManager
 import com.zjw.apps3pluspro.module.home.entity.SleepData
 import com.zjw.apps3pluspro.module.home.entity.SleepModel
-import com.zjw.apps3pluspro.network.NewVolleyRequest
-import com.zjw.apps3pluspro.network.RequestJson
-import com.zjw.apps3pluspro.network.ResultJson
-import com.zjw.apps3pluspro.network.VolleyInterface
-import com.zjw.apps3pluspro.network.javabean.SleepBean
 import com.zjw.apps3pluspro.sql.entity.SleepInfo
 import com.zjw.apps3pluspro.utils.*
 import com.zjw.apps3pluspro.utils.log.MyLog
@@ -26,9 +21,6 @@ import com.zjw.apps3pluspro.view.mycalendar.MyCalendarUtils
 import kotlinx.android.synthetic.main.public_head_white_text.*
 import kotlinx.android.synthetic.main.sleep_history_activity.*
 import kotlinx.android.synthetic.main.sleep_history_layout.*
-import org.json.JSONObject
-import java.text.DecimalFormat
-import java.util.*
 
 class SleepHistoryActivity : BaseActivity() {
     private val mUserSetTools = BaseApplication.getUserSetTools()
@@ -86,7 +78,7 @@ class SleepHistoryActivity : BaseActivity() {
                         selectionDate = date
                         public_head_title.text = selectionDate
                         calendarLayout.shrink()
-                        getSleepWeek(true)
+                        getSleepData(false)
                     } else {
                         AppUtils.showToast(this@SleepHistoryActivity, R.string.calendar_no_touchou)
                     }
@@ -267,90 +259,34 @@ class SleepHistoryActivity : BaseActivity() {
         selectionDate = MyTime.getTime()
 //        public_head_title.text = MyTime.getTime()
         calendarView.setSchemeDate(NewTimeUtils.getCycData(registTime))
-        getSleepWeek(true)
+        getSleepData(true)
     }
 
-    fun getSleepWeek(is_cycle: Boolean) {
-        MyLog.i(TAG, "getSleepWeek()")
+    fun getSleepData(init: Boolean) {
+        MyLog.i(TAG, "getSleepData()")
         try {
-            val week_list = NewTimeUtils.GetLastWeektDate(registTime, selectionDate)
-            val start_date = week_list[0]
-            val end_date = week_list[week_list.size - 1]
-            MyLog.i(TAG, "待处理 开始时间 = $start_date")
-            MyLog.i(TAG, "待处理 结束时间 = $end_date")
-//            val sleepInfo_list: List<SleepInfo> = mSleepInfoUtils.MyQueryToPeriodTime(BaseApplication.getUserId(), start_date, end_date)
             val mSleepInfo = mSleepInfoUtils.MyQueryToDate(BaseApplication.getUserId(), selectionDate)
             if (mSleepInfo != null) {
-                MyLog.i(TAG, "待处理 数据够了 = 更新UI")
                 updateUi(mSleepInfo)
             } else {
-                MyLog.i(TAG, "待处理 数据不够 = 获取数据")
-                if (is_cycle) {
-                    requestSleepData(week_list, start_date, end_date)
+                waitDialog!!.show(getString(R.string.loading0))
+                DataManager.getInstance().getSleepDay(context, true, selectionDate) { `object` ->
+                    if (init) {
+                        waitDialog!!.close()
+                    } else {
+                        waitDialog!!.close(150)
+                    }
+                    if (`object` != null) {
+                        updateUi(`object` as SleepInfo)
+                    } else {
+                        noData()
+                    }
                 }
             }
         } catch (e: Exception) {
+            waitDialog!!.close()
             noData()
         }
-    }
-
-    private fun requestSleepData(my_data_list: ArrayList<String>, begin_time: String, end_time: String) {
-        waitDialog!!.show(getString(R.string.loading0))
-        val mRequestInfo = RequestJson.getSleepListData(begin_time, end_time)
-        MyLog.i(TAG, "请求接口-获取睡眠数据 mRequestInfo = $mRequestInfo")
-        NewVolleyRequest.RequestPost(mRequestInfo, TAG,
-                object : VolleyInterface(this, mListener, mErrorListener) {
-                    override fun onMySuccess(result: JSONObject) { // TODO Auto-generated method stub
-                        waitDialog!!.close()
-                        MyLog.i(TAG, "请求接口-获取睡眠数据 请求成功 = result = $result")
-                        val mSleepBean = ResultJson.SleepBean(result)
-                        //请求成功
-                        if (mSleepBean.isRequestSuccess) {
-                            if (mSleepBean.isGetSleepSuccess == 1) {
-                                MyLog.i(TAG, "请求接口-获取睡眠数据 成功")
-                                ResultSleepDataParsing(my_data_list, mSleepBean)
-                            } else if (mSleepBean.isGetSleepSuccess == 0) {
-                                MyLog.i(TAG, "请求接口-获取睡眠数据 失败")
-                                AppUtils.showToast(mContext, R.string.data_try_again_code1)
-                            } else if (mSleepBean.isGetSleepSuccess == 2) {
-                                MyLog.i(TAG, "请求接口-获取睡眠数据 无数据")
-                                SleepBean.insertNullListData(mSleepInfoUtils, my_data_list)
-                                getSleepWeek(false)
-                            } else {
-                                AppUtils.showToast(mContext, R.string.data_try_again_code1)
-                            }
-                            //请求失败
-                        } else {
-                            AppUtils.showToast(mContext, R.string.server_try_again_code0)
-                        }
-                    }
-
-                    override fun onMyError(arg0: VolleyError) { // TODO Auto-generated method stub
-                        MyLog.i(TAG, "请求接口-获取睡眠数据 请求失败 = message = " + arg0.message)
-                        waitDialog!!.close()
-                        AppUtils.showToast(mContext, R.string.net_worse_try_again)
-                        return
-                    }
-                })
-    }
-
-    /**
-     * 解析数据
-     */
-    private fun ResultSleepDataParsing(my_date_list: ArrayList<String>, mSleepBean: SleepBean) {
-        MyLog.i(TAG, "待处理 日期数组 = $my_date_list")
-        MyLog.i(TAG, "请求接口-获取睡眠数据 size = " + mSleepBean.data.size)
-        val sleepInfo_list = mSleepBean.getSleepList(my_date_list, mSleepBean.data)
-        for (mSleepInfo in sleepInfo_list) {
-            MyLog.i(TAG, "解析数组 = sleepInfo_list = $mSleepInfo")
-        }
-        val isSuccess: Boolean = mSleepInfoUtils.insertInfoList(sleepInfo_list)
-        if (isSuccess) {
-            MyLog.i(TAG, "插入多条睡眠表成功！")
-        } else {
-            MyLog.i(TAG, "插入多条睡眠表失败！")
-        }
-        getSleepWeek(false)
     }
 
     fun getSleepTimeSlot(progress: Int) { //图表

@@ -12,6 +12,7 @@ import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.application.BaseApplication
 import com.zjw.apps3pluspro.base.BaseActivity
 import com.zjw.apps3pluspro.bleservice.BleTools
+import com.zjw.apps3pluspro.module.home.DataManager
 import com.zjw.apps3pluspro.network.NewVolleyRequest
 import com.zjw.apps3pluspro.network.RequestJson
 import com.zjw.apps3pluspro.network.ResultJson
@@ -82,7 +83,7 @@ class StepHistoryActivity : BaseActivity() {
                         selectionDate = date
                         public_head_title.setText(selectionDate)
                         calendarLayout.shrink()
-                        getSportWeek(true)
+                        getSportData(false)
                     } else {
                         AppUtils.showToast(context, R.string.calendar_no_touchou)
                     }
@@ -199,92 +200,35 @@ class StepHistoryActivity : BaseActivity() {
         selectionDate = MyTime.getTime()
 //        public_head_title.setText(selectionDate)
         calendarView.setSchemeDate(NewTimeUtils.getCycData(registTime))
-        getSportWeek(true)
+        getSportData(true)
 
     }
 
-    fun getSportWeek(is_cycle: Boolean) {
-        MyLog.i(TAG, "getSportWeek()")
+    fun getSportData(init: Boolean) {
+        MyLog.i(TAG, "getSportData()")
         try {
-            val week_list = NewTimeUtils.GetLastWeektDate(registTime, selectionDate)
-            val start_date = week_list[0]
-            val end_date = week_list[week_list.size - 1]
-            MyLog.i(TAG, "待处理 开始时间 = $start_date")
-            MyLog.i(TAG, "待处理 结束时间 = $end_date")
-//            val movementInfo_list: List<MovementInfo> = mMovementInfoUtils.MyQueryToPeriodTime(BaseApplication.getUserId(), start_date, end_date)
             val mMovementInfo = mMovementInfoUtils.MyQueryToDate(BaseApplication.getUserId(), selectionDate)
             if (mMovementInfo != null) {
-                MyLog.i(TAG, "满足条件 更新UI")
                 updateUi(mMovementInfo)
             } else {
-                MyLog.i(TAG, "不满足条件，请求后台 is_cycle = $is_cycle")
-                if (is_cycle) {
-                    requestSportData(week_list, start_date, end_date)
+                waitDialog!!.show(getString(R.string.loading0))
+                DataManager.getInstance().getSportDay(context, true, selectionDate) { movementInfo ->
+                    if (init) {
+                        waitDialog!!.close()
+                    } else {
+                        waitDialog!!.close(150)
+                    }
+                    if (movementInfo != null) {
+                        MyLog.i(TAG, "movementInfo = $movementInfo")
+                        updateUi(movementInfo as MovementInfo)
+                    } else {
+                        noData()
+                    }
                 }
             }
         } catch (e: Exception) {
+            waitDialog!!.close()
             noData()
         }
     }
-
-    private fun requestSportData(my_data_list: ArrayList<String>, begin_time: String, end_time: String) {
-        waitDialog?.show(getString(R.string.loading0))
-        val mRequestInfo = RequestJson.getSportListData(begin_time, end_time)
-        MyLog.i(TAG, "请求接口-获取运动数据 mRequestInfo = $mRequestInfo")
-        NewVolleyRequest.RequestPost(mRequestInfo, TAG,
-                object : VolleyInterface(this, mListener, mErrorListener) {
-                    override fun onMySuccess(result: JSONObject) { // TODO Auto-generated method stub
-                        waitDialog?.close()
-                        MyLog.i(TAG, "请求接口-获取运动数据 请求成功 = result = $result")
-                        val mSportBean = ResultJson.SportBean(result)
-                        //请求成功
-                        if (mSportBean.isRequestSuccess) {
-                            if (mSportBean.isGetSportSuccess == 1) {
-                                MyLog.i(TAG, "请求接口-获取运动数据 成功")
-                                ResultSportDataParsing(my_data_list, mSportBean)
-                            } else if (mSportBean.isGetSportSuccess == 0) {
-                                MyLog.i(TAG, "请求接口-获取运动数据 失败")
-                                AppUtils.showToast(mContext, R.string.data_try_again_code1)
-                            } else if (mSportBean.isGetSportSuccess == 2) {
-                                MyLog.i(TAG, "请求接口-获取运动数据 无数据")
-                                SportBean.insertNullListData(mMovementInfoUtils, my_data_list)
-                                getSportWeek(false)
-                            } else {
-                                AppUtils.showToast(mContext, R.string.data_try_again_code1)
-                            }
-                            //请求失败
-                        } else {
-                            AppUtils.showToast(mContext, R.string.server_try_again_code0)
-                        }
-                    }
-
-                    override fun onMyError(arg0: VolleyError) { // TODO Auto-generated method stub
-                        MyLog.i(TAG, "请求接口-获取运动数据 请求失败 = message = " + arg0.message)
-                        waitDialog?.close()
-                        AppUtils.showToast(mContext, R.string.net_worse_try_again)
-                        return
-                    }
-                })
-    }
-
-    /**
-     * 解析数据
-     */
-    private fun ResultSportDataParsing(my_date_list: ArrayList<String>, mSportBean: SportBean) {
-        MyLog.i(TAG, "待处理 日期数组 = $my_date_list")
-        MyLog.i(TAG, "请求接口-获取运动数据 size = " + mSportBean.data.size)
-        val movementInfo_list = mSportBean.getMovementList(my_date_list, mSportBean.data)
-        for (mMovementInfo in movementInfo_list) {
-            MyLog.i(TAG, "解析数组 = movementInfo_list = $mMovementInfo")
-        }
-        val isSuccess: Boolean = mMovementInfoUtils.insertInfoList(movementInfo_list)
-        if (isSuccess) {
-            MyLog.i(TAG, "插入多条运动表成功！")
-        } else {
-            MyLog.i(TAG, "插入多条运动表失败！")
-        }
-        getSportWeek(false)
-    }
-
-
 }

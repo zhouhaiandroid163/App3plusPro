@@ -181,6 +181,9 @@ public class DialMarketManager {
             mRequestInfo = RequestJson.getMainDialList(); // v2
         } else if (themeVersion.equalsIgnoreCase(themeVersion_V3)) {
             mRequestInfo = RequestJson.getHomeByProductList(); // v3
+        } else {
+            SysUtils.logAppRunning(TAG, "getMainDialList themeVersion = " + themeVersion);
+            return;
         }
         MyLog.i(TAG, "getMainDialList = " + mRequestInfo.toString());
         SysUtils.logAppRunning(TAG, "getMainDialList = " + mRequestInfo.toString());
@@ -246,6 +249,9 @@ public class DialMarketManager {
             mRequestInfo = RequestJson.getMoreDialPageList(pageNum, dialTypeId);
         } else if (themeVersion.equalsIgnoreCase(themeVersion_V3)) {
             mRequestInfo = RequestJson.moreDialPageByProductList(pageNum, dialTypeId);
+        } else {
+            SysUtils.logAppRunning(TAG, "getMoreDialPageList themeVersion = " + themeVersion);
+            return;
         }
 
         MyLog.i(TAG, "getMoreDialPageList = " + mRequestInfo.toString());

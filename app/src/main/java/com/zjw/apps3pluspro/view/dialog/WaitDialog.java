@@ -91,6 +91,25 @@ public class WaitDialog {
             e.printStackTrace();
         }
     }
+
+    public void close(int time) {
+        try {
+            if (mHandler == null) {
+                mHandler = new Handler();
+            }
+            if (mDialog != null && mDialog.isShowing()) {
+                mHandler.postDelayed(() -> {
+                    if (mDialog != null && mDialog.isShowing()) {
+                        mDialog.dismiss();
+                        mDialog = null;
+                    }
+                }, time);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 显示等待对话框
      */

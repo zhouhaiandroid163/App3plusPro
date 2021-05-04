@@ -124,11 +124,14 @@ class ThemeUploadActivity : BaseActivity() {
     lateinit var dialInfo: ThemeMarketItem.DialInfo
     override fun initDatas() {
         super.initDatas()
+        initBroadcast()
+        initTheme()
+    }
+
+    private fun initTheme(){
         var deviceWidth = mBleDeviceTools._device_theme_resolving_power_width
         var deviceHeight = mBleDeviceTools._device_theme_resolving_power_height
         UiType = if (deviceWidth == 128 && deviceHeight == 220) 1 else 2
-        initBroadcast()
-
         bitmapUtils = BitmapUtils(context)
 
         dialInfo = intent.getSerializableExtra("DialInfo") as ThemeMarketItem.DialInfo
@@ -148,7 +151,6 @@ class ThemeUploadActivity : BaseActivity() {
                 finish()
             }
         })
-
     }
 
     lateinit var themeDetails: ThemeDetails
@@ -377,6 +379,7 @@ class ThemeUploadActivity : BaseActivity() {
         if (isCustom) {
 //            byte = CustomClockDialUtils.getCustonClockDialDataByFile(this@ThemeUploadActivity, curThemeName, color_r, color_g, color_b, newBgBitmap)
             if (newBgBitmap == null || newTextBitmap == null) {
+                initTheme()
                 return
             }
             byteTheme = CustomClockDialNewUtils.getNewCustomClockDialData(curThemeName, color_r, color_g, color_b, newBgBitmap, newTextBitmap)

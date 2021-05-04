@@ -1817,6 +1817,9 @@ public class BleService extends Service {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                        SysUtils.logContentI(TAG, "onServicesDiscovered is Exception" + e);
+                        SysUtils.logAppRunning(TAG, "onServicesDiscovered is Exception" + e);
+                        connectBleRXError();
                     }
                 }).start();
 

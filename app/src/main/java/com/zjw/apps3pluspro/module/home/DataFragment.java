@@ -299,7 +299,7 @@ public class DataFragment extends BaseFragment {
 
     private void getAllData() {
         try {
-            DataManager.getInstance().getSportDay(homeActivity, true, new DataManager.GetDataSuccess() {
+            DataManager.getInstance().getSportDay(homeActivity, true, MyTime.getTime(), new DataManager.GetDataSuccess() {
                 @Override
                 public void onSuccess(Object movementInfo) {
                     closeSwipeRefresh();
@@ -309,7 +309,7 @@ public class DataFragment extends BaseFragment {
                     }
                 }
             });
-            DataManager.getInstance().getSleepDay(homeActivity, true, new DataManager.GetDataSuccess() {
+            DataManager.getInstance().getSleepDay(homeActivity, true, MyTime.getTime(), new DataManager.GetDataSuccess() {
                 @Override
                 public void onSuccess(Object object) {
                     if (object != null) {
