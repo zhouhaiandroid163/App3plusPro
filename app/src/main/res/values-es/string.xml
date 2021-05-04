@@ -1005,5 +1005,6 @@
     <string name="no_account">No tienes una cuenta?</string>
     <string name="add_log">Envíe los registros al mismo tiempo</string>
     <string name="google_service_not_support">El servicio Google Play no es compatible</string>
+    <string name="notices_other">medios de comunicación social</string>
     <!-- 西班牙 -->
 </resources>

@@ -1005,5 +1005,6 @@
     <string name="no_account">Vous n\'avez pas de compte?</string>
     <string name="add_log">Soumettez les journaux en même temps</string>
     <string name="google_service_not_support">Le service Google Play n\'est pas pris en charge</string>
+    <string name="notices_other">des médias sociaux</string>
     <!-- 法语 -->
 </resources>
