@@ -885,6 +885,14 @@ public class HandleDeviceDataTools {
             mBleDeviceTools.setIsSupportSleepTarget(false);
         }
 
+        int[] deviceParams19 = MyUtils.BinstrToIntArray(data[31]);
+        int[] deviceParams20 = MyUtils.BinstrToIntArray(data[32]);
+        int[] deviceParams21 = MyUtils.BinstrToIntArray(data[33]);
+
+        int[] deviceParams22 = MyUtils.BinstrToIntArray(data[34]);
+        int messagePushType = ((data[34] & 0xff) >> 5) & 0x07;
+        MyLog.i(TAG, "固件返回值 = 设置消息推送类型 = " + messagePushType);
+        mBleDeviceTools.setMessagePushType(messagePushType);
 
         MyLog.i(TAG, "固件返回值 = DeviceName = " + DeviceName);
         MyLog.i(TAG, "固件返回值 = DeviceMac = " + DeviceMac);

@@ -478,6 +478,23 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                     e.printStackTrace();
                 }
             }
+        } else {
+            switch (mBleDeviceTools.getMessagePushType()) {
+                case 0:
+                    break;
+                case 1:
+                    if (mBleDeviceTools.getOtherMessage()) {
+                        SysUtils.logContentI(TAG, "other message =" + postMessage1);
+                        try {
+                            sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceOther));
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         OldPageName = packageName;

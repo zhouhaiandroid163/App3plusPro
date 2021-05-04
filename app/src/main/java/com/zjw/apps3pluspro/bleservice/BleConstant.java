@@ -74,6 +74,7 @@ public class BleConstant {
     public static final int NotifaceVK = 0x19;
     public static final int NotifaceOK = 0x1a;
     public static final int NotifaceICQ = 0x1b;
+    public static final int NotifaceOther = 0x14;
 
 
     //使能ID

@@ -2501,7 +2501,6 @@ public class BleDeviceTools {
         return settin.getInt("ClockDialMuLanVersion", 0);
     }
 
-    //表盘木兰规则版本号
     public void setSupportBatteryPercentage(boolean b) {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
@@ -2512,5 +2511,30 @@ public class BleDeviceTools {
     public boolean getSupportBatteryPercentage() {
         SharedPreferences settin = getSharedPreferencesCommon();
         return settin.getBoolean("setSupportBatteryPercentage", false);
+    }
+
+    //设置推送类型
+    public void setMessagePushType(int b) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putInt("setMessagePushType", b);
+        editor.apply();
+    }
+
+    public int getMessagePushType() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getInt("setMessagePushType", 0);
+    }
+
+    public void setOtherMessage(boolean b) {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        SharedPreferences.Editor editor = settin.edit();
+        editor.putBoolean("setOtherMessage", b);
+        editor.apply();
+    }
+
+    public boolean getOtherMessage() {
+        SharedPreferences settin = getSharedPreferencesCommon();
+        return settin.getBoolean("setOtherMessage", false);
     }
 }

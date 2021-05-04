@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -23,6 +24,8 @@ import com.zjw.apps3pluspro.utils.PhoneUtil;
 import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 
+import butterknife.BindView;
+
 
 /**
  * APP提醒
@@ -34,7 +37,7 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
     private BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
 
     private SwitchCompat sb_notice_qq, sb_notice_wechat, sb_notice_whatsapp, sb_notice_skype, sb_notice_facebook;
-    private SwitchCompat sb_notice_linkedin, sb_notice_twitter, sb_notice_viber, sb_notice_line, sbPhone, sbSms;
+    private SwitchCompat sb_notice_linkedin, sb_notice_twitter, sb_notice_viber, sb_notice_line, sbPhone, sbSms, sbOther;
     private SwitchCompat sb_notice_gmail, sb_notice_outlook, sb_notice_instagrem, sb_notice_snapchat, sb_notice_iosmail;
     private SwitchCompat sb_notice_zalo, sb_notice_telegram, sb_notice_youtube, sb_notice_kakao_talk, sb_notice_vk, sb_notice_ok, sb_notice_icq;
 
@@ -57,7 +60,7 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
             String msg = mContext.getString(R.string.allow_notification_authority_tip_left)
                     + mContext.getString(R.string.app_name)
                     + mContext.getString(R.string.allow_notification_authority_tip_right);
-            DialogUtils.BaseDialog(mContext, this.getString(R.string.dialog_prompt), msg,mContext.getDrawable(R.drawable.black_corner_bg),new DialogUtils.DialogClickListener() {
+            DialogUtils.BaseDialog(mContext, this.getString(R.string.dialog_prompt), msg, mContext.getDrawable(R.drawable.black_corner_bg), new DialogUtils.DialogClickListener() {
                 @Override
                 public void OnOK() {
                     MyNotificationsListenerService.openNotificationAccess(mContext);
@@ -68,7 +71,26 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
 
                 }
             });
+        }
+    }
 
+    @BindView(R.id.layoutOther)
+    LinearLayout layoutOther;
+    @BindView(R.id.layoutOtherMessage)
+    LinearLayout layoutOtherMessage;
+
+    @Override
+    protected void initDatas() {
+        super.initDatas();
+
+        if (mBleDeviceTools.getMessagePushType() == 1) {
+            layoutOther.setVisibility(View.GONE);
+            notiface_lin_type1.setVisibility(View.GONE);
+            notiface_lin_type3.setVisibility(View.GONE);
+            layoutOtherMessage.setVisibility(View.VISIBLE);
+        } else {
+            layoutOther.setVisibility(View.VISIBLE);
+            layoutOtherMessage.setVisibility(View.GONE);
         }
     }
 
@@ -83,7 +105,6 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
         }
         super.onDestroy();
     }
-
 
     private void initView() {
         ((TextView) findViewById(R.id.public_head_title)).setText(getString(R.string.device_message_notification_title));
@@ -113,10 +134,10 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
         sb_notice_icq = (SwitchCompat) findViewById(R.id.sb_notice_icq);
         sbSms = (SwitchCompat) findViewById(R.id.sbSms);
         sbPhone = (SwitchCompat) findViewById(R.id.sbPhone);
+        sbOther = (SwitchCompat) findViewById(R.id.sbOther);
 
         notiface_lin_type1 = (LinearLayout) findViewById(R.id.notiface_lin_type1);
         notiface_lin_type3 = (LinearLayout) findViewById(R.id.notiface_lin_type3);
-
     }
 
     private void initData() {
@@ -146,7 +167,7 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
         sb_notice_icq.setChecked(mBleDeviceTools.get_reminde_icq());
         sbSms.setChecked(mBleDeviceTools.get_reminde_mms());
         sbPhone.setChecked(mBleDeviceTools.get_reminde_call());
-
+        sbOther.setChecked(mBleDeviceTools.getOtherMessage());
 
         sb_notice_qq.setOnCheckedChangeListener(this);
         sb_notice_wechat.setOnCheckedChangeListener(this);
@@ -173,8 +194,7 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
         sb_notice_icq.setOnCheckedChangeListener(this);
         sbSms.setOnCheckedChangeListener(this);
         sbPhone.setOnCheckedChangeListener(this);
-
-
+        sbOther.setOnCheckedChangeListener(this);
     }
 
     void updateUi() {
@@ -208,15 +228,12 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
         switch (buttonView.getId()) {
-
             case R.id.sb_notice_qq:
                 mBleDeviceTools.set_reminde_qq(isChecked);
                 break;
-
             case R.id.sb_notice_wechat:
                 mBleDeviceTools.set_reminde_wx(isChecked);
                 break;
-
             case R.id.sb_notice_whatsapp:
                 mBleDeviceTools.set_reminde_whatsapp(isChecked);
                 break;
@@ -324,6 +341,34 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
                     }
                 }
                 break;
+            case R.id.sbOther:
+                mBleDeviceTools.setOtherMessage(isChecked);
+                refreSwitch(isChecked);
+                break;
         }
+    }
+
+    private void refreSwitch(boolean isChecked) {
+        mBleDeviceTools.set_reminde_qq(isChecked);
+        mBleDeviceTools.set_reminde_wx(isChecked);
+        mBleDeviceTools.set_reminde_whatsapp(isChecked);
+        mBleDeviceTools.set_reminde_skype(isChecked);
+        mBleDeviceTools.set_facebook(isChecked);
+        mBleDeviceTools.set_reminde_linkedin(isChecked);
+        mBleDeviceTools.set_reminde_twitter(isChecked);
+        mBleDeviceTools.set_reminde_viber(isChecked);
+        mBleDeviceTools.set_reminde_line(isChecked);
+        mBleDeviceTools.set_reminde_gmail(isChecked);
+        mBleDeviceTools.set_reminde_outlook(isChecked);
+        mBleDeviceTools.set_reminde_instagram(isChecked);
+        mBleDeviceTools.set_reminde_snapchat(isChecked);
+        mBleDeviceTools.set_reminde_iosmail(isChecked);
+        mBleDeviceTools.set_reminde_zalo(isChecked);
+        mBleDeviceTools.set_reminde_telegram(isChecked);
+        mBleDeviceTools.set_reminde_youtube(isChecked);
+        mBleDeviceTools.set_reminde_kakao_talk(isChecked);
+        mBleDeviceTools.set_reminde_vk(isChecked);
+        mBleDeviceTools.set_reminde_ok(isChecked);
+        mBleDeviceTools.set_reminde_icq(isChecked);
     }
 }
