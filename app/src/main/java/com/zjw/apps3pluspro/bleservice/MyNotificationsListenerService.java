@@ -59,6 +59,7 @@ public class MyNotificationsListenerService extends NotificationListenerService 
     private static final String PACKAGE_QQ = "com.tencent.mobileqq";
     private static final String PACKAGE_MMS = "com.android.mms";
     private static final String PACKAGE_MMS_VIVO = "com.android.mms.service";
+    private static final String PACKAGE_MMS_ONEPLUS = "com.oneplus.mms";
     private static final String PACKAGE_MMS_SAMSUNG = "com.samsung.android.messaging";
     private static final String PACKAGE_MMS_NUBIA = "cn.nubia.mms";
     private static final String PACKAGE_MMS_NOKIA = "com.google.android.apps.messaging";
@@ -286,7 +287,7 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                     e.printStackTrace();
                 }
             }
-        } else if (packageName.equals(PACKAGE_MMS) || packageName.equals(PACKAGE_MMS_VIVO)
+        } else if (packageName.equals(PACKAGE_MMS) || packageName.equals(PACKAGE_MMS_VIVO)|| packageName.equals(PACKAGE_MMS_ONEPLUS)
                 || packageName.equals(PACKAGE_MMS_SAMSUNG) || packageName.equals(PACKAGE_MMS_NUBIA) || packageName.equals(PACKAGE_MMS_NOKIA)) {
             if (CheckSkypeMMs(String.valueOf(notificationTitle)) || CheckSkypeMMs(postMessage1) || CheckSkypeMMs(String.valueOf(notificationText))) {
                 SysUtils.logContentI(TAG, "ignore mms message =" + notificationText);
