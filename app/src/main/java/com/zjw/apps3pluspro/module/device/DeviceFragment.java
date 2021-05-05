@@ -574,7 +574,7 @@ public class DeviceFragment extends BaseFragment {
 //            mBleDeviceTools.setIsOpenGooglefit(false);
 //        }
 
-        layoutGoogleFit.setVisibility(View.GONE);
+        layoutGoogleFit.setVisibility(View.VISIBLE);
         mBleDeviceTools.setIsOpenGooglefit(false);
 
         if (mBleDeviceTools.get_is_screen_saver()) {
