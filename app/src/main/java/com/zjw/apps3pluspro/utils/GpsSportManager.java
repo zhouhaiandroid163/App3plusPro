@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
+import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.maps.AMapUtils;
@@ -235,29 +236,36 @@ public class GpsSportManager {
                 if (/*newDistance < Constants.GPS_OFFSET_DISTANCE_MIN ||*/ (newDistance / xSeconds) > Constants.GPS_OFFSET_DISTANCE_MAX)
                     return;
                 if (oldLatLng != newLatLng) {
-                    GpsInfo gpsInfo = new GpsInfo();
-
-                    double[] gps84 = GPSUtil.gcj02_To_Gps84(location.getLatitude(), location.getLongitude());
-                    gpsInfo.latitude = gps84[0];
-                    gpsInfo.longitude = gps84[1];
-                    gpsInfo.altitude = location.getAltitude();
-
-                    int satellite = location.getSatellites();
-                    if (satellite >= 1 && satellite < 3) {
-                        gpsInfo.gpsAccuracy = GpsInfo.GPS_LOW;
-                    } else if (satellite >= 3 && satellite < 6) {
-                        gpsInfo.gpsAccuracy = GpsInfo.GPS_MEDIUM;
-                    } else if (satellite >= 6) {
-                        gpsInfo.gpsAccuracy = GpsInfo.GPS_HIGH;
-                    }
-                    mBleDeviceTools.setWeatherGps(gpsInfo.longitude + "," + gpsInfo.latitude);
-                    if (locationListener != null) {
-                        locationListener.onLocationChanged(gpsInfo);
-                    }
+                    sendLocationChanged(location);
                 }
+            } else {
+                sendLocationChanged(location);
             }
             oldLatLng = newLatLng;
         });
+    }
+
+    private void sendLocationChanged(AMapLocation location){
+        GpsInfo gpsInfo = new GpsInfo();
+
+        double[] gps84 = GPSUtil.gcj02_To_Gps84(location.getLatitude(), location.getLongitude());
+        gpsInfo.latitude = gps84[0];
+        gpsInfo.longitude = gps84[1];
+        gpsInfo.altitude = location.getAltitude();
+
+        int satellite = location.getSatellites();
+        if (satellite >= 1 && satellite < 3) {
+            gpsInfo.gpsAccuracy = GpsInfo.GPS_LOW;
+        } else if (satellite >= 3 && satellite < 6) {
+            gpsInfo.gpsAccuracy = GpsInfo.GPS_MEDIUM;
+        } else if (satellite >= 6) {
+            gpsInfo.gpsAccuracy = GpsInfo.GPS_HIGH;
+        }
+        mBleDeviceTools.setWeatherGps(gpsInfo.longitude + "," + gpsInfo.latitude);
+
+        if (locationListener != null) {
+            locationListener.onLocationChanged(gpsInfo);
+        }
     }
 
     private LatLng oldLatLng;
