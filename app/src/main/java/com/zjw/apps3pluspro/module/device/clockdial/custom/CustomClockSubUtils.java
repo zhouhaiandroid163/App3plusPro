@@ -75,35 +75,13 @@ public class CustomClockSubUtils {
         for (int i = 0; i < byt.length; i += 3) {
             byte[] rgb16 = null;
 
-            //木兰表盘规则
-            if (mBleDeviceTools.getClockDialGenerationMode() == 1) {
-                //木兰-规则1
-                if (mBleDeviceTools.getClockDialMuLanVersion() == 1) {
-                    //正向
+            switch (CustomClockDialNewUtils.curThemeVersionRule) {
+                case CustomClockDialNewUtils.themeVersionRule_Positive:
                     rgb16 = RGB24TORGB16Forward(byt[i], byt[i + 1], byt[i + 2]);
-                }
-                //木兰-老规则
-                else {
-                    //反向
-                    if (mBleDeviceTools.getClockDialDataFormat() == 1) {
-                        rgb16 = RGB24TORGB16Reverse(byt[i], byt[i + 1], byt[i + 2]);
-                    }
-                    //正向
-                    else {
-                        rgb16 = RGB24TORGB16Forward(byt[i], byt[i + 1], byt[i + 2]);
-                    }
-                }
-            }
-            //舟海表盘规则
-            else {
-                //反向
-                if (mBleDeviceTools.getClockDialDataFormat() == 1) {
+                    break;
+                case CustomClockDialNewUtils.themeVersionRule_Reverse:
                     rgb16 = RGB24TORGB16Reverse(byt[i], byt[i + 1], byt[i + 2]);
-                }
-                //正向
-                else {
-                    rgb16 = RGB24TORGB16Forward(byt[i], byt[i + 1], byt[i + 2]);
-                }
+                    break;
             }
 
             retu[abc] = rgb16[0];
