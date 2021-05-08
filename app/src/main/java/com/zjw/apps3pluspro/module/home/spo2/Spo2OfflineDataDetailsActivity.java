@@ -130,6 +130,9 @@ public class Spo2OfflineDataDetailsActivity extends BaseActivity implements
         mCurveChartView = findViewById(R.id.mCurveChartView);
         tvSlidingValue = findViewById(R.id.tvSlidingValue);
         tvSlidingValue.setVisibility(View.INVISIBLE);
+
+        layoutNoData.setVisibility(View.VISIBLE);
+        layoutData.setVisibility(View.GONE);
     }
 
     TextView tvSlidingValue;
