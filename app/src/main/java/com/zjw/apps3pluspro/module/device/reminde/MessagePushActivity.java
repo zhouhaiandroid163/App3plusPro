@@ -1,10 +1,7 @@
 package com.zjw.apps3pluspro.module.device.reminde;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
-import android.os.Bundle;
-import android.text.Layout;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -17,7 +14,6 @@ import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.base.BaseActivity;
 import com.zjw.apps3pluspro.bleservice.MyNotificationsListenerService;
 import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
-import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.AuthorityManagement;
 import com.zjw.apps3pluspro.utils.DialogUtils;
 import com.zjw.apps3pluspro.utils.PhoneUtil;
@@ -88,6 +84,10 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
             notiface_lin_type1.setVisibility(View.GONE);
             notiface_lin_type3.setVisibility(View.GONE);
             layoutOtherMessage.setVisibility(View.VISIBLE);
+
+            boolean other = mBleDeviceTools.getOtherMessage();
+            sbOther.setChecked(other);
+            refreshSwitch(other);
         } else {
             layoutOther.setVisibility(View.VISIBLE);
             layoutOtherMessage.setVisibility(View.GONE);
@@ -167,7 +167,6 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
         sb_notice_icq.setChecked(mBleDeviceTools.get_reminde_icq());
         sbSms.setChecked(mBleDeviceTools.get_reminde_mms());
         sbPhone.setChecked(mBleDeviceTools.get_reminde_call());
-        sbOther.setChecked(mBleDeviceTools.getOtherMessage());
 
         sb_notice_qq.setOnCheckedChangeListener(this);
         sb_notice_wechat.setOnCheckedChangeListener(this);
@@ -343,12 +342,12 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.sbOther:
                 mBleDeviceTools.setOtherMessage(isChecked);
-                refreSwitch(isChecked);
+                refreshSwitch(isChecked);
                 break;
         }
     }
 
-    private void refreSwitch(boolean isChecked) {
+    private void refreshSwitch(boolean isChecked) {
         mBleDeviceTools.set_reminde_qq(isChecked);
         mBleDeviceTools.set_reminde_wx(isChecked);
         mBleDeviceTools.set_reminde_whatsapp(isChecked);
