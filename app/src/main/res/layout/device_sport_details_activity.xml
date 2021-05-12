@@ -197,6 +197,27 @@
                         app:layout_constraintTop_toTopOf="@+id/tvTitle6" />
 
                     <TextView
+                        android:id="@+id/tvTitleMaxSpeed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/device_sport_speed_max"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintLeft_toLeftOf="@+id/tvTitle6"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle6" />
+
+                    <TextView
+                        android:id="@+id/tvTitleMaxSpeedValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00:06:56"
+                        android:textColor="#989CA0"
+                        android:textSize="14sp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvTitleMaxSpeed" />
+
+                    <TextView
                         android:id="@+id/tvTitle7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -204,8 +225,8 @@
                         android:text="@string/device_sport_title7"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        app:layout_constraintLeft_toLeftOf="@+id/tvTitle6"
-                        app:layout_constraintTop_toBottomOf="@+id/tvTitle6" />
+                        app:layout_constraintLeft_toLeftOf="@+id/tvTitleMaxSpeed"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitleMaxSpeed" />
 
                     <TextView
                         android:id="@+id/tvTitleValue7"

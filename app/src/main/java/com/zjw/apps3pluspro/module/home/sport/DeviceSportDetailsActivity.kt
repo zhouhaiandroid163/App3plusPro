@@ -261,14 +261,12 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                 tvAvgSpeedUnit.text = resources.getText(R.string.speed_unit_mi)
             }
 
-            if (sportModleInfo?.reportFastSpeed!! == 0f) {
-                layoutSpeed.visibility = View.GONE
-            } else {
-                tvMaxSpeed.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!!)
-                if (unitType != 1) {
-                    tvMaxSpeed.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!! / 1.61f)
-                    tvMaxSpeedUnit.text = resources.getText(R.string.speed_unit_mi)
-                }
+            tvMaxSpeed.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!!)
+            tvTitleMaxSpeedValue.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!!)  + " " + resources.getString(R.string.speed_unit)
+            if (unitType != 1) {
+                tvMaxSpeed.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!! / 1.61f)
+                tvMaxSpeedUnit.text = resources.getText(R.string.speed_unit_mi)
+                tvTitleMaxSpeedValue.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!! / 1.61f)  + " " + resources.getText(R.string.speed_unit_mi)
             }
 
             tvTotalCal.text = sportModleInfo?.reportCal!!.toString()
@@ -568,6 +566,9 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
         val recordPointDataValid1 = BleTools.toBinary(sportModleInfo?.recordPointDataValid1!!, 8);
         val recordPointDataValid2 = BleTools.toBinary(sportModleInfo?.recordPointDataValid2!!, 8);
 
+        tvTitleMaxSpeed.visibility = View.GONE
+        tvTitleMaxSpeedValue.visibility = View.GONE
+
         when (sportType) {
             1 -> goneType1(recordPointDataValid1, recordPointDataValid2)
             2 -> goneType1(recordPointDataValid1, recordPointDataValid2)
@@ -654,6 +655,12 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
 
         tvTitle3.visibility = View.VISIBLE
         tvTitleValue3.visibility = View.VISIBLE
+        tvTitle5.visibility = View.VISIBLE
+        tvTitleValue5.visibility = View.VISIBLE
+        tvTitle6.visibility = View.VISIBLE
+        tvTitleValue6.visibility = View.VISIBLE
+        tvTitleMaxSpeed.visibility = View.VISIBLE
+        tvTitleMaxSpeedValue.visibility = View.VISIBLE
     }
 
     private fun goneType2(recordPointDataValid1: String, recordPointDataValid2: String) {
