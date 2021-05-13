@@ -1,7 +1,13 @@
 package com.zjw.apps3pluspro.module.device.reminde;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -20,6 +26,8 @@ import com.zjw.apps3pluspro.utils.PhoneUtil;
 import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 
+import java.util.List;
+
 import butterknife.BindView;
 
 
@@ -33,7 +41,7 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
     private BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
 
     private SwitchCompat sb_notice_qq, sb_notice_wechat, sb_notice_whatsapp, sb_notice_skype, sb_notice_facebook;
-    private SwitchCompat sb_notice_linkedin, sb_notice_twitter, sb_notice_viber, sb_notice_line, sbPhone, sbSms, sbOther;
+    private SwitchCompat sb_notice_linkedin, sb_notice_twitter, sb_notice_viber, sb_notice_line, sbPhone, sbSms;
     private SwitchCompat sb_notice_gmail, sb_notice_outlook, sb_notice_instagrem, sb_notice_snapchat, sb_notice_iosmail;
     private SwitchCompat sb_notice_zalo, sb_notice_telegram, sb_notice_youtube, sb_notice_kakao_talk, sb_notice_vk, sb_notice_ok, sb_notice_icq;
 
@@ -78,16 +86,12 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void initDatas() {
         super.initDatas();
-
         if (mBleDeviceTools.getMessagePushType() == 1) {
             layoutOther.setVisibility(View.GONE);
             notiface_lin_type1.setVisibility(View.GONE);
             notiface_lin_type3.setVisibility(View.GONE);
             layoutOtherMessage.setVisibility(View.VISIBLE);
 
-            boolean other = mBleDeviceTools.getOtherMessage();
-            sbOther.setChecked(other);
-            refreshSwitch(other);
         } else {
             layoutOther.setVisibility(View.VISIBLE);
             layoutOtherMessage.setVisibility(View.GONE);
@@ -134,7 +138,6 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
         sb_notice_icq = (SwitchCompat) findViewById(R.id.sb_notice_icq);
         sbSms = (SwitchCompat) findViewById(R.id.sbSms);
         sbPhone = (SwitchCompat) findViewById(R.id.sbPhone);
-        sbOther = (SwitchCompat) findViewById(R.id.sbOther);
 
         notiface_lin_type1 = (LinearLayout) findViewById(R.id.notiface_lin_type1);
         notiface_lin_type3 = (LinearLayout) findViewById(R.id.notiface_lin_type3);
@@ -193,7 +196,8 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
         sb_notice_icq.setOnCheckedChangeListener(this);
         sbSms.setOnCheckedChangeListener(this);
         sbPhone.setOnCheckedChangeListener(this);
-        sbOther.setOnCheckedChangeListener(this);
+
+        findViewById(R.id.layoutOtherMessage).setOnClickListener(this);
     }
 
     void updateUi() {
@@ -219,6 +223,9 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
             case R.id.public_head_back:
                 finish();
                 break;
+            case R.id.layoutOtherMessage:
+                startActivity(new Intent(this, MessagePushOtherActivity.class));
+                break;
         }
     }
 
@@ -236,86 +243,56 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
             case R.id.sb_notice_whatsapp:
                 mBleDeviceTools.set_reminde_whatsapp(isChecked);
                 break;
-
             case R.id.sb_notice_skype:
                 mBleDeviceTools.set_reminde_skype(isChecked);
                 break;
-
             case R.id.sb_notice_facebook:
                 mBleDeviceTools.set_facebook(isChecked);
                 break;
-
             case R.id.sb_notice_linkedin:
                 mBleDeviceTools.set_reminde_linkedin(isChecked);
                 break;
-
             case R.id.sb_notice_twitter:
                 mBleDeviceTools.set_reminde_twitter(isChecked);
                 break;
-
             case R.id.sb_notice_viber:
                 mBleDeviceTools.set_reminde_viber(isChecked);
                 break;
-
             case R.id.sb_notice_line:
                 mBleDeviceTools.set_reminde_line(isChecked);
                 break;
-
             case R.id.sb_notice_gmail:
-
                 mBleDeviceTools.set_reminde_gmail(isChecked);
-
                 break;
             case R.id.sb_notice_outlook:
-
                 mBleDeviceTools.set_reminde_outlook(isChecked);
-
                 break;
             case R.id.sb_notice_instagrem:
-
                 mBleDeviceTools.set_reminde_instagram(isChecked);
-
                 break;
             case R.id.sb_notice_snapchat:
-
                 mBleDeviceTools.set_reminde_snapchat(isChecked);
-
                 break;
             case R.id.sb_notice_iosmail:
-
                 mBleDeviceTools.set_reminde_iosmail(isChecked);
-
                 break;
-
             case R.id.sb_notice_zalo:
-
                 mBleDeviceTools.set_reminde_zalo(isChecked);
-
                 break;
             case R.id.sb_notice_telegram:
-
                 mBleDeviceTools.set_reminde_telegram(isChecked);
-
                 break;
             case R.id.sb_notice_youtube:
-
                 mBleDeviceTools.set_reminde_youtube(isChecked);
-
                 break;
             case R.id.sb_notice_kakao_talk:
-
                 mBleDeviceTools.set_reminde_kakao_talk(isChecked);
-
                 break;
             case R.id.sb_notice_vk:
-
                 mBleDeviceTools.set_reminde_vk(isChecked);
-
                 break;
             case R.id.sb_notice_ok:
-
                 mBleDeviceTools.set_reminde_ok(isChecked);
-
                 break;
             case R.id.sb_notice_icq:
                 mBleDeviceTools.set_reminde_icq(isChecked);
@@ -340,34 +317,6 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
                     }
                 }
                 break;
-            case R.id.sbOther:
-                mBleDeviceTools.setOtherMessage(isChecked);
-                refreshSwitch(isChecked);
-                break;
         }
-    }
-
-    private void refreshSwitch(boolean isChecked) {
-        mBleDeviceTools.set_reminde_qq(isChecked);
-        mBleDeviceTools.set_reminde_wx(isChecked);
-        mBleDeviceTools.set_reminde_whatsapp(isChecked);
-        mBleDeviceTools.set_reminde_skype(isChecked);
-        mBleDeviceTools.set_facebook(isChecked);
-        mBleDeviceTools.set_reminde_linkedin(isChecked);
-        mBleDeviceTools.set_reminde_twitter(isChecked);
-        mBleDeviceTools.set_reminde_viber(isChecked);
-        mBleDeviceTools.set_reminde_line(isChecked);
-        mBleDeviceTools.set_reminde_gmail(isChecked);
-        mBleDeviceTools.set_reminde_outlook(isChecked);
-        mBleDeviceTools.set_reminde_instagram(isChecked);
-        mBleDeviceTools.set_reminde_snapchat(isChecked);
-        mBleDeviceTools.set_reminde_iosmail(isChecked);
-        mBleDeviceTools.set_reminde_zalo(isChecked);
-        mBleDeviceTools.set_reminde_telegram(isChecked);
-        mBleDeviceTools.set_reminde_youtube(isChecked);
-        mBleDeviceTools.set_reminde_kakao_talk(isChecked);
-        mBleDeviceTools.set_reminde_vk(isChecked);
-        mBleDeviceTools.set_reminde_ok(isChecked);
-        mBleDeviceTools.set_reminde_icq(isChecked);
     }
 }

@@ -74,12 +74,6 @@
                             android:layout_marginLeft="@dimen/message_push"
                             android:text="@string/notices_other" />
 
-                        <androidx.appcompat.widget.SwitchCompat
-                            android:id="@+id/sbOther"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true" />
                     </RelativeLayout>
 
                     <include layout="@layout/line_layout" />

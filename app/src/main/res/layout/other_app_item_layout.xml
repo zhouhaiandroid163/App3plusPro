@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout style="@style/message_push">
+
+        <TextView
+            android:id="@+id/tvName"
+            style="@style/public_text_title2_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/message_push"
+            android:text="@string/notice_call" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/mSwitchCompat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+</LinearLayout>

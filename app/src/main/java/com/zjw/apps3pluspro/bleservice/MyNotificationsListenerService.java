@@ -57,12 +57,12 @@ public class MyNotificationsListenerService extends NotificationListenerService 
     private static final String PACKAGE_WECHAT2 = "com.weipin1.mm";
     private static final String PACKAGE_WECHAT3 = "com.weipin2.mm";
     private static final String PACKAGE_QQ = "com.tencent.mobileqq";
-    private static final String PACKAGE_MMS = "com.android.mms";
-    private static final String PACKAGE_MMS_VIVO = "com.android.mms.service";
-    private static final String PACKAGE_MMS_ONEPLUS = "com.oneplus.mms";
-    private static final String PACKAGE_MMS_SAMSUNG = "com.samsung.android.messaging";
-    private static final String PACKAGE_MMS_NUBIA = "cn.nubia.mms";
-    private static final String PACKAGE_MMS_NOKIA = "com.google.android.apps.messaging";
+    public static final String PACKAGE_MMS = "com.android.mms";
+    public static final String PACKAGE_MMS_VIVO = "com.android.mms.service";
+    public static final String PACKAGE_MMS_ONEPLUS = "com.oneplus.mms";
+    public static final String PACKAGE_MMS_SAMSUNG = "com.samsung.android.messaging";
+    public static final String PACKAGE_MMS_NUBIA = "cn.nubia.mms";
+    public static final String PACKAGE_MMS_NOKIA = "com.google.android.apps.messaging";
     private static final String PACKAGE_LINKEDIN = "com.linkedin.android";
     private static final String PACKAGE_TWITTER = "com.twitter.android";
     private static final String PACKAGE_VIBER = "com.viber.voip";
@@ -231,7 +231,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 SysUtils.logContentI(TAG, "ignore skype message =" + notificationTitle + ":" + notificationText);
                 return;
             }
-            if (mBleDeviceTools.get_reminde_skype()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_skype();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "skype message =" + postMessage2);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage2, BleConstant.NotifaceMsgSkype));
@@ -240,7 +244,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_WHATSAPP)) {
-            if (mBleDeviceTools.get_reminde_whatsapp()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_whatsapp();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "whatsapp message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceMsgWhatsapp));
@@ -253,7 +261,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 SysUtils.logContentI(TAG, "ignore facebook message =" + postMessage1);
                 return;
             }
-            if (mBleDeviceTools.get_reminde_facebook()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_facebook();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "facebook message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceMsgFacebook));
@@ -266,7 +278,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 SysUtils.logContentI(TAG, "ignore wx message =" + notificationText);
                 return;
             }
-            if (mBleDeviceTools.get_reminde_wx()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_wx();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "wx message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceMsgWx));
@@ -279,7 +295,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 SysUtils.logContentI(TAG, "ignore qq message =" + notificationText);
                 return;
             }
-            if (mBleDeviceTools.get_reminde_qq()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_qq();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "qq message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceMsgQq));
@@ -287,14 +307,18 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                     e.printStackTrace();
                 }
             }
-        } else if (packageName.equals(PACKAGE_MMS) || packageName.equals(PACKAGE_MMS_VIVO)|| packageName.equals(PACKAGE_MMS_ONEPLUS)
+        } else if (packageName.equals(PACKAGE_MMS) || packageName.equals(PACKAGE_MMS_VIVO) || packageName.equals(PACKAGE_MMS_ONEPLUS)
                 || packageName.equals(PACKAGE_MMS_SAMSUNG) || packageName.equals(PACKAGE_MMS_NUBIA) || packageName.equals(PACKAGE_MMS_NOKIA)) {
             if (CheckSkypeMMs(String.valueOf(notificationTitle)) || CheckSkypeMMs(postMessage1) || CheckSkypeMMs(String.valueOf(notificationText))) {
                 SysUtils.logContentI(TAG, "ignore mms message =" + notificationText);
                 return;
             }
+            boolean isOpen = mBleDeviceTools.get_reminde_mms();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
 
-            if (mBleDeviceTools.get_reminde_mms()) {
+            if (isOpen) {
                 if (notificationTitle != null && !notificationTitle.equals("") && notificationText != null && !notificationText.equals("")) {
                     try {
                         SysUtils.logContentI(TAG, "mms message 2 =" + postMessage2);
@@ -312,7 +336,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_LINKEDIN)) {
-            if (mBleDeviceTools.get_reminde_linkedin()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_linkedin();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "linkedin message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceMsgLink));
@@ -321,7 +349,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_TWITTER)) {
-            if (mBleDeviceTools.get_reminde_twitter()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_twitter();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "twitter message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceMsgTwitter));
@@ -330,7 +362,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_VIBER)) {
-            if (mBleDeviceTools.get_reminde_viber()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_viber();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "viber message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceMsgViber));
@@ -339,8 +375,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_LINE)) {
-
-            if (mBleDeviceTools.get_reminde_line()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_line();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "line message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceMsgLine));
@@ -349,7 +388,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_GMAIL)) {
-            if (mBleDeviceTools.get_reminde_gmail()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_gmail();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "gmail message =" + postMessage2);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage2, BleConstant.NotifaceGmail));
@@ -358,7 +401,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_OUTLOOK)) {
-            if (mBleDeviceTools.get_reminde_outlook()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_outlook();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "outlook message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceOutLook));
@@ -367,7 +414,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_INSTAGRAM)) {
-            if (mBleDeviceTools.get_reminde_instagram()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_instagram();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "instagram message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceInstagram));
@@ -376,8 +427,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_SNAPCHAT)) {
-            if (mBleDeviceTools.get_reminde_snapchat()) {
-
+            boolean isOpen = mBleDeviceTools.get_reminde_snapchat();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 notificationTitle = notification.extras.getString(Notification.EXTRA_TITLE);
                 notificationText = notification.extras.getCharSequence(Notification.EXTRA_TEXT);
 
@@ -416,7 +470,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_ZALO)) {
-            if (mBleDeviceTools.get_reminde_zalo()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_zalo();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "zalo message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceZalo));
@@ -425,7 +483,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_TELEGRAM)) {
-            if (mBleDeviceTools.get_reminde_telegram()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_telegram();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "telegram message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceTelegram));
@@ -434,7 +496,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_YOUTUBE)) {
-            if (mBleDeviceTools.get_reminde_youtube()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_youtube();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "youtube message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceYouTube));
@@ -443,7 +509,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_KAKAOTALK)) {
-            if (mBleDeviceTools.get_reminde_kakao_talk()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_kakao_talk();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "kakaotalk message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceKakaoTalk));
@@ -452,7 +522,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_VK)) {
-            if (mBleDeviceTools.get_reminde_vk()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_vk();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "vk message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceVK));
@@ -461,7 +535,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 }
             }
         } else if (packageName.equals(PACKAGE_OK)) {
-            if (mBleDeviceTools.get_reminde_ok()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_ok();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "ok message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceOK));
@@ -471,7 +549,11 @@ public class MyNotificationsListenerService extends NotificationListenerService 
 
             }
         } else if (packageName.equals(PACKAGE_ICQ)) {
-            if (mBleDeviceTools.get_reminde_icq()) {
+            boolean isOpen = mBleDeviceTools.get_reminde_icq();
+            if (mBleDeviceTools.getMessagePushType() == 1) {
+                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+            }
+            if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "icq message =" + postMessage1);
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceICQ));
@@ -484,7 +566,7 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 case 0:
                     break;
                 case 1:
-                    if (mBleDeviceTools.getOtherMessage()) {
+                    if (mBleDeviceTools.getOtherMessage(packageName)) {
                         SysUtils.logContentI(TAG, "other message =" + postMessage1);
                         try {
                             sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceOther));

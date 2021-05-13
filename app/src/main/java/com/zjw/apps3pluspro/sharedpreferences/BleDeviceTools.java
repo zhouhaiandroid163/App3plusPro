@@ -2526,15 +2526,15 @@ public class BleDeviceTools {
         return settin.getInt("setMessagePushType", 0);
     }
 
-    public void setOtherMessage(boolean b) {
+    public void setOtherMessage(String packName, boolean b) {
         SharedPreferences settin = getSharedPreferencesCommon();
         SharedPreferences.Editor editor = settin.edit();
-        editor.putBoolean("setOtherMessage", b);
+        editor.putBoolean("setOtherMessage_" + packName, b);
         editor.apply();
     }
 
-    public boolean getOtherMessage() {
+    public boolean getOtherMessage(String packName) {
         SharedPreferences settin = getSharedPreferencesCommon();
-        return settin.getBoolean("setOtherMessage", false);
+        return settin.getBoolean("setOtherMessage_" + packName, false);
     }
 }

@@ -81,6 +81,11 @@
         android:theme="@style/AppTheme"
         tools:replace="icon,label,theme">
         <activity
+            android:name=".module.device.reminde.MessagePushOtherActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhite" />
+        <activity
             android:name=".module.device.AGpsUpdateActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
