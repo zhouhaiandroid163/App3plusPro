@@ -70,6 +70,7 @@ public class MessagePushOtherActivity extends BaseActivity {
                             && !resolveInfo.activityInfo.packageName.equals(MyNotificationsListenerService.PACKAGE_MMS_SAMSUNG)
                             && !resolveInfo.activityInfo.packageName.equals(MyNotificationsListenerService.PACKAGE_MMS_NUBIA)
                             && !resolveInfo.activityInfo.packageName.equals(MyNotificationsListenerService.PACKAGE_MMS_NOKIA)
+                            && !resolveInfo.activityInfo.packageName.equals("com.android.contacts")
                     ) {
                         MessagePushOtherRecyclerAdapter.OtherApp mOtherApp = new MessagePushOtherRecyclerAdapter.OtherApp();
                         mOtherApp.appName = resolveInfo.loadLabel(getPackageManager()).toString();
