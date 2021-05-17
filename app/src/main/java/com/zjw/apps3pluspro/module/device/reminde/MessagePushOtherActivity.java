@@ -74,6 +74,7 @@ public class MessagePushOtherActivity extends BaseActivity {
                         MessagePushOtherRecyclerAdapter.OtherApp mOtherApp = new MessagePushOtherRecyclerAdapter.OtherApp();
                         mOtherApp.appName = resolveInfo.loadLabel(getPackageManager()).toString();
                         mOtherApp.packageName = resolveInfo.activityInfo.packageName;
+                        mOtherApp.icon = resolveInfo.activityInfo.loadIcon(getPackageManager());
                         mDatas.add(mOtherApp);
                     }
                 }

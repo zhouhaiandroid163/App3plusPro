@@ -3,13 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <RelativeLayout style="@style/message_push">
+    <RelativeLayout
+        style="@style/message_push"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true" />
 
         <TextView
             android:id="@+id/tvName"
             style="@style/public_text_title2_style"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/message_push"
+            android:layout_marginLeft="45dp"
             android:text="@string/notice_call" />
 
         <androidx.appcompat.widget.SwitchCompat

@@ -1,10 +1,12 @@
 package com.zjw.apps3pluspro.module.device.reminde;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,6 +41,7 @@ public class MessagePushOtherRecyclerAdapter extends RecyclerView.Adapter<Recycl
         OtherApp otherApp = mDatas.get(position);
         if (otherApp != null) {
             normalHolder.tvName.setText(otherApp.appName);
+            normalHolder.ivIcon.setImageDrawable(otherApp.icon);
             if (mBleDeviceTools.getOtherMessage(otherApp.packageName)) {
                 normalHolder.mSwitchCompat.setChecked(true);
             } else {
@@ -74,6 +77,7 @@ public class MessagePushOtherRecyclerAdapter extends RecyclerView.Adapter<Recycl
     }
 
     public static class OtherApp {
+        Drawable icon;
         String packageName;
         String appName;
     }
@@ -81,12 +85,14 @@ public class MessagePushOtherRecyclerAdapter extends RecyclerView.Adapter<Recycl
 
     public static class NormalHolder extends RecyclerView.ViewHolder {
         TextView tvName;
+        ImageView ivIcon;
         SwitchCompat mSwitchCompat;
 
         NormalHolder(View itemView) {
             super(itemView);
 
             tvName = itemView.findViewById(R.id.tvName);
+            ivIcon = itemView.findViewById(R.id.ivIcon);
             mSwitchCompat = itemView.findViewById(R.id.mSwitchCompat);
 
         }
