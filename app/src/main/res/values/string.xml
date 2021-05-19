@@ -911,6 +911,7 @@
     <string name="device_sport_title10">Cadence</string>
     <string name="device_sport_title11">Cumulative climb</string>
     <string name="device_sport_title12">Cumulative decline</string>
+    <string name="device_sport_title_avg_height">Avg height</string>
     <string name="device_sport_effect">Athletic performance</string>
     <string name="device_sport_effect1">Training effect：</string>
     <string name="device_sport_effect_rank_1">Trace amount</string>

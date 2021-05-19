@@ -160,7 +160,9 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
             tvTitleValue10.text = (sportModleInfo?.reportTotalStep!! / (sportModleInfo?.reportDuration!! / 60.0)).toInt().toString() + " " + resources.getString(R.string.device_sport_step_speed_unit)
             tvTitleValue11.text = sportModleInfo?.reportCumulativeRise!!.toString() + " " + resources.getString(R.string.device_sport_unit)
             tvTitleValue12.text = sportModleInfo?.reportCumulativeDecline!!.toString() + " " + resources.getString(R.string.device_sport_unit)
+            tvAvgHeightValue.text = sportModleInfo?.reportAvgHeight!!.toString() + " " + resources.getString(R.string.device_sport_unit)
             tvTitleValue13.text = DeviceSportManager.instance.getSwimStyle(sportModleInfo?.reportSwimStyle, context)
+
 
             if (unitType != 1) {
                 if (isUserM(sportType)) {
@@ -172,6 +174,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                 tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + " " + resources.getString(R.string.speed_unit_mi)
                 tvTitleValue11.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
                 tvTitleValue12.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
+                tvAvgHeightValue.text = caloriesFmt.format(sportModleInfo?.reportAvgHeight!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
             }
 
             tvTrainingEffectScore.text = sportModleInfo?.reportTrainingEffect!!.toString()
@@ -758,6 +761,8 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
         tvTitleValue11.visibility = View.GONE
         tvTitle12.visibility = View.GONE
         tvTitleValue12.visibility = View.GONE
+        tvAvgHeight.visibility = View.GONE
+        tvAvgHeightValue.visibility = View.GONE
     }
 
     private fun goneHeart() {

@@ -344,6 +344,27 @@
                         app:layout_constraintTop_toTopOf="@+id/tvTitle12" />
 
                     <TextView
+                        android:id="@+id/tvAvgHeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/device_sport_title_avg_height"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintLeft_toLeftOf="@+id/tvTitle12"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle12" />
+
+                    <TextView
+                        android:id="@+id/tvAvgHeightValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00:06:56"
+                        android:textColor="#989CA0"
+                        android:textSize="14sp"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvAvgHeight" />
+
+                    <TextView
                         android:id="@+id/tvTitle13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -351,8 +372,8 @@
                         android:text="@string/device_sport_swim_style"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        app:layout_constraintLeft_toLeftOf="@+id/tvTitle12"
-                        app:layout_constraintTop_toBottomOf="@+id/tvTitle12" />
+                        app:layout_constraintLeft_toLeftOf="@+id/tvAvgHeight"
+                        app:layout_constraintTop_toBottomOf="@+id/tvAvgHeight" />
 
                     <TextView
                         android:id="@+id/tvTitleValue13"

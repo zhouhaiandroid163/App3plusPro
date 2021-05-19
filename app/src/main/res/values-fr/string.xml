@@ -910,7 +910,7 @@
     <string name="device_sport_title9">nombre d\'étapes</string>
     <string name="device_sport_title10">fréquence de pas</string>
     <string name="device_sport_title11">montée cumulée</string>
-    <string name="device_sport_title12">déclin cumulatif</string>
+    <string name="device_sport_title12">De taille moyenne</string>
     <string name="device_sport_effect">performances sportives</string>
     <string name="device_sport_effect1">effet d\'entraînement:</string>
     <string name="device_sport_effect_rank_1">quantité de trace</string>

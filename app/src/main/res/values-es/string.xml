@@ -911,6 +911,7 @@
     <string name="device_sport_title10">frecuencia de paso</string>
     <string name="device_sport_title11">ascenso acumulativo</string>
     <string name="device_sport_title12">disminución acumulativa</string>
+    <string name="device_sport_title_avg_height">Altura media</string>
     <string name="device_sport_effect">rendimiento deportivo</string>
     <string name="device_sport_effect1">efecto de entrenamiento:</string>
     <string name="device_sport_effect_rank_1">cantidad de seguimiento</string>
