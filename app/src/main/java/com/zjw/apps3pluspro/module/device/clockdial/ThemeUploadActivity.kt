@@ -128,7 +128,7 @@ class ThemeUploadActivity : BaseActivity() {
         initTheme()
     }
 
-    private fun initTheme(){
+    private fun initTheme() {
         var deviceWidth = mBleDeviceTools._device_theme_resolving_power_width
         var deviceHeight = mBleDeviceTools._device_theme_resolving_power_height
         UiType = if (deviceWidth == 128 && deviceHeight == 220) 1 else 2
@@ -1292,7 +1292,12 @@ class ThemeUploadActivity : BaseActivity() {
                         handleBitmap(bitmap)
                     }
                 }
-
+                try {
+                    val themeTemp = File(Constants.IMAGE_FILE_LOCATION + File.separator + Constants.IMAGE_FILE_LOCATION_TEMP)
+                    themeTemp.delete()
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -1305,7 +1310,8 @@ class ThemeUploadActivity : BaseActivity() {
      * @throws FileNotFoundException
      */
     private fun startCropIntent(uri: Uri) {
-        imageUri = Uri.parse(Constants.IMAGE_FILE_LOCATION);
+        SysUtils.makeFilePath(Constants.IMAGE_FILE_LOCATION, Constants.IMAGE_FILE_LOCATION_TEMP)
+        imageUri = Uri.fromFile(File(Constants.IMAGE_FILE_LOCATION + File.separator + Constants.IMAGE_FILE_LOCATION_TEMP))
         val intent = Intent("com.android.camera.action.CROP")
         intent.setDataAndType(uri, "image/*")
         intent.putExtra("crop", "true")

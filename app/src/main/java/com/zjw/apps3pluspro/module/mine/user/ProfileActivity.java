@@ -781,7 +781,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
                 dialog.cancel();
                 if (!JavaUtil.checkIsNull(heightValue)) {
                     if (mUserSetTools.get_user_unit_type()) {
-                        tv_profile_height.setText(heightValue +  " " +getString(R.string.centimeter));
+                        tv_profile_height.setText(heightValue + " " + getString(R.string.centimeter));
                     } else {
                         int inResult = pvFt * 12 + pvIn;
                         heightValue = String.valueOf((int) (inResult * 2.54));
@@ -868,11 +868,11 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
             MyLog.i(TAG, "个人信息设置 = heightUnit_en = " + getString(R.string.centimeter));
 
             if (!TextUtils.isEmpty(heightValue)) {
-                tv_profile_height.setText(heightValue + " " +getString(R.string.centimeter));
+                tv_profile_height.setText(heightValue + " " + getString(R.string.centimeter));
             }
 
             if (!TextUtils.isEmpty(weightValue)) {
-                tv_profile_weight.setText(weightValue +  " " +getString(R.string.kg));
+                tv_profile_weight.setText(weightValue + " " + getString(R.string.kg));
             }
         } else {
 
@@ -1193,24 +1193,30 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
             case Constants.TailoringResult:
                 MyLog.i(TAG, "回调 裁剪完成 imageUri = " + imageUri);
                 if (resultCode == RESULT_OK) {
+                    File headPicture = new File(Constants.HEAD_IMG + "head.png");
+                    if (headPicture.exists()) {
+                        headPicture.delete();
+                    }
                     if (imageUri != null) {
                         try {
                             Bitmap head = BmpUtils.decodeUriAsBitmap(mContext, imageUri);
                             if (head != null) {
                                 setPicToView(head);// 保存在SD卡中
                                 ci_mines_head.setImageBitmap(head);// 用ImageView显示出来
-                                uploadImage(Constants.HEAD_IMG + "head" + BaseApplication.getUserId() + ".png");
+                                uploadImage(Constants.IMAGE_FILE_LOCATION + File.separator + Constants.IMAGE_FILE_LOCATION_TEMP);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                     }
                 }
-
+                try {
+                    File themeTemp = new File(Constants.IMAGE_FILE_LOCATION + File.separator + Constants.IMAGE_FILE_LOCATION_TEMP);
+                    themeTemp.delete();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
-
-
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -1232,6 +1238,7 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
             e1.printStackTrace();
         }
         String head_loca_data = new String(Base64.encode(data_src, Base64.DEFAULT));
+        MyLog.i(TAG, "xxxxxxxxxxx = " + head_loca_data);
         mUserSetTools.set_user_head_bast64(head_loca_data);
 
         byte[] data = GZIPUtil.Compress(data_src);
@@ -1301,6 +1308,8 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
      * @throws FileNotFoundException
      */
     private void startCropIntent(Uri uri) {
+        SysUtils.makeFilePath(Constants.IMAGE_FILE_LOCATION, Constants.IMAGE_FILE_LOCATION_TEMP);
+        imageUri = Uri.fromFile(new File(Constants.IMAGE_FILE_LOCATION + File.separator + Constants.IMAGE_FILE_LOCATION_TEMP));
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
@@ -1317,35 +1326,35 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
 
     private void setPicToView(Bitmap mBitmap) {
 
-        String sdStatus = Environment.getExternalStorageState();
-        String fileName = "";
-        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
-
-            AppUtils.showToast(mContext, R.string.sd_card);
-            return;
-        }
-
-        // 创建
-        SysUtils.makeRootDirectory(Constants.HEAD_IMG);
-
-        FileOutputStream b = null;
-        fileName = Constants.HEAD_IMG + "head" + BaseApplication.getUserId() + ".png";// 图片名字
-
-        try {
-            b = new FileOutputStream(fileName);
-            mBitmap.compress(Bitmap.CompressFormat.PNG, 50, b);// 把数据写入文件
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                // 关闭流
-                b.flush();
-                b.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        String sdStatus = Environment.getExternalStorageState();
+//        String fileName = "";
+//        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) { // 检测sd是否可用
+//
+//            AppUtils.showToast(mContext, R.string.sd_card);
+//            return;
+//        }
+//
+//        // 创建
+//        SysUtils.makeRootDirectory(Constants.HEAD_IMG);
+//
+//        FileOutputStream b = null;
+//        fileName = Constants.HEAD_IMG + "head" + BaseApplication.getUserId() + ".png";// 图片名字
+//
+//        try {
+//            b = new FileOutputStream(fileName);
+//            mBitmap.compress(Bitmap.CompressFormat.PNG, 50, b);// 把数据写入文件
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                // 关闭流
+//                b.flush();
+//                b.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
 
