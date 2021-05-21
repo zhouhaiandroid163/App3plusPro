@@ -49,7 +49,7 @@ class ScanDeviceTypeActivity : BaseActivity() {
                     mIntent.putExtra("type", BleConstant.PLUS_Vibe)
                     startActivity(mIntent)
                     finish()
-		    SysUtils.logAppRunning("ScanDeviceTypeActivity.class", "scan = " + BleConstant.PLUS_Vibe)
+                    SysUtils.logAppRunning("ScanDeviceTypeActivity.class", "scan = " + BleConstant.PLUS_Vibe)
                 } else {
                     BluetoothUtil.enableBluetooth(this@ScanDeviceTypeActivity, HomeActivity.BleStateResult)
                 }

@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="3PLUS HR+"
+                    android:text="HR+"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -76,7 +76,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="3PLUS Vibe+"
+                    android:text="Vibe+"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="3PLUS Vibe+ Pro"
+                    android:text="Vibe PRO"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 
