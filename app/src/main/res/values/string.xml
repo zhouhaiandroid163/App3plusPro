@@ -355,9 +355,9 @@
     <string name="medicine_title">Medication reminder</string>
     <string name="open_medicine">Open medication reminder</string>
     <string name="medicine_tip">When "medication reminder" is enabled, it will be set to vibrate during the set time. Regular medications improve compliance and thus enhance treatment outcomes.</string>
-    <string name="drink_water_title">Hydration reminde</string>
+    <string name="drink_water_title">Hydration reminder</string>
     <string name="open_drink_water">Turn on the water reminder</string>
-    <string name="drink_water_tip">When “Drinking Water Reminder” is enabled, the device will be alerted by vibration during the set time. It is recommended that adults drink 1500ml-1700ml a day.</string>
+    <string name="drink_water_tip">When “Hydration reminder” is enabled, the device will be alerted by vibration during the set time. It is recommended that adults drink 1500ml-1700ml a day.</string>
     <string name="metting_title">Meeting reminder</string>
     <string name="open_metting">Open meeting reminder</string>
     <string name="metting_tip">When “Conference Reminder” is enabled, it will be set to vibrate during the set time.</string>
@@ -689,7 +689,7 @@
     <string name="device_message_notification_content">Receive SMS, call, APP and other messages on the device side</string>
     <string name="device_message_notification_tip">Choose an app to receive notifications on the device</string>
     <string name="device_remind_set_title">Reminder settings</string>
-    <string name="device_remind_set_content">Set meeting reminders, drinking water reminders, sedentary reminders, etc.</string>
+    <string name="device_remind_set_content">Set meeting reminders, Hydration reminder, sedentary reminders, etc.</string>
     <string name="device_remind_not_title">Do not disturb mode</string>
     <string name="device_remind_not_content">Click to enter do not disturb mode settings</string>
     <string name="device_hourly_measure">Automatic HR measurement every hour after opening</string>
