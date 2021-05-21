@@ -2932,8 +2932,8 @@ public class BleService extends Service {
         MyLog.i(TAG, "初始化 写入喝水提醒");
         writeRXCharacteristic(init_drinking);
 
-        MyLog.i(TAG, "初始化 写入闹钟");
-        writeRXCharacteristic(init_alarm_clock);
+//        MyLog.i(TAG, "初始化 写入闹钟");
+//        writeRXCharacteristic(init_alarm_clock);
 
         MyLog.i(TAG, "初始化 同步时间");
         syncTime();

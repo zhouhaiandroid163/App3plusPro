@@ -119,9 +119,10 @@ public class AlarmClockActivity extends BaseActivity implements OnClickListener 
     }
 
     private void initData() {
-
-
         updateUi();
+        //闹钟提醒
+        final byte[] init_alarm_clock = BtSerializeation.setDeviceAlarm(RemindeUtils.getAlarmClock(getApplicationContext()));
+        writeRXCharacteristic(init_alarm_clock);
     }
 
 
