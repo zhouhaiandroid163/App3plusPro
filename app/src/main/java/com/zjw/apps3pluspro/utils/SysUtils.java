@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -835,6 +836,28 @@ public class SysUtils {
 
         Bitmap bitmap = BitmapFactory.decodeFile(imgPath, opts);
         return bitmap;
+    }
+
+    public static boolean is24TimeFormat(Context context) {
+        return android.text.format.DateFormat.is24HourFormat(context);
+    }
+
+    public static boolean is20Mtu() {
+        if (MyUtils.getPhoneModel().equals("Xiaomi Mi-4c")) {
+            return true;
+        }
+        if (MyUtils.getPhoneModel().equals("Xiaomi MI 4S")) {
+            return true;
+        }
+        return false;
+    }
+
+    public static String bigDecimalFormat(float number) {
+        return new BigDecimal(String.valueOf(number)).setScale(2, BigDecimal.ROUND_DOWN).toString();
+    }
+
+    public static String bigDecimalFormat(double number) {
+        return new BigDecimal(String.valueOf(number)).setScale(2, BigDecimal.ROUND_DOWN).toString();
     }
 
 }

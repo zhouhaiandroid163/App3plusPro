@@ -56,7 +56,6 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
     private val mBleDeviceTools = BaseApplication.getBleDeviceTools()
     private var sportType: Int = 0
     var sportModleInfo: SportModleInfo? = null
-    var caloriesFmt = DecimalFormat(",##0.00")
     override fun setLayoutId(): Int {
         isTextDark = false
         return R.layout.device_sport_details_activity
@@ -66,7 +65,6 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
 
     override fun initViews() {
         super.initViews()
-        caloriesFmt.roundingMode = RoundingMode.DOWN
         unitType = mBleDeviceTools._device_unit
         sportModleInfo = MoreSportActivity.sportModleInfo
         ivRight.background = ContextCompat.getDrawable(this, R.mipmap.device_sport_share)
@@ -148,12 +146,12 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
             if (isUserM(sportType)) {
                 tvTitleValue3.text = sportModleInfo?.reportDistance.toString() + " " + resources.getString(R.string.device_sport_unit)
             } else {
-                tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0) + " " + resources.getString(R.string.sport_distance_unit)
+                tvTitleValue3.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportDistance!! / 1000.0) + " " + resources.getString(R.string.sport_distance_unit)
             }
 
             tvTitleValue4.text = sportModleInfo?.reportCal.toString() + " " + resources.getString(R.string.big_calory)
             tvTitleValue5.text = avgPaceString
-            tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + " " + resources.getString(R.string.speed_unit)
+            tvTitleValue6.text = SysUtils.bigDecimalFormat(((sportModleInfo?.reportDistance!! / 1000.0) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + " " + resources.getString(R.string.speed_unit)
             tvTitleValue7.text = sportModleInfo?.reportAvgHeart!!.toString() + " " + resources.getString(R.string.bpm)
             tvTitleValue8.text = sportModleInfo?.reportMaxHeart!!.toString() + " " + resources.getString(R.string.bpm)
             tvTitleValue9.text = sportModleInfo?.reportTotalStep!!.toString() + " " + resources.getString(R.string.steps)
@@ -166,15 +164,15 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
 
             if (unitType != 1) {
                 if (isUserM(sportType)) {
-                    tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
+                    tvTitleValue3.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportDistance!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
                 } else {
-                    tvTitleValue3.text = caloriesFmt.format(sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) + " " + resources.getString(R.string.unit_mi)
+                    tvTitleValue3.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) + " " + resources.getString(R.string.unit_mi)
                 }
 
-                tvTitleValue6.text = caloriesFmt.format(((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + " " + resources.getString(R.string.speed_unit_mi)
-                tvTitleValue11.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
-                tvTitleValue12.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
-                tvAvgHeightValue.text = caloriesFmt.format(sportModleInfo?.reportAvgHeight!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
+                tvTitleValue6.text = SysUtils.bigDecimalFormat(((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + " " + resources.getString(R.string.speed_unit_mi)
+                tvTitleValue11.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportCumulativeRise!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
+                tvTitleValue12.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
+                tvAvgHeightValue.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportAvgHeight!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
             }
 
             tvTrainingEffectScore.text = sportModleInfo?.reportTrainingEffect!!.toString()
@@ -258,28 +256,28 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                 }
             }
 
-            tvAvgSpeed.text = caloriesFmt.format((sportModleInfo?.reportDistance!! / 1000.0 / (sportModleInfo?.reportDuration!! / 3600.0))).toString()
+            tvAvgSpeed.text = SysUtils.bigDecimalFormat((sportModleInfo?.reportDistance!! / 1000.0 / (sportModleInfo?.reportDuration!! / 3600.0))).toString()
             if (unitType != 1) {
-                tvAvgSpeed.text = caloriesFmt.format((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f / (sportModleInfo?.reportDuration!! / 3600.0))).toString()
+                tvAvgSpeed.text = SysUtils.bigDecimalFormat((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f / (sportModleInfo?.reportDuration!! / 3600.0))).toString()
                 tvAvgSpeedUnit.text = resources.getText(R.string.speed_unit_mi)
             }
 
-            tvMaxSpeed.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!!)
-            tvTitleMaxSpeedValue.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!!)  + " " + resources.getString(R.string.speed_unit)
+            tvMaxSpeed.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportFastSpeed!!)
+            tvTitleMaxSpeedValue.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportFastSpeed!!)  + " " + resources.getString(R.string.speed_unit)
             if (unitType != 1) {
-                tvMaxSpeed.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!! / 1.61f)
+                tvMaxSpeed.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportFastSpeed!! / 1.61f)
                 tvMaxSpeedUnit.text = resources.getText(R.string.speed_unit_mi)
-                tvTitleMaxSpeedValue.text = caloriesFmt.format(sportModleInfo?.reportFastSpeed!! / 1.61f)  + " " + resources.getText(R.string.speed_unit_mi)
+                tvTitleMaxSpeedValue.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportFastSpeed!! / 1.61f)  + " " + resources.getText(R.string.speed_unit_mi)
             }
 
             tvTotalCal.text = sportModleInfo?.reportCal!!.toString()
-            tvAvgCal.text = caloriesFmt.format((sportModleInfo?.reportCal!! / (sportModleInfo?.reportDuration!! / 60.0))).toString()
+            tvAvgCal.text = SysUtils.bigDecimalFormat((sportModleInfo?.reportCal!! / (sportModleInfo?.reportDuration!! / 60.0))).toString()
 
             tvCumulativeRise.text = sportModleInfo?.reportCumulativeRise!!.toString()
             tvCumulativeDecline.text = sportModleInfo?.reportCumulativeDecline!!.toString()
             if (unitType != 1) {
-                tvCumulativeRise.text = caloriesFmt.format(sportModleInfo?.reportCumulativeRise!! * 3.28f)
-                tvCumulativeDecline.text = caloriesFmt.format(sportModleInfo?.reportCumulativeDecline!! * 3.28f)
+                tvCumulativeRise.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportCumulativeRise!! * 3.28f)
+                tvCumulativeDecline.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportCumulativeDecline!! * 3.28f)
                 tvHeightUnit1.text = resources.getString(R.string.unit_ft)
                 tvHeightUnit2.text = resources.getString(R.string.unit_ft)
             }
