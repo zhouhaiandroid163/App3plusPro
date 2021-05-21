@@ -302,18 +302,20 @@ public class MessagePushActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.sbPhone:
                 mBleDeviceTools.set_reminde_call(isChecked);
-                if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-                    // 低版本部分手机触发询问
+                if(SysUtils.hasSimCard(context)){
+                    if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+                        // 低版本部分手机触发询问
+                        if (isChecked) {
+                            PhoneUtil.endCall(this);
+                        }
+                    }
                     if (isChecked) {
-                        PhoneUtil.endCall(this);
-                    }
-                }
-                if (isChecked) {
-                    if (AuthorityManagement.verifyMailList(MessagePushActivity.this)) {
-                        PhoneUtil.getContactNameFromPhoneBook(this, "123456");
-                    }
-                    if (AuthorityManagement.verifyPhoneState(MessagePushActivity.this)) {
-                        MyLog.i(TAG, "verify Phone State is true");
+                        if (AuthorityManagement.verifyMailList(MessagePushActivity.this)) {
+                            PhoneUtil.getContactNameFromPhoneBook(this, "123456");
+                        }
+                        if (AuthorityManagement.verifyPhoneState(MessagePushActivity.this)) {
+                            MyLog.i(TAG, "verify Phone State is true");
+                        }
                     }
                 }
                 break;
