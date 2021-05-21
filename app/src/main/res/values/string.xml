@@ -355,7 +355,7 @@
     <string name="medicine_title">Medication reminder</string>
     <string name="open_medicine">Open medication reminder</string>
     <string name="medicine_tip">When "medication reminder" is enabled, it will be set to vibrate during the set time. Regular medications improve compliance and thus enhance treatment outcomes.</string>
-    <string name="drink_water_title">Drinking water reminder</string>
+    <string name="drink_water_title">Hydration reminde</string>
     <string name="open_drink_water">Turn on the water reminder</string>
     <string name="drink_water_tip">When “Drinking Water Reminder” is enabled, the device will be alerted by vibration during the set time. It is recommended that adults drink 1500ml-1700ml a day.</string>
     <string name="metting_title">Meeting reminder</string>
@@ -557,7 +557,7 @@
     <string name="dialog_send_pos7">Left</string>
     <string name="dialog_send_pos8">Right</string>
     <!-- 主题音频相关 -->
-    <string name="my_theme_title">Watch Face</string>
+    <string name="my_theme_title">Watch face</string>
     <string name="my_theme_content">Personalized dial</string>
     <string name="my_theme_dialog_count">After connecting the bracelet, click on the dial of your favorite and then transfer the APP to the bracelet.</string>
     <string name="my_music_dialog_count">After connecting the bracelet, click on the favorite song and then transfer the APP to the bracelet.</string>
@@ -682,7 +682,7 @@
     <string name="scan_bing_time_out">Binding timeout</string>
     <string name="scan_bing_success">Bind successfully</string>
     <!--设备标签相关-->
-    <string name="device_dial_center_title">Watch Face</string>
+    <string name="device_dial_center_title">Watch face</string>
     <string name="device_message_notification_title">Notification</string>
     <string name="device_screensaver_title">Screensaver settings</string>
     <string name="device_screensaver_content">Customize your screensaver pictures</string>
