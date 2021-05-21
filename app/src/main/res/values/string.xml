@@ -908,7 +908,7 @@
     <string name="device_sport_title7">Average heart rate</string>
     <string name="device_sport_title8">Maximum heart rate</string>
     <string name="device_sport_title9">Step count</string>
-    <string name="device_sport_title10">Cadence</string>
+    <string name="device_sport_title10">Avg cadence</string>
     <string name="device_sport_title11">Cumulative climb</string>
     <string name="device_sport_title12">Cumulative decline</string>
     <string name="device_sport_title_avg_height">Avg height</string>

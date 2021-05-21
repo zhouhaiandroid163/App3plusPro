@@ -314,9 +314,9 @@ public class MyNotificationsListenerService extends NotificationListenerService 
                 return;
             }
             boolean isOpen = mBleDeviceTools.get_reminde_mms();
-            if (mBleDeviceTools.getMessagePushType() == 1) {
-                isOpen = mBleDeviceTools.getOtherMessage(packageName);
-            }
+//            if (mBleDeviceTools.getMessagePushType() == 1) {
+//                isOpen = mBleDeviceTools.getOtherMessage(packageName);
+//            }
 
             if (isOpen) {
                 if (notificationTitle != null && !notificationTitle.equals("") && notificationText != null && !notificationText.equals("")) {
