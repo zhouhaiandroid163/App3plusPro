@@ -82,6 +82,7 @@ import com.zjw.apps3pluspro.kml.KmlFileManager;
 import com.zjw.apps3pluspro.kml.TrackPoint;
 import com.zjw.apps3pluspro.module.device.AGpsUpdateActivity;
 import com.zjw.apps3pluspro.module.device.DeviceFragment;
+import com.zjw.apps3pluspro.module.device.DeviceManager;
 import com.zjw.apps3pluspro.module.device.DeviceMoreSetActivity;
 import com.zjw.apps3pluspro.module.device.ScanDeviceActivity;
 import com.zjw.apps3pluspro.module.device.ScanDeviceTypeActivity;
@@ -1827,6 +1828,7 @@ public class HomeActivity extends BaseActivity {
             AppUtils.showToast(mContext, R.string.login_invalid);
         }
         disconnect();
+        DeviceManager.getInstance().unBind(context, null);
         MyOkHttpClient.getInstance().quitApp(HomeActivity.this);
     }
 
