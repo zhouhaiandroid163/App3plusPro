@@ -1,8 +1,13 @@
 package com.zjw.apps3pluspro.module.device.weather
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Handler
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -13,11 +18,15 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import butterknife.OnClick
 import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.application.BaseApplication
 import com.zjw.apps3pluspro.base.BaseActivity
+import com.zjw.apps3pluspro.utils.AuthorityManagement
+import com.zjw.apps3pluspro.utils.DialogUtils
 import com.zjw.apps3pluspro.utils.GpsSportManager
+import com.zjw.apps3pluspro.utils.MyUtils
 import kotlinx.android.synthetic.main.weather_city_search_activity.*
 import java.util.ArrayList
 
@@ -65,6 +74,15 @@ class WeatherCitySearchActivity : BaseActivity() {
     private var isStartLocation: Boolean = false
     private var isLocationSuccess: Boolean = false
     private fun startLocation() {
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            AuthorityManagement.verifyLocation(this)
+            return
+        }
+        if (!MyUtils.isGPSOpen(context)) {
+            DialogUtils.showSettingGps(this)
+            return
+        }
+
         handler.removeCallbacksAndMessages(null)
         handler.postDelayed(getLocationTimeOut, 10 * 1000)
 
@@ -146,6 +164,37 @@ class WeatherCitySearchActivity : BaseActivity() {
             setResult(Activity.RESULT_OK)
             finish()
         }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
+        when (requestCode) {
+            AuthorityManagement.REQUEST_EXTERNAL_LOCATION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    showSettingDialog(getString(R.string.setting_dialog_location))
+                }
+            }
+            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
+    fun showSettingDialog(title: String?) {
+        DialogUtils.BaseDialog(context,
+                context.resources.getString(R.string.dialog_prompt),
+                title,
+                context.getDrawable(R.drawable.black_corner_bg),
+                object : DialogUtils.DialogClickListener {
+                    override fun OnOK() {
+                        val intent = Intent()
+                        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                        val uri = Uri.fromParts("package", context.getPackageName(), null)
+                        intent.data = uri
+                        startActivity(intent)
+                    }
+
+                    override fun OnCancel() {}
+                }
+                , getString(R.string.setting_dialog_setting))
     }
 
 }

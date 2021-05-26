@@ -1,17 +1,21 @@
 package com.zjw.apps3pluspro.module.device.weather
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Handler
+import android.provider.Settings
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import butterknife.OnClick
 import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.application.BaseApplication
@@ -21,9 +25,8 @@ import com.zjw.apps3pluspro.bleservice.BleTools
 import com.zjw.apps3pluspro.bleservice.BtSerializeation
 import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent
 import com.zjw.apps3pluspro.eventbus.tools.EventTools
-import com.zjw.apps3pluspro.utils.AppUtils
-import com.zjw.apps3pluspro.utils.GpsSportManager
-import com.zjw.apps3pluspro.utils.SysUtils
+import com.zjw.apps3pluspro.utils.*
+import com.zjw.apps3pluspro.utils.DialogUtils.DialogClickListener
 import kotlinx.android.synthetic.main.weather_main_activity.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -123,12 +126,18 @@ class WeatherMainActivity : BaseActivity() {
         if (switchCompat.isChecked) {
             SysUtils.logAmapGpsE(TAG, "switchCompat is checked")
             SysUtils.logAppRunning(TAG, "switchCompat is checked")
-            if (!SysUtils.isLocServiceEnable(this)) {
+
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 switchCompat.isChecked = false
-                val toast: Toast = Toast.makeText(this, resources.getString(R.string.gps_switch_close), Toast.LENGTH_SHORT)
-                toast.show()
+                AuthorityManagement.verifyLocation(this)
                 return
             }
+            if (!MyUtils.isGPSOpen(context)) {
+                switchCompat.isChecked = false
+                DialogUtils.showSettingGps(this)
+                return
+            }
+
             layoutCity.visibility = View.VISIBLE
 //            tvLatLon.visibility = View.VISIBLE
             showDialog()
@@ -239,5 +248,36 @@ class WeatherMainActivity : BaseActivity() {
             else -> {
             }
         }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
+        when (requestCode) {
+            AuthorityManagement.REQUEST_EXTERNAL_LOCATION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    showSettingDialog(getString(R.string.setting_dialog_location))
+                }
+            }
+            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
+    fun showSettingDialog(title: String?) {
+        DialogUtils.BaseDialog(context,
+                context.resources.getString(R.string.dialog_prompt),
+                title,
+                context.getDrawable(R.drawable.black_corner_bg),
+                object : DialogClickListener {
+                    override fun OnOK() {
+                        val intent = Intent()
+                        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                        val uri = Uri.fromParts("package", context.getPackageName(), null)
+                        intent.data = uri
+                        startActivity(intent)
+                    }
+
+                    override fun OnCancel() {}
+                }
+                , getString(R.string.setting_dialog_setting))
     }
 }
