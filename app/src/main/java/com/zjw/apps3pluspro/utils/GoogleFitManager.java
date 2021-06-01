@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -261,14 +263,39 @@ public class GoogleFitManager {
             return;
         }
         String[] steps = mMotionInfo.getData().split(",");
+//        steps = new String[]{"100", "500", "100", "500", "100",
+//                "100", "500", "100", "500", "100",
+//                "100", "500", "100", "500", "100",
+//                "100", "500", "100", "500", "100",
+//                "100", "500", "100", "500"};
 
+        String currentTime = NewTimeUtils.getStringDate(System.currentTimeMillis(), NewTimeUtils.TIME_YYYY_MM_DD_HHMMSS);
+        String HHMMSS = currentTime.split(" ")[1];
+        int currentHour = Integer.parseInt(HHMMSS.split(":")[0]);
+        int currentMinute = Integer.parseInt(HHMMSS.split(":")[1]);
+        MyLog.w(TAG, "upload google fit start HH:MM:SS = " + HHMMSS);
+
+        int totalStep = 0;
         for (int i = 0; i < steps.length; i++) {
             int step = Integer.parseInt(steps[i]);
             long startTime = dataTime + oneHourTime * i;
-            long endTime = startTime + oneHourTime - 1;
-            MyLog.e(TAG, "upload google fit start num mMotionInfo " + mMotionInfo.getDate() + " " + i + " step=" + step);
-            GoogleFitManager.getInstance().UpLoadGooglefitStep(step, startTime, 3600 * 1000 - 1, HomeActivity.homeActivity);
+            if (i < currentHour) {
+                MyLog.e(TAG, "upload google fit start num mMotionInfo " + mMotionInfo.getDate() + " " + i + " step=" + step);
+                GoogleFitManager.getInstance().UpLoadGooglefitStep(step, startTime, 3600 * 1000 - 1, HomeActivity.homeActivity);
+                totalStep = totalStep + step;
+            } else if (i == currentHour) {
+                int timeMode = 60 * 1000;
+                if (currentMinute > 5) {
+                    timeMode = (currentMinute - 5) * 60 * 1000;
+                }
+                MyLog.e(TAG, "upload google fit start num mMotionInfo " + mMotionInfo.getDate() + " " + i + " step=" + step);
+                GoogleFitManager.getInstance().UpLoadGooglefitStep(step, startTime, timeMode, HomeActivity.homeActivity);
+                totalStep = totalStep + step;
+            } else {
+                break;
+            }
         }
+        MyLog.w(TAG, "upload google fit end totalStep = " + totalStep);
     }
 
     private GoogleApiClient mApiClient;
@@ -324,7 +351,7 @@ public class GoogleFitManager {
         if (mApiClient == null) {
             return;
         }
-        if (steps == 0) return;
+//        if (steps == 0) return;
         try {
             new Thread(new Runnable() {
                 @Override

@@ -318,11 +318,11 @@ public class NewTimeUtils {
 
     }
 
-    public static String TIME_YYYY_MM_DD = "yyyy-MM-dd";
-    public static String TIME_YYYY_MM_DD_HH = "yyyy-MM-dd HH";
-    public static String TIME_MM_DD_HHMMSS = "MM-dd HH:mm:ss";
-    public static String TIME_YYYY_MM_DD_HHMMSS = "yyyy-MM-dd HH:mm:ss";
-    public static String HHMMSS = "HH:mm:ss";
+    public static final String TIME_YYYY_MM_DD = "yyyy-MM-dd";
+    public static final String TIME_YYYY_MM_DD_HH = "yyyy-MM-dd HH";
+    public static final String TIME_MM_DD_HHMMSS = "MM-dd HH:mm:ss";
+    public static final String TIME_YYYY_MM_DD_HHMMSS = "yyyy-MM-dd HH:mm:ss";
+    public static final String HHMMSS = "HH:mm:ss";
 
     @SuppressLint("SimpleDateFormat")
     public static String getStringDate(long time, String format) {
