@@ -464,7 +464,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
         String authorizationCode = mAccountBean.getData().getAuthorization();
-        MyLog.i(TAG, "login Authorization code" + authorizationCode);
+        SysUtils.logAppRunning(TAG, "login Authorization code" + authorizationCode);
         AccountBean.saveAccount(user_id, account, password, register_time, type, authorizationCode);
 
         getUserInfo();

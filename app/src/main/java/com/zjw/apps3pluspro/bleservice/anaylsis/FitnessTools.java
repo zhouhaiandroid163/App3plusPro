@@ -1092,8 +1092,12 @@ public class FitnessTools {
                         sportModleInfo.set_id(querySportModleInfos.get(0).get_id());
                         mSportModleInfoUtils.updateData(sportModleInfo);
                     } else {
-                        SysUtils.logContentW(TAG, " report over and inseart db");
-                        mSportModleInfoUtils.insertData(sportModleInfo);
+                        if (sportModleInfo.getReportDuration() > 24 * 60 * 60) {
+                            SysUtils.logContentI(TAG, "reportDuration > 24 * 60 * 60");
+                        } else {
+                            Log.w(TAG, " report over and inseart db");
+                            mSportModleInfoUtils.insertData(sportModleInfo);
+                        }
                     }
                 } else {
                     SysUtils.logContentE(TAG, " report over and data is Exception");
