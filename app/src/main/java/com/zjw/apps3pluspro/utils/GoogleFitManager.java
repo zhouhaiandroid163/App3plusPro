@@ -21,6 +21,7 @@ import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.fitness.Fitness;
 import com.google.android.gms.fitness.FitnessOptions;
 import com.google.android.gms.fitness.data.DataPoint;
@@ -28,6 +29,7 @@ import com.google.android.gms.fitness.data.DataSet;
 import com.google.android.gms.fitness.data.DataSource;
 import com.google.android.gms.fitness.data.DataType;
 import com.google.android.gms.fitness.data.Field;
+import com.google.android.gms.fitness.request.DataUpdateRequest;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -256,6 +258,12 @@ public class GoogleFitManager {
         long lastTime = mBleDeviceTools.getGooglefitSyncLastTime();
         long dataTime = NewTimeUtils.getLongTime(mMotionInfo.getDate(), NewTimeUtils.TIME_YYYY_MM_DD);
 
+        boolean isCurrentDay = false;
+        if (mMotionInfo.getDate().equals(NewTimeUtils.getStringDate(System.currentTimeMillis(), NewTimeUtils.TIME_YYYY_MM_DD))) {
+            isCurrentDay = true;
+            MyLog.w(TAG, "The current date is today");
+        }
+
         long oneDayTime = 24 * 3600 * 1000L;
         long oneHourTime = 3600 * 1000L;
         String data = mMotionInfo.getData();
@@ -263,11 +271,11 @@ public class GoogleFitManager {
             return;
         }
         String[] steps = mMotionInfo.getData().split(",");
-//        steps = new String[]{"100", "500", "100", "500", "100",
-//                "100", "500", "100", "500", "100",
-//                "100", "500", "100", "500", "100",
-//                "100", "500", "100", "500", "100",
-//                "100", "500", "100", "500"};
+//        steps = new String[]{"100", "100", "100", "100", "100",
+//                "100", "100", "100", "100", "100",
+//                "100", "100", "100", "100", "100",
+//                "500", "100", "100", "100", "100",
+//                "100", "100", "100", "100"};
 
         String currentTime = NewTimeUtils.getStringDate(System.currentTimeMillis(), NewTimeUtils.TIME_YYYY_MM_DD_HHMMSS);
         String HHMMSS = currentTime.split(" ")[1];
@@ -279,20 +287,28 @@ public class GoogleFitManager {
         for (int i = 0; i < steps.length; i++) {
             int step = Integer.parseInt(steps[i]);
             long startTime = dataTime + oneHourTime * i;
-            if (i < currentHour) {
+
+            if (isCurrentDay) {
+                if (i < currentHour) {
+                    MyLog.e(TAG, "upload google fit start num mMotionInfo " + mMotionInfo.getDate() + " " + i + " step=" + step);
+
+                    GoogleFitManager.getInstance().UpLoadGooglefitStep(step, startTime, 3600 * 1000 - 1, HomeActivity.homeActivity);
+                    totalStep = totalStep + step;
+                } else if (i == currentHour) {
+                    int timeMode = 60 * 1000;
+                    if (currentMinute > 7) {
+                        timeMode = (currentMinute - 7) * 60 * 1000;
+                    }
+                    MyLog.e(TAG, "upload google fit start num mMotionInfo " + mMotionInfo.getDate() + " " + i + " step=" + step);
+                    GoogleFitManager.getInstance().UpLoadGooglefitStep(step, startTime, timeMode, HomeActivity.homeActivity);
+                    totalStep = totalStep + step;
+                } else {
+                    break;
+                }
+            } else {
                 MyLog.e(TAG, "upload google fit start num mMotionInfo " + mMotionInfo.getDate() + " " + i + " step=" + step);
                 GoogleFitManager.getInstance().UpLoadGooglefitStep(step, startTime, 3600 * 1000 - 1, HomeActivity.homeActivity);
                 totalStep = totalStep + step;
-            } else if (i == currentHour) {
-                int timeMode = 60 * 1000;
-                if (currentMinute > 5) {
-                    timeMode = (currentMinute - 5) * 60 * 1000;
-                }
-                MyLog.e(TAG, "upload google fit start num mMotionInfo " + mMotionInfo.getDate() + " " + i + " step=" + step);
-                GoogleFitManager.getInstance().UpLoadGooglefitStep(step, startTime, timeMode, HomeActivity.homeActivity);
-                totalStep = totalStep + step;
-            } else {
-                break;
             }
         }
         MyLog.w(TAG, "upload google fit end totalStep = " + totalStep);
@@ -367,11 +383,20 @@ public class GoogleFitManager {
                     stepDataPoint.setTimeInterval(timemillis, timemillis + timeMode, TimeUnit.MILLISECONDS);
                     stepDataPoint.getValue(Field.FIELD_STEPS).setInt(steps);
                     dataSet.add(stepDataPoint);
-                    com.google.android.gms.common.api.Status insertStatus = Fitness.HistoryApi.insertData(mApiClient, dataSet).await(1, TimeUnit.MINUTES);
+                    Status insertStatus = Fitness.HistoryApi.insertData(mApiClient, dataSet).await(1, TimeUnit.MINUTES);
                     if (!insertStatus.isSuccess()) {
                         Log.i(TAG, "There was a problem inserting the dataset.");
                     }
                     Log.i(TAG, "step insert was successful!" + steps);
+
+                    DataUpdateRequest request = new DataUpdateRequest.Builder()
+                            .setDataSet(dataSet)
+                            .setTimeInterval(timemillis, timemillis + timeMode, TimeUnit.MILLISECONDS)
+                            .build();
+                    Status updateStatus = Fitness.HistoryApi.updateData(mApiClient, request).await(1, TimeUnit.MINUTES);
+                    if (!updateStatus.isSuccess()) {
+                        Log.i(TAG, "There was a problem updateData.");
+                    }
 
                     DataSource distanceSource = new DataSource.Builder()
                             .setAppPackageName(activity.getApplicationContext().getPackageName())
@@ -386,7 +411,7 @@ public class GoogleFitManager {
                     distanceDataPoint.getValue(Field.FIELD_DISTANCE).setFloat(distance);
                     distanceSet.add(distanceDataPoint);
 
-                    com.google.android.gms.common.api.Status StatusDistance = Fitness.HistoryApi.insertData(mApiClient, distanceSet).await(1, TimeUnit.MINUTES);
+                    Status StatusDistance = Fitness.HistoryApi.insertData(mApiClient, distanceSet).await(1, TimeUnit.MINUTES);
                     if (!StatusDistance.isSuccess()) {
                         Log.i(TAG, "There was a problem inserting the distanceSet.");
                     }
@@ -405,7 +430,7 @@ public class GoogleFitManager {
                     calDataPoint.getValue(Field.FIELD_CALORIES).setFloat(calorie);
                     calSet.add(calDataPoint);
 
-                    com.google.android.gms.common.api.Status StatusCal = Fitness.HistoryApi.insertData(mApiClient, calSet).await(1, TimeUnit.MINUTES);
+                    Status StatusCal = Fitness.HistoryApi.insertData(mApiClient, calSet).await(1, TimeUnit.MINUTES);
                     if (!StatusCal.isSuccess()) {
                         Log.i(TAG, "There was a problem inserting the calSet.");
                     }

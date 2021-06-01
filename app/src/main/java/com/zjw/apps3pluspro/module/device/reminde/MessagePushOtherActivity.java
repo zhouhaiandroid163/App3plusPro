@@ -82,7 +82,9 @@ public class MessagePushOtherActivity extends BaseActivity {
             }
             runOnUiThread(() -> {
                 waitDialog.close(300);
-                mRecyclerView.setAdapter(adapter);
+                if(mRecyclerView != null){
+                    mRecyclerView.setAdapter(adapter);
+                }
             });
         }).start();
     }
