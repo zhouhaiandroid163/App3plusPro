@@ -418,7 +418,7 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener {
                                     }
                                     String strFilePath = Constants.P_LOG_PATH + Constants.P_LOG_APP_RUNNING;
                                     File file = new File(strFilePath);
-                                    if (file.exists()) {
+                                    if (isAgree && mFile.exists()) {
                                         file.delete();
                                     }
                                     finish();

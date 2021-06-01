@@ -574,12 +574,12 @@ public class DeviceFragment extends BaseFragment {
 //            mBleDeviceTools.setIsOpenGooglefit(false);
 //        }
 
-//        layoutGoogleFit.setVisibility(View.VISIBLE);
+        layoutGoogleFit.setVisibility(View.VISIBLE);
 
         //屏蔽并默认修改为关
-        mBleDeviceTools.setIsOpenGooglefit(false);
-        scGoogleFit.setChecked(false);
-        layoutGoogleFit.setVisibility(View.GONE);
+//        mBleDeviceTools.setIsOpenGooglefit(false);
+//        scGoogleFit.setChecked(false);
+//        layoutGoogleFit.setVisibility(View.GONE);
 
         if (mBleDeviceTools.get_is_screen_saver()) {
             layoutScreensaver.setVisibility(View.VISIBLE);

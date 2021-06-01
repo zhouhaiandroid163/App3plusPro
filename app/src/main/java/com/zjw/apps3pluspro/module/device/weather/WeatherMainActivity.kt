@@ -25,6 +25,7 @@ import com.zjw.apps3pluspro.bleservice.BleTools
 import com.zjw.apps3pluspro.bleservice.BtSerializeation
 import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent
 import com.zjw.apps3pluspro.eventbus.tools.EventTools
+import com.zjw.apps3pluspro.module.device.weather.openweather.WeatherManager
 import com.zjw.apps3pluspro.utils.*
 import com.zjw.apps3pluspro.utils.DialogUtils.DialogClickListener
 import kotlinx.android.synthetic.main.weather_main_activity.*
@@ -162,11 +163,16 @@ class WeatherMainActivity : BaseActivity() {
                     SysUtils.logAmapGpsE(TAG, "getLatLon success and stopGps getWeatherCity")
                     SysUtils.logAppRunning(TAG, "getLatLon success and stopGps getWeatherCity")
                     GpsSportManager.getInstance().stopGps(this)
-                    GpsSportManager.getInstance().getWeatherCity(this) {
-                        SysUtils.logAmapGpsE(TAG, "getWeatherCity success and startRequestWeather")
-                        handler.removeCallbacksAndMessages(null)
-                        initTvLatLon()
-                        startRequestWeather()
+//                    GpsSportManager.getInstance().getWeatherCity(this) {
+//                        SysUtils.logAmapGpsE(TAG, "getWeatherCity success and startRequestWeather")
+//                        handler.removeCallbacksAndMessages(null)
+//                        initTvLatLon()
+//                        startRequestWeather()
+//                    }
+
+                    val gps = mBleDeviceTools.weatherGps.split(",")
+                    if(gps.size > 1){
+                        WeatherManager.getInstance().getCurrentWeather(gps[1].toDouble(), gps[0].toDouble())
                     }
                 }
             }

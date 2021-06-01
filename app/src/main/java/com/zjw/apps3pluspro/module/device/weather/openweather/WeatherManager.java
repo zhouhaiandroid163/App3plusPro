@@ -1,0 +1,159 @@
+package com.zjw.apps3pluspro.module.device.weather.openweather;
+
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.zjw.apps3pluspro.application.BaseApplication;
+import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
+
+/**
+ * Created by android
+ * on 2021/5/31
+ */
+public class WeatherManager {
+    private static final String TAG = WeatherManager.class.getSimpleName();
+    private static WeatherManager weatherManager;
+    private BleDeviceTools mBleDeviceTools = BaseApplication.getBleDeviceTools();
+
+    public static WeatherManager getInstance() {
+        if (weatherManager == null) {
+            weatherManager = new WeatherManager();
+        }
+        return weatherManager;
+    }
+
+    private static final String appid = "55927c151597caba67e863d486282616";
+    public static final String lang = "en";
+    private static final String units = "metric";
+    //api.openweathermap.org/data/2.5/weather?lat=22.547&lon=114.085947&appid=55927c151597caba67e863d486282616&lang=en&units=metric
+    private static final String getCurrentWeatherUrl = "http://api.openweathermap.org/data/2.5/weather?";
+
+    CurrentWeather currentWeather;
+
+    double lat = 0.0;
+    double lon = 0.0;
+
+    public void getCurrentWeather(double lat, double lon) {
+        this.lat = lat;
+        this.lon = lon;
+        Log.i(TAG, "getCurrentWeather = " + "lat = " + lat + " lon = " + lon);
+        String url = getCurrentWeatherUrl + "lat=" + lat + "&lon=" + lon + "&appid=" + appid + "&lang=" + lang + "&units=" + units;
+        MyOkHttpClient2.getInstance().asynGetCall(new DisposeDataHandle(new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+                Log.w(TAG, "getCurrentWeather onSuccess = " + responseObj);
+                Gson gson = new Gson();
+                currentWeather = gson.fromJson(responseObj.toString(), CurrentWeather.class);
+                mBleDeviceTools.setWeatherCity(currentWeather.name);
+                mBleDeviceTools.setWeatherCityID(String.valueOf(currentWeather.id));
+
+                // get 4 days weather data
+                getEveryDayWeather(String.valueOf(currentWeather.id));
+
+            }
+
+            @Override
+            public void onFailure(Object reasonObj) {
+                Log.w(TAG, "getCurrentWeather onFailure = " + reasonObj);
+            }
+        }), url);
+    }
+
+    //api.openweathermap.org/data/2.5/forecast/daily?id=6958812&cnt=4&appid=55927c151597caba67e863d486282616&lang=en&units=metric
+    private static final String getEveryDayWeatherUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?";
+
+    WeatherDays weatherDays;
+
+    public void getEveryDayWeather(String cityId) {
+        String url = getEveryDayWeatherUrl + "id=" + cityId + "&cnt=" + 4 + "&appid=" + appid + "&lang=" + lang + "&units=" + units;
+
+        MyOkHttpClient2.getInstance().asynGetCall(new DisposeDataHandle(new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+                Log.w(TAG, "getEveryDayWeather onSuccess = " + responseObj);
+                Gson gson = new Gson();
+                weatherDays = gson.fromJson(responseObj.toString(), WeatherDays.class);
+
+                // get 4 days 96 hours data
+                getWeatherPerHour(mBleDeviceTools.getWeatherCityID());
+            }
+
+            @Override
+            public void onFailure(Object reasonObj) {
+                Log.w(TAG, "getEveryDayWeather onFailure = " + reasonObj);
+            }
+        }), url);
+    }
+
+    //pro.openweathermap.org/data/2.5/forecast/hourly?id=6958812&appid=55927c151597caba67e863d486282616&lang=en&units=metric
+    private static final String getWeatherPerHourUrl = "http://pro.openweathermap.org/data/2.5/forecast/hourly?";
+
+    WeatherPerHour weatherPerHour;
+
+    public void getWeatherPerHour(String cityId) {
+        String url = getWeatherPerHourUrl + "id=" + cityId + "&appid=" + appid + "&lang=" + lang + "&units=" + units;
+
+        MyOkHttpClient2.getInstance().asynGetCall(new DisposeDataHandle(new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+                Log.w(TAG, "getWeatherPerHour onSuccess = " + responseObj);
+                Gson gson = new Gson();
+                weatherPerHour = gson.fromJson(responseObj.toString(), WeatherPerHour.class);
+
+                getWeatherAQI();
+            }
+
+            @Override
+            public void onFailure(Object reasonObj) {
+                Log.w(TAG, "getWeatherPerHour onFailure = " + reasonObj);
+            }
+        }), url);
+    }
+
+    //api.openweathermap.org/data/2.5/air_pollution/forecast?lat=22.63157957374291&lon=113.83335400582953&appid=55927c151597caba67e863d486282616&start=1622444442&end=1622790042
+    private static final String getWeatherAQIUrl = "http://api.openweathermap.org/data/2.5/air_pollution/forecast?";
+
+    WeatherAQI weatherAQI;
+
+    public void getWeatherAQI() {
+        long start = System.currentTimeMillis() / 1000 + 3600;
+        long end = start + 96 * 3600;
+        String url = getWeatherAQIUrl + "lat=" + lat + "&lon=" + lon + "&appid=" + appid + "&start=" + start + "&end=" + end;
+        MyOkHttpClient2.getInstance().asynGetCall(new DisposeDataHandle(new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+                Log.w(TAG, "getWeatherAQI onSuccess = " + responseObj);
+                Gson gson = new Gson();
+                weatherAQI = gson.fromJson(responseObj.toString(), WeatherAQI.class);
+            }
+
+            @Override
+            public void onFailure(Object reasonObj) {
+                Log.w(TAG, "getWeatherAQI onFailure = " + reasonObj);
+            }
+        }), url);
+    }
+
+    //api.openweathermap.org/data/2.5/find?q=shenzhen&appid=55927c151597caba67e863d486282616&lang=en&units=metric
+    private static final String getWeatherFindBySearchUrl = "http://api.openweathermap.org/data/2.5/find?";
+    WeatherFind weatherFind;
+
+    public void getWeatherFindBySearch(String city) {
+        String url = getWeatherFindBySearchUrl + "q=" + city + "&appid=" + appid + "&lang=" + lang + "&units=" + units;
+        MyOkHttpClient2.getInstance().asynGetCall(new DisposeDataHandle(new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+                Log.w(TAG, "getWeatherFindBySearch onSuccess = " + responseObj);
+                Gson gson = new Gson();
+                weatherFind = gson.fromJson(responseObj.toString(), WeatherFind.class);
+            }
+
+            @Override
+            public void onFailure(Object reasonObj) {
+                Log.w(TAG, "getWeatherFindBySearch onFailure = " + reasonObj);
+            }
+        }), url);
+    }
+
+
+}
