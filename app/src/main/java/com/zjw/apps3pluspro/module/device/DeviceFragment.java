@@ -703,7 +703,7 @@ public class DeviceFragment extends BaseFragment {
                 if (BleService.syncState) {
                     return;
                 }
-                if (HomeActivity.isSyncSportData) {
+                if (BleService.isSyncSportData) {
                     return;
                 }
                 homeActivity.syncData();

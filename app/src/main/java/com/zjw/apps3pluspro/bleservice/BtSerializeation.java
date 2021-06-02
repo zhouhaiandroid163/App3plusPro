@@ -1812,7 +1812,71 @@ public class BtSerializeation {
         return temperature;
     }
 
-    public static byte[] appStartCmd(int pack) {
+    //APP发起-询问设备准备好了没有
+    public static byte[] sendingData;
+
+    public static int curPack = 0;
+
+    public static byte[] appStartCmd(String curCmd) {
+        switch (curCmd) {
+            case BleService.GET_SPORT_IDS_TODAY:
+                sendingData = FitnessTools.getSportIds(0);
+                break;
+            case BleService.GET_SPORT_IDS_HISTORY:
+                sendingData = FitnessTools.getSportIds(1);
+                break;
+            case BleService.REQUEST_FITNESS_ID_TODAY:
+            case BleService.REQUEST_FITNESS_ID_HISTORY:
+                sendingData = FitnessTools.requestFitnessId();
+                break;
+            case BleService.DELETE_DEVICE_SPORT_HISTORY:
+            case BleService.DELETE_DEVICE_SPORT_TODAY:
+                sendingData = FitnessTools.deleteSportId();
+                break;
+            case BleService.GET_PAGE_DEVICE:
+                sendingData = SystemTools.getPageDevice();
+                break;
+            case BleService.SET_PAGE_DEVICE:
+                sendingData = SystemTools.getPageDeviceSet();
+                break;
+            case BleService.APP_GPS_READY:
+                sendingData = FitnessTools.getGpsReady(BleService.lastGpsInfo);
+                break;
+            case BleService.APP_SEND_GPS:
+                if (BleService.lastGpsInfo != null) {
+                    sendingData = FitnessTools.getGpsByte(BleService.lastGpsInfo);
+                }
+                break;
+            case BleService.APP_REQUEST_GPS_SPORT_STATE:
+                sendingData = FitnessTools.getDeviceGpsState();
+                break;
+            case BleService.APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL:
+                sendingData = WatchFaceTools.getDeviceWatchFacePrepareStatus(BleService.themeId, BleService.themeSize);
+                break;
+            case BleService.APP_REQUEST_DEVICE_OTA_PREPARE:
+                sendingData = SystemTools.getDeviceOtaPrepareStatus(BleService.isForce, BleService.version, BleService.md5);
+                break;
+            case BleService.APP_REQUEST_DEVICE_WATCH_FACE:
+                sendingData = WatchFaceTools.getDeviceWatchFaceList();
+                break;
+            case BleService.APP_SET_DEVICE_WATCH_FACE:
+                sendingData = WatchFaceTools.setDeviceWatchFace(BleService.currentThemeId);
+                break;
+            case BleService.APP_DELETE_DEVICE_WATCH_FACE:
+                sendingData = WatchFaceTools.deleteDeviceWatchFace(BleService.currentThemeId);
+                break;
+        }
+        if (sendingData == null) {
+            return null;
+        }
+        int validDataLength = BaseApplication.getBleDeviceTools().get_device_mtu_num() - 2;
+        int pack;
+        if (sendingData.length % validDataLength == 0) {
+            pack = sendingData.length / validDataLength;
+        } else {
+            pack = sendingData.length / validDataLength + 1;
+        }
+        curPack = pack;
         BleService.currentUuid_proto = BleConstant.CHAR_PROTOBUF_UUID_02;
         byte[] valueByte = new byte[6];
         valueByte[0] = (byte) 0;
@@ -1824,6 +1888,7 @@ public class BtSerializeation {
         return valueByte;
     }
 
+    //设备发起-准备好了
     public static byte[] deviceStartCmd() {
         byte[] valueByte = new byte[6];
         valueByte[0] = (byte) 0;
@@ -1835,6 +1900,7 @@ public class BtSerializeation {
         return valueByte;
     }
 
+    //设备发起-APP确认收完了
     public static byte[] appConfirm() {
         byte[] valueByte = new byte[6];
         valueByte[0] = (byte) 0;
@@ -1846,63 +1912,10 @@ public class BtSerializeation {
         return valueByte;
     }
 
-    // 0 今天  1 历史
-    public static byte[] GetSportIds(int type) {
-        return getProtoByte(FitnessTools.getSportIds(type));
-    }
-
-    public static byte[] requestFitnessId() {
-        return getProtoByte(FitnessTools.requestFitnessId());
-    }
-
-    public static byte[] deleteSportId() {
-        return getProtoByte(FitnessTools.deleteSportId());
-    }
-
-    public static byte[] getPageDevice() {
-        return getProtoByte(SystemTools.getPageDevice());
-    }
-
-    public static byte[] getPageDeviceSet() {
-        return getProtoByte(SystemTools.getPageDeviceSet());
-    }
-
-    public static byte[] getGpsReady(GpsSportManager.GpsInfo gpsInfo) {
-        return getProtoByte(FitnessTools.getGpsReady(gpsInfo));
-    }
-
-    public static byte[] getGpsByte(GpsSportManager.GpsInfo gpsInfo) {
-        return getProtoByte(FitnessTools.getGpsByte(gpsInfo));
-    }
-
-    public static byte[] getRequestGpsStateByte() {
-        return getProtoByte(FitnessTools.getDeviceGpsState());
-    }
-
-    public static byte[] getDeviceWatchFaceListByte() {
-        return getProtoByte(WatchFaceTools.getDeviceWatchFaceList());
-    }
-
-    public static byte[] setDeviceWatchFaceByte(String id) {
-        return getProtoByte(WatchFaceTools.setDeviceWatchFace(id));
-    }
-
-    public static byte[] deleteDeviceWatchFaceByte(String id) {
-        return getProtoByte(WatchFaceTools.deleteDeviceWatchFace(id));
-    }
-
-    public static byte[] getDeviceWatchFacePrepareStatus(String themeId, int themeSize) {
-        return getProtoByte(WatchFaceTools.getDeviceWatchFacePrepareStatus(themeId, themeSize));
-    }
-
-    public static byte[] getDeviceOtaPrepareStatus(boolean isForce, String version, String md5) {
-        return getProtoByte(SystemTools.getDeviceOtaPrepareStatus(isForce, version, md5));
-    }
-
-
-    private static byte[] getProtoByte(byte[] valueByte) {
+    public static byte[] getProtoByte(byte[] valueByte, int pack) {
         byte[] valueByte1 = new byte[2];
-        valueByte1[0] = (byte) 1;
+        valueByte1[0] = (byte) pack;
+        valueByte1[1] = (byte) (pack >> 8);
         if (valueByte == null) {
             return valueByte1;
         }

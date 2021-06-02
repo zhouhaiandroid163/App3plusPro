@@ -26,12 +26,13 @@ import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.base.BaseActivity;
 import com.zjw.apps3pluspro.bleservice.BleConstant;
+import com.zjw.apps3pluspro.bleservice.BleService;
 import com.zjw.apps3pluspro.bleservice.BroadcastTools;
 import com.zjw.apps3pluspro.bleservice.UpdateInfoService;
-import com.zjw.apps3pluspro.eventbus.AppConfirmEvent;
 import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusSuccessEvent;
+import com.zjw.apps3pluspro.eventbus.UploadThemeStateEvent;
 import com.zjw.apps3pluspro.eventbus.tools.EventTools;
 import com.zjw.apps3pluspro.network.NewVolleyRequest;
 import com.zjw.apps3pluspro.network.RequestJson;
@@ -82,13 +83,6 @@ public class ProtobufActivity extends BaseActivity {
         EventTools.SafeRegisterEventBus(this);
         handler = new Handler();
 
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ThemeManager.ACTION_CMD_APP_START);
-        intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_START);
-        intentFilter.addAction(ThemeManager.ACTION_CMD_APP_CONFIRM);
-        intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_CONFIRM);
-        intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK);
-        registerReceiver(receiver, intentFilter);
         initBroadcast();
 
         SysUtils.makeRootDirectory(Constants.UPDATE_DEVICE_FILE);
@@ -106,7 +100,6 @@ public class ProtobufActivity extends BaseActivity {
     protected void onDestroy() {
         waitDialog.dismiss();
         EventTools.SafeUnregisterEventBus(this);
-        unregisterReceiver(receiver);
         if (broadcastReceiver != null) {
             unregisterReceiver(broadcastReceiver);
         }
@@ -122,98 +115,37 @@ public class ProtobufActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.update:
-
                 getNetDeviceVersion(mBleDeviceTools.get_ble_device_type(), mBleDeviceTools.get_ble_device_version(), mBleDeviceTools.get_device_platform_type());
                 break;
         }
     }
 
-    private int curPiece = 0;
-    private int curPieceSendPack = 0;
-    private String type = "";
-
-    private void startUploadThemePiece() {
-        curCmd = "btUploadTheme";
-        curPiece++;
-        if (ThemeManager.getInstance().dataPackTotalPieceLength - curPiece >= 1) {
-            curPieceSendPack = ThemeManager.getInstance().dataPieceMaxPack;
-        } else {
-            curPieceSendPack = ThemeManager.getInstance().dataPieceEndPack;
-        }
-        sendProtoUpdateData(BleCmdManager.getInstance().appStartCmd(curPieceSendPack));
-    }
-
-    private void uploadDataPiece() {
-        for (int i = 0; i < curPieceSendPack; i++) {
-            sendProtoUpdateData(BleCmdManager.getInstance().sendThemePiece(i + 1, curPiece));
-        }
-        if (progressBar != null) {
-            progressBar.setProgress(curPiece * 100 / ThemeManager.getInstance().dataPackTotalPieceLength);
-        }
-        if ("watch".equalsIgnoreCase(type)) {
-            tvDeviceUpdateProgress.setText("" + curPiece * 100 / ThemeManager.getInstance().dataPackTotalPieceLength + "%");
-        } else {
-            tvDeviceUpdateProgress.setText("" + curPiece * 100 / ThemeManager.getInstance().dataPackTotalPieceLength + "%");
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void UploadThemeStateEvent(UploadThemeStateEvent event) {
+        switch (event.state) {
+            case 1:
+                Toast.makeText(ProtobufActivity.this, getResources().getString(R.string.send_fail), Toast.LENGTH_SHORT).show();
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+                finish();
+                break;
+            case 2:
+                progressBar.setProgress(event.progress);
+                tvDeviceUpdateProgress.setText("" + event.progress + "%");
+                break;
+            case 3:
+                Toast.makeText(ProtobufActivity.this, getResources().getString(R.string.dfu_success), Toast.LENGTH_SHORT).show();
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+                handler.postDelayed(() -> finish(), 0 * 1000);
+                break;
         }
     }
-
-    BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action == null) {
-                return;
-            }
-            switch (action) {
-                case ThemeManager.ACTION_CMD_APP_START:
-                    switch (curCmd) {
-                        case "btUploadTheme":
-                            uploadDataPiece();
-                            break;
-                    }
-                    break;
-                case ThemeManager.ACTION_CMD_DEVICE_CONFIRM:
-                    switch (curCmd) {
-                        case "btUploadTheme":
-                            if (curPiece == ThemeManager.getInstance().dataPackTotalPieceLength) {
-                                if ("watch".equalsIgnoreCase(type)) {
-//                                    tvDeviceUpdateProgress.setText("上传主题");
-                                } else {
-//                                    tvDeviceUpdateProgress.setText("固件升级");
-                                }
-                                Toast.makeText(ProtobufActivity.this, getResources().getString(R.string.dfu_success), Toast.LENGTH_SHORT).show();
-                                if (progressDialog != null && progressDialog.isShowing()) {
-                                    progressDialog.dismiss();
-                                }
-                                handler.postDelayed(() -> finish(), 0 * 1000);
-                            } else {
-                                startUploadThemePiece();
-                            }
-                            break;
-                    }
-                    break;
-                case ThemeManager.ACTION_CMD_DEVICE_START:
-                    sendProtoUpdateData(BleCmdManager.getInstance().deviceStartCmd());
-                    break;
-                case ThemeManager.ACTION_CMD_APP_CONFIRM:
-                    sendProtoUpdateData(BleCmdManager.getInstance().appConfirm());
-                    break;
-                case ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK:
-                    int pageNum = intent.getIntExtra("packNum", 0);
-                    sendProtoUpdateData(BleCmdManager.getInstance().sendThemePiece(pageNum, curPiece));
-                    break;
-            }
-        }
-    };
-
 
     public static int capacity = 50;
     public static String firmwareVersion = "";
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void AppConfirmEvent(AppConfirmEvent event) {
-        sendProtoUpdateData(BleCmdManager.getInstance().appConfirm());
-    }
 
     private Dialog progressDialog;
     TextView msg, tvDeviceUpdateProgress;
@@ -450,12 +382,9 @@ public class ProtobufActivity extends BaseActivity {
     }
 
     private void startDfu() {
-        curPiece = 0;
-        type = "ota";
         showDialog();
-        ThemeManager.getInstance().initUpload(ProtobufActivity.this, type, null);
-        startUploadThemePiece();
         progressDialog.setCancelable(false);
+        BleService.bluetoothLeService.sendTheme("ota", null);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

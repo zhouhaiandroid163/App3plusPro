@@ -24,12 +24,15 @@ import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.base.BaseActivity;
 import com.zjw.apps3pluspro.bleservice.BleConstant;
+import com.zjw.apps3pluspro.bleservice.BleService;
 import com.zjw.apps3pluspro.bleservice.BroadcastTools;
 import com.zjw.apps3pluspro.bleservice.BtSerializeation;
 import com.zjw.apps3pluspro.bleservice.UpdateInfoService;
 import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoAGpsPrepareStatusSuccessEvent;
+import com.zjw.apps3pluspro.eventbus.UploadThemeStateEvent;
 import com.zjw.apps3pluspro.eventbus.tools.EventTools;
+import com.zjw.apps3pluspro.module.device.dfu.ProtobufActivity;
 import com.zjw.apps3pluspro.network.NewVolleyRequest;
 import com.zjw.apps3pluspro.network.RequestJson;
 import com.zjw.apps3pluspro.network.ResultJson;
@@ -108,11 +111,6 @@ public class AGpsUpdateActivity extends BaseActivity {
 
         filter.addAction(BroadcastTools.ACTION_UPDATE_LTO_SUCCESS);
         filter.addAction(BroadcastTools.ACTION_DOWN_CLOCK_FILE_STATE_ERROR);
-        filter.addAction(ThemeManager.ACTION_CMD_APP_START);
-        filter.addAction(ThemeManager.ACTION_CMD_DEVICE_START);
-        filter.addAction(ThemeManager.ACTION_CMD_APP_CONFIRM);
-        filter.addAction(ThemeManager.ACTION_CMD_DEVICE_CONFIRM);
-        filter.addAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK);
 
         filter.setPriority(1000);
         registerReceiver(broadcastReceiverLto, filter);
@@ -139,79 +137,39 @@ public class AGpsUpdateActivity extends BaseActivity {
                     AppUtils.showToast(context, R.string.net_worse_try_again);
                     finish();
                     break;
-                case ThemeManager.ACTION_CMD_APP_START:
-                    switch (curCmd) {
-                        case "btUploadTheme":
-                            uploadDataPiece();
-                            break;
-                    }
-                    break;
-                case ThemeManager.ACTION_CMD_DEVICE_CONFIRM:
-                    switch (curCmd) {
-                        case "btUploadTheme":
-                            if (curPiece == ThemeManager.getInstance().dataPackTotalPieceLength) {
-                                Toast.makeText(AGpsUpdateActivity.this, getResources().getString(R.string.send_success), Toast.LENGTH_SHORT).show();
-                                if (progressDialog != null && progressDialog.isShowing()) {
-                                    progressDialog.dismiss();
-                                }
-                                finish();
-                            } else {
-                                startUploadThemePiece();
-                            }
-                            break;
-                    }
-                    break;
-                case ThemeManager.ACTION_CMD_DEVICE_START:
-                    sendProtoUpdateData(BleCmdManager.getInstance().deviceStartCmd());
-                    break;
-                case ThemeManager.ACTION_CMD_APP_CONFIRM:
-                    sendProtoUpdateData(BleCmdManager.getInstance().appConfirm());
-                    break;
-                case ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK:
-                    int pageNum = intent.getIntExtra("packNum", 0);
-                    sendProtoUpdateData(BleCmdManager.getInstance().sendThemePiece(pageNum, curPiece));
-                    break;
             }
         }
     };
 
-    private void uploadDataPiece() {
-        for (int i = 0; i < curPieceSendPack; i++) {
-            sendProtoUpdateData(BleCmdManager.getInstance().sendThemePiece(i + 1, curPiece));
-        }
-        if (progressBar != null) {
-            progressBar.setProgress(curPiece * 100 / ThemeManager.getInstance().dataPackTotalPieceLength);
-        }
-        if ("watch".equalsIgnoreCase(type)) {
-            tvDeviceUpdateProgress.setText("" + curPiece * 100 / ThemeManager.getInstance().dataPackTotalPieceLength + "%");
-        } else {
-            tvDeviceUpdateProgress.setText("" + curPiece * 100 / ThemeManager.getInstance().dataPackTotalPieceLength + "%");
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void UploadThemeStateEvent(UploadThemeStateEvent event) {
+        switch (event.state) {
+            case 1:
+                Toast.makeText(this, getResources().getString(R.string.send_fail), Toast.LENGTH_SHORT).show();
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+                finish();
+                break;
+            case 2:
+                progressBar.setProgress(event.progress);
+                tvDeviceUpdateProgress.setText("" + event.progress + "%");
+                break;
+            case 3:
+                Toast.makeText(this, getResources().getString(R.string.dfu_success), Toast.LENGTH_SHORT).show();
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+                protoHandler.postDelayed(() -> finish(), 0 * 1000);
+                break;
         }
     }
 
-    private String curCmd = "";
-    private int curPiece = 0;
-    private int curPieceSendPack = 0;
-    private String type = "";
 
     private void startDfu() {
-        curPiece = 0;
-        type = "lto";
         showDialog();
-        ThemeManager.getInstance().initUpload(this, type, null);
-        startUploadThemePiece();
         progressDialog.setCancelable(false);
-    }
-
-    private void startUploadThemePiece() {
-        curCmd = "btUploadTheme";
-        curPiece++;
-        if (ThemeManager.getInstance().dataPackTotalPieceLength - curPiece >= 1) {
-            curPieceSendPack = ThemeManager.getInstance().dataPieceMaxPack;
-        } else {
-            curPieceSendPack = ThemeManager.getInstance().dataPieceEndPack;
-        }
-        sendProtoUpdateData(BleCmdManager.getInstance().appStartCmd(curPieceSendPack));
+        BleService.bluetoothLeService.sendTheme("lto", null);
     }
 
     private Handler protoHandler;

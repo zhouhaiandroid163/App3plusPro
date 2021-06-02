@@ -36,7 +36,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -53,38 +52,24 @@ import com.zjw.apps3pluspro.bleservice.BroadcastTools;
 import com.zjw.apps3pluspro.bleservice.BtSerializeation;
 import com.zjw.apps3pluspro.bleservice.MyNotificationsListenerService;
 import com.zjw.apps3pluspro.bleservice.UpdateInfoService;
-import com.zjw.apps3pluspro.bleservice.anaylsis.FitnessTools;
 import com.zjw.apps3pluspro.broadcastreceiver.HomeWatcherReceiver;
 import com.zjw.apps3pluspro.eventbus.AuthorizationStateEvent;
 import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent;
 import com.zjw.apps3pluspro.eventbus.BluetoothAdapterStateEvent;
 import com.zjw.apps3pluspro.eventbus.DataSyncCompleteEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceInfoEvent;
-import com.zjw.apps3pluspro.eventbus.DeviceNoSportEvent;
-import com.zjw.apps3pluspro.eventbus.DeviceSportStatusEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceToAppSportStateEvent;
 import com.zjw.apps3pluspro.eventbus.DialInfoCompleteEvent;
 import com.zjw.apps3pluspro.eventbus.DismissAGpsUpdateDialogEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoAGpsPrepareStatusSuccessEvent;
-import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusEvent;
-import com.zjw.apps3pluspro.eventbus.GetDeviceProtoWatchFacePrepareStatusEvent;
-import com.zjw.apps3pluspro.eventbus.GpsSportDeviceStartEvent;
-import com.zjw.apps3pluspro.eventbus.LocationChangeEventBus;
 import com.zjw.apps3pluspro.eventbus.OffEcgSyncStateEvent;
-import com.zjw.apps3pluspro.eventbus.PageDeviceSetEvent;
-import com.zjw.apps3pluspro.eventbus.PageDeviceSyncEvent;
 import com.zjw.apps3pluspro.eventbus.ShowDialogEvent;
-import com.zjw.apps3pluspro.eventbus.SyncDeviceSportEvent;
 import com.zjw.apps3pluspro.eventbus.SyncTimeLoadingEvent;
 import com.zjw.apps3pluspro.eventbus.SyncTimeOutEvent;
 import com.zjw.apps3pluspro.eventbus.tools.EventTools;
-import com.zjw.apps3pluspro.kml.KmlFileManager;
-import com.zjw.apps3pluspro.kml.TrackPoint;
 import com.zjw.apps3pluspro.module.device.AGpsUpdateActivity;
 import com.zjw.apps3pluspro.module.device.DeviceFragment;
 import com.zjw.apps3pluspro.module.device.DeviceManager;
-import com.zjw.apps3pluspro.module.device.DeviceMoreSetActivity;
-import com.zjw.apps3pluspro.module.device.ScanDeviceActivity;
 import com.zjw.apps3pluspro.module.device.ScanDeviceTypeActivity;
 import com.zjw.apps3pluspro.module.device.dfu.BleDfuActivity;
 import com.zjw.apps3pluspro.module.device.dfu.ProtobufActivity;
@@ -130,12 +115,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -146,6 +127,7 @@ import butterknife.BindView;
  */
 public class HomeActivity extends BaseActivity {
     public static Activity homeActivity;
+    public static boolean isFirstOnCreate = false;
 
     private final String TAG = HomeActivity.class.getSimpleName();
     private Context mContext;
@@ -312,7 +294,6 @@ public class HomeActivity extends BaseActivity {
             }
         });
         findViewById(R.id.btGetSport).setOnClickListener(v -> {
-            getSport();
 
         });
 
@@ -351,6 +332,7 @@ public class HomeActivity extends BaseActivity {
         super.initDatas();
         homeActivity = this;
         mContext = this;
+        isFirstOnCreate = true;
         registerHomeKeyReceiver(this);
         SysUtils.logContentE(TAG, "onCreate");
         SysUtils.logAppRunning(TAG, "onCreate  app version = " + MyUtils.getAppInfo());
@@ -475,10 +457,6 @@ public class HomeActivity extends BaseActivity {
             mBleHandler.removeCallbacksAndMessages(null);
         }
 
-
-        if (protoHandler != null) {
-            protoHandler.removeCallbacksAndMessages(null);
-        }
 
 //        try {
 //            if (mService != null && isBind) {
@@ -614,7 +592,6 @@ public class HomeActivity extends BaseActivity {
         filter.addAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
         filter.addAction(BroadcastTools.ACTION_CMD_DEVICE_CONFIRM);
         filter.addAction(BroadcastTools.ACTION_CMD_GET_SPORT);
-        filter.addAction(BroadcastTools.ACTION_GATT_PROTOSPORT);
         filter.addAction(BroadcastTools.ACTION_CMD_DEVICE_TRANSMISSION_DATA);
 
         filter.addAction(BroadcastTools.ACTION_GATT_DEVICE_TO_APP_SPORT_STATE);
@@ -622,8 +599,6 @@ public class HomeActivity extends BaseActivity {
         filter.setPriority(1000);
         registerReceiver(broadcastReceiver, filter);
     }
-
-    public static boolean isSyncSportData = false;
 
     /**
      * 广播监听
@@ -660,7 +635,6 @@ public class HomeActivity extends BaseActivity {
                         break;
                     //已连接
                     case BroadcastTools.ACTION_GATT_CONNECTED:
-                        isFirstConnect = true;
                         isFirstShowAGpsDialog = true;
                         mConnectionState = BleConstant.STATE_CONNECTED;
                         EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_CONNECTED));
@@ -674,16 +648,8 @@ public class HomeActivity extends BaseActivity {
                     //已断开
                     case BroadcastTools.ACTION_GATT_DISCONNECTED:
                         aGpsDialog = null;
-                        isFirstConnect = false;
                         isFirstShowAGpsDialog = false;
-                        currentGpsSportState = -1;
-                        appGpsInfo = null;
-                        curSportState = BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO;
                         GpsSportManager.getInstance().stopGps(homeActivity);
-                        curCmd = "";
-                        stopLocationService();
-
-                        isSyncSportData = false;
                         mConnectionState = BleConstant.STATE_DISCONNECTED;
                         BleService.syncState = false;
                         EventBus.getDefault().post(new BlueToothStateEvent(BleConstant.STATE_DISCONNECTED));
@@ -712,12 +678,6 @@ public class HomeActivity extends BaseActivity {
                             }
                         }
                         syncWeather();
-                        break;
-                    case BroadcastTools.ACTION_GATT_PROTOSPORT:
-                        if (currentGpsSportState == -1 || currentGpsSportState == GpsSportDeviceStartEvent.SPORT_STATE_STOP) {
-                            isSyncSportData = true;
-                            getSport();
-                        }
                         break;
                     case BroadcastTools.ACTION_GATT_DEVICE_COMPLETE:
                         EventBus.getDefault().post(new DeviceInfoEvent());
@@ -787,158 +747,9 @@ public class HomeActivity extends BaseActivity {
                     case BroadcastTools.TAG_CLOSE_PHOTO_ACTION:
                         closePhoto();
                         break;
-                    case BroadcastTools.ACTION_CMD_APP_START:
-                        SysUtils.logContentI("ble", " BroadcastTools.ACTION_CMD_APP_START = " + curCmd);
-                        SysUtils.logAppRunning("ble", " BroadcastTools.ACTION_CMD_APP_START = " + curCmd);
-                        switch (curCmd) {
-                            case GET_SPORT_IDS_TODAY:
-                                refreshProtobufSportTimeOut();
-                                sendAppStart(BtSerializeation.GetSportIds(0));
-                                break;
-                            case GET_SPORT_IDS_HISTORY:
-                                refreshProtobufSportTimeOut();
-                                sendAppStart(BtSerializeation.GetSportIds(1));
-                                break;
-                            case REQUEST_FITNESS_ID_TODAY:
-                            case REQUEST_FITNESS_ID_HISTORY:
-                                refreshProtobufSportTimeOut();
-                                sendAppStart(BtSerializeation.requestFitnessId());
-                                break;
-                            case DELETE_DEVICE_SPORT_HISTORY:
-                            case DELETE_DEVICE_SPORT_TODAY:
-                                refreshProtobufSportTimeOut();
-                                sendAppStart(BtSerializeation.deleteSportId());
-                                break;
-                            case GET_PAGE_DEVICE:
-                                sendAppStart(BtSerializeation.getPageDevice());
-                                break;
-                            case SET_PAGE_DEVICE:
-                                sendAppStart(BtSerializeation.getPageDeviceSet());
-                                break;
-                            case APP_GPS_READY:
-                                sendAppStart(BtSerializeation.getGpsReady(gpsInfo));
-                                break;
-                            case APP_SEND_GPS:
-                                sendAppStart(BtSerializeation.getGpsByte(gpsInfo));
-                                break;
-                            case APP_REQUEST_GPS_SPORT_STATE:
-                                sendAppStart(BtSerializeation.getRequestGpsStateByte());
-                                break;
-                            case APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL:
-                                sendAppStart(BtSerializeation.getDeviceWatchFacePrepareStatus(themeId, themeSize));
-                                break;
-                            case APP_REQUEST_DEVICE_OTA_PREPARE:
-                                sendAppStart(BtSerializeation.getDeviceOtaPrepareStatus(isForce, version, md5));
-                                break;
-
-                        }
-                        break;
-                    case BroadcastTools.ACTION_CMD_DEVICE_START:
-                        sendAppStart(BtSerializeation.deviceStartCmd());
-                        break;
-                    case BroadcastTools.ACTION_CMD_APP_CONFIRM:
-                        sendAppStart(BtSerializeation.appConfirm());
-                        break;
-                    case BroadcastTools.ACTION_CMD_DEVICE_CONFIRM:
-                        switch (curCmd) {
-                            case DELETE_DEVICE_SPORT_HISTORY:
-                                refreshProtobufSportTimeOut();
-                                if (FitnessTools.deleteIndex == FitnessTools.bleIdsList.size()) {
-                                    //delete history over
-                                    SysUtils.logContentW("ble", " delete history over");
-                                    SysUtils.logAppRunning("ble", " delete history over");
-                                    startSyncTodayDeviceSport();
-                                } else {
-                                    deleteDeviceSport(DELETE_DEVICE_SPORT_HISTORY);
-                                }
-                                break;
-                            case DELETE_DEVICE_SPORT_TODAY:
-                                refreshProtobufSportTimeOut();
-                                if (FitnessTools.deleteIndex == FitnessTools.bleIdsList.size()) {
-                                    //delete today over
-                                    SysUtils.logContentW("ble", " delete today over");
-                                    SysUtils.logAppRunning("ble", " delete today over");
-                                    syncDeviceSportOver();
-                                } else {
-                                    deleteDeviceSport(DELETE_DEVICE_SPORT_TODAY);
-                                }
-                                break;
-                            case APP_GPS_READY:
-                                curCmd = APP_SEND_GPS;
-                                break;
-                        }
-                        break;
-                    case BroadcastTools.ACTION_CMD_GET_SPORT:
-                        refreshProtobufSportTimeOut();
-                        SysUtils.logContentI("ble", " BroadcastTools.ACTION_CMD_GET_SPORT = " + curCmd);
-                        SysUtils.logAppRunning("ble", " BroadcastTools.ACTION_CMD_GET_SPORT = " + curCmd);
-                        switch (curCmd) {
-                            case GET_SPORT_IDS_TODAY:
-                                curCmd = REQUEST_FITNESS_ID_TODAY;
-                                break;
-                            case GET_SPORT_IDS_HISTORY:
-                                curCmd = REQUEST_FITNESS_ID_HISTORY;
-                                break;
-                        }
-                        switch (curCmd) {
-                            case REQUEST_FITNESS_ID_TODAY:
-                                tvProgress.setText("today " + (FitnessTools.currentIndex) + "/" + FitnessTools.bleIdsList.size());
-                                break;
-                            case REQUEST_FITNESS_ID_HISTORY:
-                                tvProgress.setText("History " + (FitnessTools.currentIndex) + "/" + FitnessTools.bleIdsList.size());
-                                break;
-                        }
-
-                        if (FitnessTools.bleIdsList.size() != 0) {
-                            if (FitnessTools.currentIndex >= FitnessTools.bleIdsList.size()) {
-                                // over
-                                if (curCmd.equalsIgnoreCase(REQUEST_FITNESS_ID_HISTORY)) {
-                                    SysUtils.logContentW("ble", "REQUEST_FITNESS_ID_HISTORY sync over");
-                                    SysUtils.logAppRunning("ble", "REQUEST_FITNESS_ID_HISTORY sync over");
-                                    // history is over and delete the ids
-                                    FitnessTools.deleteIndex = 0;
-                                    deleteDeviceSport(DELETE_DEVICE_SPORT_HISTORY);
-                                    //                                startSyncTodayDeviceSport();
-
-                                } else if (curCmd.equalsIgnoreCase(REQUEST_FITNESS_ID_TODAY)) {
-                                    SysUtils.logContentW("ble", "REQUEST_FITNESS_ID_TODAY sync over");
-                                    SysUtils.logAppRunning("ble", "REQUEST_FITNESS_ID_TODAY sync over");
-                                    DeviceSportManager.Companion.getInstance().uploadMoreSportData();
-                                    // delete the ids
-                                    FitnessTools.deleteIndex = 0;
-                                    deleteDeviceSport(DELETE_DEVICE_SPORT_TODAY);
-                                }
-                            } else {
-                                if (main_off_line_sync_view != null && main_off_line_sync_view.getVisibility() != View.VISIBLE) {
-                                    main_off_line_sync_view.setVisibility(View.VISIBLE);
-                                }
-                                sendAppStart(BtSerializeation.appStartCmd(1));
-                            }
-                        } else {
-                            switch (curCmd) {
-                                case REQUEST_FITNESS_ID_TODAY:
-                                    SysUtils.logContentW("ble", " today is no data , sync over");
-                                    SysUtils.logAppRunning("ble", " today is no data , sync over");
-                                    DeviceSportManager.Companion.getInstance().uploadMoreSportData();
-                                    syncDeviceSportOver();
-                                    break;
-                                case REQUEST_FITNESS_ID_HISTORY:
-                                    SysUtils.logContentW("ble", " HISTORY is no data");
-                                    SysUtils.logAppRunning("ble", " HISTORY is no data");
-                                    startSyncTodayDeviceSport();
-                                    break;
-                            }
-                        }
-
-                        break;
-                    case BroadcastTools.ACTION_CMD_DEVICE_TRANSMISSION_DATA:
-                        SysUtils.logContentW("ble", " ACTION_CMD_DEVICE_TRANSMISSION_DATA");
-                        refreshProtobufSportTimeOut();
-                        break;
                     case BroadcastTools.ACTION_GATT_DEVICE_TO_APP_SPORT_STATE:
                         int sportState = intent.getIntExtra(BroadcastTools.ACTION_GATT_DEVICE_TO_APP_SPORT_TAG, -1);
                         EventBus.getDefault().post(new DeviceToAppSportStateEvent(sportState));
-                        deviceToAppSportStateEvent(new DeviceToAppSportStateEvent(sportState));
                         break;
                 }
             } catch (Exception e) {
@@ -946,295 +757,13 @@ public class HomeActivity extends BaseActivity {
             }
         }
     };
-    private String curCmd;
-    private final String GET_SPORT_IDS_TODAY = "GET_SPORT_IDS_TODAY";
-    private final String GET_SPORT_IDS_HISTORY = "GET_SPORT_IDS_HISTORY";
-    private final String REQUEST_FITNESS_ID_TODAY = "REQUEST_FITNESS_ID_TODAY";
-    private final String REQUEST_FITNESS_ID_HISTORY = "REQUEST_FITNESS_ID_HISTORY";
-    private final String DELETE_DEVICE_SPORT_HISTORY = "DELETE_DEVICE_SPORT_HISTORY";
-    private final String DELETE_DEVICE_SPORT_TODAY = "DELETE_DEVICE_SPORT_TODAY";
-    private final String GET_PAGE_DEVICE = "GET_PAGE_DEVICE";
-    private final String SET_PAGE_DEVICE = "SET_PAGE_DEVICE";
-    private final String APP_GPS_READY = "APP_GPS_READY";
-    private final String APP_SEND_GPS = "APP_SEND_GPS";
-    private final String APP_REQUEST_GPS_SPORT_STATE = "APP_REQUEST_GPS_SPORT_STATE";
-    private final String APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL = "APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL";
-    private final String APP_REQUEST_DEVICE_OTA_PREPARE = "APP_REQUEST_DEVICE_OTA_PREPARE";
 
-    boolean isForce;
-    String version;
-    String md5;
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getDeviceProtoOtaPrepareStatusEvent(GetDeviceProtoOtaPrepareStatusEvent event) {
-        isForce = event.isForce;
-        version = event.version;
-        md5 = event.md5;
-        curCmd = APP_REQUEST_DEVICE_OTA_PREPARE;
-        sendAppStart(BtSerializeation.appStartCmd(1));
-    }
-
-    private String themeId = "0";
-    private int themeSize = 0;
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getDeviceProtoStatusEvent(GetDeviceProtoWatchFacePrepareStatusEvent event) {
-        curCmd = APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL;
-        themeId = event.themeId;
-        themeSize = event.themeSize;
-        sendAppStart(BtSerializeation.appStartCmd(1));
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void pageDeviceSyncEvent(PageDeviceSyncEvent event) {
-        curCmd = GET_PAGE_DEVICE;
-        sendAppStart(BtSerializeation.appStartCmd(1));
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void pageDeviceSetEvent(PageDeviceSetEvent event) {
-        curCmd = SET_PAGE_DEVICE;
-        sendAppStart(BtSerializeation.appStartCmd(1));
-    }
-
-    private boolean isFirstConnect = false;
-    private boolean isFirstOnCreate = true;
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void deviceSportStatusEvent(DeviceSportStatusEvent event) {
-        if (isFirstConnect) {
-            MyLog.w(TAG, " deviceSportStatusEvent is first connect");
-            isFirstConnect = false;
-            if (event.sportType != 0) {
-                curCmd = APP_GPS_READY;
-                initGpsSport();
-            }
-        } else {
-            MyLog.w(TAG, " no initGpsSport");
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void deviceNoSportEvent(DeviceNoSportEvent event) {
-        MyLog.w(TAG, " init agps request");
-        if (mBleDeviceTools.getIsGpsSensor() && isFirstOnCreate) {
-            isFirstOnCreate = false;
-            writeRXCharacteristic(BtSerializeation.getBleData(null, BtSerializeation.CMD_01, BtSerializeation.KEY_AGPS));
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void gpsSportDeviceStartEvent(GpsSportDeviceStartEvent event) {
-        currentGpsSportState = event.state;
-        switch (currentGpsSportState) {
-            case GpsSportDeviceStartEvent.SPORT_STATE_START:
-                curCmd = APP_GPS_READY;
-                initGpsSport();
-                break;
-            case GpsSportDeviceStartEvent.SPORT_STATE_PAUSE:
-                break;
-            case GpsSportDeviceStartEvent.SPORT_STATE_RESUME:
-                break;
-            case GpsSportDeviceStartEvent.SPORT_STATE_STOP:
-                stopLocationService();
-                break;
-        }
-    }
-
-    public static int currentGpsSportState = -1;
-    GpsSportManager.GpsInfo gpsInfo;
-
-    private ImageView ivGpsStatus;
-
-    public void setGpsAccuracy(ImageView ivGpsStatus) {
-        this.ivGpsStatus = ivGpsStatus;
-    }
-
-    private void refreshGpsInfo(GpsSportManager.GpsInfo gpsInfo) {
-        this.gpsInfo = gpsInfo;
-        if (ivGpsStatus != null) {
-            switch (gpsInfo.gpsAccuracy) {
-                case GpsSportManager.GpsInfo.GPS_LOW:
-                    ivGpsStatus.setBackground(getResources().getDrawable(R.mipmap.gps_low_bg));
-                    break;
-                case GpsSportManager.GpsInfo.GPS_MEDIUM:
-                    ivGpsStatus.setBackground(getResources().getDrawable(R.mipmap.gps_medium_bg));
-                    break;
-                case GpsSportManager.GpsInfo.GPS_HIGH:
-                    ivGpsStatus.setBackground(getResources().getDrawable(R.mipmap.gps_high_bg));
-                    break;
-            }
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void locationChangeEventBus(LocationChangeEventBus event) {
-        GpsSportManager.GpsInfo gpsInfo = event.gpsInfo;
-        if (mBleDeviceTools.getIsSupportAppAuxiliarySport()) {
-            if (appGpsInfo == null || curSportState == BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_YES) {
-                appGpsInfo = gpsInfo;
-                writeRXCharacteristic(BtSerializeation.sendSportState(1));
-                curSportState = BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START;
-            } else {
-                switch (curSportState) {
-                    case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START:
-                    case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESUME:
-                        if (appGpsInfo.latitude == gpsInfo.latitude && appGpsInfo.longitude == gpsInfo.longitude) {
-                            Log.i(TAG, "locationChangeEventBus location is not change...");
-                        } else {
-                            double distance = GpsSportManager.getInstance().getDistance(appGpsInfo.latitude, appGpsInfo.longitude, gpsInfo.latitude, gpsInfo.longitude);
-                            if (distance != 0) {
-                                appGpsInfo = gpsInfo;
-                                Log.w(TAG, "locationChangeEventBus distance = " + distance);
-                                refreshGpsInfo(gpsInfo);
-                                writeRXCharacteristic(BtSerializeation.sendSportData(gpsInfo.latitude, gpsInfo.longitude, gpsInfo.gpsAccuracy));
-
-//                                TrackPoint tp = new TrackPoint(gpsInfo.longitude, gpsInfo.latitude, gpsInfo.altitude, System.currentTimeMillis());
-//                                KmlFileManager.getInstance().addData(tp);
-                            }
-                        }
-                        break;
-                }
-            }
-        } else {
-            switch (curCmd) {
-                case APP_GPS_READY:
-                    sendAppStart(BtSerializeation.appStartCmd(1));
-                    break;
-                case APP_SEND_GPS:
-                    if (currentGpsSportState == GpsSportDeviceStartEvent.SPORT_STATE_START || currentGpsSportState == GpsSportDeviceStartEvent.SPORT_STATE_RESUME) {
-                        refreshGpsInfo(gpsInfo);
-                        sendAppStart(BtSerializeation.appStartCmd(1));
-                    }
-                    break;
-            }
-        }
-    }
-
-    private Dialog progressDialog1;
-
-    private void createKml() {
-        progressDialog1 = new Dialog(HomeActivity.this, R.style.progress_dialog);
-        progressDialog1.setContentView(R.layout.progress_layout);
-        progressDialog1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        TextView msg = (TextView) progressDialog1.findViewById(R.id.id_tv_loadingmsg);
-
-        progressDialog1.show();
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String now = sdf.format(new Date());
-
-        String fileName = "1" + "_" + now + ".kml";
-        SysUtils.makeFilePath(Constants.P_LOG_KML, fileName);
-        SysUtils.logContentW(TAG, "fileName =" + fileName);
-        msg.setText(Constants.P_LOG_KML + fileName + "文件生成中");
-
-        try {
-            File file = new File(Constants.LOC_DIR + Constants.P_LOG_LOC_FILENAME);
-            String newPath = Constants.LOC_DIR + "1" + "_" + now + ".log";
-            boolean result = file.renameTo(new File(newPath));
-            Log.i(TAG, "file.rename = " + result);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        new Thread(() -> {
-            KmlFileManager.getInstance().createKml(Constants.P_LOG_KML + fileName);
-            mBleHandler.postDelayed(() -> {
-                if (progressDialog1 != null) {
-                    progressDialog1.dismiss();
-                }
-            }, 2000);
-        }).start();
-    }
-
-    private void initGpsSport() {
-        startLocationService();
-    }
-
-    private void getSport() {
-        if (protoHandler == null) {
-            protoHandler = new Handler();
-        }
-//        Calendar mCalendar = Calendar.getInstance();
-//        mCalendar.set(Calendar.HOUR_OF_DAY, 0);
-//        mCalendar.set(Calendar.MINUTE, 0);
-//        mCalendar.set(Calendar.SECOND, 0);
-//        mCalendar.set(Calendar.MILLISECOND, 0);
-//        long time = mCalendar.getTimeInMillis();
-//        if (mBleDeviceTools.getLastDeviceSportSyncTime() == 0 || mBleDeviceTools.getLastDeviceSportSyncTime() < time) {
-//            // 获取历史
-//            curCmd = GET_SPORT_IDS_HISTORY;
-//            sendAppStart(BtSerializeation.appStartCmd(1));
-//        } else {
-//            curCmd = GET_SPORT_IDS_TODAY;
-//            sendAppStart(BtSerializeation.appStartCmd(1));
-//        }
-        curCmd = GET_SPORT_IDS_HISTORY;
-        sendAppStart(BtSerializeation.appStartCmd(1));
-        protoHandler.removeCallbacksAndMessages(null);
-        protoHandler.postDelayed(getProtoSportTimeOut, timeOut);
-    }
-
-    private Handler protoHandler;
-    private int timeOut = 20 * 1000;
-    Runnable getProtoSportTimeOut = () -> {
-        SysUtils.logContentW("ble", " getProtoSportTimeOut");
-        SysUtils.logAppRunning("ble", " getProtoSportTimeOut");
-        syncDeviceSportOver();
-    };
-
-    private void refreshProtobufSportTimeOut() {
-        SysUtils.logContentW("ble", " refreshProtobufSportTimeOut");
-        if (protoHandler == null) {
-            protoHandler = new Handler();
-        }
-        protoHandler.removeCallbacksAndMessages(null);
-        protoHandler.postDelayed(getProtoSportTimeOut, timeOut);
-    }
-
-    private void deleteDeviceSport(String cmd) {
-        curCmd = cmd;
-        sendAppStart(BtSerializeation.appStartCmd(1));
-    }
-
-    private void startSyncTodayDeviceSport() {
-        mBleDeviceTools.setLastDeviceSportSyncTime(System.currentTimeMillis());
-        curCmd = GET_SPORT_IDS_TODAY;
-        sendAppStart(BtSerializeation.appStartCmd(1));
-    }
-
-    private void syncDeviceSportOver() {
-        isSyncSportData = false;
-        if (main_off_line_sync_view != null) {
-            main_off_line_sync_view.setVisibility(View.GONE);
-        }
-        EventBus.getDefault().post(new SyncDeviceSportEvent(0));
-        if (protoHandler != null) {
-            protoHandler.removeCallbacksAndMessages(null);
-        }
-        getDeviceGpsSportStatus();
-    }
-
-    private void getDeviceGpsSportStatus() {
-        if (mBleDeviceTools.getIsSupportGpsSport()) {
-            // 询问gps运动结果
-            curCmd = APP_REQUEST_GPS_SPORT_STATE;
-            sendAppStart(BtSerializeation.appStartCmd(1));
-        } else {
-            if (mBleDeviceTools.getIsGpsSensor()) {
-                EventBus.getDefault().post(new DeviceNoSportEvent());
-            }
-        }
-    }
 
     private Dialog aGpsDialog;
-
     private boolean isFirstShowAGpsDialog = false;
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getDeviceProtoAGpsPrepareStatusSuccessEvent(GetDeviceProtoAGpsPrepareStatusSuccessEvent event) {
-        protoHandler.removeCallbacksAndMessages(null);
         if (event.needGpsInfo && isFirstShowAGpsDialog) {
             SysUtils.logAppRunning(TAG, "GetDeviceProtoAGpsPrepareStatusSuccessEvent = " + true);
             isFirstShowAGpsDialog = false;
@@ -2046,35 +1575,7 @@ public class HomeActivity extends BaseActivity {
 //        });
     }
 
-    private int curSportState = BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO;
 
-    public void deviceToAppSportStateEvent(DeviceToAppSportStateEvent event) {
-        curSportState = event.state;
-        switch (event.state) {
-            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START: // 发起运动
-            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_YES: // 正在运动中…
-                initGpsSport();
-                break;
-            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_PAUSE: // 运动已暂停
-                break;
-            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESUME: // 运动继续
-                break;
-            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_STOP: // 结束运动
-                resetAppHelpDevice();
-                break;
-            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO: // 非运动状态…
-                break;
-        }
-    }
-
-    private GpsSportManager.GpsInfo appGpsInfo = null;
-
-    private void resetAppHelpDevice() {
-//        createKml();
-        appGpsInfo = null;
-        GpsSportManager.getInstance().stopGps(homeActivity);
-        stopLocationService();
-    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showDialogEvent(ShowDialogEvent event) {

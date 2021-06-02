@@ -24,13 +24,16 @@ import com.zjw.apps3pluspro.bleservice.BleConstant
 import com.zjw.apps3pluspro.bleservice.BleTools
 import com.zjw.apps3pluspro.bleservice.BtSerializeation
 import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent
+import com.zjw.apps3pluspro.eventbus.SendOpenWeatherDataEvent
 import com.zjw.apps3pluspro.eventbus.tools.EventTools
 import com.zjw.apps3pluspro.module.device.weather.openweather.WeatherManager
 import com.zjw.apps3pluspro.utils.*
 import com.zjw.apps3pluspro.utils.DialogUtils.DialogClickListener
 import kotlinx.android.synthetic.main.weather_main_activity.*
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 
 class WeatherMainActivity : BaseActivity() {
@@ -122,6 +125,7 @@ class WeatherMainActivity : BaseActivity() {
         }, 1500)
     }
     private var handler: Handler = Handler()
+
     @SuppressLint("ShowToast")
     private fun initSwitch() {
         if (switchCompat.isChecked) {
@@ -163,16 +167,28 @@ class WeatherMainActivity : BaseActivity() {
                     SysUtils.logAmapGpsE(TAG, "getLatLon success and stopGps getWeatherCity")
                     SysUtils.logAppRunning(TAG, "getLatLon success and stopGps getWeatherCity")
                     GpsSportManager.getInstance().stopGps(this)
-//                    GpsSportManager.getInstance().getWeatherCity(this) {
-//                        SysUtils.logAmapGpsE(TAG, "getWeatherCity success and startRequestWeather")
-//                        handler.removeCallbacksAndMessages(null)
-//                        initTvLatLon()
-//                        startRequestWeather()
-//                    }
 
-                    val gps = mBleDeviceTools.weatherGps.split(",")
-                    if(gps.size > 1){
-                        WeatherManager.getInstance().getCurrentWeather(gps[1].toDouble(), gps[0].toDouble())
+                    if (mBleDeviceTools.weatherMode == 3) {
+                        val gps = mBleDeviceTools.weatherGps.split(",")
+                        if (gps.size > 1) {
+                            WeatherManager.getInstance().getCurrentWeather(gps[1].toDouble(), gps[0].toDouble(), object : WeatherManager.GetOpenWeatherListener {
+                                override fun onSuccess() {
+                                    EventBus.getDefault().post(SendOpenWeatherDataEvent())
+                                }
+
+                                override fun onFail() {
+                                }
+                            })
+                        } else {
+                            SysUtils.logAppRunning(TAG, "gps.size is error = " + mBleDeviceTools.weatherGps)
+                        }
+                    } else {
+                        GpsSportManager.getInstance().getWeatherCity(this) {
+                            SysUtils.logAmapGpsE(TAG, "getWeatherCity success and startRequestWeather")
+                            handler.removeCallbacksAndMessages(null)
+                            initTvLatLon()
+                            startRequestWeather()
+                        }
                     }
                 }
             }
@@ -283,7 +299,6 @@ class WeatherMainActivity : BaseActivity() {
                     }
 
                     override fun OnCancel() {}
-                }
-                , getString(R.string.setting_dialog_setting))
+                }, getString(R.string.setting_dialog_setting))
     }
 }

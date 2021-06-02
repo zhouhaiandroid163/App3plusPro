@@ -405,12 +405,6 @@ public abstract class BaseActivity extends FragmentActivity {
         }
     }
 
-    public void stopLocationService() {
-        Intent intent = new Intent(this, ForegroundLocationService.class);
-        stopService(intent);
-    }
-
-
     /**
      * 重写 getResource 方法，防止系统字体影响
      */

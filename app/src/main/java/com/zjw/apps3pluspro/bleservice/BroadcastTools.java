@@ -146,9 +146,6 @@ public class BroadcastTools {
     //系统蓝牙状态发生改变
     public final static String ACTION_BLUE_STATE_CHANGED = APP_NAME + "_" + "ACTION_BLUE_STATE_CHANGED";
 
-    public static final String ACTION_GATT_PROTOSPORT = APP_NAME + "_" + "ACTION_GATT_PROTOSPORT";
-
-
     public static final String ACTION_CMD_APP_START = APP_NAME + "_" + "ACTION_CMD_START";
     public static final String ACTION_CMD_DEVICE_CONFIRM = APP_NAME + "_" + "ACTION_CMD_DEVICE_CONFIRM";
     public static final String ACTION_CMD_DEVICE_START = APP_NAME + "_" + "ACTION_CMD_DEVICE_START";
@@ -304,11 +301,6 @@ public class BroadcastTools {
     public static void broadcastSyncComplete(Context context) {
         final Intent intent = new Intent();
         intent.setAction(ACTION_GATT_SYNC_COMPLETE);
-        context.sendBroadcast(intent);
-    }
-    public static void broadcastSyncProtoSport(Context context) {
-        final Intent intent = new Intent();
-        intent.setAction(ACTION_GATT_PROTOSPORT);
         context.sendBroadcast(intent);
     }
 

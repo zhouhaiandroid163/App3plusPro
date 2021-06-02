@@ -31,9 +31,11 @@ import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.application.BaseApplication
 import com.zjw.apps3pluspro.base.BaseActivity
 import com.zjw.apps3pluspro.bleservice.BleConstant
+import com.zjw.apps3pluspro.bleservice.BleService
 import com.zjw.apps3pluspro.bleservice.BroadcastTools
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoWatchFacePrepareStatusEvent
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoWatchFacePrepareStatusSuccessEvent
+import com.zjw.apps3pluspro.eventbus.UploadThemeStateEvent
 import com.zjw.apps3pluspro.eventbus.tools.EventTools
 import com.zjw.apps3pluspro.module.device.clockdial.custom.CustomClockDialNewUtils
 import com.zjw.apps3pluspro.module.device.clockdial.custom.MyCustomClockUtils
@@ -58,6 +60,7 @@ import java.io.FileNotFoundException
 import java.util.*
 
 class ThemeUploadActivity : BaseActivity() {
+    private lateinit var protoHandler: Handler
     private val TAG = ThemeUploadActivity::class.java.simpleName
     var mBleDeviceTools = BaseApplication.getBleDeviceTools()
     override fun setLayoutId(): Int {
@@ -497,82 +500,35 @@ class ThemeUploadActivity : BaseActivity() {
 
     // *****************************   send theme to device by proto *******************
 
-    private var curPiece = 0
-    private var curPieceSendPack = 0
-    private var type = ""
-    private var curCmd: String? = ""
-    private var protoHandler: Handler? = null
     private fun startSendThemeDataByProto(byte: ByteArray?) {
         DialMarketManager.getInstance().uploadDialDownloadRecording(themeDetails.dialId, DialMarketManager.uploadDialDownloadRecordingType2_transport, this)
-        curPiece = 0
-        type = "watch"
-        ThemeManager.getInstance().initUpload(this@ThemeUploadActivity, type, byte)
-
-        startUploadThemePiece()
+        BleService.bluetoothLeService.sendTheme("watch", byte)
         initLoadingdialog()
     }
 
-    private fun startUploadThemePiece() {
-        curCmd = "btUploadTheme"
-        curPiece++
-        curPieceSendPack = if (ThemeManager.getInstance().dataPackTotalPieceLength - curPiece >= 1) {
-            ThemeManager.getInstance().dataPieceMaxPack
-        } else {
-            ThemeManager.getInstance().dataPieceEndPack
-        }
-
-        protoHandler?.removeCallbacksAndMessages(null)
-        protoHandler?.postDelayed(uploadProtoThemeTimeOut, 30 * 1000)
-
-        sendProtoUpdateData(BleCmdManager.getInstance().appStartCmd(curPieceSendPack))
-    }
-
-    private var uploadProtoThemeTimeOut = Runnable {
-        Log.w("ble", " uploadProtoTheme Time Out")
-        Toast.makeText(this@ThemeUploadActivity, resources.getText(R.string.send_fail), Toast.LENGTH_SHORT).show()
-        if (loading_dialog != null && loading_dialog!!.isShowing) {
-            loading_dialog!!.dismiss()
-        }
-        finish()
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun uploadDataPiece(): Unit {
-        for (i in 0 until curPieceSendPack) {
-            sendProtoUpdateData(BleCmdManager.getInstance().sendThemePiece(i + 1, curPiece))
-        }
-
-        send_loading_progressbar!!.max = ThemeManager.getInstance().dataPackTotalPieceLength
-        send_loading_progressbar!!.progress = curPiece
-
-        end_loading_text!!.text = (curPiece * 100 / ThemeManager.getInstance().dataPackTotalPieceLength).toString()
-    }
-
-    var receiver: BroadcastReceiver? = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val action = intent.action ?: return
-            when (action) {
-                ThemeManager.ACTION_CMD_APP_START -> when (curCmd) {
-                    "btUploadTheme" -> uploadDataPiece()
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun UploadThemeStateEvent(event: UploadThemeStateEvent) {
+        when (event.state) {
+            1 -> {
+                Log.w("ble", " uploadProtoTheme Time Out")
+                Toast.makeText(this@ThemeUploadActivity, resources.getText(R.string.send_fail), Toast.LENGTH_SHORT).show()
+                if (loading_dialog != null && loading_dialog!!.isShowing) {
+                    loading_dialog!!.dismiss()
                 }
-                ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK -> {
-                    val pageNum = intent.getIntExtra("packNum", 0)
-                    sendProtoUpdateData(BleCmdManager.getInstance().sendThemePiece(pageNum, curPiece))
+                finish()
+            }
+            2 -> {
+                send_loading_progressbar!!.max = 100
+                send_loading_progressbar!!.progress = event.progress
+                end_loading_text!!.text = (event.progress).toString()
+            }
+            3 -> {
+                DialMarketManager.getInstance().uploadDialDownloadRecording(themeDetails.dialId, DialMarketManager.uploadDialDownloadRecordingType3_success, this@ThemeUploadActivity)
+                Toast.makeText(this@ThemeUploadActivity, resources.getText(R.string.send_success), Toast.LENGTH_SHORT).show()
+                if (loading_dialog != null && loading_dialog!!.isShowing) {
+                    loading_dialog!!.dismiss()
                 }
-                ThemeManager.ACTION_CMD_DEVICE_CONFIRM -> when (curCmd) {
-                    "btUploadTheme" -> if (curPiece == ThemeManager.getInstance().dataPackTotalPieceLength) {
-                        DialMarketManager.getInstance().uploadDialDownloadRecording(themeDetails.dialId, DialMarketManager.uploadDialDownloadRecordingType3_success, this@ThemeUploadActivity)
-                        Toast.makeText(this@ThemeUploadActivity, resources.getText(R.string.send_success), Toast.LENGTH_SHORT).show()
-                        if (loading_dialog != null && loading_dialog!!.isShowing) {
-                            loading_dialog!!.dismiss()
-                        }
-                        finish()
-                    } else {
-                        startUploadThemePiece()
-                    }
-                }
-                ThemeManager.ACTION_CMD_DEVICE_START -> sendProtoUpdateData(BleCmdManager.getInstance().deviceStartCmd())
-                ThemeManager.ACTION_CMD_APP_CONFIRM -> sendProtoUpdateData(BleCmdManager.getInstance().appConfirm())
+                finish()
             }
         }
     }
@@ -1103,13 +1059,6 @@ class ThemeUploadActivity : BaseActivity() {
         filter.priority = 1000
         registerReceiver(broadcastReceiverTheme, filter)
 
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(ThemeManager.ACTION_CMD_APP_START)
-        intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_START)
-        intentFilter.addAction(ThemeManager.ACTION_CMD_APP_CONFIRM)
-        intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_CONFIRM)
-        intentFilter.addAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK)
-        registerReceiver(receiver, intentFilter)
     }
 
     /**
@@ -1354,7 +1303,6 @@ class ThemeUploadActivity : BaseActivity() {
         EventTools.SafeUnregisterEventBus(this)
         unregisterReceiver(broadcastReceiver)
         unregisterReceiver(broadcastReceiverTheme)
-        unregisterReceiver(receiver)
         TimerTwoHandler?.removeCallbacksAndMessages(null)
         TimerThreeHandler?.removeCallbacksAndMessages(null)
         TimerFourHandler?.removeCallbacksAndMessages(null)

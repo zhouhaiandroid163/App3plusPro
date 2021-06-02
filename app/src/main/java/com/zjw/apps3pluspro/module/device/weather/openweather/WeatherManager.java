@@ -33,7 +33,16 @@ public class WeatherManager {
     double lat = 0.0;
     double lon = 0.0;
 
-    public void getCurrentWeather(double lat, double lon) {
+    public interface GetOpenWeatherListener {
+        void onSuccess();
+
+        void onFail();
+    }
+
+    private GetOpenWeatherListener getOpenWeatherListener;
+
+    public void getCurrentWeather(double lat, double lon, GetOpenWeatherListener getOpenWeatherListener) {
+        this.getOpenWeatherListener = getOpenWeatherListener;
         this.lat = lat;
         this.lon = lon;
         Log.i(TAG, "getCurrentWeather = " + "lat = " + lat + " lon = " + lon);
@@ -55,6 +64,9 @@ public class WeatherManager {
             @Override
             public void onFailure(Object reasonObj) {
                 Log.w(TAG, "getCurrentWeather onFailure = " + reasonObj);
+                if (getOpenWeatherListener != null) {
+                    getOpenWeatherListener.onFail();
+                }
             }
         }), url);
     }
@@ -81,6 +93,9 @@ public class WeatherManager {
             @Override
             public void onFailure(Object reasonObj) {
                 Log.w(TAG, "getEveryDayWeather onFailure = " + reasonObj);
+                if (getOpenWeatherListener != null) {
+                    getOpenWeatherListener.onFail();
+                }
             }
         }), url);
     }
@@ -106,6 +121,9 @@ public class WeatherManager {
             @Override
             public void onFailure(Object reasonObj) {
                 Log.w(TAG, "getWeatherPerHour onFailure = " + reasonObj);
+                if (getOpenWeatherListener != null) {
+                    getOpenWeatherListener.onFail();
+                }
             }
         }), url);
     }
@@ -125,11 +143,18 @@ public class WeatherManager {
                 Log.w(TAG, "getWeatherAQI onSuccess = " + responseObj);
                 Gson gson = new Gson();
                 weatherAQI = gson.fromJson(responseObj.toString(), WeatherAQI.class);
+
+                if (getOpenWeatherListener != null) {
+                    getOpenWeatherListener.onSuccess();
+                }
             }
 
             @Override
             public void onFailure(Object reasonObj) {
                 Log.w(TAG, "getWeatherAQI onFailure = " + reasonObj);
+                if (getOpenWeatherListener != null) {
+                    getOpenWeatherListener.onFail();
+                }
             }
         }), url);
     }

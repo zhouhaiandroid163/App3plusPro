@@ -34,13 +34,13 @@ import com.zjw.apps3pluspro.bleservice.BleTools;
 import com.zjw.apps3pluspro.bleservice.BroadcastTools;
 import com.zjw.apps3pluspro.bleservice.BtSerializeation;
 import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent;
-import com.zjw.apps3pluspro.eventbus.BluetoothAdapterStateEvent;
 import com.zjw.apps3pluspro.eventbus.DataSyncCompleteEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceInfoEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceSportStatusEvent;
 import com.zjw.apps3pluspro.eventbus.DeviceToAppSportStateEvent;
 import com.zjw.apps3pluspro.eventbus.GpsSportDeviceStartEvent;
 import com.zjw.apps3pluspro.eventbus.OffEcgSyncStateEvent;
+import com.zjw.apps3pluspro.eventbus.RefreshGpsInfoEvent;
 import com.zjw.apps3pluspro.eventbus.SyncDeviceSportEvent;
 import com.zjw.apps3pluspro.eventbus.SyncTimeLoadingEvent;
 import com.zjw.apps3pluspro.eventbus.SyncTimeOutEvent;
@@ -63,8 +63,6 @@ import com.zjw.apps3pluspro.module.home.heart.PerHourOneHeartHistoryActivity;
 import com.zjw.apps3pluspro.module.home.ppg.PpgMeasureActivity;
 import com.zjw.apps3pluspro.module.home.ppg.PpgMesureHistoryActivity;
 import com.zjw.apps3pluspro.module.home.sleep.SleepHistoryActivity;
-import com.zjw.apps3pluspro.module.home.spo2.Spo2DetailsActivity;
-import com.zjw.apps3pluspro.module.home.spo2.Spo2MesureHistoryActivity;
 import com.zjw.apps3pluspro.module.home.spo2.Spo2OfflineDataDetailsActivity;
 import com.zjw.apps3pluspro.module.home.sport.MoreSportActivity;
 import com.zjw.apps3pluspro.module.home.sport.SportModleUtils;
@@ -93,6 +91,7 @@ import com.zjw.apps3pluspro.utils.AppUtils;
 import com.zjw.apps3pluspro.utils.CalibrationUtils;
 import com.zjw.apps3pluspro.utils.DefaultVale;
 import com.zjw.apps3pluspro.utils.GoogleFitManager;
+import com.zjw.apps3pluspro.utils.GpsSportManager;
 import com.zjw.apps3pluspro.utils.IntentConstants;
 import com.zjw.apps3pluspro.utils.JavaUtil;
 import com.zjw.apps3pluspro.utils.MyChartUtils;
@@ -224,7 +223,7 @@ public class DataFragment extends BaseFragment {
             if (BleService.syncState) {
                 return;
             }
-            if (HomeActivity.isSyncSportData) {
+            if (BleService.isSyncSportData) {
                 return;
             }
             if (HomeActivity.ISBlueToothConnect()) {
@@ -236,7 +235,6 @@ public class DataFragment extends BaseFragment {
         });
 
         refreshView();
-        homeActivity.setGpsAccuracy(ivGpsStatus);
         layoutConnectState.setOnClickListener(v -> {
 //            startActivity(new Intent(context, CommonProblemActivity.class));
         });
@@ -270,7 +268,7 @@ public class DataFragment extends BaseFragment {
                 if (BleService.syncState) {
                     return;
                 }
-                if (HomeActivity.isSyncSportData) {
+                if (BleService.isSyncSportData) {
                     return;
                 }
 
@@ -394,8 +392,8 @@ public class DataFragment extends BaseFragment {
         refreshView();
 //        updateUi();
         getAllData();
-        if (HomeActivity.currentGpsSportState != -1 && HomeActivity.currentGpsSportState != GpsSportDeviceStartEvent.SPORT_STATE_STOP) {
-            gpsSportDeviceStartEvent(new GpsSportDeviceStartEvent(HomeActivity.currentGpsSportState));
+        if (BleService.currentGpsSportState != -1 && BleService.currentGpsSportState != GpsSportDeviceStartEvent.SPORT_STATE_STOP) {
+            gpsSportDeviceStartEvent(new GpsSportDeviceStartEvent(BleService.currentGpsSportState));
         }
     }
 
@@ -1834,6 +1832,23 @@ public class DataFragment extends BaseFragment {
 
     private void uploadSportDistance(float distance) {
 //        homeActivity.writeRXCharacteristic(BtSerializeation.sendSportData(distance));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshGpsInfoEvent(RefreshGpsInfoEvent event) {
+        if (ivGpsStatus != null) {
+            switch (event.gpsInfo.gpsAccuracy) {
+                case GpsSportManager.GpsInfo.GPS_LOW:
+                    ivGpsStatus.setBackground(getResources().getDrawable(R.mipmap.gps_low_bg));
+                    break;
+                case GpsSportManager.GpsInfo.GPS_MEDIUM:
+                    ivGpsStatus.setBackground(getResources().getDrawable(R.mipmap.gps_medium_bg));
+                    break;
+                case GpsSportManager.GpsInfo.GPS_HIGH:
+                    ivGpsStatus.setBackground(getResources().getDrawable(R.mipmap.gps_high_bg));
+                    break;
+            }
+        }
     }
 
 }

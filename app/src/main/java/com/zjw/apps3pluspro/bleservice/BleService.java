@@ -32,11 +32,28 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import com.zjw.apps3pluspro.HomeActivity;
 import com.zjw.apps3pluspro.R;
 import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.bleservice.anaylsis.AnalysisProtoData;
 import com.zjw.apps3pluspro.bleservice.anaylsis.FitnessTools;
 import com.zjw.apps3pluspro.broadcastreceiver.PhoneReceiver;
+import com.zjw.apps3pluspro.eventbus.DeviceNoSportEvent;
+import com.zjw.apps3pluspro.eventbus.DeviceSportStatusEvent;
+import com.zjw.apps3pluspro.eventbus.DeviceToAppSportStateEvent;
+import com.zjw.apps3pluspro.eventbus.DeviceWatchFaceDeleteEvent;
+import com.zjw.apps3pluspro.eventbus.DeviceWatchFaceListSyncEvent;
+import com.zjw.apps3pluspro.eventbus.DeviceWatchFaceSetEvent;
+import com.zjw.apps3pluspro.eventbus.GetDeviceProtoOtaPrepareStatusEvent;
+import com.zjw.apps3pluspro.eventbus.GetDeviceProtoWatchFacePrepareStatusEvent;
+import com.zjw.apps3pluspro.eventbus.GpsSportDeviceStartEvent;
+import com.zjw.apps3pluspro.eventbus.LocationChangeEventBus;
+import com.zjw.apps3pluspro.eventbus.PageDeviceSetEvent;
+import com.zjw.apps3pluspro.eventbus.PageDeviceSyncEvent;
+import com.zjw.apps3pluspro.eventbus.RefreshGpsInfoEvent;
+import com.zjw.apps3pluspro.eventbus.SyncDeviceSportEvent;
+import com.zjw.apps3pluspro.eventbus.UploadThemeStateEvent;
+import com.zjw.apps3pluspro.eventbus.tools.EventTools;
 import com.zjw.apps3pluspro.module.device.DeviceManager;
 import com.zjw.apps3pluspro.module.home.ecg.EcgMeasureActivity;
 import com.zjw.apps3pluspro.module.device.reminde.RemindeUtils;
@@ -46,6 +63,7 @@ import com.zjw.apps3pluspro.bleservice.scan.ExtendedBluetoothDevice;
 import com.zjw.apps3pluspro.bleservice.scan.MyBleScanState;
 import com.zjw.apps3pluspro.bleservice.scan.NordicsemiBleScanner;
 import com.zjw.apps3pluspro.bleservice.scan.SimpleScanCallback;
+import com.zjw.apps3pluspro.module.home.sport.DeviceSportManager;
 import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
 import com.zjw.apps3pluspro.sharedpreferences.UserSetTools;
 import com.zjw.apps3pluspro.sql.dbmanager.ContinuitySpo2InfoUtils;
@@ -59,9 +77,11 @@ import com.zjw.apps3pluspro.sql.dbmanager.SleepInfoUtils;
 import com.zjw.apps3pluspro.sql.dbmanager.SportModleInfoUtils;
 import com.zjw.apps3pluspro.sql.entity.HealthInfo;
 import com.zjw.apps3pluspro.utils.AppUtils;
+import com.zjw.apps3pluspro.utils.BleCmdManager;
 import com.zjw.apps3pluspro.utils.Constants;
 import com.zjw.apps3pluspro.utils.DefaultVale;
 import com.zjw.apps3pluspro.utils.FileUtil;
+import com.zjw.apps3pluspro.utils.GpsSportManager;
 import com.zjw.apps3pluspro.utils.JavaUtil;
 import com.zjw.apps3pluspro.utils.MusicSyncManager;
 import com.zjw.apps3pluspro.utils.MyTime;
@@ -69,10 +89,15 @@ import com.zjw.apps3pluspro.utils.NotificationUtils;
 import com.zjw.apps3pluspro.utils.PhoneUtil;
 import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.utils.ThemeManager;
+import com.zjw.apps3pluspro.utils.location.ForegroundLocationService;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 import com.zjw.apps3pluspro.utils.log.TraceErrorLog;
 import com.zjw.ffitsdk.BleProtocol;
 import com.zjw.ffitsdk.SimplePerformerListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -281,6 +306,7 @@ public class BleService extends Service {
     public void onCreate() {
         SysUtils.logContentI(TAG, "onCreate");
         SysUtils.logAppRunning(TAG, "service is onCreate");
+        EventTools.SafeRegisterEventBus(this);
 
         if (mProcessCmdThread == null) {
             mProcessCmdThread = new Thread(process_cmd_runnable);
@@ -381,6 +407,10 @@ public class BleService extends Service {
 
     @Override
     public void onDestroy() {
+        EventTools.SafeUnregisterEventBus(this);
+        if (protoHandler != null) {
+            protoHandler.removeCallbacksAndMessages(null);
+        }
         bluetoothLeService = null;
         mProcessCmd = false;
         if (mProcessCmdThread != null) {
@@ -616,6 +646,7 @@ public class BleService extends Service {
         intentFilter.addAction(BroadcastTools.ACTION_NOTIFICATION_SEND_SET_BRIHNESS_TIME);
         intentFilter.addAction(BroadcastTools.ACTION_NOTIFICATION_SEND_SET_CYCLE);
         intentFilter.addAction(BroadcastTools.ACTION_NOTIFICATION_SEND_KUGOU_MUSIC);
+        intentFilter.addAction(BroadcastTools.ACTION_CMD_GET_SPORT);
         intentFilter.addAction(VOLUME_CHANGED_ACTION);
         intentFilter.addAction(ACTION_DATA_AVAILABLE1);
         intentFilter.addAction(ACTION_DATA_AVAILABLE2);
@@ -1209,8 +1240,7 @@ public class BleService extends Service {
 
                 }
                 if (curPacket < recvMaxPacket) {
-                    intent.setAction(BroadcastTools.ACTION_CMD_DEVICE_TRANSMISSION_DATA);
-                    sendBroadcast(intent);
+                    refreshProtobufSportTimeOut();
                     return;
                 }
                 if (curPiece < maxPiece) {
@@ -1252,13 +1282,16 @@ public class BleService extends Service {
                 currentUuid_proto = BleConstant.CHAR_PROTOBUF_UUID_02;
                 //设备回复成功，
                 if (Arrays.equals("00 00 01 01 00 00".split(" "), strCmd)) {
-                    intent.setAction(BroadcastTools.ACTION_CMD_APP_START);
-                    sendBroadcast(intent);
+//                    intent.setAction(BroadcastTools.ACTION_CMD_APP_START);
+//                    sendBroadcast(intent);
+                    sendBleData2();
                 }
                 // 设备确认
                 if (Arrays.equals("00 00 01 00 00 00".split(" "), strCmd)) {
-                    intent.setAction(BroadcastTools.ACTION_CMD_DEVICE_CONFIRM);
-                    sendBroadcast(intent);
+//                    intent.setAction(BroadcastTools.ACTION_CMD_DEVICE_CONFIRM);
+//                    sendBroadcast(intent);
+
+                    sendNextBleData2();
                 }
 
             } catch (Exception e) {
@@ -1269,60 +1302,61 @@ public class BleService extends Service {
     }
 
     private long lastDisplayTime = 0;
-//    private String lastData = "";
+    private String lastData = "";
 
     private void displayData1(String data) {
         if (data != null) {
             SysUtils.logContentI(TAG, TAG_CONTENT + "displayData1 : " + data);
             SysUtils.logAppRunning(TAG, TAG_CONTENT + "displayData1 : " + data);
-//            if (System.currentTimeMillis() - lastDisplayTime < 5 && lastData.equalsIgnoreCase(data)) {
-//                SysUtils.logContentI(TAG, TAG_CONTENT + "displayData1 : repeat data");
-//            } else {
-//                lastData = data;
-            String[] strCmd;
-            strCmd = data.split(" ");
-            Intent intent = new Intent();
-            try {
-                currentUuid_proto = BleConstant.CHAR_PROTOBUF_UUID_01;
-                if (strCmd[0].equalsIgnoreCase("00") && strCmd[1].equalsIgnoreCase("00")) {
-                    if (strCmd[2].equalsIgnoreCase("00") && strCmd[3].equalsIgnoreCase("00")) {
-                        recvMaxPacket = Integer.parseInt(strCmd[5] + strCmd[4], 16);
+            /*if (System.currentTimeMillis() - lastDisplayTime < 5 && lastData.equalsIgnoreCase(data)) {
+                SysUtils.logContentI(TAG, TAG_CONTENT + "displayData1 : repeat data");
+            } else */
+            {
+                String[] strCmd;
+                strCmd = data.split(" ");
+                Intent intent = new Intent();
+                try {
+                    currentUuid_proto = BleConstant.CHAR_PROTOBUF_UUID_01;
+                    if (strCmd[0].equalsIgnoreCase("00") && strCmd[1].equalsIgnoreCase("00")) {
+                        if (strCmd[2].equalsIgnoreCase("00") && strCmd[3].equalsIgnoreCase("00")) {
+                            recvMaxPacket = Integer.parseInt(strCmd[5] + strCmd[4], 16);
 
-                        intent.setAction(BroadcastTools.ACTION_CMD_DEVICE_START);
-                        sendBroadcast(intent);
-                        resetBleCmdState(false);
+//                            intent.setAction(BroadcastTools.ACTION_CMD_DEVICE_START);
+//                            sendBroadcast(intent);
+                            writeCharacteristic(BtSerializeation.deviceStartCmd(), BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_01);
+                            resetBleCmdState(false);
+                            return;
+                        }
+                    } else {
+                        curPacket = Integer.parseInt(strCmd[1] + strCmd[0], 16);
+                        if (curPacket == 1) {
+                            recvData = data.substring(6);
+                        } else {
+                            recvData = recvData + data.substring(6);
+                        }
+                    }
+
+                    if (curPacket < recvMaxPacket) {
+                        refreshProtobufSportTimeOut();
                         return;
                     }
-                } else {
-                    curPacket = Integer.parseInt(strCmd[1] + strCmd[0], 16);
-                    if (curPacket == 1) {
-                        recvData = data.substring(6);
-                    } else {
-                        recvData = recvData + data.substring(6);
-                    }
-                }
-
-                if (curPacket < recvMaxPacket) {
-                    intent.setAction(BroadcastTools.ACTION_CMD_DEVICE_TRANSMISSION_DATA);
-                    sendBroadcast(intent);
-                    return;
-                }
 
 //                    intent.setAction(BroadcastTools.ACTION_CMD_APP_CONFIRM);
 //                    sendBroadcast(intent);
-                writeCharacteristic(BtSerializeation.appConfirm(), BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_01);
+                    writeCharacteristic(BtSerializeation.appConfirm(), BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_01);
 
-                strCmd = recvData.split(" ");
-                byte[] valueByte = new byte[strCmd.length];
-                for (int i = 0; i < strCmd.length; i++) {
-                    valueByte[i] = (byte) Integer.parseInt(strCmd[i], 16);
+                    strCmd = recvData.split(" ");
+                    byte[] valueByte = new byte[strCmd.length];
+                    for (int i = 0; i < strCmd.length; i++) {
+                        valueByte[i] = (byte) Integer.parseInt(strCmd[i], 16);
+                    }
+                    String analysisProtoData = AnalysisProtoData.getInstance().analysisData(valueByte);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                String analysisProtoData = AnalysisProtoData.getInstance().analysisData(valueByte);
-
-            } catch (Exception e) {
-                e.printStackTrace();
+                resetBleCmdState(false);
             }
-            resetBleCmdState(false);
         }
     }
 
@@ -1508,6 +1542,7 @@ public class BleService extends Service {
          */
         private void handleDisconnectedBle(BluetoothGatt gatt) {
             SysUtils.logContentI(TAG, "处理断开状态");
+            initDisconnectParameter();
 
             mBleDeviceTools.set_ble_device_type(0);
             mBleDeviceTools.set_ble_device_version(0);
@@ -1802,6 +1837,7 @@ public class BleService extends Service {
                             bInitGattServices = true;
 
                             mBleHandler.post(() -> {
+                                isFirstConnect = true;
                                 BroadcastTools.broadcastDeviceConnectedDISCOVERSERVICES(getApplicationContext());
                                 if (!BaseApplication.isScanActivity) { // 重连
                                     if (!mBleDeviceTools.get_ble_name().contains(BleConstant.PLUS_HR)) {
@@ -1900,16 +1936,32 @@ public class BleService extends Service {
 
     private void broadcastUpdate(final String action, final BluetoothGattCharacteristic characteristic) {
         try {
-            final Intent intent = new Intent(action);
+//            final Intent intent = new Intent(action);
             final byte[] data = characteristic.getValue();
             if (data != null && data.length > 0) {
                 final StringBuilder stringBuilder = new StringBuilder(data.length);
                 for (byte byteChar : data)
                     stringBuilder.append(String.format("%02X ", byteChar));
 
-                intent.putExtra(EXTRA_DATA, stringBuilder.toString());
+//                intent.putExtra(EXTRA_DATA, stringBuilder.toString());
+
+                lastDisplayTime = System.currentTimeMillis();
+                switch (action) {
+                    case ACTION_DATA_AVAILABLE1:
+                        displayData1(stringBuilder.toString());
+                        break;
+                    case ACTION_DATA_AVAILABLE2:
+                        displayData2(stringBuilder.toString());
+                        break;
+                    case ACTION_DATA_AVAILABLE3:
+                        displayData3(stringBuilder.toString());
+                        break;
+                    case ACTION_DATA_AVAILABLE4:
+                        displayData4(stringBuilder.toString());
+                        break;
+                }
             }
-            sendBroadcast(intent);
+//            sendBroadcast(intent);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -2491,6 +2543,8 @@ public class BleService extends Service {
                     final byte[] init_language = BtSerializeation.SendNewInitDevice(country);
                     writeRXCharacteristic(init_language);
                 }
+            } else if (BroadcastTools.ACTION_CMD_GET_SPORT.equals(action)) {
+                getNextProtoDeviceSport();
             }
         }
     }
@@ -3030,7 +3084,7 @@ public class BleService extends Service {
 //                    IDLE_LAST_TIME = System.currentTimeMillis();
 //                }
 
-                if(!TextUtils.isEmpty(phoneNumber)){
+                if (!TextUtils.isEmpty(phoneNumber)) {
                     SysUtils.logContentW(TAG, "phoneNumber is not null and CloseCall cmd");
                     writeRXCharacteristic(BtSerializeation.sendCloseCall());
                 }
@@ -3130,7 +3184,10 @@ public class BleService extends Service {
 
         if (mBleDeviceTools.getIsSupportProtobuf() && mBleDeviceTools.getPointExercise()) {
             mBleHandler.postDelayed(() -> {
-                BroadcastTools.broadcastSyncProtoSport(getApplicationContext());
+                if (currentGpsSportState == -1 || currentGpsSportState == GpsSportDeviceStartEvent.SPORT_STATE_STOP || currentGpsSportState == GpsSportDeviceStartEvent.SPORT_STATE_PAUSE) {
+                    isSyncSportData = true;
+                    getProtoSport();
+                }
             }, time);
         }
     }
@@ -3870,42 +3927,56 @@ public class BleService extends Service {
 
     private void displayData4(String data) {
         if (data != null) {
+            Log.w("time", "displayData  1 ");
             SysUtils.logContentI(TAG, "displayData4 : " + data);
             SysUtils.logAppRunning(TAG, "displayData4 : " + data);
 
-//            if (System.currentTimeMillis() - lastDisplayTime < 5 && lastData.equalsIgnoreCase(data)) {
-//                SysUtils.logContentI(TAG, "displayData4 : repeat data");
-//                lastData = data;
+            /*if (System.currentTimeMillis() - lastDisplayTime < 5 && lastData.equalsIgnoreCase(data)) {
+                SysUtils.logContentI(TAG, "displayData4 : repeat data");
+            } else*/
+            {
+                Log.w("time", "displayData 2 ");
+                lastData = data;
 
-            recvData = data;
+                recvData = data;
 
-            String strCmd[];
-            strCmd = recvData.split(" ");
-            Intent intent = new Intent();
-            try {
-                //设备回复成功，
-                if (Arrays.equals("00 00 01 01 00 00".split(" "), strCmd)) {
-                    intent.setAction(ThemeManager.ACTION_CMD_APP_START);
-                    sendBroadcast(intent);
+                String strCmd[];
+                strCmd = recvData.split(" ");
+                Intent intent = new Intent();
+                try {
+                    //设备回复成功，
+
+                    if (Integer.parseInt(strCmd[2], 16) == 1) {
+                        if (Integer.parseInt(strCmd[3], 16) == 1) {
+                            Log.w("time", "displayData  3 ");
+                            ThreadPoolService.getInstance().post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    uploadDataPiece();
+                                }
+                            });
+                        }
+                        if (Integer.parseInt(strCmd[3], 16) == 0) {
+                            sendNextPiece();
+                        }
+                    }
+
+                    int packNum = Integer.parseInt(strCmd[5] + strCmd[4], 16);
+                    if (packNum > 0) {
+                        SysUtils.logContentI(TAG, "displayData4 reissue data : " + data);
+                        SysUtils.logAppRunning(TAG, "displayData4 reissue data : " + data);
+                        curReissueDataSize++;
+//                        intent.setAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK);
+//                        intent.putExtra("packNum", packNum);
+//                        sendBroadcast(intent);
+                        writeCharacteristicProto4(BleCmdManager.getInstance().sendThemePiece(packNum, themeCurPiece));
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                if (Arrays.equals("00 00 01 00 00 00".split(" "), strCmd)) {
-                    intent.setAction(ThemeManager.ACTION_CMD_DEVICE_CONFIRM);
-                    sendBroadcast(intent);
-                }
-
-                int packNum = Integer.parseInt(strCmd[5] + strCmd[4], 16);
-                if (packNum > 0) {
-                    SysUtils.logContentI(TAG, "displayData4 reissue data : " + data);
-                    SysUtils.logAppRunning(TAG, "displayData4 reissue data : " + data);
-                    intent.setAction(ThemeManager.ACTION_CMD_DEVICE_REISSUE_PACK);
-                    intent.putExtra("packNum", packNum);
-                    sendBroadcast(intent);
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
+                resetBleCmdState(false);
             }
-            resetBleCmdState(false);
         }
     }
 
@@ -3927,10 +3998,6 @@ public class BleService extends Service {
             }
         }
     };
-
-    public void writeCharacteristicProto4(byte[] paramCmd) {
-        writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_04);
-    }
 
     Runnable process_cmd_proto_runnable = () -> {
         while (mProcessCmd) {
@@ -3984,6 +4051,636 @@ public class BleService extends Service {
             lastTakePhotoTime = System.currentTimeMillis();
             BroadcastTools.broadcastDevicePhoto(getApplicationContext());
         }
+    }
+
+    // ****************************  proto  **************************
+    private String curCmd;
+    public static final String GET_SPORT_IDS_TODAY = "GET_SPORT_IDS_TODAY";
+    public static final String GET_SPORT_IDS_HISTORY = "GET_SPORT_IDS_HISTORY";
+    public static final String REQUEST_FITNESS_ID_TODAY = "REQUEST_FITNESS_ID_TODAY";
+    public static final String REQUEST_FITNESS_ID_HISTORY = "REQUEST_FITNESS_ID_HISTORY";
+    public static final String DELETE_DEVICE_SPORT_HISTORY = "DELETE_DEVICE_SPORT_HISTORY";
+    public static final String DELETE_DEVICE_SPORT_TODAY = "DELETE_DEVICE_SPORT_TODAY";
+    public static final String GET_PAGE_DEVICE = "GET_PAGE_DEVICE";
+    public static final String SET_PAGE_DEVICE = "SET_PAGE_DEVICE";
+    public static final String APP_GPS_READY = "APP_GPS_READY";
+    public static final String APP_SEND_GPS = "APP_SEND_GPS";
+    public static final String APP_REQUEST_GPS_SPORT_STATE = "APP_REQUEST_GPS_SPORT_STATE";
+    public static final String APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL = "APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL";
+    public static final String APP_REQUEST_DEVICE_OTA_PREPARE = "APP_REQUEST_DEVICE_OTA_PREPARE";
+    // 获取设备的主题列表
+    public static final String APP_REQUEST_DEVICE_WATCH_FACE = "APP_REQUEST_DEVICE_WATCH_FACE";
+    public static final String APP_SET_DEVICE_WATCH_FACE = "APP_SET_DEVICE_WATCH_FACE";
+    public static final String APP_DELETE_DEVICE_WATCH_FACE = "APP_DELETE_DEVICE_WATCH_FACE";
+
+    public static boolean isForce;
+    public static String version;
+    public static String md5;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getDeviceProtoOtaPrepareStatusEvent(GetDeviceProtoOtaPrepareStatusEvent event) {
+        isForce = event.isForce;
+        version = event.version;
+        md5 = event.md5;
+        curCmd = APP_REQUEST_DEVICE_OTA_PREPARE;
+        bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+    }
+
+    public static String themeId = "0";
+    public static int themeSize = 0;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getDeviceProtoStatusEvent(GetDeviceProtoWatchFacePrepareStatusEvent event) {
+        curCmd = APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL;
+        themeId = event.themeId;
+        themeSize = event.themeSize;
+        bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void deviceWatchFaceListSyncEvent(DeviceWatchFaceListSyncEvent event) {
+        curCmd = APP_REQUEST_DEVICE_WATCH_FACE;
+        bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+    }
+
+    public static String currentThemeId = "";
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void deviceWatchFaceSetEvent(DeviceWatchFaceSetEvent event) {
+        currentThemeId = event.id;
+        curCmd = APP_SET_DEVICE_WATCH_FACE;
+        bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void deviceWatchFaceDeleteEvent(DeviceWatchFaceDeleteEvent event) {
+        currentThemeId = event.id;
+        curCmd = APP_DELETE_DEVICE_WATCH_FACE;
+        bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void pageDeviceSyncEvent(PageDeviceSyncEvent event) {
+        curCmd = GET_PAGE_DEVICE;
+        bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void pageDeviceSetEvent(PageDeviceSetEvent event) {
+        curCmd = SET_PAGE_DEVICE;
+        bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void deviceNoSportEvent(DeviceNoSportEvent event) {
+        MyLog.w(TAG, " init agps request");
+        if (mBleDeviceTools.getIsGpsSensor() && HomeActivity.isFirstOnCreate) {
+            HomeActivity.isFirstOnCreate = false;
+            writeRXCharacteristic(BtSerializeation.getBleData(null, BtSerializeation.CMD_01, BtSerializeation.KEY_AGPS));
+        }
+    }
+
+    private boolean isFirstConnect = false;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void deviceSportStatusEvent(DeviceSportStatusEvent event) {
+        if (isFirstConnect) {
+            MyLog.w(TAG, " deviceSportStatusEvent is first connect");
+            if (event.paused) {
+                currentGpsSportState = GpsSportDeviceStartEvent.SPORT_STATE_PAUSE;
+            } else {
+                currentGpsSportState = GpsSportDeviceStartEvent.SPORT_STATE_START;
+            }
+            isFirstConnect = false;
+            curCmd = APP_GPS_READY;
+            initGpsSport();
+        } else {
+            MyLog.w(TAG, " no initGpsSport");
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void gpsSportDeviceStartEvent(GpsSportDeviceStartEvent event) {
+        currentGpsSportState = event.state;
+        switch (currentGpsSportState) {
+            case GpsSportDeviceStartEvent.SPORT_STATE_START:
+                curCmd = APP_GPS_READY;
+                initGpsSport();
+                break;
+            case GpsSportDeviceStartEvent.SPORT_STATE_PAUSE:
+                break;
+            case GpsSportDeviceStartEvent.SPORT_STATE_RESUME:
+                break;
+            case GpsSportDeviceStartEvent.SPORT_STATE_STOP:
+                lastGpsInfo = null;
+                isSuccessfulPositioning = false;
+                stopLocationService();
+//                createKml();
+                getProtoSport();
+                break;
+        }
+    }
+
+    private void stopLocationService() {
+        Intent intent = new Intent(this, ForegroundLocationService.class);
+        stopService(intent);
+    }
+
+    public static int currentGpsSportState = -1;
+    public static GpsSportManager.GpsInfo lastGpsInfo;
+    public static boolean isSuccessfulPositioning = false;
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void locationChangeEventBus(LocationChangeEventBus event) {
+        GpsSportManager.GpsInfo gpsInfo = event.gpsInfo;
+        if (mBleDeviceTools.getIsSupportAppAuxiliarySport()) {
+            if (appGpsInfo == null || curSportState == BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_YES) {
+                appGpsInfo = gpsInfo;
+                writeRXCharacteristic(BtSerializeation.sendSportState(1));
+                curSportState = BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START;
+            } else {
+                switch (curSportState) {
+                    case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START:
+                    case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESUME:
+                        if (appGpsInfo.latitude == gpsInfo.latitude && appGpsInfo.longitude == gpsInfo.longitude) {
+                            Log.i(TAG, "locationChangeEventBus location is not change...");
+                        } else {
+                            double distance = GpsSportManager.getInstance().getDistance(appGpsInfo.latitude, appGpsInfo.longitude, gpsInfo.latitude, gpsInfo.longitude);
+                            if (distance != 0) {
+                                appGpsInfo = gpsInfo;
+                                Log.w(TAG, "locationChangeEventBus distance = " + distance);
+                                EventBus.getDefault().post(new RefreshGpsInfoEvent(gpsInfo));
+                                writeRXCharacteristic(BtSerializeation.sendSportData(gpsInfo.latitude, gpsInfo.longitude, gpsInfo.gpsAccuracy));
+
+//                                TrackPoint tp = new TrackPoint(gpsInfo.longitude, gpsInfo.latitude, gpsInfo.altitude, System.currentTimeMillis());
+//                                KmlFileManager.getInstance().addData(tp);
+                            }
+                        }
+                        break;
+                }
+            }
+        } else {
+            if (isSyncSportData) {
+                return;
+            } else {
+                if (currentGpsSportState == GpsSportDeviceStartEvent.SPORT_STATE_START || currentGpsSportState == GpsSportDeviceStartEvent.SPORT_STATE_RESUME) {
+                    if (lastGpsInfo == null) {
+                        lastGpsInfo = gpsInfo;
+                        curCmd = APP_GPS_READY;
+                        bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+                        isSuccessfulPositioning = true;
+                    } else {
+                        lastGpsInfo = gpsInfo;
+
+                        EventBus.getDefault().post(new RefreshGpsInfoEvent(gpsInfo));
+
+                        curCmd = APP_SEND_GPS;
+                        bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+
+//                    TrackPoint tp = new TrackPoint(gpsInfo.longitude, gpsInfo.latitude, gpsInfo.altitude, System.currentTimeMillis());
+//                    KmlFileManager.getInstance().addData(tp);
+                    }
+                }
+            }
+        }
+    }
+
+    public static int curSportState = BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void deviceToAppSportStateEvent(DeviceToAppSportStateEvent event) {
+        curSportState = event.state;
+        switch (event.state) {
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_START: // 发起运动
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_YES: // 正在运动中…
+                initGpsSport();
+                break;
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_PAUSE: // 运动已暂停
+                break;
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESUME: // 运动继续
+                break;
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_STOP: // 结束运动
+                resetAppHelpDevice();
+                break;
+            case BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO: // 非运动状态…
+                break;
+        }
+    }
+
+    private GpsSportManager.GpsInfo appGpsInfo = null;
+
+    private void resetAppHelpDevice() {
+//        createKml();
+        appGpsInfo = null;
+        GpsSportManager.getInstance().stopGps(this);
+        stopLocationService();
+    }
+
+    private void initGpsSport() {
+        Intent intent = new Intent(this, ForegroundLocationService.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        } else {
+            startService(intent);
+        }
+    }
+
+    private void getProtoSport() {
+        if (protoHandler == null) {
+            protoHandler = new Handler();
+        }
+//        Calendar mCalendar = Calendar.getInstance();
+//        mCalendar.set(Calendar.HOUR_OF_DAY, 0);
+//        mCalendar.set(Calendar.MINUTE, 0);
+//        mCalendar.set(Calendar.SECOND, 0);
+//        mCalendar.set(Calendar.MILLISECOND, 0);
+//        long time = mCalendar.getTimeInMillis();
+//        if (mBleDeviceTools.getLastDeviceSportSyncTime() == 0 || mBleDeviceTools.getLastDeviceSportSyncTime() < time) {
+//            // 获取历史
+//            curCmd = GET_SPORT_IDS_HISTORY;
+//            bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+//        } else {
+//            curCmd = GET_SPORT_IDS_TODAY;
+//            bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+//        }
+        curCmd = GET_SPORT_IDS_HISTORY;
+        bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+        protoHandler.removeCallbacksAndMessages(null);
+        protoHandler.postDelayed(getProtoSportTimeOut, timeOut);
+    }
+
+    private Handler protoHandler;
+    private int timeOut = 20 * 1000;
+
+    Runnable getProtoSportTimeOut = () -> {
+        SysUtils.logContentW("ble", " getProtoSportTimeOut");
+        SysUtils.logAppRunning("ble", " getProtoSportTimeOut");
+        syncDeviceSportOver();
+    };
+
+    private void refreshProtobufSportTimeOut() {
+        Log.w("ble", " refreshProtobufSportTimeOut");
+        if (protoHandler == null) {
+            protoHandler = new Handler();
+        }
+        protoHandler.removeCallbacksAndMessages(null);
+        protoHandler.postDelayed(getProtoSportTimeOut, timeOut);
+    }
+
+    private void deleteDeviceSport(String cmd) {
+        curCmd = cmd;
+        bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+    }
+
+    private void startSyncTodayDeviceSport() {
+        mBleDeviceTools.setLastDeviceSportSyncTime(System.currentTimeMillis());
+        curCmd = GET_SPORT_IDS_TODAY;
+        bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+    }
+
+    public static boolean isSyncSportData = false;
+
+    private void syncDeviceSportOver() {
+        isSyncSportData = false;
+        EventBus.getDefault().post(new SyncDeviceSportEvent(0));
+        if (protoHandler != null) {
+            protoHandler.removeCallbacksAndMessages(null);
+        }
+    }
+
+    private void getDeviceGpsSportStatus() {
+        if (mBleDeviceTools.getIsSupportGpsSport()) {
+            // 询问gps运动结果
+            curCmd = APP_REQUEST_GPS_SPORT_STATE;
+            bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+        } else {
+            if (mBleDeviceTools.getIsGpsSensor()) {
+                EventBus.getDefault().post(new DeviceNoSportEvent());
+            }
+        }
+    }
+
+    private void initDisconnectParameter() {
+        curSportState = BroadcastTools.TAG_DEVICE_TO_APP_SPORT_STATE_RESULT_NO;
+        isSyncSportData = false;
+        currentGpsSportState = -1;
+        lastGpsInfo = null;
+        isSuccessfulPositioning = false;
+        isFirstConnect = false;
+        curCmd = "";
+        stopLocationService();
+    }
+
+    void sendBleData2() {
+        SysUtils.logContentI("ble", " BroadcastTools.ACTION_CMD_APP_START = " + curCmd);
+        SysUtils.logAppRunning("ble", " BroadcastTools.ACTION_CMD_APP_START = " + curCmd);
+        int validDataLength = BaseApplication.getBleDeviceTools().get_device_mtu_num() - 2;
+        for (int i = 1; i < BtSerializeation.curPack + 1; i++) {
+            if (BtSerializeation.curPack == 1) {
+                bleCmdList_proto.add(BtSerializeation.getProtoByte(BtSerializeation.sendingData, i));
+            } else {
+                byte[] data;
+                int dataLength = validDataLength;
+                if (i == BtSerializeation.curPack) {
+                    // The last packet
+                    dataLength = BtSerializeation.sendingData.length - (i - 1) * validDataLength;
+                    data = new byte[dataLength];
+                } else {
+                    data = new byte[validDataLength];
+                }
+                System.arraycopy(BtSerializeation.sendingData, (i - 1) * validDataLength, data, 0, dataLength);
+                bleCmdList_proto.add(BtSerializeation.getProtoByte(data, i));
+            }
+        }
+    }
+
+    void sendNextBleData2() {
+        try {
+            switch (curCmd) {
+                case DELETE_DEVICE_SPORT_HISTORY:
+                    refreshProtobufSportTimeOut();
+                    if (FitnessTools.deleteIndex == FitnessTools.bleIdsList.size()) {
+                        //delete history over
+                        SysUtils.logContentW("ble", " delete history over");
+                        SysUtils.logAppRunning("ble", " delete history over");
+                        startSyncTodayDeviceSport();
+                    } else {
+                        deleteDeviceSport(DELETE_DEVICE_SPORT_HISTORY);
+                    }
+                    break;
+                case DELETE_DEVICE_SPORT_TODAY:
+                    refreshProtobufSportTimeOut();
+                    if (FitnessTools.deleteIndex == FitnessTools.bleIdsList.size()) {
+                        //delete today over
+                        SysUtils.logContentW("ble", " delete today over");
+                        SysUtils.logAppRunning("ble", " delete today over");
+                        syncDeviceSportOver();
+                        getDeviceGpsSportStatus();
+                    } else {
+                        deleteDeviceSport(DELETE_DEVICE_SPORT_TODAY);
+                    }
+                    break;
+                case APP_GPS_READY:
+                    curCmd = APP_SEND_GPS;
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void getNextProtoDeviceSport() {
+        try {
+            refreshProtobufSportTimeOut();
+            SysUtils.logContentI("ble", " BroadcastTools.ACTION_CMD_GET_SPORT = " + curCmd);
+            SysUtils.logAppRunning("ble", " BroadcastTools.ACTION_CMD_GET_SPORT = " + curCmd);
+            switch (curCmd) {
+                case GET_SPORT_IDS_TODAY:
+                    curCmd = REQUEST_FITNESS_ID_TODAY;
+                    break;
+                case GET_SPORT_IDS_HISTORY:
+                    curCmd = REQUEST_FITNESS_ID_HISTORY;
+                    break;
+            }
+            switch (curCmd) {
+                case REQUEST_FITNESS_ID_TODAY:
+                    //                tvProgress.setText("today " + (FitnessTools.currentIndex) + "/" + FitnessTools.bleIdsList.size());
+                    break;
+                case REQUEST_FITNESS_ID_HISTORY:
+                    //                tvProgress.setText("History " + (FitnessTools.currentIndex) + "/" + FitnessTools.bleIdsList.size());
+                    break;
+            }
+
+            if (FitnessTools.bleIdsList.size() != 0) {
+                if (FitnessTools.currentIndex >= FitnessTools.bleIdsList.size()) {
+                    // over
+                    if (curCmd.equalsIgnoreCase(REQUEST_FITNESS_ID_HISTORY)) {
+                        SysUtils.logContentW("ble", "REQUEST_FITNESS_ID_HISTORY sync over");
+                        SysUtils.logAppRunning("ble", "REQUEST_FITNESS_ID_HISTORY sync over");
+                        // history is over and delete the ids
+                        FitnessTools.deleteIndex = 0;
+                        deleteDeviceSport(DELETE_DEVICE_SPORT_HISTORY);
+                        //                                startSyncTodayDeviceSport();
+
+                    } else if (curCmd.equalsIgnoreCase(REQUEST_FITNESS_ID_TODAY)) {
+                        SysUtils.logContentW("ble", "REQUEST_FITNESS_ID_TODAY sync over");
+                        SysUtils.logAppRunning("ble", "REQUEST_FITNESS_ID_TODAY sync over");
+                        DeviceSportManager.Companion.getInstance().uploadMoreSportData();
+                        // delete the ids
+                        FitnessTools.deleteIndex = 0;
+                        deleteDeviceSport(DELETE_DEVICE_SPORT_TODAY);
+                    }
+                } else {
+                    EventBus.getDefault().post(new SyncDeviceSportEvent(1));
+                    bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+                }
+            } else {
+                switch (curCmd) {
+                    case REQUEST_FITNESS_ID_TODAY:
+                        SysUtils.logContentW("ble", " today is no data , sync over");
+                        SysUtils.logAppRunning("ble", " today is no data , sync over");
+                        DeviceSportManager.Companion.getInstance().uploadMoreSportData();
+                        syncDeviceSportOver();
+                        getDeviceGpsSportStatus();
+                        break;
+                    case REQUEST_FITNESS_ID_HISTORY:
+                        SysUtils.logContentW("ble", " HISTORY is no data");
+                        SysUtils.logAppRunning("ble", " HISTORY is no data");
+                        startSyncTodayDeviceSport();
+                        break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // ==================== send theme =======
+    int curReissueDataSize = 0;
+    int writeCharacteristicProto4Fail = 0;
+    long sendThemeStartTime = 0;
+
+    BluetoothGattCharacteristic dev_name;
+
+    public void sendTheme(String type, byte[] fileName) {
+        if (mBluetoothGatt == null) {
+            return;
+        }
+        BluetoothGattService gap_service = mBluetoothGatt.getService(BleConstant.UUID_PROTOBUF_SERVICE);
+        if (gap_service == null) {
+            return;
+        }
+        dev_name = gap_service.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_04);
+        if (dev_name == null) {
+            return;
+        }
+        dev_name.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE);
+
+        sendThemeStartTime = System.currentTimeMillis();
+
+        curReissueDataSize = 0;
+        writeCharacteristicProto4Fail = 0;
+        themeCurPiece = 0;
+        ThemeManager.getInstance().initUpload(this, type, fileName);
+        startUploadThemePiece();
+    }
+
+    private int themeCurPiece = 0;
+    private int curPieceSendPack = 0;
+
+    private void startUploadThemePiece() {
+        themeCurPiece++;
+        curPieceSendPack = (ThemeManager.getInstance().dataPackTotalPieceLength - themeCurPiece >= 1) ? ThemeManager.getInstance().dataPieceMaxPack : ThemeManager.getInstance().dataPieceEndPack;
+
+        if (protoHandler == null) {
+            protoHandler = new Handler();
+        }
+        protoHandler.removeCallbacksAndMessages(null);
+        protoHandler.postDelayed(uploadProtoThemeTimeOut, 30 * 1000);
+        writeCharacteristicProto4(BleCmdManager.getInstance().appStartCmd(curPieceSendPack));
+    }
+
+    Runnable uploadProtoThemeTimeOut = () -> {
+        EventBus.getDefault().post(new UploadThemeStateEvent(1, 0)); // 超时
+    };
+
+    @SuppressLint("SetTextI18n")
+    private void uploadDataPiece() {
+        for (int i = 0; i < curPieceSendPack; i++) {
+            writeCharacteristicProto4(BleCmdManager.getInstance().sendThemePiece(i + 1, themeCurPiece));
+        }
+
+        int progress = (themeCurPiece * 100 / ThemeManager.getInstance().dataPackTotalPieceLength);
+        EventBus.getDefault().post(new UploadThemeStateEvent(2, progress)); // 进度
+    }
+
+    void sendNextPiece() {
+        if (themeCurPiece == ThemeManager.getInstance().dataPackTotalPieceLength) {
+            protoHandler.removeCallbacksAndMessages(null);
+            EventBus.getDefault().post(new UploadThemeStateEvent(3, 0)); // 完成
+            SysUtils.logContentW(TAG, "curReissueDataSize = " + curReissueDataSize + "  time = " + (System.currentTimeMillis() - sendThemeStartTime));
+            SysUtils.logAppRunning(TAG, "writeCharacteristicProto4Fail = " + writeCharacteristicProto4Fail);
+        } else {
+            startUploadThemePiece();
+        }
+    }
+
+    public void writeCharacteristicProto4(byte[] value) {
+        try {
+//            SysUtils.logContentI(TAG, "writeCharacteristicProto4 =" + BleTools.bytes2HexString(value));
+//            SysUtils.logAppRunning(TAG, "writeCharacteristicProto4 =" + BleTools.bytes2HexString(value));
+            Log.i(TAG, "writeCharacteristicProto4 =" + BleTools.bytes2HexString(value));
+
+            dev_name.setValue(value);
+            boolean status = mBluetoothGatt.writeCharacteristic(dev_name);
+
+            for (int i = 1; i <= 100; i++) {
+                if (status) {
+                    break;
+                }
+//                SysUtils.logContentI(TAG, " writeCharacteristicProto4 status =  number of reissues " + i + " status = " + status);
+//                SysUtils.logAppRunning(TAG, " writeCharacteristicProto4 status =  number of reissues " + i + " status = " + status);
+                Log.i(TAG, " writeCharacteristicProto4 status =  number of reissues " + i + " status = " + status);
+                try {
+                    Thread.sleep(i);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                status = mBluetoothGatt.writeCharacteristic(dev_name);
+            }
+//            SysUtils.logContentI(TAG, " writeCharacteristicProto4 status end = " + status);
+//            SysUtils.logAppRunning(TAG, " writeCharacteristicProto4 status end = " + status);
+            Log.i(TAG, " writeCharacteristicProto4 status end = " + status);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ****************************  proto end **************************
+    public boolean writeSpecialCharacteristic(byte[] value) {
+        SysUtils.logContentI(TAG, "writeSpecialCharacteristic =" + BleTools.bytes2HexString(value));
+        SysUtils.logAppRunning(TAG, "writeSpecialCharacteristic =" + BleTools.bytes2HexString(value));
+
+        List<byte[]> cmdList = new ArrayList<>();
+        int length = value.length;
+        int copy_size = 0;
+        while (length > 0) {
+            if (length < currentMtu) {
+                byte[] val = new byte[length];
+                for (int i = 0; i < length; i++) {
+                    val[i] = value[i + copy_size];
+                }
+                if (isSupportBigMtu) {
+                    currentUuid = BleConstant.CHAR_BIG_UUID_02;
+                } else {
+                    currentUuid = BleConstant.UUID_BASE_WRITE;
+                }
+                cmdList.add(val);
+            } else {
+                byte[] val = new byte[currentMtu];
+                for (int i = 0; i < currentMtu; i++) {
+                    val[i] = value[i + copy_size];
+                }
+                if (isSupportBigMtu) {
+                    currentUuid = BleConstant.CHAR_BIG_UUID_02;
+                } else {
+                    currentUuid = BleConstant.UUID_BASE_WRITE;
+                }
+                cmdList.add(val);
+            }
+            copy_size += currentMtu;
+            length -= currentMtu;
+        }
+
+        UUID serviceUUid = BleConstant.UUID_BASE_SERVICE;
+        UUID uuid = BleConstant.UUID_BASE_WRITE;
+        if (currentUuid.equals(BleConstant.CHAR_BIG_UUID_02)) {
+            serviceUUid = BleConstant.UUID_BIG_SERVICE;
+            uuid = BleConstant.CHAR_BIG_UUID_02;
+        }
+
+        if (mBluetoothGatt == null) {
+            return false;
+        }
+        BluetoothGattService gap_service = mBluetoothGatt.getService(serviceUUid);
+        if (gap_service == null) {
+            return false;
+        }
+        BluetoothGattCharacteristic dev_name = gap_service.getCharacteristic(uuid);
+        if (dev_name == null) {
+            return false;
+        }
+
+        while (cmdList.size() > 0) {
+            byte[] cmd = cmdList.remove(0);
+            if (!writeSpecialCharacteristic(dev_name, uuid, cmd)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean writeSpecialCharacteristic(BluetoothGattCharacteristic dev_name, UUID uuid, byte[] cmd) {
+        dev_name.setValue(cmd);
+        boolean status = mBluetoothGatt.writeCharacteristic(dev_name);
+        for (int i = 1; i <= 100; i++) {
+            if (status) {
+                break;
+            }
+            try {
+                Thread.sleep(i);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            status = mBluetoothGatt.writeCharacteristic(dev_name);
+        }
+        SysUtils.logContentI(TAG, "uuid = " + uuid + " writeSpecialCharacteristic status end = " + status);
+        SysUtils.logAppRunning(TAG, "uuid = " + uuid + " writeSpecialCharacteristic status end = " + status);
+        return status;
     }
 }
 
