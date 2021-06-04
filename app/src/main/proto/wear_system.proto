@@ -168,32 +168,50 @@ message WristScreen {
 }
 
 enum Function {
-    SETTING = 0x01;
-    FITNESS = 0x02;
-    HEART_RATE = 0x03;
-    PRESSURE = 0x04;
-    ENERGY = 0x05;
-    SLEEP = 0x06;
-    BREATH = 0x07;
-    ANAEROBIC_THRESHOLD = 0x08;
-    CALENDAR = 0x09;
-    CLOCK = 0x0A;
-    STOPWATCH = 0x0B;
-    TIME_KEEPING = 0x0C;
-    WEATHER = 0x0D;
-    STOCK = 0x0E;
-    APP_LIST = 0x0F;
-    SPORT_LIST = 0x10;
-    HOME = 0x11;
-    MUSIC_CONTROLLER = 0x12;
-    VOICE_ASSISTANT = 0x13;
-    BLOOD_OXYGEN = 0x14;
+    SETTING = 0x01; 				//设置
+    FITNESS = 0x02;					//运动健身
+    HEART_RATE = 0x03;				//心率
+    PRESSURE = 0x04;				//压力
+    ENERGY = 0x05;					//能量
+    SLEEP = 0x06;					//睡眠
+    BREATH = 0x07;					//呼吸训练
+    ANAEROBIC_THRESHOLD = 0x08;		//无氧阈
+    CALENDAR = 0x09;				//日历
+    CLOCK = 0x0A;					//闹钟
+    STOPWATCH = 0x0B;				//秒表
+    TIME_KEEPING = 0x0C;			//倒计时
+    WEATHER = 0x0D;					//天气
+    STOCK = 0x0E;					//股票
+    APP_LIST = 0x0F;				//应用程序列表
+    SPORT_LIST = 0x10;				//多运动
+    HOME = 0x11;					//主表盘
+    MUSIC_CONTROLLER = 0x12;		//音乐控制
+    VOICE_ASSISTANT = 0x13;			//语音助理
+    BLOOD_OXYGEN = 0x14;			//血氧
 
-    ALIPAY = 0x20;
-    CARD = 0x21;
-    DOOR = 0x22;
-    BUS = 0x23;
-    BANK = 0x24;
+    ALIPAY = 0x20;					//支付宝
+    CARD = 0x21;					//卡包
+    DOOR = 0x22;					//门卡
+    BUS = 0x23;						//公共汽车卡
+    BANK = 0x24;					//银行卡
+
+    BLOOD_PRESSURE = 0x81;			//血压
+    ECG_FUNCTION = 0x82;       		//心电
+    INFORMATION = 0x83;				//信息
+    ACTIVITY_HEAT = 0x84;			//活动热量
+    STEP_COUNTER = 0x85; 			//计步
+    CALORIE = 0x86;					//卡路里
+    DISTANCE = 0x87;				//距离
+    PHYSIONLOGICAL_CYCLE = 0x88;	//生理周期
+    COMPASS = 0x89;					//指南针
+    ABOUT = 0x8A;					//关于
+    MORE_SETTING = 0x8B;			//更多
+    ATMOSPHERIC_PRESSURE = 0x8C;	//气压
+    PHYSICAL_EXERCISE = 0x8D;		//锻炼
+    DAILY_STATE = 0x8E;				//状态
+    TOOL_LIST = 0x8F;				//工具
+    QR_CODE_DOWNLOAD = 0x90;		//二维码
+    TEMPERATURE = 0x91;				//体温
 }
 
 enum Order {

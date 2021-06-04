@@ -414,6 +414,9 @@ public class BleTools {
         return bleBodyTemp;
     }
 
+    public static int getFahrenheit(int tempValue){
+        return (int) ((tempValue) * 1.8 + 32);
+    }
 
     /**
      * 判断睡眠是否合法2

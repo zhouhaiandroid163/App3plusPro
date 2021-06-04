@@ -63,6 +63,7 @@ import com.zjw.apps3pluspro.eventbus.DialInfoCompleteEvent;
 import com.zjw.apps3pluspro.eventbus.DismissAGpsUpdateDialogEvent;
 import com.zjw.apps3pluspro.eventbus.GetDeviceProtoAGpsPrepareStatusSuccessEvent;
 import com.zjw.apps3pluspro.eventbus.OffEcgSyncStateEvent;
+import com.zjw.apps3pluspro.eventbus.SendOpenWeatherDataEvent;
 import com.zjw.apps3pluspro.eventbus.ShowDialogEvent;
 import com.zjw.apps3pluspro.eventbus.SyncTimeLoadingEvent;
 import com.zjw.apps3pluspro.eventbus.SyncTimeOutEvent;
@@ -76,6 +77,7 @@ import com.zjw.apps3pluspro.module.device.dfu.ProtobufActivity;
 import com.zjw.apps3pluspro.module.device.dfurtk.RtkDfuActivity;
 import com.zjw.apps3pluspro.module.device.entity.DeviceModel;
 import com.zjw.apps3pluspro.module.device.weather.WeatherBean;
+import com.zjw.apps3pluspro.module.device.weather.openweather.WeatherManager;
 import com.zjw.apps3pluspro.module.friend.FriendRankFragment;
 import com.zjw.apps3pluspro.module.home.DataFragment;
 import com.zjw.apps3pluspro.module.home.sport.DeviceSportManager;
@@ -759,9 +761,9 @@ public class HomeActivity extends BaseActivity {
     };
 
 
-
     private Dialog aGpsDialog;
     private boolean isFirstShowAGpsDialog = false;
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getDeviceProtoAGpsPrepareStatusSuccessEvent(GetDeviceProtoAGpsPrepareStatusSuccessEvent event) {
         if (event.needGpsInfo && isFirstShowAGpsDialog) {
@@ -1538,13 +1540,33 @@ public class HomeActivity extends BaseActivity {
     private void syncWeather() {
         if (mBleDeviceTools.get_is_weather() && mBleDeviceTools.getWeatherSwitch()) {
             if (System.currentTimeMillis() - mBleDeviceTools.getWeatherSyncTime() > 10 * 60 * 1000L) {
-                if (mBleDeviceTools.getWeatherCity().isEmpty()) {
+                if (mBleDeviceTools.getWeatherMode() == 3) {
+                    if (mBleDeviceTools.getWeatherGps().isEmpty()) {
+                    } else {
+                        String[] gps = mBleDeviceTools.getWeatherGps().split(",");
+                        if (gps.length > 1) {
+                            WeatherManager.getInstance().getCurrentWeather(false,false, Double.parseDouble(gps[1]), Double.parseDouble(gps[0]), new WeatherManager.GetOpenWeatherListener() {
+                                @Override
+                                public void onSuccess() {
+                                    EventBus.getDefault().post(new SendOpenWeatherDataEvent(0));
+                                }
+
+                                @Override
+                                public void onFail() {
+
+                                }
+                            });
+                        }
+                    }
+                } else {
+                    if (mBleDeviceTools.getWeatherCity().isEmpty()) {
 //                    GpsSportManager.getInstance().getLatLon(this, gpsInfo -> {
 //                        GpsSportManager.getInstance().stopGps(this);
 //                        requestWeather();
 //                    });
-                } else {
-                    requestWeather();
+                    } else {
+                        requestWeather();
+                    }
                 }
             }
         }
@@ -1574,7 +1596,6 @@ public class HomeActivity extends BaseActivity {
         });
 //        });
     }
-
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)

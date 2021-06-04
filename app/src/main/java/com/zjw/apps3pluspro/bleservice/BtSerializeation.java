@@ -7,6 +7,7 @@ import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.bleservice.anaylsis.FitnessTools;
 import com.zjw.apps3pluspro.bleservice.anaylsis.SystemTools;
 import com.zjw.apps3pluspro.bleservice.anaylsis.WatchFaceTools;
+import com.zjw.apps3pluspro.bleservice.anaylsis.WeatherTools;
 import com.zjw.apps3pluspro.module.device.entity.AlarmClockModel;
 import com.zjw.apps3pluspro.module.device.entity.DurgModel;
 import com.zjw.apps3pluspro.module.device.entity.MettingModel;
@@ -1864,6 +1865,15 @@ public class BtSerializeation {
                 break;
             case BleService.APP_DELETE_DEVICE_WATCH_FACE:
                 sendingData = WatchFaceTools.deleteDeviceWatchFace(BleService.currentThemeId);
+                break;
+            case BleService.APP_SEND_OPEN_WEATHER_LATEST_WEATHER:
+                sendingData = WeatherTools.getWeather(0);
+                break;
+            case BleService.APP_SEND_OPEN_WEATHER_DAILY_FORECAST:
+                sendingData = WeatherTools.getWeather(1);
+                break;
+            case BleService.APP_SEND_OPEN_WEATHER_HOURLY_FORECAST:
+                sendingData = WeatherTools.getWeather(2);
                 break;
         }
         if (sendingData == null) {

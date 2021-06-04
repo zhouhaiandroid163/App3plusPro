@@ -1,8 +1,14 @@
 package com.zjw.apps3pluspro.bleservice.anaylsis;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.xiaomi.wear.protobuf.CommonProtos;
 import com.xiaomi.wear.protobuf.WearProtos;
 import com.xiaomi.wear.protobuf.WeatherProtos;
+import com.zjw.apps3pluspro.module.device.weather.openweather.CurrentWeather;
+import com.zjw.apps3pluspro.module.device.weather.openweather.WeatherAQI;
+import com.zjw.apps3pluspro.module.device.weather.openweather.WeatherDays;
+import com.zjw.apps3pluspro.module.device.weather.openweather.WeatherManager;
+import com.zjw.apps3pluspro.module.device.weather.openweather.WeatherPerHour;
 
 import java.util.ArrayList;
 
@@ -107,53 +113,146 @@ public class WeatherTools {
                 WeatherProtos.WeatherForecast.Data.List data_list = weather_forecast.getDataList();
                 result_str += getDataList(data_list);
                 break;
-
-
         }
-
         return result_str;
-
     }
 
-
-    public static WeatherProtos.Weather.Builder getWeather(int pos) {
+    public static byte[] getWeather(int id) {
+        WearProtos.WearPacket.Builder wear1 = WearProtos.WearPacket.newBuilder();
+        wear1.setType(WearProtos.WearPacket.Type.WEATHER);
 
         WeatherProtos.Weather.Builder weather = WeatherProtos.Weather.newBuilder();
-
-
-        switch (pos) {
-            case latest:
+        switch (id) {
+            case 0:
                 weather.setLatest(getWeatherLatest());
+                wear1.setId((byte) WeatherProtos.Weather.WeatherID.LATEST_WEATHER.getNumber());
                 break;
-
-            case forecast:
-                weather.setForecast(getWeatherForecast());
+            case 1:
+                weather.setForecast(getWeatherDailyForecast());
+                wear1.setId((byte) WeatherProtos.Weather.WeatherID.DAILY_FORECAST.getNumber());
                 break;
+            case 2:
+                weather.setHourforecast(getWeatherHourlyForecast());
+                wear1.setId((byte) WeatherProtos.Weather.WeatherID.HOURLY_FORECAST.getNumber());
+                break;
+        }
+        wear1.setWeather(weather);
 
+        //解析自己传输的数据
+//        try {
+//            WearProtos.WearPacket wear = WearProtos.WearPacket.parseFrom(wear1.build().toByteArray());
+//            WeatherTools.analysisWeather(wear);
+//        } catch (InvalidProtocolBufferException e) {
+//            e.printStackTrace();
+//        }
 
+        return wear1.build().toByteArray();
+    }
+
+    private static WeatherProtos.WeatherHourForecast getWeatherHourlyForecast() {
+        WeatherPerHour weatherPerHour = WeatherManager.getInstance().weatherPerHour;
+        WeatherAQI weatherAQI = WeatherManager.getInstance().weatherAQI;
+
+        WeatherProtos.WeatherHourForecast.Data.List.Builder list = WeatherProtos.WeatherHourForecast.Data.List.newBuilder();
+        for (int i = 0; i < weatherPerHour.list.size(); i++) {
+            WeatherPerHour.WeatherHour weatherHour = weatherPerHour.list.get(i);
+
+            WeatherProtos.WeatherHourForecast.Data.Builder data = WeatherProtos.WeatherHourForecast.Data.newBuilder();
+            data.setWeather(Integer.parseInt(weatherHour.weather.get(0).id));
+
+            CommonProtos.RangeValue.Builder temp = CommonProtos.RangeValue.newBuilder();
+            temp.setFrom((int) Float.parseFloat(weatherHour.main.temp_min));
+            temp.setTo((int) Float.parseFloat(weatherHour.main.temp_max));
+            data.setTemperature(temp);
+            data.setTemperatureUnit("℃");
+
+            if (weatherAQI.list.size() > i) {
+                int aqi = Integer.parseInt(weatherAQI.list.get(i).main.aqi);
+                data.setAqi(CommonTools.getKeyValue("aqi", aqi));
+            }
+
+            list.addList(data);
         }
 
-        return weather;
+        WeatherProtos.WeatherHourForecast.Builder weather = WeatherProtos.WeatherHourForecast.newBuilder();
+        weather.setDataList(list);
+        return weather.build();
+    }
+
+    private static WeatherProtos.WeatherForecast getWeatherDailyForecast() {
+        WeatherDays weatherDays = WeatherManager.getInstance().weatherDays;
+        WeatherAQI weatherAQI = WeatherManager.getInstance().weatherAQI;
+
+        WeatherProtos.WeatherId.Builder weatherId = WeatherProtos.WeatherId.newBuilder();
+        weatherId.setPubTime(weatherDays.list.get(0).dt);
+        weatherId.setCityName(weatherDays.city.name);
+        weatherId.setLocationName(weatherDays.city.country);
+        weatherId.setPubTimeStamp(Integer.parseInt(weatherDays.list.get(0).dt));
+
+        WeatherProtos.WeatherForecast.Builder weather = WeatherProtos.WeatherForecast.newBuilder();
+        weather.setId(weatherId.build());
+        WeatherProtos.WeatherForecast.Data.List.Builder list = WeatherProtos.WeatherForecast.Data.List.newBuilder();
+
+        for (int i = 1; i < weatherDays.list.size(); i++) {
+            WeatherDays.WeatherDay weatherDay = weatherDays.list.get(i);
+
+            WeatherProtos.WeatherForecast.Data.Builder data = WeatherProtos.WeatherForecast.Data.newBuilder();
+            data.setAqi(CommonTools.getKeyValue("aqi", Integer.parseInt(weatherAQI.list.get(95 - (4 - i) * 24).main.aqi)));
+
+            data.setWeather(Integer.parseInt(weatherDay.weather.get(0).id));
+
+            CommonProtos.RangeValue.Builder temp = CommonProtos.RangeValue.newBuilder();
+            temp.setFrom((int) Float.parseFloat(weatherDay.temp.min));
+            temp.setTo((int) Float.parseFloat(weatherDay.temp.max));
+            data.setTemperature(temp);
+            data.setTemperatureUnit("℃");
+
+            WeatherProtos.SunRiseSet.Builder sunRise = WeatherProtos.SunRiseSet.newBuilder();
+            sunRise.setSunRise(weatherDay.sunrise);
+            sunRise.setSunSet(weatherDay.sunset);
+            data.setSunRiseSet(sunRise);
+
+            data.setHumidity(CommonTools.getKeyValue("%", (int) Float.parseFloat(weatherDay.humidity)));
+            data.setProbabilityOfRainfall(CommonTools.getKeyValue("%", (int) Float.parseFloat(weatherDay.pop)));
+
+            list.addList(data);
+        }
+
+        weather.setDataList(list);
+
+
+        return weather.build();
     }
 
 
-    public static WeatherProtos.WeatherLatest getWeatherLatest() {
-        WeatherProtos.WeatherLatest.Builder weather_latst = WeatherProtos.WeatherLatest.newBuilder();
-        weather_latst.setId(getWeatherId("2019-10-17T09:30:32+08:00", "shenzhen", "宝安"));
-        weather_latst.setWeather(0x05);
-        weather_latst.setTemperature(CommonTools.getKeyValue("℃", 26));
-        weather_latst.setHumidity(CommonTools.getKeyValue("%", 95));
-        weather_latst.setWindInfo(CommonTools.getKeyValue("113", 1));
-        weather_latst.setUvindex(CommonTools.getKeyValue("SPF0", 1));
-        weather_latst.setAqi(CommonTools.getKeyValue("优", 33));
+    private static WeatherProtos.WeatherLatest getWeatherLatest() {
+        CurrentWeather currentWeather = WeatherManager.getInstance().currentWeather;
+        WeatherAQI weatherAQI = WeatherManager.getInstance().weatherAQI;
+        WeatherPerHour weatherPerHour = WeatherManager.getInstance().weatherPerHour;
+
+        WeatherProtos.WeatherId.Builder weatherId = WeatherProtos.WeatherId.newBuilder();
+        weatherId.setPubTime(currentWeather.dt);
+        weatherId.setCityName(currentWeather.name);
+        weatherId.setLocationName(currentWeather.sys.country);
+        weatherId.setPubTimeStamp(Integer.parseInt(currentWeather.dt));
+
+        WeatherProtos.WeatherLatest.Builder weather = WeatherProtos.WeatherLatest.newBuilder();
+        weather.setId(weatherId.build());
+        weather.setWeather(Integer.parseInt(currentWeather.weather.get(0).id));
+        weather.setTemperature(CommonTools.getKeyValue("℃", (int) Float.parseFloat(currentWeather.main.temp)));
+        weather.setHumidity(CommonTools.getKeyValue("%", (int) Float.parseFloat(currentWeather.main.humidity)));
+        weather.setWindInfo(CommonTools.getKeyValue(currentWeather.wind.speed, (int) Float.parseFloat(currentWeather.wind.deg)));
+        weather.setUvindex(CommonTools.getKeyValue("SPF0", 0));
+        weather.setAqi(CommonTools.getKeyValue("aqi", Integer.parseInt(weatherAQI.list.get(0).main.aqi)));
+        weather.setPressure(Float.parseFloat(weatherPerHour.list.get(0).main.sea_level));
+        weather.setWindSpeed(CommonTools.getKeyValue("m/s", (int) Float.parseFloat(currentWeather.wind.speed)));
+        weather.setProbabilityOfRainfall(CommonTools.getKeyValue("%", (int) Float.parseFloat(weatherPerHour.list.get(0).pop)));
 
         ArrayList<WeatherProtos.Alerts> data_list = new ArrayList<>();
-        data_list.add(getAlerts("大雾", "黄色"));
-//        data_list.add(getAlerts("type6", "level6"));
-//        data_list.add(getAlerts("type7", "level7"));
-        weather_latst.setAlertsList(getAlertsList(data_list));
+        data_list.add(getAlerts("unKnown", "level6"));
+        weather.setAlertsList(getAlertsList(data_list));
 
-        return weather_latst.build();
+        return weather.build();
     }
 
     public static WeatherProtos.Alerts getAlerts(String type, String level) {
@@ -207,7 +306,7 @@ public class WeatherTools {
     public static WeatherProtos.WeatherForecast.Data getData(int aqi) {
         WeatherProtos.WeatherForecast.Data.Builder data = WeatherProtos.WeatherForecast.Data.newBuilder();
         data.setAqi(CommonTools.getKeyValue("api", aqi));
-        data.setWeather(CommonTools.getRangeValue(3, 10));
+//        data.setWeather(CommonTools.getRangeValue(3, 10));
         data.setTemperature(CommonTools.getRangeValue(20, 30));
         data.setTemperatureUnit("摄氏度");
         data.setSunRiseSet(getSunRiseSet());
@@ -267,7 +366,7 @@ public class WeatherTools {
 
         System.out.println("数据封装 = " + "weather/" + "weather_latest/weather====");
         result_str += "weather/" + "weather_latest/weather=====" + "\n";
-        result_str += CommonTools.getRangeValue(data.getWeather());
+        result_str += data.getWeather();
 
         System.out.println("数据封装 = " + "weather/" + "weather_latest/temperature=====");
         result_str += "weather/" + "weather_latest/temperature=====" + "\n";
@@ -376,50 +475,5 @@ public class WeatherTools {
         }
     }
 
-    public static byte[] getLatestWeather() {
-
-        WeatherProtos.Weather.Builder weather = WeatherProtos.Weather.newBuilder();
-
-        weather.setLatest(getWeatherLatest());
-
-        WearProtos.WearPacket.Builder wear1 = WearProtos.WearPacket.newBuilder()
-                .setType(WearProtos.WearPacket.Type.WEATHER)
-                .setId((byte) WeatherProtos.Weather.WeatherID.LATEST_WEATHER.getNumber())
-                .setWeather(weather);
-
-        try {
-            WearProtos.WearPacket wear = WearProtos.WearPacket.parseFrom(wear1.build().toByteArray());
-            SystemTools.analysisSystem(wear);
-
-        } catch (InvalidProtocolBufferException e) {
-            e.printStackTrace();
-        }
-
-
-        return wear1.build().toByteArray();
-    }
-
-    public static byte[] getLatestWeather(WeatherProtos.WeatherLatest.Builder weather_latst) {
-
-        WeatherProtos.Weather.Builder weather = WeatherProtos.Weather.newBuilder();
-
-        weather.setLatest(weather_latst);
-
-        WearProtos.WearPacket.Builder wear1 = WearProtos.WearPacket.newBuilder()
-                .setType(WearProtos.WearPacket.Type.WEATHER)
-                .setId((byte) WeatherProtos.Weather.WeatherID.LATEST_WEATHER.getNumber())
-                .setWeather(weather);
-
-        try {
-            WearProtos.WearPacket wear = WearProtos.WearPacket.parseFrom(wear1.build().toByteArray());
-            SystemTools.analysisSystem(wear);
-
-        } catch (InvalidProtocolBufferException e) {
-            e.printStackTrace();
-        }
-
-
-        return wear1.build().toByteArray();
-    }
 
 }

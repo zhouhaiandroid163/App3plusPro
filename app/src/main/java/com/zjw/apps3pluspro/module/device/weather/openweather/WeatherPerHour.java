@@ -13,7 +13,7 @@ public class WeatherPerHour {
     public ArrayList<WeatherHour> list;
     public WeatherCity city;
 
-    private static class WeatherHour{
+    public class WeatherHour {
         public String dt;
         public WeatherMain main;
         public ArrayList<WeatherItem> weather;

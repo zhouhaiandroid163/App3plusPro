@@ -1,7 +1,7 @@
 // wear_weather.proto
 
 syntax = "proto2";
-
+ 
 import "nanopb.proto";
 import "wear_common.proto";
 
@@ -21,19 +21,22 @@ message Weather {
         WeatherLatest latest = 1;
         WeatherForecast forecast = 2;
         float pressure = 3;
+        WeatherHourForecast hourforecast = 4;
     }
 }
 
 message WeatherLatest {
     required WeatherId id = 1;
-    required uint32 weather = 2 [(nanopb).int_size = IS_16];
-    required KeyValue temperature = 3;
-    required KeyValue humidity = 4;
-    required KeyValue wind_info = 5;
-    required KeyValue uvindex = 6;
-    required KeyValue aqi = 7;
+    required uint32 weather = 2 [(nanopb).int_size = IS_16];//天气类型
+    required KeyValue temperature = 3;//温度
+    required KeyValue humidity = 4;//湿度
+    required KeyValue wind_info = 5;//风方向
+    required KeyValue uvindex = 6;//紫外线
+    required KeyValue aqi = 7;//空气质量
     required Alerts.List alerts_list = 8;
     optional float pressure = 9;
+    optional KeyValue Wind_speed = 10;//风速度
+    optional KeyValue Probability_of_rainfall = 11;//降雨几率
 }
 
 message WeatherForecast {
@@ -42,10 +45,27 @@ message WeatherForecast {
 
     message Data {
         required KeyValue aqi = 1;
-        optional RangeValue weather = 2;
+        optional uint32 weather = 2;
         optional RangeValue temperature = 3;
         optional string temperature_unit = 4 [(nanopb).type = FT_POINTER];
         optional SunRiseSet sun_rise_set = 5;
+        optional KeyValue humidity = 6;//湿度
+        optional KeyValue Probability_of_rainfall = 7;//降雨几率
+
+        message List {
+            repeated Data list = 1 [(nanopb).type = FT_POINTER];
+        }
+    }
+}
+
+message WeatherHourForecast {
+    required Data.List data_list = 1;
+
+    message Data {
+        optional uint32 weather = 1[(nanopb).int_size = IS_16];//天气类型
+        optional RangeValue temperature = 2;//温度(从什么到什么)
+        optional string temperature_unit = 3 [(nanopb).type = FT_POINTER];//温度单位
+        optional KeyValue aqi = 4;//空气质量
 
         message List {
             repeated Data list = 1 [(nanopb).type = FT_POINTER];
@@ -54,9 +74,10 @@ message WeatherForecast {
 }
 
 message WeatherId {
-    required string pub_time = 1 [(nanopb).type = FT_POINTER];
+    required string pub_time = 1 [(nanopb).type = FT_POINTER];//（时间戳）
     required string city_name = 2 [(nanopb).type = FT_POINTER];
     required string location_name = 3 [(nanopb).type = FT_POINTER];
+    optional uint32 pub_time_stamp = 4;//（时间戳）(秒单位)
 }
 
 message Alerts {

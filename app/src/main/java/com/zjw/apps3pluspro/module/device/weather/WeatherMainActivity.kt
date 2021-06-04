@@ -21,6 +21,7 @@ import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.application.BaseApplication
 import com.zjw.apps3pluspro.base.BaseActivity
 import com.zjw.apps3pluspro.bleservice.BleConstant
+import com.zjw.apps3pluspro.bleservice.BleService
 import com.zjw.apps3pluspro.bleservice.BleTools
 import com.zjw.apps3pluspro.bleservice.BtSerializeation
 import com.zjw.apps3pluspro.eventbus.BlueToothStateEvent
@@ -82,7 +83,12 @@ class WeatherMainActivity : BaseActivity() {
             if (mBleDeviceTools.weatherSwitch) {
                 showDialog()
                 initTvLatLon()
-                startRequestWeather()
+
+                if (mBleDeviceTools.weatherMode == 3) {
+                    getOpenWeather(false)
+                } else {
+                    startRequestWeather()
+                }
             }
         }
     }
@@ -150,17 +156,10 @@ class WeatherMainActivity : BaseActivity() {
             mBleDeviceTools.weatherCity = ""
             mBleDeviceTools.weatherGps = ""
             initTvLatLon()
-            if (mBleDeviceTools.weatherCity.isNotEmpty()) {
-                initTvLatLon()
-                startRequestWeather()
-            } else {
-//                mBleDeviceTools.weatherGps = "113.83315192897955,22.631363436442037"
-//                GpsSportManager.getInstance().getWeatherCity(this) {
-//                    initTvLatLon()
-//                    startRequestWeather()
-//                }
+
+            if (mBleDeviceTools.weatherMode == 3) {
                 handler.removeCallbacksAndMessages(null)
-                handler.postDelayed(getLocationTimeOut, 10 * 1000)
+                handler.postDelayed(getLocationTimeOut, 15 * 1000)
                 SysUtils.logAmapGpsE(TAG, "getLatLon")
                 SysUtils.logAppRunning(TAG, "getLatLon")
                 GpsSportManager.getInstance().getLatLon(this) { gpsInfo: GpsSportManager.GpsInfo ->
@@ -168,21 +167,27 @@ class WeatherMainActivity : BaseActivity() {
                     SysUtils.logAppRunning(TAG, "getLatLon success and stopGps getWeatherCity")
                     GpsSportManager.getInstance().stopGps(this)
 
-                    if (mBleDeviceTools.weatherMode == 3) {
-                        val gps = mBleDeviceTools.weatherGps.split(",")
-                        if (gps.size > 1) {
-                            WeatherManager.getInstance().getCurrentWeather(gps[1].toDouble(), gps[0].toDouble(), object : WeatherManager.GetOpenWeatherListener {
-                                override fun onSuccess() {
-                                    EventBus.getDefault().post(SendOpenWeatherDataEvent())
-                                }
+                    getOpenWeather(true)
+                }
+            } else {
+                if (mBleDeviceTools.weatherCity.isNotEmpty()) {
+                    initTvLatLon()
+                    startRequestWeather()
+                } else {
+//                mBleDeviceTools.weatherGps = "113.83315192897955,22.631363436442037"
+//                GpsSportManager.getInstance().getWeatherCity(this) {
+//                    initTvLatLon()
+//                    startRequestWeather()
+//                }
+                    handler.removeCallbacksAndMessages(null)
+                    handler.postDelayed(getLocationTimeOut, 10 * 1000)
+                    SysUtils.logAmapGpsE(TAG, "getLatLon")
+                    SysUtils.logAppRunning(TAG, "getLatLon")
+                    GpsSportManager.getInstance().getLatLon(this) { gpsInfo: GpsSportManager.GpsInfo ->
+                        SysUtils.logAmapGpsE(TAG, "getLatLon success and stopGps getWeatherCity")
+                        SysUtils.logAppRunning(TAG, "getLatLon success and stopGps getWeatherCity")
+                        GpsSportManager.getInstance().stopGps(this)
 
-                                override fun onFail() {
-                                }
-                            })
-                        } else {
-                            SysUtils.logAppRunning(TAG, "gps.size is error = " + mBleDeviceTools.weatherGps)
-                        }
-                    } else {
                         GpsSportManager.getInstance().getWeatherCity(this) {
                             SysUtils.logAmapGpsE(TAG, "getWeatherCity success and startRequestWeather")
                             handler.removeCallbacksAndMessages(null)
@@ -221,15 +226,19 @@ class WeatherMainActivity : BaseActivity() {
                 sendData(t3)
             }
 
-            msg?.text = resources.getString(R.string.weather_send_over)
-
-            val handler = Handler()
-            handler.postDelayed({
-                if (progressDialog != null && progressDialog!!.isShowing) {
-                    progressDialog!!.dismiss()
-                }
-            }, 2000)
+            sendSuccess()
         }
+    }
+
+    private fun sendSuccess() {
+        msg?.text = resources.getString(R.string.weather_send_over)
+
+        val handler = Handler()
+        handler.postDelayed({
+            if (progressDialog != null && progressDialog!!.isShowing) {
+                progressDialog!!.dismiss()
+            }
+        }, 2000)
     }
 
     private var progressDialog: Dialog? = null
@@ -300,5 +309,29 @@ class WeatherMainActivity : BaseActivity() {
 
                     override fun OnCancel() {}
                 }, getString(R.string.setting_dialog_setting))
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun sendOpenWeatherDataEvent(event: SendOpenWeatherDataEvent?) {
+        if (event!!.status == 1) {
+            sendSuccess()
+        }
+    }
+
+    private fun getOpenWeather(isSaveName: Boolean) {
+        val gps = mBleDeviceTools.weatherGps.split(",")
+        if (gps.size > 1) {
+            WeatherManager.getInstance().getCurrentWeather(false, isSaveName, gps[1].toDouble(), gps[0].toDouble(), object : WeatherManager.GetOpenWeatherListener {
+                override fun onSuccess() {
+                    EventBus.getDefault().post(SendOpenWeatherDataEvent(0))
+                    initTvLatLon()
+                }
+
+                override fun onFail() {
+                }
+            })
+        } else {
+            SysUtils.logAppRunning(TAG, "gps.size is error = " + mBleDeviceTools.weatherGps)
+        }
     }
 }

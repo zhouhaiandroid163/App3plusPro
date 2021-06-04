@@ -51,6 +51,7 @@ import com.zjw.apps3pluspro.eventbus.LocationChangeEventBus;
 import com.zjw.apps3pluspro.eventbus.PageDeviceSetEvent;
 import com.zjw.apps3pluspro.eventbus.PageDeviceSyncEvent;
 import com.zjw.apps3pluspro.eventbus.RefreshGpsInfoEvent;
+import com.zjw.apps3pluspro.eventbus.SendOpenWeatherDataEvent;
 import com.zjw.apps3pluspro.eventbus.SyncDeviceSportEvent;
 import com.zjw.apps3pluspro.eventbus.UploadThemeStateEvent;
 import com.zjw.apps3pluspro.eventbus.tools.EventTools;
@@ -4072,6 +4073,10 @@ public class BleService extends Service {
     public static final String APP_REQUEST_DEVICE_WATCH_FACE = "APP_REQUEST_DEVICE_WATCH_FACE";
     public static final String APP_SET_DEVICE_WATCH_FACE = "APP_SET_DEVICE_WATCH_FACE";
     public static final String APP_DELETE_DEVICE_WATCH_FACE = "APP_DELETE_DEVICE_WATCH_FACE";
+    // 发送openweatherData
+    public static final String APP_SEND_OPEN_WEATHER_LATEST_WEATHER = "APP_SEND_OPEN_WEATHER_LATEST_WEATHER";
+    public static final String APP_SEND_OPEN_WEATHER_DAILY_FORECAST = "APP_SEND_OPEN_WEATHER_DAILY_FORECAST";
+    public static final String APP_SEND_OPEN_WEATHER_HOURLY_FORECAST = "APP_SEND_OPEN_WEATHER_HOURLY_FORECAST";
 
     public static boolean isForce;
     public static String version;
@@ -4425,6 +4430,18 @@ public class BleService extends Service {
                 case APP_GPS_READY:
                     curCmd = APP_SEND_GPS;
                     break;
+                case APP_SEND_OPEN_WEATHER_LATEST_WEATHER:
+                    curCmd = APP_SEND_OPEN_WEATHER_DAILY_FORECAST;
+                    bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+                    break;
+                case APP_SEND_OPEN_WEATHER_DAILY_FORECAST:
+                    curCmd = APP_SEND_OPEN_WEATHER_HOURLY_FORECAST;
+                    bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
+                    break;
+                case APP_SEND_OPEN_WEATHER_HOURLY_FORECAST:
+                    SysUtils.logContentW("ble", " weather send over");
+                    EventBus.getDefault().post(new SendOpenWeatherDataEvent(1));
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -4597,6 +4614,15 @@ public class BleService extends Service {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void sendOpenWeatherDataEvent(SendOpenWeatherDataEvent event) {
+        if(event.status == 0){
+            curCmd = APP_SEND_OPEN_WEATHER_LATEST_WEATHER;
+            bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
         }
     }
 

@@ -23,12 +23,14 @@ import butterknife.OnClick
 import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.application.BaseApplication
 import com.zjw.apps3pluspro.base.BaseActivity
-import com.zjw.apps3pluspro.utils.AuthorityManagement
-import com.zjw.apps3pluspro.utils.DialogUtils
-import com.zjw.apps3pluspro.utils.GpsSportManager
-import com.zjw.apps3pluspro.utils.MyUtils
+import com.zjw.apps3pluspro.bleservice.BleTools
+import com.zjw.apps3pluspro.eventbus.SendOpenWeatherDataEvent
+import com.zjw.apps3pluspro.module.device.weather.openweather.WeatherFind
+import com.zjw.apps3pluspro.module.device.weather.openweather.WeatherManager
+import com.zjw.apps3pluspro.utils.*
 import kotlinx.android.synthetic.main.weather_city_search_activity.*
-import java.util.ArrayList
+import org.greenrobot.eventbus.EventBus
+import java.util.*
 
 
 class WeatherCitySearchActivity : BaseActivity() {
@@ -84,18 +86,41 @@ class WeatherCitySearchActivity : BaseActivity() {
         }
 
         handler.removeCallbacksAndMessages(null)
-        handler.postDelayed(getLocationTimeOut, 10 * 1000)
+        if (mBleDeviceTools.weatherMode == 3) {
+            handler.postDelayed(getLocationTimeOut, 15 * 1000)
+        } else {
+            handler.postDelayed(getLocationTimeOut, 10 * 1000)
+        }
 
         isStartLocation = true
         isLocationSuccess = false
         tvCityName.text = resources.getString(R.string.weather_location_ing)
         GpsSportManager.getInstance().getLatLon(this) { gpsInfo: GpsSportManager.GpsInfo ->
             GpsSportManager.getInstance().stopGps(this)
-            GpsSportManager.getInstance().getWeatherCity(this) {
-                handler.removeCallbacksAndMessages(null)
-                isStartLocation = false
-                isLocationSuccess = true
-                tvCityName.text = mBleDeviceTools.weatherCity
+
+            if (mBleDeviceTools.weatherMode == 3) {
+                val gps = mBleDeviceTools.weatherGps.split(",")
+                if (gps.size > 1) {
+                    WeatherManager.getInstance().getCurrentWeather(true, true, gps[1].toDouble(), gps[0].toDouble(), object : WeatherManager.GetOpenWeatherListener {
+                        override fun onSuccess() {
+                            handler.removeCallbacksAndMessages(null)
+                            isStartLocation = false
+                            isLocationSuccess = true
+                            tvCityName.text = mBleDeviceTools.weatherCity
+                        }
+
+                        override fun onFail() {
+                        }
+                    })
+                }
+
+            } else {
+                GpsSportManager.getInstance().getWeatherCity(this) {
+                    handler.removeCallbacksAndMessages(null)
+                    isStartLocation = false
+                    isLocationSuccess = true
+                    tvCityName.text = mBleDeviceTools.weatherCity
+                }
             }
         }
     }
@@ -133,24 +158,46 @@ class WeatherCitySearchActivity : BaseActivity() {
 
     private var mLayoutInflater: LayoutInflater? = null
     private fun requestCityList(city: String) {
-        GpsSportManager.getInstance().getWeatherCityBySearch(this, object : GpsSportManager.onWeatherCitySearchListener {
-            override fun onError() {
-                Toast.makeText(context, resources.getText(R.string.net_worse_try_again), Toast.LENGTH_SHORT).show()
-            }
+        if (mBleDeviceTools.weatherMode == 3) {
+            WeatherManager.getInstance().getWeatherFindBySearch(city, object : WeatherManager.GetOpenWeatherListener {
+                override fun onSuccess() {
+                    layoutParent.removeAllViews()
+                    if (WeatherManager.getInstance().weatherFind.list == null) {
+                        Toast.makeText(context, resources.getText(R.string.no_data), Toast.LENGTH_SHORT).show()
+                    }
 
-            override fun onSuccess(list: ArrayList<WeatherCityEntity>?) {
-                layoutParent.removeAllViews()
-                if (list == null) {
-                    Toast.makeText(context, resources.getText(R.string.no_data), Toast.LENGTH_SHORT).show()
-                } else {
-                    for (i in 0 until list.size) {
-                        val mLinearLayout = mLayoutInflater?.inflate(R.layout.city_item_layout, null) as LinearLayout
-                        findViewById(mLinearLayout, i, list[i])
+                    for (i in 0 until WeatherManager.getInstance().weatherFind.list.size) {
+                        val mLinearLayout = mLayoutInflater?.inflate(R.layout.city_open_weather_item_layout, null) as LinearLayout
+                        initOpenWeatherData(mLinearLayout, i, WeatherManager.getInstance().weatherFind.list[i])
                         layoutParent.addView(mLinearLayout)
                     }
                 }
-            }
-        }, city)
+
+                override fun onFail() {
+                    Toast.makeText(context, resources.getText(R.string.net_worse_try_again), Toast.LENGTH_SHORT).show()
+                }
+            })
+
+        } else {
+            GpsSportManager.getInstance().getWeatherCityBySearch(this, object : GpsSportManager.onWeatherCitySearchListener {
+                override fun onError() {
+                    Toast.makeText(context, resources.getText(R.string.net_worse_try_again), Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onSuccess(list: ArrayList<WeatherCityEntity>?) {
+                    layoutParent.removeAllViews()
+                    if (list == null) {
+                        Toast.makeText(context, resources.getText(R.string.no_data), Toast.LENGTH_SHORT).show()
+                    } else {
+                        for (i in 0 until list.size) {
+                            val mLinearLayout = mLayoutInflater?.inflate(R.layout.city_item_layout, null) as LinearLayout
+                            findViewById(mLinearLayout, i, list[i])
+                            layoutParent.addView(mLinearLayout)
+                        }
+                    }
+                }
+            }, city)
+        }
     }
 
     private val mBleDeviceTools = BaseApplication.getBleDeviceTools()
@@ -193,8 +240,33 @@ class WeatherCitySearchActivity : BaseActivity() {
                     }
 
                     override fun OnCancel() {}
-                }
-                , getString(R.string.setting_dialog_setting))
+                }, getString(R.string.setting_dialog_setting))
+    }
+
+    private fun initOpenWeatherData(mLinearLayout: LinearLayout, i: Int, weatherFindItem: WeatherFind.WeatherFindItem?) {
+        val tvName = mLinearLayout.findViewById<TextView>(R.id.tvName)
+        val tvMain = mLinearLayout.findViewById<TextView>(R.id.tvMain)
+        val tvTemp = mLinearLayout.findViewById<TextView>(R.id.tvTemp)
+        val tvTempMaxMin = mLinearLayout.findViewById<TextView>(R.id.tvTempMaxMin)
+        val layoutCity = mLinearLayout.findViewById<LinearLayout>(R.id.layoutCity)
+
+        tvName.text = weatherFindItem?.name + " " + weatherFindItem?.sys!!.country
+        tvMain.text = weatherFindItem.weather[0].main
+
+        if (mBleDeviceTools.temperatureType == 1) {
+            tvTemp.text = BleTools.getFahrenheit(weatherFindItem.main.temp.toFloat().toInt()).toString() + "℉"
+            tvTempMaxMin.text = BleTools.getFahrenheit(weatherFindItem.main.temp_max.toFloat().toInt()).toString() + "℉" + "/" + BleTools.getFahrenheit(weatherFindItem.main.temp_min.toFloat().toInt()).toString() + "℉"
+        } else {
+            tvTemp.text = weatherFindItem.main.temp.toFloat().toInt().toString() + "℃"
+            tvTempMaxMin.text = weatherFindItem.main.temp_max.toFloat().toInt().toString() + "℃" + "/" + weatherFindItem.main.temp_min.toFloat().toInt().toString() + "℃"
+        }
+        layoutCity.setOnClickListener { v: View? ->
+            mBleDeviceTools.weatherCity = weatherFindItem.name
+            mBleDeviceTools.weatherCityID = weatherFindItem.id
+            mBleDeviceTools.weatherGps = weatherFindItem.coord.lon.toString() + "," + weatherFindItem.coord.lat.toString()
+            setResult(Activity.RESULT_OK)
+            finish()
+        }
     }
 
 }

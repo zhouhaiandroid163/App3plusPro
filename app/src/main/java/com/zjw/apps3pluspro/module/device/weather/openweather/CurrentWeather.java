@@ -16,6 +16,7 @@ public class CurrentWeather {
     public WeatherRain rain;
     public WeatherClouds clouds;
     public String dt;
+    public WeatherSys sys;
     public String timezone;
     public String id;
     public String name;

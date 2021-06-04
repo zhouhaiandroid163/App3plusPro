@@ -79,7 +79,7 @@ public class ForegroundLocationService extends Service {
         int id = getClass().hashCode();
         startForeground(id, notification);
 
-        gpsSportManager = new GpsSportManager(0, id, notification);
+        gpsSportManager = new GpsSportManager(1, id, notification);
 
     }
 
