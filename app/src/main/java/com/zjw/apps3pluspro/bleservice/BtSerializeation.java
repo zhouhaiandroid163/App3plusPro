@@ -1819,82 +1819,88 @@ public class BtSerializeation {
     public static int curPack = 0;
 
     public static byte[] appStartCmd(String curCmd) {
-        switch (curCmd) {
-            case BleService.GET_SPORT_IDS_TODAY:
-                sendingData = FitnessTools.getSportIds(0);
-                break;
-            case BleService.GET_SPORT_IDS_HISTORY:
-                sendingData = FitnessTools.getSportIds(1);
-                break;
-            case BleService.REQUEST_FITNESS_ID_TODAY:
-            case BleService.REQUEST_FITNESS_ID_HISTORY:
-                sendingData = FitnessTools.requestFitnessId();
-                break;
-            case BleService.DELETE_DEVICE_SPORT_HISTORY:
-            case BleService.DELETE_DEVICE_SPORT_TODAY:
-                sendingData = FitnessTools.deleteSportId();
-                break;
-            case BleService.GET_PAGE_DEVICE:
-                sendingData = SystemTools.getPageDevice();
-                break;
-            case BleService.SET_PAGE_DEVICE:
-                sendingData = SystemTools.getPageDeviceSet();
-                break;
-            case BleService.APP_GPS_READY:
-                sendingData = FitnessTools.getGpsReady(BleService.lastGpsInfo);
-                break;
-            case BleService.APP_SEND_GPS:
-                if (BleService.lastGpsInfo != null) {
-                    sendingData = FitnessTools.getGpsByte(BleService.lastGpsInfo);
-                }
-                break;
-            case BleService.APP_REQUEST_GPS_SPORT_STATE:
-                sendingData = FitnessTools.getDeviceGpsState();
-                break;
-            case BleService.APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL:
-                sendingData = WatchFaceTools.getDeviceWatchFacePrepareStatus(BleService.themeId, BleService.themeSize);
-                break;
-            case BleService.APP_REQUEST_DEVICE_OTA_PREPARE:
-                sendingData = SystemTools.getDeviceOtaPrepareStatus(BleService.isForce, BleService.version, BleService.md5);
-                break;
-            case BleService.APP_REQUEST_DEVICE_WATCH_FACE:
-                sendingData = WatchFaceTools.getDeviceWatchFaceList();
-                break;
-            case BleService.APP_SET_DEVICE_WATCH_FACE:
-                sendingData = WatchFaceTools.setDeviceWatchFace(BleService.currentThemeId);
-                break;
-            case BleService.APP_DELETE_DEVICE_WATCH_FACE:
-                sendingData = WatchFaceTools.deleteDeviceWatchFace(BleService.currentThemeId);
-                break;
-            case BleService.APP_SEND_OPEN_WEATHER_LATEST_WEATHER:
-                sendingData = WeatherTools.getWeather(0);
-                break;
-            case BleService.APP_SEND_OPEN_WEATHER_DAILY_FORECAST:
-                sendingData = WeatherTools.getWeather(1);
-                break;
-            case BleService.APP_SEND_OPEN_WEATHER_HOURLY_FORECAST:
-                sendingData = WeatherTools.getWeather(2);
-                break;
-        }
-        if (sendingData == null) {
+        byte[] valueByte = new byte[0];
+        try {
+            switch (curCmd) {
+                case BleService.GET_SPORT_IDS_TODAY:
+                    sendingData = FitnessTools.getSportIds(0);
+                    break;
+                case BleService.GET_SPORT_IDS_HISTORY:
+                    sendingData = FitnessTools.getSportIds(1);
+                    break;
+                case BleService.REQUEST_FITNESS_ID_TODAY:
+                case BleService.REQUEST_FITNESS_ID_HISTORY:
+                    sendingData = FitnessTools.requestFitnessId();
+                    break;
+                case BleService.DELETE_DEVICE_SPORT_HISTORY:
+                case BleService.DELETE_DEVICE_SPORT_TODAY:
+                    sendingData = FitnessTools.deleteSportId();
+                    break;
+                case BleService.GET_PAGE_DEVICE:
+                    sendingData = SystemTools.getPageDevice();
+                    break;
+                case BleService.SET_PAGE_DEVICE:
+                    sendingData = SystemTools.getPageDeviceSet();
+                    break;
+                case BleService.APP_GPS_READY:
+                    sendingData = FitnessTools.getGpsReady(BleService.lastGpsInfo);
+                    break;
+                case BleService.APP_SEND_GPS:
+                    if (BleService.lastGpsInfo != null) {
+                        sendingData = FitnessTools.getGpsByte(BleService.lastGpsInfo);
+                    }
+                    break;
+                case BleService.APP_REQUEST_GPS_SPORT_STATE:
+                    sendingData = FitnessTools.getDeviceGpsState();
+                    break;
+                case BleService.APP_REQUEST_DEVICE_WATCH_FACE_PREPARE_INSTALL:
+                    sendingData = WatchFaceTools.getDeviceWatchFacePrepareStatus(BleService.themeId, BleService.themeSize);
+                    break;
+                case BleService.APP_REQUEST_DEVICE_OTA_PREPARE:
+                    sendingData = SystemTools.getDeviceOtaPrepareStatus(BleService.isForce, BleService.version, BleService.md5);
+                    break;
+                case BleService.APP_REQUEST_DEVICE_WATCH_FACE:
+                    sendingData = WatchFaceTools.getDeviceWatchFaceList();
+                    break;
+                case BleService.APP_SET_DEVICE_WATCH_FACE:
+                    sendingData = WatchFaceTools.setDeviceWatchFace(BleService.currentThemeId);
+                    break;
+                case BleService.APP_DELETE_DEVICE_WATCH_FACE:
+                    sendingData = WatchFaceTools.deleteDeviceWatchFace(BleService.currentThemeId);
+                    break;
+                case BleService.APP_SEND_OPEN_WEATHER_LATEST_WEATHER:
+                    sendingData = WeatherTools.getWeather(0);
+                    break;
+                case BleService.APP_SEND_OPEN_WEATHER_DAILY_FORECAST:
+                    sendingData = WeatherTools.getWeather(1);
+                    break;
+                case BleService.APP_SEND_OPEN_WEATHER_HOURLY_FORECAST:
+                    sendingData = WeatherTools.getWeather(2);
+                    break;
+            }
+            if (sendingData == null) {
+                return null;
+            }
+            int validDataLength = BaseApplication.getBleDeviceTools().get_device_mtu_num() - 2;
+            int pack;
+            if (sendingData.length % validDataLength == 0) {
+                pack = sendingData.length / validDataLength;
+            } else {
+                pack = sendingData.length / validDataLength + 1;
+            }
+            curPack = pack;
+            BleService.currentUuid_proto = BleConstant.CHAR_PROTOBUF_UUID_02;
+            valueByte = new byte[6];
+            valueByte[0] = (byte) 0;
+            valueByte[1] = (byte) 0;
+            valueByte[2] = (byte) 0;
+            valueByte[3] = (byte) 0;
+            valueByte[4] = (byte) pack;
+            valueByte[5] = (byte) 0;
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
-        int validDataLength = BaseApplication.getBleDeviceTools().get_device_mtu_num() - 2;
-        int pack;
-        if (sendingData.length % validDataLength == 0) {
-            pack = sendingData.length / validDataLength;
-        } else {
-            pack = sendingData.length / validDataLength + 1;
-        }
-        curPack = pack;
-        BleService.currentUuid_proto = BleConstant.CHAR_PROTOBUF_UUID_02;
-        byte[] valueByte = new byte[6];
-        valueByte[0] = (byte) 0;
-        valueByte[1] = (byte) 0;
-        valueByte[2] = (byte) 0;
-        valueByte[3] = (byte) 0;
-        valueByte[4] = (byte) pack;
-        valueByte[5] = (byte) 0;
         return valueByte;
     }
 

@@ -4014,10 +4014,12 @@ public class BleService extends Service {
                 } else {
                     if (cmdSize > 0) {
                         byte[] paramCmd = bleCmdList_proto.remove(0);
-                        if (isReplyDevice(paramCmd)) {
-                            writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_01);
-                        } else {
-                            writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_02);
+                        if(paramCmd != null){
+                            if (isReplyDevice(paramCmd)) {
+                                writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_01);
+                            } else {
+                                writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_02);
+                            }
                         }
                     }
                 }

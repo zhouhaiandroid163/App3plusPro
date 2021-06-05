@@ -193,17 +193,20 @@ public class WeatherTools {
         weather.setId(weatherId.build());
         WeatherProtos.WeatherForecast.Data.List.Builder list = WeatherProtos.WeatherForecast.Data.List.newBuilder();
 
-        for (int i = 1; i < weatherDays.list.size(); i++) {
+        for (int i = 0; i < weatherDays.list.size(); i++) {
             WeatherDays.WeatherDay weatherDay = weatherDays.list.get(i);
 
             WeatherProtos.WeatherForecast.Data.Builder data = WeatherProtos.WeatherForecast.Data.newBuilder();
-            data.setAqi(CommonTools.getKeyValue("aqi", Integer.parseInt(weatherAQI.list.get(95 - (4 - i) * 24).main.aqi)));
+            if (i == 0) {
+                data.setAqi(CommonTools.getKeyValue("aqi", Integer.parseInt(weatherAQI.list.get(0).main.aqi)));
+            } else
+                data.setAqi(CommonTools.getKeyValue("aqi", Integer.parseInt(weatherAQI.list.get(i * 24 - 1).main.aqi)));
 
             data.setWeather(Integer.parseInt(weatherDay.weather.get(0).id));
 
             CommonProtos.RangeValue.Builder temp = CommonProtos.RangeValue.newBuilder();
-            temp.setFrom((int) Float.parseFloat(weatherDay.temp.min));
-            temp.setTo((int) Float.parseFloat(weatherDay.temp.max));
+            temp.setFrom((int) Float.parseFloat(weatherDay.temp.max));
+            temp.setTo((int) Float.parseFloat(weatherDay.temp.min));
             data.setTemperature(temp);
             data.setTemperatureUnit("℃");
 
@@ -213,14 +216,11 @@ public class WeatherTools {
             data.setSunRiseSet(sunRise);
 
             data.setHumidity(CommonTools.getKeyValue("%", (int) Float.parseFloat(weatherDay.humidity)));
-            data.setProbabilityOfRainfall(CommonTools.getKeyValue("%", (int) Float.parseFloat(weatherDay.pop)));
+            data.setProbabilityOfRainfall(CommonTools.getKeyValue("%", (int) (Float.parseFloat(weatherDay.pop) * 100)));
 
             list.addList(data);
         }
-
         weather.setDataList(list);
-
-
         return weather.build();
     }
 
@@ -246,7 +246,7 @@ public class WeatherTools {
         weather.setAqi(CommonTools.getKeyValue("aqi", Integer.parseInt(weatherAQI.list.get(0).main.aqi)));
         weather.setPressure(Float.parseFloat(weatherPerHour.list.get(0).main.sea_level));
         weather.setWindSpeed(CommonTools.getKeyValue("m/s", (int) Float.parseFloat(currentWeather.wind.speed)));
-        weather.setProbabilityOfRainfall(CommonTools.getKeyValue("%", (int) Float.parseFloat(weatherPerHour.list.get(0).pop)));
+        weather.setProbabilityOfRainfall(CommonTools.getKeyValue("%", (int) (Float.parseFloat(weatherPerHour.list.get(0).pop) * 100)));
 
         ArrayList<WeatherProtos.Alerts> data_list = new ArrayList<>();
         data_list.add(getAlerts("unKnown", "level6"));
