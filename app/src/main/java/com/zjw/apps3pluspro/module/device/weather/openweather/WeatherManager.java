@@ -133,14 +133,15 @@ public class WeatherManager {
         }), url);
     }
 
-    //api.openweathermap.org/data/2.5/air_pollution/forecast?lat=22.63157957374291&lon=113.83335400582953&appid=55927c151597caba67e863d486282616&start=1622444442&end=1622790042
-    private static final String getWeatherAQIUrl = "http://api.openweathermap.org/data/2.5/air_pollution/forecast?";
+    //api.openweathermap.org/data/2.5/air_pollution/history?lat=22.63157957374291&lon=113.83335400582953&appid=55927c151597caba67e863d486282616&start=1622444442&end=1622790042
+    private static final String getWeatherAQIUrl = "http://api.openweathermap.org/data/2.5/air_pollution/history?";
 
     public WeatherAQI weatherAQI;
 
     public void getWeatherAQI() {
-        long start = System.currentTimeMillis() / 1000 + 3600;
+        long start = System.currentTimeMillis() / 1000;
         long end = start + 96 * 3600;
+        Log.i(TAG, "getWeatherAQI start = " + start + " end = " + end + " lon = " + lon + " lat = " + lat);
         String url = getWeatherAQIUrl + "lat=" + lat + "&lon=" + lon + "&appid=" + appid + "&start=" + start + "&end=" + end;
         MyOkHttpClient2.getInstance().asynGetCall(new DisposeDataHandle(new DisposeDataListener() {
             @Override
@@ -148,6 +149,7 @@ public class WeatherManager {
                 Log.w(TAG, "getWeatherAQI onSuccess = " + responseObj);
                 Gson gson = new Gson();
                 weatherAQI = gson.fromJson(responseObj.toString(), WeatherAQI.class);
+                Log.i(TAG, "getWeatherAQI onSuccess size = " + weatherAQI.list.size());
 
                 if (getOpenWeatherListener != null) {
                     getOpenWeatherListener.onSuccess();
