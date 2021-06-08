@@ -1161,21 +1161,26 @@ public class ProfileActivity extends BaseActivity implements OnClickListener {
             case Constants.PhotoTag:
                 MyLog.i(TAG, "回调 裁剪图片");
                 if (resultCode == RESULT_OK) {
-                    String fileSrc;
-                    if ("file".equals(data.getData().getScheme())) {
-                        // 有些低版本机型返回的Uri模式为file
-                        fileSrc = data.getData().getPath();
-                    } else {
-                        // Uri模型为content
-                        String[] proj = {MediaStore.Images.Media.DATA};
-                        Cursor cursor = getContentResolver().query(data.getData(), proj, null, null, null);
-                        cursor.moveToFirst();
-                        int idx = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                        fileSrc = cursor.getString(idx);
-                        cursor.close();
+                    try {
+                        String fileSrc;
+                        if ("file".equals(data.getData().getScheme())) {
+                            // 有些低版本机型返回的Uri模式为file
+                            fileSrc = data.getData().getPath();
+                        } else {
+                            // Uri模型为content
+                            String[] proj = {MediaStore.Images.Media.DATA};
+                            Cursor cursor = getContentResolver().query(data.getData(), proj, null, null, null);
+                            cursor.moveToFirst();
+                            int idx = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                            fileSrc = cursor.getString(idx);
+                            cursor.close();
+                        }
+                        // 跳转到图片裁剪页面
+                        startCropIntent(Uri.fromFile(new File(fileSrc)));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        startCropIntent(data.getData());
                     }
-                    // 跳转到图片裁剪页面
-                    startCropIntent(Uri.fromFile(new File(fileSrc)));
                 }
                 break;
             case Constants.TakingTag:

@@ -217,6 +217,8 @@ public class WeatherTools {
 
             data.setHumidity(CommonTools.getKeyValue("%", (int) Float.parseFloat(weatherDay.humidity)));
             data.setProbabilityOfRainfall(CommonTools.getKeyValue("%", (int) (Float.parseFloat(weatherDay.pop) * 100)));
+            data.setWindSpeed(CommonTools.getKeyValue("m/s", (int) Float.parseFloat(weatherDay.speed)));
+            data.setWindInfo(CommonTools.getKeyValue(weatherDay.speed, (int) Float.parseFloat(weatherDay.deg)));
 
             list.addList(data);
         }

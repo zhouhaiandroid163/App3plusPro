@@ -1,7 +1,7 @@
 // wear_weather.proto
 
 syntax = "proto2";
- 
+
 import "nanopb.proto";
 import "wear_common.proto";
 
@@ -51,6 +51,8 @@ message WeatherForecast {
         optional SunRiseSet sun_rise_set = 5;
         optional KeyValue humidity = 6;//湿度
         optional KeyValue Probability_of_rainfall = 7;//降雨几率
+        optional KeyValue wind_info = 8;//风方向
+        optional KeyValue Wind_speed = 9;//风速度
 
         message List {
             repeated Data list = 1 [(nanopb).type = FT_POINTER];

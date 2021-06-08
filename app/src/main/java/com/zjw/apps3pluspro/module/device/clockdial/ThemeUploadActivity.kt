@@ -1202,19 +1202,23 @@ class ThemeUploadActivity : BaseActivity() {
             Constants.PhotoTag -> {
                 MyLog.i(TAG, "回调 裁剪图片")
                 if (resultCode == Activity.RESULT_OK) {
-                    val fileSrc: String?
-                    if ("file" == data!!.data!!.scheme) { // 有些低版本机型返回的Uri模式为file
-                        fileSrc = data.data!!.path
-                    } else { // Uri模型为content
-                        val proj = arrayOf(MediaStore.Images.Media.DATA)
-                        val cursor = contentResolver.query(data.data!!, proj, null, null, null)
-                        cursor!!.moveToFirst()
-                        val idx = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                        fileSrc = cursor.getString(idx)
-                        cursor.close()
+                    try {
+                        val fileSrc: String?
+                        if ("file" == data!!.data!!.scheme) { // 有些低版本机型返回的Uri模式为file
+                            fileSrc = data.data!!.path
+                        } else { // Uri模型为content
+                            val proj = arrayOf(MediaStore.Images.Media.DATA)
+                            val cursor = contentResolver.query(data.data!!, proj, null, null, null)
+                            cursor!!.moveToFirst()
+                            val idx = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                            fileSrc = cursor.getString(idx)
+                            cursor.close()
+                        }
+                        // 跳转到图片裁剪页面
+                        startCropIntent(Uri.fromFile(File(fileSrc)))
+                    } catch (e: Exception) {
+                        startCropIntent(data!!.data!!)
                     }
-                    // 跳转到图片裁剪页面
-                    startCropIntent(Uri.fromFile(File(fileSrc)))
                 }
             }
             Constants.TakingTag -> {

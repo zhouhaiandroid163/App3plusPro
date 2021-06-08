@@ -67,7 +67,11 @@ public class NordicsemiBleScanner extends BaseBleScanner {
     public void onStopBleScan() {
         isScanning = false;
         final BluetoothLeScannerCompat scanner = BluetoothLeScannerCompat.getScanner();
-        scanner.stopScan(scanCallback);
+        try {
+            scanner.stopScan(scanCallback);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
