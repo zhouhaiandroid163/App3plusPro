@@ -2,3 +2,4 @@
 /.idea/
 /.gradle/
 /App3plusPro.iml
+*.properties
