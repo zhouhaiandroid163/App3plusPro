@@ -156,5 +156,453 @@
         <attr name="stepHistogramView_isDrawX0" format="boolean" />
     </declare-styleable>
 
+    <string-array name="more_sport">
+        <item>@string/more_sport_1</item>
+        <item>@string/more_sport_2</item>
+        <item>@string/more_sport_3</item>
+        <item>@string/more_sport_4</item>
+        <item>@string/more_sport_5</item>
+        <item>@string/more_sport_6</item>
+        <item>@string/more_sport_7</item>
+        <item>@string/more_sport_8</item>
+        <item>@string/more_sport_9</item>
+
+        <item>@string/more_sport_10</item>
+        <item>@string/more_sport_11</item>
+        <item>@string/more_sport_12</item>
+        <item>@string/more_sport_13</item>
+        <item>@string/more_sport_14</item>
+        <item>@string/more_sport_15</item>
+        <item>@string/more_sport_16</item>
+        <item>@string/more_sport_17</item>
+        <item>@string/more_sport_18</item>
+        <item>@string/more_sport_19</item>
+
+        <item>@string/more_sport_20</item>
+        <item>@string/more_sport_21</item>
+        <item>@string/more_sport_22</item>
+        <item>@string/more_sport_23</item>
+        <item>@string/more_sport_24</item>
+        <item>@string/more_sport_25</item>
+        <item>@string/more_sport_26</item>
+        <item>@string/more_sport_27</item>
+        <item>@string/more_sport_28</item>
+        <item>@string/more_sport_29</item>
+
+        <item>@string/more_sport_30</item>
+        <item>@string/more_sport_31</item>
+        <item>@string/more_sport_32</item>
+        <item>@string/more_sport_33</item>
+        <item>@string/more_sport_34</item>
+        <item>@string/more_sport_35</item>
+        <item>@string/more_sport_36</item>
+        <item>@string/more_sport_37</item>
+        <item>@string/more_sport_38</item>
+        <item>@string/more_sport_39</item>
+
+        <item>@string/more_sport_40</item>
+        <item>@string/more_sport_41</item>
+        <item>@string/more_sport_42</item>
+        <item>@string/more_sport_43</item>
+        <item>@string/more_sport_44</item>
+        <item>@string/more_sport_45</item>
+        <item>@string/more_sport_46</item>
+        <item>@string/more_sport_47</item>
+        <item>@string/more_sport_48</item>
+        <item>@string/more_sport_49</item>
+
+        <item>@string/more_sport_50</item>
+        <item>@string/more_sport_51</item>
+        <item>@string/more_sport_52</item>
+        <item>@string/more_sport_53</item>
+        <item>@string/more_sport_54</item>
+        <item>@string/more_sport_55</item>
+        <item>@string/more_sport_56</item>
+        <item>@string/more_sport_57</item>
+        <item>@string/more_sport_58</item>
+        <item>@string/more_sport_59</item>
+
+        <item>@string/more_sport_60</item>
+        <item>@string/more_sport_61</item>
+        <item>@string/more_sport_62</item>
+        <item>@string/more_sport_63</item>
+        <item>@string/more_sport_64</item>
+        <item>@string/more_sport_65</item>
+        <item>@string/more_sport_66</item>
+        <item>@string/more_sport_67</item>
+        <item>@string/more_sport_68</item>
+        <item>@string/more_sport_69</item>
+
+        <item>@string/more_sport_70</item>
+        <item>@string/more_sport_71</item>
+        <item>@string/more_sport_72</item>
+        <item>@string/more_sport_73</item>
+        <item>@string/more_sport_74</item>
+        <item>@string/more_sport_75</item>
+        <item>@string/more_sport_76</item>
+        <item>@string/more_sport_77</item>
+        <item>@string/more_sport_78</item>
+        <item>@string/more_sport_79</item>
+
+        <item>@string/more_sport_80</item>
+        <item>@string/more_sport_81</item>
+        <item>@string/more_sport_82</item>
+        <item>@string/more_sport_83</item>
+        <item>@string/more_sport_84</item>
+        <item>@string/more_sport_85</item>
+        <item>@string/more_sport_86</item>
+        <item>@string/more_sport_87</item>
+        <item>@string/more_sport_88</item>
+        <item>@string/more_sport_89</item>
+
+        <item>@string/more_sport_90</item>
+        <item>@string/more_sport_91</item>
+        <item>@string/more_sport_92</item>
+        <item>@string/more_sport_93</item>
+        <item>@string/more_sport_94</item>
+        <item>@string/more_sport_95</item>
+        <item>@string/more_sport_96</item>
+        <item>@string/more_sport_97</item>
+        <item>@string/more_sport_98</item>
+        <item>@string/more_sport_99</item>
+
+        <item>@string/more_sport_100</item>
+        <item>@string/more_sport_101</item>
+        <item>@string/more_sport_102</item>
+        <item>@string/more_sport_103</item>
+        <item>@string/more_sport_104</item>
+        <item>@string/more_sport_105</item>
+        <item>@string/more_sport_106</item>
+        <item>@string/more_sport_107</item>
+        <item>@string/more_sport_108</item>
+        <item>@string/more_sport_109</item>
+
+        <item>@string/more_sport_110</item>
+        <item>@string/more_sport_111</item>
+        <item>@string/more_sport_112</item>
+        <item>@string/more_sport_113</item>
+        <item>@string/more_sport_114</item>
+        <item>@string/more_sport_115</item>
+        <item>@string/more_sport_116</item>
+        <item>@string/more_sport_117</item>
+        <item>@string/more_sport_118</item>
+        <item>@string/more_sport_119</item>
+
+        <item>@string/more_sport_120</item>
+        <item>@string/more_sport_121</item>
+        <item>@string/more_sport_122</item>
+        <item>@string/more_sport_123</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+        <item>unKnow</item>
+
+        <item>@string/more_sport_200</item>
+        <item>@string/more_sport_201</item>
+
+    </string-array>
+    <string-array name="more_sport_img">
+        <item>@mipmap/more_sport_1</item>
+        <item>@mipmap/more_sport_2</item>
+        <item>@mipmap/more_sport_3</item>
+        <item>@mipmap/more_sport_4</item>
+        <item>@mipmap/more_sport_5</item>
+        <item>@mipmap/more_sport_6</item>
+        <item>@mipmap/more_sport_7</item>
+        <item>@mipmap/more_sport_8</item>
+        <item>@mipmap/more_sport_9</item>
+
+        <item>@mipmap/more_sport_10</item>
+        <item>@mipmap/more_sport_11</item>
+        <item>@mipmap/more_sport_12</item>
+        <item>@mipmap/more_sport_13</item>
+        <item>@mipmap/more_sport_14</item>
+        <item>@mipmap/more_sport_15</item>
+        <item>@mipmap/more_sport_16</item>
+        <item>@mipmap/more_sport_17</item>
+        <item>@mipmap/more_sport_18</item>
+        <item>@mipmap/more_sport_19</item>
+
+        <item>@mipmap/more_sport_20</item>
+        <item>@mipmap/more_sport_21</item>
+        <item>@mipmap/more_sport_22</item>
+        <item>@mipmap/more_sport_23</item>
+        <item>@mipmap/more_sport_24</item>
+        <item>@mipmap/more_sport_25</item>
+        <item>@mipmap/more_sport_26</item>
+        <item>@mipmap/more_sport_27</item>
+        <item>@mipmap/more_sport_28</item>
+        <item>@mipmap/more_sport_29</item>
+
+        <item>@mipmap/more_sport_30</item>
+        <item>@mipmap/more_sport_31</item>
+        <item>@mipmap/more_sport_32</item>
+        <item>@mipmap/more_sport_33</item>
+        <item>@mipmap/more_sport_34</item>
+        <item>@mipmap/more_sport_35</item>
+        <item>@mipmap/more_sport_36</item>
+        <item>@mipmap/more_sport_37</item>
+        <item>@mipmap/more_sport_38</item>
+        <item>@mipmap/more_sport_39</item>
+
+        <item>@mipmap/more_sport_40</item>
+        <item>@mipmap/more_sport_41</item>
+        <item>@mipmap/more_sport_42</item>
+        <item>@mipmap/more_sport_43</item>
+        <item>@mipmap/more_sport_44</item>
+        <item>@mipmap/more_sport_45</item>
+        <item>@mipmap/more_sport_46</item>
+        <item>@mipmap/more_sport_47</item>
+        <item>@mipmap/more_sport_48</item>
+        <item>@mipmap/more_sport_49</item>
+
+        <item>@mipmap/more_sport_50</item>
+        <item>@mipmap/more_sport_51</item>
+        <item>@mipmap/more_sport_52</item>
+        <item>@mipmap/more_sport_53</item>
+        <item>@mipmap/more_sport_54</item>
+        <item>@mipmap/more_sport_55</item>
+        <item>@mipmap/more_sport_56</item>
+        <item>@mipmap/more_sport_57</item>
+        <item>@mipmap/more_sport_58</item>
+        <item>@mipmap/more_sport_59</item>
+
+        <item>@mipmap/more_sport_60</item>
+        <item>@mipmap/more_sport_61</item>
+        <item>@mipmap/more_sport_62</item>
+        <item>@mipmap/more_sport_63</item>
+        <item>@mipmap/more_sport_64</item>
+        <item>@mipmap/more_sport_65</item>
+        <item>@mipmap/more_sport_66</item>
+        <item>@mipmap/more_sport_67</item>
+        <item>@mipmap/more_sport_68</item>
+        <item>@mipmap/more_sport_69</item>
+
+        <item>@mipmap/more_sport_70</item>
+        <item>@mipmap/more_sport_71</item>
+        <item>@mipmap/more_sport_72</item>
+        <item>@mipmap/more_sport_73</item>
+        <item>@mipmap/more_sport_74</item>
+        <item>@mipmap/more_sport_75</item>
+        <item>@mipmap/more_sport_76</item>
+        <item>@mipmap/more_sport_77</item>
+        <item>@mipmap/more_sport_78</item>
+        <item>@mipmap/more_sport_79</item>
+
+        <item>@mipmap/more_sport_80</item>
+        <item>@mipmap/more_sport_81</item>
+        <item>@mipmap/more_sport_82</item>
+        <item>@mipmap/more_sport_83</item>
+        <item>@mipmap/more_sport_84</item>
+        <item>@mipmap/more_sport_85</item>
+        <item>@mipmap/more_sport_86</item>
+        <item>@mipmap/more_sport_87</item>
+        <item>@mipmap/more_sport_88</item>
+        <item>@mipmap/more_sport_89</item>
+
+        <item>@mipmap/more_sport_90</item>
+        <item>@mipmap/more_sport_91</item>
+        <item>@mipmap/more_sport_92</item>
+        <item>@mipmap/more_sport_93</item>
+        <item>@mipmap/more_sport_94</item>
+        <item>@mipmap/more_sport_95</item>
+        <item>@mipmap/more_sport_96</item>
+        <item>@mipmap/more_sport_97</item>
+        <item>@mipmap/more_sport_98</item>
+        <item>@mipmap/more_sport_99</item>
+
+        <item>@mipmap/more_sport_100</item>
+        <item>@mipmap/more_sport_101</item>
+        <item>@mipmap/more_sport_102</item>
+        <item>@mipmap/more_sport_103</item>
+        <item>@mipmap/more_sport_104</item>
+        <item>@mipmap/more_sport_105</item>
+        <item>@mipmap/more_sport_106</item>
+        <item>@mipmap/more_sport_107</item>
+        <item>@mipmap/more_sport_108</item>
+        <item>@mipmap/more_sport_109</item>
+
+        <item>@mipmap/more_sport_110</item>
+        <item>@mipmap/more_sport_111</item>
+        <item>@mipmap/more_sport_112</item>
+        <item>@mipmap/more_sport_113</item>
+        <item>@mipmap/more_sport_114</item>
+        <item>@mipmap/more_sport_115</item>
+        <item>@mipmap/more_sport_116</item>
+        <item>@mipmap/more_sport_117</item>
+        <item>@mipmap/more_sport_118</item>
+        <item>@mipmap/more_sport_119</item>
+
+        <item>@mipmap/more_sport_120</item>
+        <item>@mipmap/more_sport_121</item>
+        <item>@mipmap/more_sport_122</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+        <item>@mipmap/more_sport_123</item>
+
+        <item>@mipmap/more_sport_200</item>
+        <item>@mipmap/more_sport_201</item>
+    </string-array>
+
 
 </resources>

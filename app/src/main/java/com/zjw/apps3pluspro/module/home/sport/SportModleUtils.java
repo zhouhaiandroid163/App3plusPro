@@ -2,6 +2,7 @@ package com.zjw.apps3pluspro.module.home.sport;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 
 import com.zjw.apps3pluspro.R;
@@ -228,131 +229,25 @@ public class SportModleUtils {
         return date;
     }
 
-
     public static String getDeviceSportTypeStr(Context context, int sport_type) {
-        String result = "";
-        switch (String.valueOf(sport_type)) {
-            //户外跑步
-            case "1":
-                result = context.getString(R.string.more_sport_1);
-                break;
-            //户外健走，
-            case "2":
-                result = context.getString(R.string.more_sport_2);
-                break;
-            //室内跑步，
-            case "3":
-                result = context.getString(R.string.more_sport_3);
-                break;
-            //登山，
-            case "4":
-                result = context.getString(R.string.more_sport_4);
-                break;
-            //越野，
-            case "5":
-                result = context.getString(R.string.more_sport_5);
-                break;
-            //户外骑行，
-            case "6":
-                result = context.getString(R.string.more_sport_6);
-                break;
-            //室内骑行，
-            case "7":
-                result = context.getString(R.string.more_sport_7);
-                break;
-            //自由训练，
-            case "8":
-                result = context.getString(R.string.more_sport_8);
-                break;
-            case "9":
-                result = context.getString(R.string.more_sport_9);
-                break;
-            case "10":
-                result = context.getString(R.string.more_sport_10);
-                break;
-            case "11":
-                result = context.getString(R.string.more_sport_11);
-                break;
-            case "12":
-                result = context.getString(R.string.more_sport_12);
-                break;
-            case "27":
-                result = context.getString(R.string.more_sport_27);
-                break;
-            case "39":
-                result = context.getString(R.string.more_sport_39);
-                break;
-            case "200":
-                result = context.getString(R.string.more_sport_200);
-                break;
-            case "201":
-                result = context.getString(R.string.more_sport_201);
-                break;
-
+        String[] languages = context.getResources().getStringArray(R.array.more_sport);
+        try {
+            return languages[sport_type - 1];
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "unKnow";
         }
-        return result;
     }
 
     public static Drawable getDeviceSportTypeImg(Context context, int recordPointSportType) {
-        Drawable imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_1);
-        switch (String.valueOf(recordPointSportType)) {
-            //户外跑步
-            case "1":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_1);
-                break;
-            //户外健走，
-            case "2":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_2);
-                break;
-            //室内跑步，
-            case "3":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_3);
-                break;
-            //登山，
-            case "4":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_4);
-                break;
-            //越野，
-            case "5":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_5);
-                break;
-            //户外骑行，
-            case "6":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_6);
-                break;
-            //室内骑行，
-            case "7":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_7);
-                break;
-            //自由训练，
-            case "8":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_8);
-                break;
-            case "9":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_9);
-                break;
-            case "10":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_10);
-                break;
-            case "11":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_11);
-                break;
-            case "12":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_12);
-                break;
-            case "27":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_27);
-                break;
-            case "39":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_39);
-                break;
-            case "200":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_200);
-                break;
-            case "201":
-                imageDrawable = context.getResources().getDrawable(R.mipmap.more_sport_201);
-                break;
+        TypedArray iconList = context.getResources().obtainTypedArray(R.array.more_sport_img);
+        try {
+            Drawable imageDrawable = context.getResources().getDrawable(iconList.getResourceId(recordPointSportType - 1, 0));
+            iconList.recycle();//用完后要调用recycle()方法回收
+            return imageDrawable;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return context.getResources().getDrawable(iconList.getResourceId(0, 0));
         }
-        return imageDrawable;
     }
 }

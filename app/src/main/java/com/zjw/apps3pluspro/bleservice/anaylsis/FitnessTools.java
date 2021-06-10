@@ -1117,47 +1117,32 @@ public class FitnessTools {
     }
 
     public static boolean isData1(int sportType) {
-        if (sportType == 1 || sportType == 2 || sportType == 4 || sportType == 5 || sportType == 15 || sportType == 17 || sportType == 19 || sportType == 20 || sportType == 14) {
+        if (sportType == 1 || sportType == 2 || sportType == 4 || sportType == 5) {
             return true;
-        } else {
-            return false;
         }
+        return sportType > 12 && sportType < 21;
     }
 
     public static boolean isData2(int sportType) {
-        if (sportType == 3 || sportType == 37 || sportType == 38) {
-            return true;
-        } else {
-            return false;
-        }
+        return sportType == 3 || sportType == 37 || sportType == 38;
     }
 
     public static boolean isData3(int sportType) {
-        if (sportType == 6) {
-            return true;
-        } else {
-            return false;
-        }
+        return sportType == 6;
     }
 
     public static boolean isData4(int sportType) {
-        if (sportType == 7 || sportType == 8 || sportType == 9 || sportType == 10 || sportType == 11 || sportType == 12 || sportType == 47 || sportType == 49 || sportType == 53
-                || sportType == 54 || sportType == 56 || sportType == 25
-                || sportType == 24 || sportType == 26 || sportType == 27 || sportType == 30 || sportType == 35 || sportType == 34 || sportType == 36 || sportType == 39
-                || sportType == 59 || sportType == 65
-                || sportType == 66) {
+        if (sportType > 6 && sportType < 13) {
             return true;
-        } else {
-            return false;
         }
+        if (sportType > 20 && sportType < 37) {
+            return true;
+        }
+        return sportType > 38 && sportType < 124;
     }
 
     public static boolean isData5(int sportType) {
-        if (sportType == 200 || sportType == 201) {
-            return true;
-        } else {
-            return false;
-        }
+        return sportType == 200 || sportType == 201;
     }
 
 
