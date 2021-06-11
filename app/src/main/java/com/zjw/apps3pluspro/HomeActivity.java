@@ -1548,6 +1548,7 @@ public class HomeActivity extends BaseActivity {
                             WeatherManager.getInstance().getCurrentWeather(false,false, Double.parseDouble(gps[1]), Double.parseDouble(gps[0]), new WeatherManager.GetOpenWeatherListener() {
                                 @Override
                                 public void onSuccess() {
+                                    mBleDeviceTools.setWeatherSyncTime(System.currentTimeMillis());
                                     EventBus.getDefault().post(new SendOpenWeatherDataEvent(0));
                                 }
 

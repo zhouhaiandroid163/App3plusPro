@@ -44,7 +44,7 @@ message WeatherForecast {
     required Data.List data_list = 2;
 
     message Data {
-        required KeyValue aqi = 1;
+        optional KeyValue aqi = 1;
         optional uint32 weather = 2;
         optional RangeValue temperature = 3;
         optional string temperature_unit = 4 [(nanopb).type = FT_POINTER];

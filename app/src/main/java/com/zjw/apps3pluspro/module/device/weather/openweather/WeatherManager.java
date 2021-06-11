@@ -82,7 +82,7 @@ public class WeatherManager {
     public WeatherDays weatherDays;
 
     public void getEveryDayWeather(String cityId) {
-        String url = getEveryDayWeatherUrl + "id=" + cityId + "&cnt=" + 5 + "&appid=" + appid + "&lang=" + lang + "&units=" + units;
+        String url = getEveryDayWeatherUrl + "lat=" + lat + "&lon=" + lon + "&cnt=" + 5 + "&appid=" + appid + "&lang=" + lang + "&units=" + units;
 
         MyOkHttpClient2.getInstance().asynGetCall(new DisposeDataHandle(new DisposeDataListener() {
             @Override
@@ -111,7 +111,7 @@ public class WeatherManager {
     public WeatherPerHour weatherPerHour;
 
     public void getWeatherPerHour(String cityId) {
-        String url = getWeatherPerHourUrl + "id=" + cityId + "&appid=" + appid + "&lang=" + lang + "&units=" + units;
+        String url = getWeatherPerHourUrl + "lat=" + lat + "&lon=" + lon + "&appid=" + appid + "&lang=" + lang + "&units=" + units;
 
         MyOkHttpClient2.getInstance().asynGetCall(new DisposeDataHandle(new DisposeDataListener() {
             @Override

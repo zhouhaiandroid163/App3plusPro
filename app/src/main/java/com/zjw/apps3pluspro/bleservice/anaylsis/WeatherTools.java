@@ -197,10 +197,19 @@ public class WeatherTools {
             WeatherDays.WeatherDay weatherDay = weatherDays.list.get(i);
 
             WeatherProtos.WeatherForecast.Data.Builder data = WeatherProtos.WeatherForecast.Data.newBuilder();
-            if (i == 0) {
-                data.setAqi(CommonTools.getKeyValue("aqi", Integer.parseInt(weatherAQI.list.get(0).main.aqi)));
-            } else
-                data.setAqi(CommonTools.getKeyValue("aqi", Integer.parseInt(weatherAQI.list.get(i * 24 - 1).main.aqi)));
+            try {
+                if (i == 0) {
+                    data.setAqi(CommonTools.getKeyValue("aqi", Integer.parseInt(weatherAQI.list.get(0).main.aqi)));
+                } else {
+                    if (i * 24 - 1 < weatherAQI.list.size()) {
+                        data.setAqi(CommonTools.getKeyValue("aqi", Integer.parseInt(weatherAQI.list.get(i * 24 - 1).main.aqi)));
+                    } else {
+                        data.setAqi(CommonTools.getKeyValue("aqi", 1));
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             data.setWeather(Integer.parseInt(weatherDay.weather.get(0).id));
 
@@ -246,10 +255,11 @@ public class WeatherTools {
         weather.setWindInfo(CommonTools.getKeyValue(currentWeather.wind.speed, (int) Float.parseFloat(currentWeather.wind.deg)));
         weather.setUvindex(CommonTools.getKeyValue("SPF0", 0));
         weather.setAqi(CommonTools.getKeyValue("aqi", Integer.parseInt(weatherAQI.list.get(0).main.aqi)));
-        weather.setPressure(Float.parseFloat(weatherPerHour.list.get(0).main.sea_level));
         weather.setWindSpeed(CommonTools.getKeyValue("m/s", (int) Float.parseFloat(currentWeather.wind.speed)));
-        weather.setProbabilityOfRainfall(CommonTools.getKeyValue("%", (int) (Float.parseFloat(weatherPerHour.list.get(0).pop) * 100)));
-
+        if (weatherPerHour != null && weatherPerHour.list != null && weatherPerHour.list.size() > 0) {
+            weather.setPressure(Float.parseFloat(weatherPerHour.list.get(0).main.sea_level));
+            weather.setProbabilityOfRainfall(CommonTools.getKeyValue("%", (int) (Float.parseFloat(weatherPerHour.list.get(0).pop) * 100)));
+        }
         ArrayList<WeatherProtos.Alerts> data_list = new ArrayList<>();
         data_list.add(getAlerts("unKnown", "level6"));
         weather.setAlertsList(getAlertsList(data_list));

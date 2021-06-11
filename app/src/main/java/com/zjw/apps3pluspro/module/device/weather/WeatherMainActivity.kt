@@ -232,6 +232,7 @@ class WeatherMainActivity : BaseActivity() {
 
     private fun sendSuccess() {
         msg?.text = resources.getString(R.string.weather_send_over)
+        handler.removeCallbacksAndMessages(null)
 
         val handler = Handler()
         handler.postDelayed({
