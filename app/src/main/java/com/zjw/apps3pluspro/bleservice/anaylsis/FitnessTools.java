@@ -362,6 +362,9 @@ public class FitnessTools {
             case GpsSportManager.GpsInfo.GPS_HIGH:
                 phoneSportDataV2D.setGpsAccuracy(FitnessProtos.GpsAccuracy.GPS_HIGH);
                 break;
+            default:
+                phoneSportDataV2D.setGpsAccuracy(FitnessProtos.GpsAccuracy.GPS_UNKNOWN);
+                break;
         }
 
         builder.setPhoneSportDataV2D(phoneSportDataV2D);

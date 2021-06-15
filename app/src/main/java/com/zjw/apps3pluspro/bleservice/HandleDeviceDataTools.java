@@ -2,6 +2,7 @@ package com.zjw.apps3pluspro.bleservice;
 
 import android.content.Context;
 
+import com.zjw.apps3pluspro.module.home.entity.HeartModel;
 import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
 import com.zjw.apps3pluspro.sql.dbmanager.ContinuitySpo2InfoUtils;
 import com.zjw.apps3pluspro.sql.dbmanager.ContinuityTempInfoUtils;
@@ -29,6 +30,7 @@ import com.zjw.apps3pluspro.utils.MyUtils;
 import com.zjw.apps3pluspro.utils.SysUtils;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class HandleDeviceDataTools {
@@ -176,7 +178,7 @@ public class HandleDeviceDataTools {
      *
      * @param data
      */
-    public static void HandleWoHeart(HeartInfoUtils mHeartInfoUtils, byte[] data) {
+    public static void HandleWoHeart(Context context, HeartInfoUtils mHeartInfoUtils, byte[] data) {
 
         boolean isCheck = BleTools.checkData(data);
         MyLog.i(TAG, "蓝牙回调 - 连续心率数据 校验结果 = " + isCheck);
@@ -195,6 +197,7 @@ public class HandleDeviceDataTools {
                 MyLog.i(TAG, "蓝牙回调 连续心率 mHeartInfo = " + mHeartInfo);
 
                 boolean isNull = mHeartInfoUtils.MyQuestDataInNull(mHeartInfo);
+
                 if (isNull) {
                     MyLog.i(TAG, "插入连续心率表 = 数据不存在");
                     boolean isSuccess = mHeartInfoUtils.MyUpdateData(mHeartInfo);
@@ -206,6 +209,8 @@ public class HandleDeviceDataTools {
                 } else {
                     MyLog.i(TAG, "插入连续心率表 = 数据已存在");
                 }
+
+                GoogleFitManager.getInstance().postHeart(mHeartInfo, context);
             } else {
                 MyLog.i(TAG, "ble 得到连续心率 mBleHeartModle = null 或者 日期不合法");
             }

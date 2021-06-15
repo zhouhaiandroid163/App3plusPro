@@ -2087,7 +2087,7 @@ public class BleService extends Service {
                 //连续心率
                 case BleConstant.Key_MoHeart: {
                     MyLog.i(TAG, "蓝牙回调 - 连续心率");
-                    HandleDeviceDataTools.HandleWoHeart(mHeartInfoUtils, data);
+                    HandleDeviceDataTools.HandleWoHeart(this,mHeartInfoUtils, data);
                 }
                 break;
 

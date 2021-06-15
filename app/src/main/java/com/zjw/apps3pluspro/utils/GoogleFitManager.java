@@ -35,14 +35,17 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.zjw.apps3pluspro.HomeActivity;
 import com.zjw.apps3pluspro.application.BaseApplication;
+import com.zjw.apps3pluspro.module.home.entity.HeartModel;
 import com.zjw.apps3pluspro.sharedpreferences.BleDeviceTools;
+import com.zjw.apps3pluspro.sql.entity.HeartInfo;
 import com.zjw.apps3pluspro.sql.entity.MovementInfo;
 import com.zjw.apps3pluspro.utils.log.MyLog;
 
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.android.gms.auth.api.signin.GoogleSignIn.getSignedInAccountFromIntent;
-import static com.google.android.gms.auth.api.signin.internal.zzh.getSignInResultFromIntent;
+import static com.google.android.gms.auth.api.signin.internal.zzi.getSignInResultFromIntent;
 
 public class GoogleFitManager {
 
@@ -443,7 +446,31 @@ public class GoogleFitManager {
         }
     }
 
-    public void updateHeart(final Activity activity, final float bmp, final long timemillis) {
+    public void postHeart(HeartInfo mHeartInfo, Context context) {
+        try {
+            HeartModel mHeartModel = new HeartModel(mHeartInfo);
+            String[] heartData = mHeartModel.getHeartData().split(",");
+
+            long time = NewTimeUtils.getLongTime(mHeartModel.getHeartDate(), NewTimeUtils.TIME_YYYY_MM_DD);
+            Calendar mCalendar = Calendar.getInstance();
+            mCalendar.setTimeInMillis(time);
+            mCalendar.set(Calendar.HOUR_OF_DAY, 0);
+            mCalendar.set(Calendar.MINUTE, 0);
+            mCalendar.set(Calendar.SECOND, 0);
+            mCalendar.set(Calendar.MILLISECOND, 0);
+            for (int i = 0; i < heartData.length; i++) {
+                int bmp = Integer.parseInt(heartData[i]);
+                if (bmp == 0) {
+                    continue;
+                }
+                GoogleFitManager.getInstance().updateHeart(context, bmp, mCalendar.getTimeInMillis() + 5 * 60 * 1000 * i);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateHeart(final Context activity, final float bmp, final long timemillis) {
         if (mApiClient == null) {
             if (BaseApplication.getBleDeviceTools().getIsOpenGooglefit()) {
                 OpenGoogleFit(HomeActivity.homeActivity);
@@ -454,11 +481,13 @@ public class GoogleFitManager {
         if (mApiClient == null) {
             return;
         }
+        String currentTime = NewTimeUtils.getStringDate(timemillis, NewTimeUtils.TIME_YYYY_MM_DD_HHMMSS);
+        Log.i(TAG, "updateHeart heart = " + bmp + " timemillis currentTime = " + currentTime);
         new Thread(new Runnable() {
             public void run() {
                 DataSource heartSource = new DataSource.Builder()
                         .setAppPackageName(activity.getApplicationContext().getPackageName())
-                        .setStreamName("Googlefit" + " - heart rate")
+                        .setStreamName("Googlefit" + " - heartrate ")
                         .setDataType(DataType.TYPE_HEART_RATE_BPM)
                         .setType(DataSource.TYPE_RAW)
                         .build();

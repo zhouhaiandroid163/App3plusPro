@@ -731,8 +731,8 @@ public class DataFragment extends BaseFragment {
             if (!JavaUtil.checkIsNull(mSleepModel.getSleepSleepTime())) {
                 String sleep_time = mSleepModel.getSleepSleepTime();
 
-                tvSleepTitle.setText(getResources().getString(R.string.sleep_length_time) + " " + MyTime.getSleepTime_H(sleep_time, getResources().getString(R.string.sleep_gang))+ " "
-                        + getResources().getString(R.string.hour) + " " + MyTime.getSleepTime_M(sleep_time, getResources().getString(R.string.sleep_gang))+ " "
+                tvSleepTitle.setText(getResources().getString(R.string.sleep_length_time) + " " + MyTime.getSleepTime_H(sleep_time, getResources().getString(R.string.sleep_gang)) + " "
+                        + getResources().getString(R.string.hour) + " " + MyTime.getSleepTime_M(sleep_time, getResources().getString(R.string.sleep_gang)) + " "
                         + getResources().getString(R.string.minute));
             }
             int progress1 = Integer.parseInt(mSleepModel.getSleepDeep());
@@ -833,7 +833,7 @@ public class DataFragment extends BaseFragment {
         if (heartTime != -1) {
             int length = mHeartModel.getHeartData().split(",").length;
             long dataTime = NewTimeUtils.getLongTime(mHeartModel.getHeartDate(), NewTimeUtils.TIME_YYYY_MM_DD);
-            GoogleFitManager.getInstance().updateHeart(getActivity(), Long.parseLong(last_heart), (long) (dataTime + 24 * 3600 * 1000l * (heartTime * 1.0f / length)));
+//            GoogleFitManager.getInstance().updateHeart(getActivity(), Long.parseLong(last_heart), (long) (dataTime + 24 * 3600 * 1000l * (heartTime * 1.0f / length)));
         }
 
         if (!JavaUtil.checkIsNull(avg)) {
