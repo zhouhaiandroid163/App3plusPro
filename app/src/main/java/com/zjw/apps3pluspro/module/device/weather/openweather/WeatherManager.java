@@ -146,13 +146,19 @@ public class WeatherManager {
         MyOkHttpClient2.getInstance().asynGetCall(new DisposeDataHandle(new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
-                Log.w(TAG, "getWeatherAQI onSuccess = " + responseObj);
-                Gson gson = new Gson();
-                weatherAQI = gson.fromJson(responseObj.toString(), WeatherAQI.class);
-                Log.i(TAG, "getWeatherAQI onSuccess size = " + weatherAQI.list.size());
+                try {
+                    Log.w(TAG, "getWeatherAQI onSuccess = " + responseObj);
+                    Gson gson = new Gson();
+                    weatherAQI = gson.fromJson(responseObj.toString(), WeatherAQI.class);
+                    if (weatherAQI != null && weatherAQI.list != null) {
+                        Log.i(TAG, "getWeatherAQI onSuccess size = " + weatherAQI.list.size());
+                    }
 
-                if (getOpenWeatherListener != null) {
-                    getOpenWeatherListener.onSuccess();
+                    if (getOpenWeatherListener != null) {
+                        getOpenWeatherListener.onSuccess();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
 
