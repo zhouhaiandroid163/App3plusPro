@@ -679,7 +679,6 @@ public class HomeActivity extends BaseActivity {
                                 getNetDeviceVersion(mBleDeviceTools.get_ble_device_type(), mBleDeviceTools.get_ble_device_version(), mBleDeviceTools.get_device_platform_type());
                             }
                         }
-                        syncWeather();
                         break;
                     case BroadcastTools.ACTION_GATT_DEVICE_COMPLETE:
                         EventBus.getDefault().post(new DeviceInfoEvent());
@@ -1346,6 +1345,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     public static boolean ISBlueToothConnect() {
+        mConnectionState = BleService.getBlueToothStatus();
         if (mConnectionState == BleConstant.STATE_CONNECTED) {
             return true;
         } else {
@@ -1536,69 +1536,6 @@ public class HomeActivity extends BaseActivity {
             syncTime();
         }
     }
-
-    private void syncWeather() {
-        if (mBleDeviceTools.get_is_weather() && mBleDeviceTools.getWeatherSwitch()) {
-            if (System.currentTimeMillis() - mBleDeviceTools.getWeatherSyncTime() > 10 * 60 * 1000L) {
-                if (mBleDeviceTools.getWeatherMode() == 3) {
-                    if (mBleDeviceTools.getWeatherGps().isEmpty()) {
-                    } else {
-                        String[] gps = mBleDeviceTools.getWeatherGps().split(",");
-                        if (gps.length > 1) {
-                            WeatherManager.getInstance().getCurrentWeather(false,false, Double.parseDouble(gps[1]), Double.parseDouble(gps[0]), new WeatherManager.GetOpenWeatherListener() {
-                                @Override
-                                public void onSuccess() {
-                                    mBleDeviceTools.setWeatherSyncTime(System.currentTimeMillis());
-                                    EventBus.getDefault().post(new SendOpenWeatherDataEvent(0));
-                                }
-
-                                @Override
-                                public void onFail() {
-
-                                }
-                            });
-                        }
-                    }
-                } else {
-                    if (mBleDeviceTools.getWeatherCity().isEmpty()) {
-//                    GpsSportManager.getInstance().getLatLon(this, gpsInfo -> {
-//                        GpsSportManager.getInstance().stopGps(this);
-//                        requestWeather();
-//                    });
-                    } else {
-                        requestWeather();
-                    }
-                }
-            }
-        }
-    }
-
-    private void requestWeather() {
-//        GpsSportManager.getInstance().getWeatherCity(this, () -> {
-        GpsSportManager.getInstance().getWeatherArea(this, () -> {
-            ArrayList<WeatherBean> myWeatherModle = WeatherBean.getHisData(HomeActivity.this);
-            if (myWeatherModle != null) {
-                System.out.println("请求天气 = 历史 解析2 " + myWeatherModle.toString());
-
-                byte[] t2 = WeatherBean.getWaeatherListData(myWeatherModle);
-                System.out.println("请求天气  t2 = " + BleTools.printHexString(t2));
-
-                float atmosphericPressure = 0;
-                try {
-                    atmosphericPressure = Float.parseFloat(myWeatherModle.get(0).getPressure());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-                byte[] t3 = BtSerializeation.setWeather(atmosphericPressure, t2);
-                System.out.println("请求天气  t3 = " + BleTools.printHexString(t3));
-
-                sendData(t3);
-            }
-        });
-//        });
-    }
-
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void showDialogEvent(ShowDialogEvent event) {
         switch (event.type) {

@@ -56,6 +56,8 @@ import com.zjw.apps3pluspro.eventbus.SyncDeviceSportEvent;
 import com.zjw.apps3pluspro.eventbus.UploadThemeStateEvent;
 import com.zjw.apps3pluspro.eventbus.tools.EventTools;
 import com.zjw.apps3pluspro.module.device.DeviceManager;
+import com.zjw.apps3pluspro.module.device.weather.WeatherBean;
+import com.zjw.apps3pluspro.module.device.weather.openweather.WeatherManager;
 import com.zjw.apps3pluspro.module.home.ecg.EcgMeasureActivity;
 import com.zjw.apps3pluspro.module.device.reminde.RemindeUtils;
 import com.zjw.apps3pluspro.module.device.entity.MusicInfo;
@@ -2556,7 +2558,7 @@ public class BleService extends Service {
      *
      * @return
      */
-    private static int getBlueToothStatus() {
+    public static int getBlueToothStatus() {
         return mConnectionState;
     }
 
@@ -3188,8 +3190,12 @@ public class BleService extends Service {
                 if (currentGpsSportState == -1 || currentGpsSportState == GpsSportDeviceStartEvent.SPORT_STATE_STOP || currentGpsSportState == GpsSportDeviceStartEvent.SPORT_STATE_PAUSE) {
                     isSyncSportData = true;
                     getProtoSport();
+                } else {
+                    syncWeather();
                 }
             }, time);
+        } else {
+            syncWeather();
         }
     }
 
@@ -4355,6 +4361,8 @@ public class BleService extends Service {
         if (protoHandler != null) {
             protoHandler.removeCallbacksAndMessages(null);
         }
+
+        getDeviceGpsSportStatus();
     }
 
     private void getDeviceGpsSportStatus() {
@@ -4367,6 +4375,8 @@ public class BleService extends Service {
                 EventBus.getDefault().post(new DeviceNoSportEvent());
             }
         }
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(this::syncWeather, 300);
     }
 
     private void initDisconnectParameter() {
@@ -4424,7 +4434,6 @@ public class BleService extends Service {
                         SysUtils.logContentW("ble", " delete today over");
                         SysUtils.logAppRunning("ble", " delete today over");
                         syncDeviceSportOver();
-                        getDeviceGpsSportStatus();
                     } else {
                         deleteDeviceSport(DELETE_DEVICE_SPORT_TODAY);
                     }
@@ -4502,7 +4511,6 @@ public class BleService extends Service {
                         SysUtils.logAppRunning("ble", " today is no data , sync over");
                         DeviceSportManager.Companion.getInstance().uploadMoreSportData();
                         syncDeviceSportOver();
-                        getDeviceGpsSportStatus();
                         break;
                     case REQUEST_FITNESS_ID_HISTORY:
                         SysUtils.logContentW("ble", " HISTORY is no data");
@@ -4709,6 +4717,67 @@ public class BleService extends Service {
         SysUtils.logContentI(TAG, "uuid = " + uuid + " writeSpecialCharacteristic status end = " + status);
         SysUtils.logAppRunning(TAG, "uuid = " + uuid + " writeSpecialCharacteristic status end = " + status);
         return status;
+    }
+
+
+    private void syncWeather() {
+        if (mBleDeviceTools.get_is_weather() && mBleDeviceTools.getWeatherSwitch()) {
+            if (System.currentTimeMillis() - mBleDeviceTools.getWeatherSyncTime() > 10 * 60 * 1000L) {
+                if (mBleDeviceTools.getWeatherMode() == 3) {
+                    if (mBleDeviceTools.getWeatherGps().isEmpty()) {
+                    } else {
+                        String[] gps = mBleDeviceTools.getWeatherGps().split(",");
+                        if (gps.length > 1) {
+                            WeatherManager.getInstance().getCurrentWeather(false,false, Double.parseDouble(gps[1]), Double.parseDouble(gps[0]), new WeatherManager.GetOpenWeatherListener() {
+                                @Override
+                                public void onSuccess() {
+                                    mBleDeviceTools.setWeatherSyncTime(System.currentTimeMillis());
+                                    EventBus.getDefault().post(new SendOpenWeatherDataEvent(0));
+                                }
+
+                                @Override
+                                public void onFail() {
+
+                                }
+                            });
+                        }
+                    }
+                } else {
+                    if (mBleDeviceTools.getWeatherCity().isEmpty()) {
+//                    GpsSportManager.getInstance().getLatLon(this, gpsInfo -> {
+//                        GpsSportManager.getInstance().stopGps(this);
+//                        requestWeather();
+//                    });
+                    } else {
+                        requestWeather();
+                    }
+                }
+            }
+        }
+    }
+
+    private void requestWeather() {
+//        GpsSportManager.getInstance().getWeatherCity(this, () -> {
+        GpsSportManager.getInstance().getWeatherArea(this, () -> {
+            ArrayList<WeatherBean> myWeatherModle = WeatherBean.getHisData(this);
+            if (myWeatherModle != null) {
+                System.out.println("请求天气 = 历史 解析2 " + myWeatherModle.toString());
+
+                byte[] t2 = WeatherBean.getWaeatherListData(myWeatherModle);
+                System.out.println("请求天气  t2 = " + BleTools.printHexString(t2));
+
+                float atmosphericPressure = 0;
+                try {
+                    atmosphericPressure = Float.parseFloat(myWeatherModle.get(0).getPressure());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                byte[] t3 = BtSerializeation.setWeather(atmosphericPressure, t2);
+                System.out.println("请求天气  t3 = " + BleTools.printHexString(t3));
+                writeRXCharacteristic(t3);
+            }
+        });
+//        });
     }
 }
 

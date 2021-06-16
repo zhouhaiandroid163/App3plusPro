@@ -135,6 +135,7 @@ public class ProtobufActivity extends BaseActivity {
                 tvDeviceUpdateProgress.setText("" + event.progress + "%");
                 break;
             case 3:
+                mBleDeviceTools.setWeatherSyncTime(0);
                 Toast.makeText(ProtobufActivity.this, getResources().getString(R.string.dfu_success), Toast.LENGTH_SHORT).show();
                 if (progressDialog != null && progressDialog.isShowing()) {
                     progressDialog.dismiss();
