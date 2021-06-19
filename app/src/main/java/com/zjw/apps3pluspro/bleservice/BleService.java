@@ -1591,6 +1591,7 @@ public class BleService extends Service {
             SysUtils.logContentI(TAG, "onServicesDiscovered ");
             SysUtils.logAppRunning(TAG, "onServicesDiscovered ");
             if (status == BluetoothGatt.GATT_SUCCESS) {
+                initChannelList();
                 new Thread(() -> {
                     try {
                         iCallDeviceInfo = false;
@@ -1676,163 +1677,71 @@ public class BleService extends Service {
                         }
                         int delayTime = 100;
                         if (flag_sys) {
-                            mBleHandler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    characteristic_system_read = mSYSTEMervice.getCharacteristic(BleConstant.UUID_BASE_READ);
-                                    if (enableNotifacationSysRead()) {
-                                        SysUtils.logContentI(TAG, "系统数据(小包) = 使能成功");
-                                        SysUtils.logAppRunning(TAG, "系统数据(小包) = 使能成功");
-                                    } else {
-                                        SysUtils.logContentI(TAG, "系统数据(小包) = 使能失败");
-                                        SysUtils.logAppRunning(TAG, "系统数据(小包) = 使能失败");
-                                    }
-                                }
-                            }, delayTime);
-                            delayTime += 400;
+                            characteristic_system_read = mSYSTEMervice.getCharacteristic(BleConstant.UUID_BASE_READ);
+                            channelList.add(characteristic_system_read);
+                            SysUtils.logContentI(TAG, "find UUID_BASE_READ");
                         }
                         if (isSupportBigMtu) {
-                            mBleHandler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    characteristic_big_3 = mBigService.getCharacteristic(BleConstant.CHAR_BIG_UUID_03);
-                                    if (enableNotifacationSysRead()) {
-                                        SysUtils.logContentI(TAG, "系统数据(大包) = 使能成功");
-                                        SysUtils.logAppRunning(TAG, "系统数据(大包) = 使能成功");
-                                    } else {
-                                        SysUtils.logContentI(TAG, "系统数据(大包) = 使能失败");
-                                        SysUtils.logAppRunning(TAG, "系统数据(大包) = 使能失败");
-                                    }
-                                }
-                            }, delayTime);
-                            delayTime += 400;
+                            characteristic_big_3 = mBigService.getCharacteristic(BleConstant.CHAR_BIG_UUID_03);
+                            channelList.add(characteristic_big_3);
+                            SysUtils.logContentI(TAG, "find CHAR_BIG_UUID_03");
                         }
 
                         if (flag_ecg) {
-                            // 延迟使能
-                            mBleHandler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    characteristic_ecg_read = mECGService.getCharacteristic(BleConstant.UUID_ECG_READ);
-                                    if (enableNotifacationEcgRead()) {
-                                        SysUtils.logContentI(TAG, "ECG数据 = 使能成功");
-                                        SysUtils.logAppRunning(TAG, "ECG数据 = 使能成功");
-                                    } else {
-                                        SysUtils.logContentI(TAG, "ECG数据 = 使能失败");
-                                        SysUtils.logAppRunning(TAG, "ECG数据 = 使能失败");
-                                    }
-                                }
-                            }, delayTime);
-                            delayTime += 400;
+                            characteristic_ecg_read = mECGService.getCharacteristic(BleConstant.UUID_ECG_READ);
+                            channelList.add(characteristic_ecg_read);
+                            SysUtils.logContentI(TAG, "find UUID_ECG_READ");
                         }
 
                         if (flag_ppg) {
-                            // 延迟使能
-                            mBleHandler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    characteristic_ppg_read = mPPGService.getCharacteristic(BleConstant.UUID_PPG_READ);
-                                    if (enableNotifacationPpgRead()) {
-                                        SysUtils.logContentI(TAG, "PPG数据 = 使能成功");
-                                        SysUtils.logAppRunning(TAG, "PPG数据 = 使能成功");
-                                    } else {
-                                        SysUtils.logContentI(TAG, "PPG数据 = 使能失败");
-                                        SysUtils.logAppRunning(TAG, "PPG数据 = 使能失败");
-                                    }
-                                }
-                            }, delayTime);
-                            delayTime += 400;
+                            characteristic_ppg_read = mPPGService.getCharacteristic(BleConstant.UUID_PPG_READ);
+                            channelList.add(characteristic_ppg_read);
+                            SysUtils.logContentI(TAG, "find UUID_PPG_READ");
                         }
 
                         if (flag_theme) {
-                            // 延迟使能
-                            mBleHandler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    characteristic_theme_read = mThemeService.getCharacteristic(BleConstant.UUID_THEME_READ);
-                                    characteristic_theme_write = mThemeService.getCharacteristic(BleConstant.UUID_THEME_WRITE);
-                                    if (enableNotifacationThemeRead()) {
-                                        SysUtils.logContentI(TAG, "主题数据 = 使能成功");
-                                        SysUtils.logAppRunning(TAG, "主题数据 = 使能成功");
-                                    } else {
-                                        SysUtils.logContentI(TAG, "主题数据 = 使能失败");
-                                        SysUtils.logAppRunning(TAG, "主题数据 = 使能失败");
-                                    }
-                                }
-                            }, delayTime);
-                            delayTime += 400;
+                            characteristic_theme_read = mThemeService.getCharacteristic(BleConstant.UUID_THEME_READ);
+                            characteristic_theme_write = mThemeService.getCharacteristic(BleConstant.UUID_THEME_WRITE);
+                            channelList.add(characteristic_theme_read);
+                            SysUtils.logContentI(TAG, "find UUID_THEME_READ");
                         }
 
-//                if (flag_log) {
-//                    // 延迟使能
-//                    mBleHandler.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            characteristic_log_read = mLogService.getCharacteristic(BleConstant.UUID_LOG_READ);
-//                            if (enableNotifacationLogRead()) {
-//                                SysUtils.logContentI(TAG, "LOG数据 = 使能成功");
-//                                TraceErrorLog.i("LOG数据 = 使能成功");
-//                            } else {
-//                                SysUtils.logContentI(TAG, "LOG数据 = 使能失败");
-//                                TraceErrorLog.i("LOG数据 = 使能成功");
-//                            }
-//                        }
-//                    }, 1350);
-//                }
-
-//                int delayTime = 1500;
-
-                        Thread.sleep(delayTime);
                         if (flag_protobuf) {
                             characteristic_protobuf_1 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_01);
                             characteristic_protobuf_2 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_02);
                             characteristic_protobuf_3 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_03);
                             characteristic_protobuf_4 = mProtobufService.getCharacteristic(BleConstant.CHAR_PROTOBUF_UUID_04);
 
-                            if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_1)) {
-                                SysUtils.logContentI(TAG, "characteristic_protobuf_1 on success");
-                            } else {
-                                SysUtils.logContentI(TAG, "characteristic_protobuf_1  error");
-                                SysUtils.logAppRunning(TAG, "characteristic_protobuf_1  error");
-                                connectBleRXError();
-                                return;
-                            }
-
-                            Thread.sleep(400);
-                            if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_2)) {
-                                SysUtils.logContentI(TAG, "characteristic_protobuf_2 on success");
-                            } else {
-                                SysUtils.logContentI(TAG, "characteristic_protobuf_2 error");
-                                SysUtils.logAppRunning(TAG, "characteristic_protobuf_2 error");
-                                connectBleRXError();
-                                return;
-                            }
-                            Thread.sleep(400);
-                            if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_3)) {
-                                SysUtils.logContentI(TAG, "characteristic_protobuf_3 on success");
-                            } else {
-                                SysUtils.logContentI(TAG, "characteristic_protobuf_3  error");
-                                SysUtils.logAppRunning(TAG, "characteristic_protobuf_3  error");
-                                connectBleRXError();
-                                return;
-                            }
-
-                            Thread.sleep(400);
-                            if (enableNotificationBoolean("proto", mBluetoothGatt, characteristic_protobuf_4)) {
-                                SysUtils.logContentI(TAG, "characteristic_protobuf_4 on success");
-                            } else {
-                                SysUtils.logContentI(TAG, "characteristic_protobuf_4  error");
-                                SysUtils.logAppRunning(TAG, "characteristic_protobuf_4  error");
-                                connectBleRXError();
-                                return;
-                            }
-                            Thread.sleep(400);
-                        } else {
-                            if (!mBleDeviceTools.get_ble_name().contains(BleConstant.PLUS_HR)) {
-                                connectBleRXError();
-                                return;
-                            }
+                            channelList.add(characteristic_protobuf_1);
+                            channelList.add(characteristic_protobuf_2);
+                            channelList.add(characteristic_protobuf_3);
+                            channelList.add(characteristic_protobuf_4);
                         }
+
+                        SysUtils.logContentE(TAG, "enableNotification channel total size = " + channelList.size());
+
+                        isEnable = true;
+                        while (!isRecycleEnable) {
+                            if (isEnable) {
+                                if (channelList.size() > 0) {
+                                    curCharacteristic = channelList.remove(0);
+                                    SysUtils.logContentW(TAG, curCharacteristic.getUuid().toString() + " last channel size = " + channelList.size());
+                                    if (enableNotificationBoolean(TAG, mBluetoothGatt, curCharacteristic)) {
+                                        isEnable = false;
+                                        removeChannelTimer();
+                                        mChannelHandler.postDelayed(mChannelRunnable, 2000);
+                                    } else {
+                                        isRecycleEnable = true;
+                                        connectBleRXError();
+                                        return;
+                                    }
+                                } else {
+                                    SysUtils.logContentI(TAG, "enableNotification channel size = " + channelList.size());
+                                }
+                            }
+                            Thread.sleep(30);
+                        }
+                        if (!isWriteSuccess) return;
                         //发送初始化数据
                         Thread.sleep(400);
                         if (flag_sys || isSupportBigMtu) {
@@ -1923,6 +1832,70 @@ public class BleService extends Service {
             SysUtils.logContentI(TAG, " onMtuChanged = " + mtu + " status = " + status);
             SysUtils.logAppRunning(TAG, " onMtuChanged = " + mtu + " status = " + status);
         }
+
+        @Override
+        public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
+            long endTime = System.currentTimeMillis() - enableTime;
+            SysUtils.logContentE(TAG, "write Descriptor status = " + status + " time = " + endTime + "ms");
+            super.onDescriptorWrite(gatt, descriptor, status);
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                initCurCharacteristic();
+                isEnable = true;
+                if (channelList.size() == 0) {
+                    removeChannelTimer();
+                    isRecycleEnable = true;
+                }
+            } else {
+                isWriteSuccess = false;
+                isEnable = false;
+                isRecycleEnable = true;
+                connectBleRXError();
+            }
+        }
+    }
+
+    private BluetoothGattCharacteristic curCharacteristic;
+
+    private void initCurCharacteristic() {
+        if (curCharacteristic != null) {
+            if (curCharacteristic.getUuid().toString().equalsIgnoreCase(BleConstant.UUID_BASE_READ.toString())) {
+                setEnableNorticeSysTag(true);
+            } else if (curCharacteristic.getUuid().toString().equalsIgnoreCase(BleConstant.CHAR_BIG_UUID_03.toString())) {
+                setEnableNorticeSysTag(true);
+            } else if (curCharacteristic.getUuid().toString().equalsIgnoreCase(BleConstant.UUID_ECG_READ.toString())) {
+                setEnableNorticeEcgTag(true);
+            } else if (curCharacteristic.getUuid().toString().equalsIgnoreCase(BleConstant.UUID_PPG_READ.toString())) {
+                setEnableNorticePpgTag(true);
+            } else if (curCharacteristic.getUuid().toString().equalsIgnoreCase(BleConstant.UUID_THEME_READ.toString())) {
+                setEnableNorticeThemeTag(true);
+            }
+        }
+    }
+
+    private void initChannelList() {
+        channelList.clear();
+        isRecycleEnable = false;
+        isWriteSuccess = true;
+    }
+
+    private final ArrayList<BluetoothGattCharacteristic> channelList = new ArrayList<>();
+    private boolean isRecycleEnable = false;
+    private boolean isEnable = false;
+    private boolean isWriteSuccess = true;
+    private final Handler mChannelHandler = new Handler();
+    private final Runnable mChannelRunnable = new Runnable() {
+        @Override
+        public void run() {
+            SysUtils.logContentI(TAG, " enableNotification channel timeout ");
+            isWriteSuccess = false;
+            isEnable = false;
+            isRecycleEnable = true;
+            connectBleRXError();
+        }
+    };
+
+    private void removeChannelTimer() {
+        mChannelHandler.removeCallbacksAndMessages(null);
     }
 
     private Handler mBindDeviceHandler;
@@ -2089,7 +2062,7 @@ public class BleService extends Service {
                 //连续心率
                 case BleConstant.Key_MoHeart: {
                     MyLog.i(TAG, "蓝牙回调 - 连续心率");
-                    HandleDeviceDataTools.HandleWoHeart(this,mHeartInfoUtils, data);
+                    HandleDeviceDataTools.HandleWoHeart(this, mHeartInfoUtils, data);
                 }
                 break;
 
@@ -2683,33 +2656,29 @@ public class BleService extends Service {
         return is_enable;
     }
 
-    /**
-     * 使能UUID
-     *
-     * @param tag
-     * @param Gatt
-     * @param Characteristic
-     */
-    private boolean enableNotificationBoolean(String tag, BluetoothGatt Gatt, BluetoothGattCharacteristic Characteristic) {
 
-        SysUtils.logContentI(TAG, "enableNotificationBoolean = tag = " + tag);
+    long enableTime = 0;
 
+    private boolean enableNotificationBoolean(String tag, BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+        enableTime = System.currentTimeMillis();
         try {
-            if (Gatt != null) {
-                if (Characteristic != null) {
-                    Gatt.setCharacteristicNotification(Characteristic, true);
-                    final BluetoothGattDescriptor descriptor = Characteristic.getDescriptor(BleConstant.CCCD);
+            if (gatt != null) {
+                if (characteristic != null) {
+                    gatt.setCharacteristicNotification(characteristic, true);
+                    final BluetoothGattDescriptor descriptor = characteristic.getDescriptor(BleConstant.CCCD);
                     descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
 
-                    boolean result = Gatt.writeDescriptor(descriptor);
-                    SysUtils.logContentI(TAG, "enableNotificationBoolean 00 = return = " + result);
+                    boolean result = gatt.writeDescriptor(descriptor);
+                    SysUtils.logContentI(TAG, "enableNotificationBoolean  = " + result);
+                    SysUtils.logAppRunning(TAG, "enableNotificationBoolean  = " + result);
                     return result;
                 } else {
-                    SysUtils.logContentI(TAG, "enableNotificationBoolean 11 = return = " + false);
+                    SysUtils.logContentI(TAG, "enableNotificationBoolean characteristic == null ");
+                    SysUtils.logAppRunning(TAG, "enableNotificationBoolean characteristic == null");
                     return false;
                 }
             } else {
-                SysUtils.logContentI(TAG, "enableNotificationBoolean 22 = return = " + false);
+                SysUtils.logContentI(TAG, "enableNotificationBoolean gatt = null " + false);
                 return false;
             }
         } catch (Exception e) {
@@ -4020,7 +3989,7 @@ public class BleService extends Service {
                 } else {
                     if (cmdSize > 0) {
                         byte[] paramCmd = bleCmdList_proto.remove(0);
-                        if(paramCmd != null){
+                        if (paramCmd != null) {
                             if (isReplyDevice(paramCmd)) {
                                 writeCharacteristic(paramCmd, BleConstant.UUID_PROTOBUF_SERVICE, BleConstant.CHAR_PROTOBUF_UUID_01);
                             } else {
@@ -4365,6 +4334,9 @@ public class BleService extends Service {
         getDeviceGpsSportStatus();
     }
 
+
+    private final Handler weatherHandle = new Handler();
+
     private void getDeviceGpsSportStatus() {
         if (mBleDeviceTools.getIsSupportGpsSport()) {
             // 询问gps运动结果
@@ -4375,8 +4347,7 @@ public class BleService extends Service {
                 EventBus.getDefault().post(new DeviceNoSportEvent());
             }
         }
-        Handler mHandler = new Handler();
-        mHandler.postDelayed(this::syncWeather, 300);
+        weatherHandle.postDelayed(this::syncWeather, 300);
     }
 
     private void initDisconnectParameter() {
@@ -4630,7 +4601,7 @@ public class BleService extends Service {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void sendOpenWeatherDataEvent(SendOpenWeatherDataEvent event) {
-        if(event.status == 0){
+        if (event.status == 0) {
             curCmd = APP_SEND_OPEN_WEATHER_LATEST_WEATHER;
             bleCmdList_proto.add(BtSerializeation.appStartCmd(curCmd));
         }
@@ -4728,7 +4699,7 @@ public class BleService extends Service {
                     } else {
                         String[] gps = mBleDeviceTools.getWeatherGps().split(",");
                         if (gps.length > 1) {
-                            WeatherManager.getInstance().getCurrentWeather(false,false, Double.parseDouble(gps[1]), Double.parseDouble(gps[0]), new WeatherManager.GetOpenWeatherListener() {
+                            WeatherManager.getInstance().getCurrentWeather(false, false, Double.parseDouble(gps[1]), Double.parseDouble(gps[0]), new WeatherManager.GetOpenWeatherListener() {
                                 @Override
                                 public void onSuccess() {
                                     mBleDeviceTools.setWeatherSyncTime(System.currentTimeMillis());

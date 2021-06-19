@@ -330,7 +330,7 @@
     <string name="already_new">Latest</string>
     <string name="download_title">Downloading</string>
     <!-- 闹钟 -->
-    <string name="colok_title">Alarm reminder</string>
+    <string name="colok_title">Alarm</string>
     <string name="clock_set">Alarm setting</string>
     <string name="add_clock">Add an alarm</string>
     <string name="alarm_full">Up to 5 alarms can be set, please delete and add</string>
