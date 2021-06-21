@@ -403,6 +403,11 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener {
                         params.put("appMsg", MyUtils.getAppName() + "_" + MyUtils.getAppInfo());
                         params.put("phoneSystem", MyUtils.getPhoneModel());
                         params.put("appId", "02");
+                        if (!TextUtils.isEmpty(BaseApplication.getBleDeviceTools().get_ble_name())) {
+                            params.put("deviceName", BaseApplication.getBleDeviceTools().get_ble_name());
+                            params.put("deviceType", BaseApplication.getBleDeviceTools().get_ble_device_type());
+                            params.put("deviceVersion", BaseApplication.getBleDeviceTools().get_ble_device_version());
+                        }
 //            params.put("feekBackType", 3);
                         NewVolleyRequest.RequestMultiPostRequest(params, new VolleyInterface(mContext, VolleyInterface.mListener, VolleyInterface.mErrorListener) {
                             @Override

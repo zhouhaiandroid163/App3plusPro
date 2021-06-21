@@ -4,6 +4,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.xiaomi.wear.protobuf.CommonProtos;
 import com.xiaomi.wear.protobuf.WearProtos;
 import com.xiaomi.wear.protobuf.WeatherProtos;
+import com.zjw.apps3pluspro.application.BaseApplication;
 import com.zjw.apps3pluspro.module.device.weather.openweather.CurrentWeather;
 import com.zjw.apps3pluspro.module.device.weather.openweather.WeatherAQI;
 import com.zjw.apps3pluspro.module.device.weather.openweather.WeatherDays;
@@ -185,7 +186,7 @@ public class WeatherTools {
 
         WeatherProtos.WeatherId.Builder weatherId = WeatherProtos.WeatherId.newBuilder();
         weatherId.setPubTime(weatherDays.list.get(0).dt);
-        weatherId.setCityName(weatherDays.city.name);
+        weatherId.setCityName(BaseApplication.getBleDeviceTools().getWeatherCity());
         weatherId.setLocationName(weatherDays.city.country);
         weatherId.setPubTimeStamp(Integer.parseInt(weatherDays.list.get(0).dt));
 
@@ -243,7 +244,7 @@ public class WeatherTools {
 
         WeatherProtos.WeatherId.Builder weatherId = WeatherProtos.WeatherId.newBuilder();
         weatherId.setPubTime(currentWeather.dt);
-        weatherId.setCityName(currentWeather.name);
+        weatherId.setCityName(BaseApplication.getBleDeviceTools().getWeatherCity());
         weatherId.setLocationName(currentWeather.sys.country);
         weatherId.setPubTimeStamp(Integer.parseInt(currentWeather.dt));
 
