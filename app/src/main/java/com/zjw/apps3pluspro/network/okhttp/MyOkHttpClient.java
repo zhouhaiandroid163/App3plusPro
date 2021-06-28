@@ -144,6 +144,7 @@ public class MyOkHttpClient {
         Call call = mOkHttpClient.newCall(request);
         jsonCallback = new CommonJsonCallback(vif);
         call.enqueue(jsonCallback);
+        callList.add(call);
     }
 
     public void asynGetCall(VolleyInterface vif, String url) {
@@ -155,6 +156,7 @@ public class MyOkHttpClient {
         Call call = mOkHttpClient.newCall(request);
         jsonCallback = new CommonJsonCallback(vif);
         call.enqueue(jsonCallback);
+        callList.add(call);
     }
 
     public static class CommonJsonCallback implements Callback {
@@ -293,5 +295,32 @@ public class MyOkHttpClient {
             return false;
         }
         return false;
+    }
+
+    private final ArrayList<Call> callList = new ArrayList<>();
+
+    // 取消网络请求
+    public void cancel() {
+        try {
+            if (callList.size() > 100) {
+                for (int i = 0; i < 100; i++) {
+                    Call call = callList.get(callList.size() - 100 + i);
+                    call.cancel();
+                }
+            } else {
+                for (Call call : callList) {
+                    call.cancel();
+                }
+            }
+            callList.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+            StackTraceElement[] stackTrace = e.getStackTrace();
+            int lineNumber = 0;
+            if (stackTrace.length > 0) {
+                lineNumber = stackTrace[0].getLineNumber();
+            }
+            SysUtils.logContentE(TAG, e.toString() + " line number = " + lineNumber);
+        }
     }
 }

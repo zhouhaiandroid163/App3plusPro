@@ -7,6 +7,7 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.zjw.apps3pluspro.eventbus.AuthorizationStateEvent;
+import com.zjw.apps3pluspro.network.okhttp.MyOkHttpClient;
 import com.zjw.apps3pluspro.utils.network.AESUtils;
 
 import android.content.Context;
@@ -36,6 +37,7 @@ public abstract class VolleyInterface {
                     String code = result.optString("code");
                     if (code.equalsIgnoreCase(ResultJson.AUTHORIZATION_CODE_FAILURE) || code.equalsIgnoreCase(ResultJson.AUTHORIZATION_CODE_NULL)) {
                         EventBus.getDefault().post(new AuthorizationStateEvent(code));
+                        MyOkHttpClient.getInstance().cancel();
                     } else {
                         onMySuccess(result);
                     }
