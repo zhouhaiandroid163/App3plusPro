@@ -103,16 +103,7 @@ public class RemindSettingActivity extends BaseActivity implements View.OnClickL
         } else {
             layoutDrug.setVisibility(View.GONE);
         }
-
-        LinearLayout layoutAlarmClock = findViewById(R.id.layoutAlarmClock);
-        if(mBleDeviceTools.getIsSupportAlarmClock()){
-            layoutAlarmClock.setVisibility(View.VISIBLE);
-        } else {
-            layoutAlarmClock.setVisibility(View.GONE);
-        }
-
     }
-
 
     private void initData() {
 

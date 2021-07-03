@@ -856,10 +856,6 @@ public class SysUtils {
         return new BigDecimal(String.valueOf(number)).setScale(2, BigDecimal.ROUND_DOWN).toString();
     }
 
-    public static String bigDecimalFormat(double number) {
-        return new BigDecimal(String.valueOf(number)).setScale(2, BigDecimal.ROUND_DOWN).toString();
-    }
-
     public static boolean hasSimCard(Context context) {
         TelephonyManager telMgr = (TelephonyManager)
                 context.getSystemService(Context.TELEPHONY_SERVICE);

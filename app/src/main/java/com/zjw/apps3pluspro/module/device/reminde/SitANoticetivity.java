@@ -161,11 +161,12 @@ public class SitANoticetivity extends BaseActivity implements View.OnClickListen
                 showNofifaceCycleDialog();
                 break;
             case R.id.tvRightText:
-                if (mSitModel.isOldTime()) {
-                    InputErrorDialog();
-                } else {
-                    saveSetting();
-                }
+//                if (mSitModel.isOldTime()) {
+//                    InputErrorDialog();
+//                } else {
+//                    saveSetting();
+//                }
+                saveSetting();
                 break;
 
 

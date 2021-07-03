@@ -392,8 +392,6 @@ public class RtkDfuActivity extends RtkBaseDfuActivity<DfuHelper> implements Vie
         findViewById(R.id.rtk_start_updaload).setOnClickListener(this);
         findViewById(R.id.rtk_stop_updaload).setOnClickListener(this);
 
-        findViewById(R.id.public_head_back).setVisibility(View.INVISIBLE);
-
     }
 
     @Override

@@ -1800,8 +1800,18 @@ public class RequestJson {
                 mJSONObject.put("reportAvgHeart", mSportModleInfo.getReportAvgHeart());
                 mJSONObject.put("reportMaxHeart", mSportModleInfo.getReportMaxHeart());
                 mJSONObject.put("reportMinHeart", mSportModleInfo.getReportMinHeart());
-                mJSONObject.put("reportCumulativeRise", SysUtils.bigDecimalFormat(mSportModleInfo.getReportCumulativeRise()));
-                mJSONObject.put("reportCumulativeDecline", SysUtils.bigDecimalFormat(mSportModleInfo.getReportCumulativeDecline()));
+
+                if (mSportModleInfo.getReportCumulativeRise() < 9999.99) {
+                    mJSONObject.put("reportCumulativeRise", SysUtils.bigDecimalFormat(mSportModleInfo.getReportCumulativeRise()));
+                } else {
+                    mJSONObject.put("reportCumulativeRise", "0");
+                }
+                if (mSportModleInfo.getReportCumulativeDecline() < 9999.99) {
+                    mJSONObject.put("reportCumulativeDecline", SysUtils.bigDecimalFormat(mSportModleInfo.getReportCumulativeDecline()));
+                } else {
+                    mJSONObject.put("reportCumulativeDecline", "0");
+                }
+
                 mJSONObject.put("reportAvgHeight", SysUtils.bigDecimalFormat(mSportModleInfo.getReportAvgHeight()));
                 mJSONObject.put("reportMaxHeight", SysUtils.bigDecimalFormat(mSportModleInfo.getReportMaxHeight()));
                 mJSONObject.put("reportMinHeight", SysUtils.bigDecimalFormat(mSportModleInfo.getReportMinHeight()));

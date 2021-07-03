@@ -477,6 +477,10 @@ public class MyNotificationsListenerService extends NotificationListenerService 
             if (isOpen) {
                 try {
                     SysUtils.logContentI(TAG, "zalo message =" + postMessage1);
+                    if (CheckZaloMMs(postMessage1)) {
+                        SysUtils.logContentI(TAG, "ignore zalo message =" + notificationText);
+                        return;
+                    }
                     sendBleData(BtSerializeation.notifyMsg(mBleDeviceTools, postMessage1, BleConstant.NotifaceZalo));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
@@ -771,6 +775,16 @@ public class MyNotificationsListenerService extends NotificationListenerService 
             result = true;
         }
         return result;
+    }
+
+    boolean CheckZaloMMs(String count) {
+        if (TextUtils.isEmpty(count)) {
+            return true;
+        }
+        if (count.equalsIgnoreCase("Zalo")) {
+            return true;
+        }
+        return false;
     }
 
 }

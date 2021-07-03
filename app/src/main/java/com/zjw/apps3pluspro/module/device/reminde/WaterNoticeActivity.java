@@ -158,11 +158,12 @@ public class WaterNoticeActivity extends BaseActivity implements View.OnClickLis
                 showCycleDialog();
                 break;
             case R.id.tvRightText:
-                if (mWaterModel.isOldTime()) {
-                    InputErrorDialog();
-                } else {
-                    saveSetting();
-                }
+//                if (mWaterModel.isOldTime()) {
+//                    InputErrorDialog();
+//                } else {
+//                    saveSetting();
+//                }
+                saveSetting();
                 break;
 
         }

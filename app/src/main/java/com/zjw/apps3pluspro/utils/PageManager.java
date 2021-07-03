@@ -24,7 +24,7 @@ public class PageManager {
     private Gson gson;
     private GsonBuilder builder;
 
-    private ArrayList<PageItem> pageAppList = new ArrayList<>();
+    private ArrayList<PageItem> pageAppList = new ArrayList<>();// 第一种app首页布局
     public final static int PAGE_HIDE = -1; // 隐藏的标记位置
     public final static int PAGE_APP_ECG = 0;
     public final static int PAGE_APP_EXERCISE = 1;
@@ -35,7 +35,6 @@ public class PageManager {
     public final static int PAGE_APP_MENSTRUAL_PERIOD = 6;
     public final static int PAGE_APP_BLOOD_OXYGEN = 7;
     public final static int PAGE_APP_TEMPERATURE = 8;
-
 
     public ArrayList<PageItem> pageDeviceList = new ArrayList<>();
     public ArrayList<PageItem> pageDeviceNoMove = new ArrayList<>();
@@ -86,7 +85,6 @@ public class PageManager {
     public final static int PAGE_DEVICE_TOOL_LIST = 0x8F;                //工具
     public final static int PAGE_DEVICE_QR_CODE_DOWNLOAD = 0x90;        //二维码
     public final static int PAGE_DEVICE_TEMPERATURE = 0x91;                //体温
-
 
     public static PageManager getInstance() {
         if (pageManager == null) {
@@ -640,4 +638,14 @@ public class PageManager {
         }
         return name;
     }
+
+    public ArrayList<Integer> pageApp2List = new ArrayList<>();// 第二种app首页布局
+    public final static int PAGE_APP2_DISTANCE = 1;
+    public final static int PAGE_APP2_STEPS = 2;
+    public final static int PAGE_APP2_CAL = 3;
+    public final static int PAGE_APP2_WATER = 4;
+    public final static int PAGE_APP2_SLEEP = 5;
+    public final static int PAGE_APP2_TEMPERATURE = 6;
+    public final static int PAGE_APP2_BLOOD_OXYGEN = 7;
+
 }

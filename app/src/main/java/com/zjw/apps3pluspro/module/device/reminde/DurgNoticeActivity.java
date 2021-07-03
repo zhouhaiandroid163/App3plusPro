@@ -162,11 +162,12 @@ public class DurgNoticeActivity extends BaseActivity implements View.OnClickList
                 showNofifaceCycleDialog();
                 break;
             case R.id.tvRightText:
-                if (mDurgModel.isOldTime()) {
-                    InputErrorDialog();
-                } else {
-                    saveSetting();
-                }
+//                if (mDurgModel.isOldTime()) {
+//                    InputErrorDialog();
+//                } else {
+//                    saveSetting();
+//                }
+                saveSetting();
                 break;
 
 

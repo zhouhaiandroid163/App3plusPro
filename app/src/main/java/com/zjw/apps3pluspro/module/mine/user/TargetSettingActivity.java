@@ -99,16 +99,16 @@ public class TargetSettingActivity extends BaseActivity {
         initActivityTimeTarget();
         initDistanceTarget();
 
-        if (mBleDeviceTools.getIsSupportCalorieTarget()) {
-            layoutCal.setVisibility(View.VISIBLE);
-        } else {
-            layoutCal.setVisibility(View.GONE);
-        }
-        if (mBleDeviceTools.getIsSupportDistanceTarget()) {
-            layoutDistance.setVisibility(View.VISIBLE);
-        } else {
-            layoutDistance.setVisibility(View.GONE);
-        }
+//        if (mBleDeviceTools.getIsSupportCalorieTarget()) {
+//            layoutCal.setVisibility(View.VISIBLE);
+//        } else {
+//            layoutCal.setVisibility(View.GONE);
+//        }
+//        if (mBleDeviceTools.getIsSupportDistanceTarget()) {
+//            layoutDistance.setVisibility(View.VISIBLE);
+//        } else {
+//            layoutDistance.setVisibility(View.GONE);
+//        }
         if (mBleDeviceTools.getIsSupportActivityTimeTarget()) {
             layoutActivityTime.setVisibility(View.VISIBLE);
         } else {
@@ -395,7 +395,9 @@ public class TargetSettingActivity extends BaseActivity {
                 case 0:
                     mUserSetTools.set_user_cal_target(textGoal);
                     initCalTarget();
-                    writeRXCharacteristic(BtSerializeation.sendGoalData(0, Integer.parseInt(mUserSetTools.get_user_cal_target())));
+                    if (mBleDeviceTools.getIsSupportCalorieTarget()) {
+                        writeRXCharacteristic(BtSerializeation.sendGoalData(0, Integer.parseInt(mUserSetTools.get_user_cal_target())));
+                    }
                     break;
                 case 1:
                     mUserSetTools.set_user_distance_target(textGoal);
@@ -406,7 +408,9 @@ public class TargetSettingActivity extends BaseActivity {
                     } else {
                         distance = Integer.parseInt(mUserSetTools.get_user_distance_target()) * 1610;
                     }
-                    writeRXCharacteristic(BtSerializeation.sendGoalData(1, distance));
+                    if (mBleDeviceTools.getIsSupportDistanceTarget()) {
+                        writeRXCharacteristic(BtSerializeation.sendGoalData(1, distance));
+                    }
                     break;
                 case 2:
                     mUserSetTools.set_user_activity_target(textGoal);

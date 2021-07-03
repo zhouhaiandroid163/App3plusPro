@@ -22,6 +22,7 @@ import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.application.BaseApplication
 import com.zjw.apps3pluspro.base.BaseActivity
 import com.zjw.apps3pluspro.bleservice.BleTools
+import com.zjw.apps3pluspro.bleservice.anaylsis.FitnessTools
 import com.zjw.apps3pluspro.module.home.entity.DeviceSportEntity
 import com.zjw.apps3pluspro.module.home.entity.DeviceSportSwimEntity
 import com.zjw.apps3pluspro.module.home.sport.amap.PathSmoothTool
@@ -146,12 +147,12 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
             if (isUserM(sportType)) {
                 tvTitleValue3.text = sportModleInfo?.reportDistance.toString() + " " + resources.getString(R.string.device_sport_unit)
             } else {
-                tvTitleValue3.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportDistance!! / 1000.0) + " " + resources.getString(R.string.sport_distance_unit)
+                tvTitleValue3.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportDistance!! / 1000f) + " " + resources.getString(R.string.sport_distance_unit)
             }
 
             tvTitleValue4.text = sportModleInfo?.reportCal.toString() + " " + resources.getString(R.string.big_calory)
             tvTitleValue5.text = avgPaceString
-            tvTitleValue6.text = SysUtils.bigDecimalFormat(((sportModleInfo?.reportDistance!! / 1000.0) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + " " + resources.getString(R.string.speed_unit)
+            tvTitleValue6.text = SysUtils.bigDecimalFormat(((sportModleInfo?.reportDistance!! / 1000f) / (sportModleInfo?.reportDuration!! / 3600f))).toString() + " " + resources.getString(R.string.speed_unit)
             tvTitleValue7.text = sportModleInfo?.reportAvgHeart!!.toString() + " " + resources.getString(R.string.bpm)
             tvTitleValue8.text = sportModleInfo?.reportMaxHeart!!.toString() + " " + resources.getString(R.string.bpm)
             tvTitleValue9.text = sportModleInfo?.reportTotalStep!!.toString() + " " + resources.getString(R.string.steps)
@@ -166,10 +167,10 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                 if (isUserM(sportType)) {
                     tvTitleValue3.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportDistance!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
                 } else {
-                    tvTitleValue3.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) + " " + resources.getString(R.string.unit_mi)
+                    tvTitleValue3.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportDistance!! / 1000f / 1.61f) + " " + resources.getString(R.string.unit_mi)
                 }
 
-                tvTitleValue6.text = SysUtils.bigDecimalFormat(((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f) / (sportModleInfo?.reportDuration!! / 3600.0))).toString() + " " + resources.getString(R.string.speed_unit_mi)
+                tvTitleValue6.text = SysUtils.bigDecimalFormat(((sportModleInfo?.reportDistance!! / 1000f / 1.61f) / (sportModleInfo?.reportDuration!! / 3600f))).toString() + " " + resources.getString(R.string.speed_unit_mi)
                 tvTitleValue11.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportCumulativeRise!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
                 tvTitleValue12.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportCumulativeDecline!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
                 tvAvgHeightValue.text = SysUtils.bigDecimalFormat(sportModleInfo?.reportAvgHeight!! * 3.28f) + " " + resources.getString(R.string.unit_ft)
@@ -256,9 +257,9 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
                 }
             }
 
-            tvAvgSpeed.text = SysUtils.bigDecimalFormat((sportModleInfo?.reportDistance!! / 1000.0 / (sportModleInfo?.reportDuration!! / 3600.0))).toString()
+            tvAvgSpeed.text = SysUtils.bigDecimalFormat((sportModleInfo?.reportDistance!! / 1000f / (sportModleInfo?.reportDuration!! / 3600f))).toString()
             if (unitType != 1) {
-                tvAvgSpeed.text = SysUtils.bigDecimalFormat((sportModleInfo?.reportDistance!! / 1000.0 / 1.61f / (sportModleInfo?.reportDuration!! / 3600.0))).toString()
+                tvAvgSpeed.text = SysUtils.bigDecimalFormat((sportModleInfo?.reportDistance!! / 1000f / 1.61f / (sportModleInfo?.reportDuration!! / 3600f))).toString()
                 tvAvgSpeedUnit.text = resources.getText(R.string.speed_unit_mi)
             }
 
@@ -271,7 +272,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
             }
 
             tvTotalCal.text = sportModleInfo?.reportCal!!.toString()
-            tvAvgCal.text = SysUtils.bigDecimalFormat((sportModleInfo?.reportCal!! / (sportModleInfo?.reportDuration!! / 60.0))).toString()
+            tvAvgCal.text = SysUtils.bigDecimalFormat((sportModleInfo?.reportCal!! / (sportModleInfo?.reportDuration!! / 60f))).toString()
 
             tvCumulativeRise.text = sportModleInfo?.reportCumulativeRise!!.toString()
             tvCumulativeDecline.text = sportModleInfo?.reportCumulativeDecline!!.toString()
@@ -570,27 +571,22 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
         tvTitleMaxSpeed.visibility = View.GONE
         tvTitleMaxSpeedValue.visibility = View.GONE
 
-        when (sportType) {
-            1 -> goneType1(recordPointDataValid1, recordPointDataValid2)
-            2 -> goneType1(recordPointDataValid1, recordPointDataValid2)
-            4 -> goneType1(recordPointDataValid1, recordPointDataValid2)
-            5 -> goneType1(recordPointDataValid1, recordPointDataValid2)
-
-            3 -> goneType2(recordPointDataValid1, recordPointDataValid2)
-
-            6 -> goneType3(recordPointDataValid1, recordPointDataValid2)
-
-            7 -> goneType4(recordPointDataValid1, recordPointDataValid2)
-            8 -> goneType4(recordPointDataValid1, recordPointDataValid2)
-            9 -> goneType4(recordPointDataValid1, recordPointDataValid2)
-            10 -> goneType4(recordPointDataValid1, recordPointDataValid2)
-            11 -> goneType4(recordPointDataValid1, recordPointDataValid2)
-            12 -> goneType4(recordPointDataValid1, recordPointDataValid2)
-            27 -> goneType4(recordPointDataValid1, recordPointDataValid2)
-            39 -> goneType4(recordPointDataValid1, recordPointDataValid2)
-
-            200 -> goneType5(recordPointDataValid1, recordPointDataValid2)
-            201 -> goneType5(recordPointDataValid1, recordPointDataValid2)
+        when {
+            FitnessTools.isData1(sportType) -> {
+                goneType1(recordPointDataValid1, recordPointDataValid2)
+            }
+            FitnessTools.isData2(sportType) -> {
+                goneType2(recordPointDataValid1, recordPointDataValid2)
+            }
+            FitnessTools.isData3(sportType) -> {
+                goneType3(recordPointDataValid1, recordPointDataValid2)
+            }
+            FitnessTools.isData4(sportType) -> {
+                goneType4(recordPointDataValid1, recordPointDataValid2)
+            }
+            FitnessTools.isData5(sportType) -> {
+                goneType5(recordPointDataValid1, recordPointDataValid2)
+            }
         }
     }
 
@@ -857,7 +853,7 @@ class DeviceSportDetailsActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     override fun onDestroy() {
-        mvAmap.onDestroy()
+//        mvAmap.onDestroy()
         super.onDestroy()
     }
 

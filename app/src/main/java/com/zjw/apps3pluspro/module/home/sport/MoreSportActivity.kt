@@ -1,9 +1,11 @@
 package com.zjw.apps3pluspro.module.home.sport
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.provider.Settings
+import android.view.LayoutInflater
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +16,7 @@ import com.zjw.apps3pluspro.R
 import com.zjw.apps3pluspro.adapter.MoreSportRecyclerAdapter
 import com.zjw.apps3pluspro.application.BaseApplication
 import com.zjw.apps3pluspro.base.BaseActivity
+import com.zjw.apps3pluspro.bleservice.anaylsis.FitnessTools
 import com.zjw.apps3pluspro.module.home.sport.DeviceSportManager.Companion.instance
 import com.zjw.apps3pluspro.module.home.sport.amap.AmapGpsSportActivity
 import com.zjw.apps3pluspro.module.home.sport.amap.AmapLocusActivity
@@ -31,7 +34,8 @@ class MoreSportActivity : BaseActivity() {
         var sportModleInfo: SportModleInfo? = null
     }
 
-    private lateinit var pageManageRecyclerAdapter: MoreSportRecyclerAdapter
+    private lateinit var moreSportRecyclerAdapter: MoreSportRecyclerAdapter
+
     //加载相关
     private var waitDialog: WaitDialog? = null
     private val TAG = MoreSportActivity::class.java.simpleName
@@ -44,10 +48,12 @@ class MoreSportActivity : BaseActivity() {
         return R.layout.more_sport_activity
     }
 
+    @SuppressLint("SetTextI18n")
     override fun initViews() {
         super.initViews()
         public_head_title.text = resources.getString(R.string.movement_history)
-        ivTitleType.background = ContextCompat.getDrawable(this@MoreSportActivity, R.mipmap.title_gps_icon)
+        ivTitleType.background =
+            ContextCompat.getDrawable(this@MoreSportActivity, R.mipmap.title_gps_icon)
         waitDialog = WaitDialog(this)
 
         recyclerView.layoutManager = LinearLayoutManager(this);
@@ -65,7 +71,8 @@ class MoreSportActivity : BaseActivity() {
                 if (isClick) {
                     //如果等于加入的数据，类型等于 ONE_TYPE,则查询数据
                     if (calendar.scheme != null && calendar.scheme != ""
-                            && calendar.scheme == MyCalendarUtils.ONE_TYPE) {
+                        && calendar.scheme == MyCalendarUtils.ONE_TYPE
+                    ) {
                         selectionDate = date
                         public_head_title.text = selectionDate
                         calendarLayout.shrink()
@@ -107,23 +114,29 @@ class MoreSportActivity : BaseActivity() {
     fun queryData() {
         val startTime = NewTimeUtils.getLongTime(selectionDate, NewTimeUtils.TIME_YYYY_MM_DD)
         val endTime = startTime + 24 * 3600 * 1000L - 1
-        sportModleInfos = mSportModleInfoUtils.queryByTime(startTime, endTime) as ArrayList<SportModleInfo>
+        sportModleInfos =
+            mSportModleInfoUtils.queryByTime(startTime, endTime) as ArrayList<SportModleInfo>
 
         if (sportModleInfos.size == 0) {
-            pageManageRecyclerAdapter = MoreSportRecyclerAdapter(context, sportModleInfos)
-            recyclerView.adapter = pageManageRecyclerAdapter
-            pageManageRecyclerAdapter.notifyDataSetChanged()
+            moreSportRecyclerAdapter = MoreSportRecyclerAdapter(context, sportModleInfos)
+            recyclerView.adapter = moreSportRecyclerAdapter
+            moreSportRecyclerAdapter.notifyDataSetChanged()
 
-            instance.getMoreSportData(selectionDate.toString(), object : DeviceSportManager.GetDataSuccess {
-                override fun onSuccess() {
-                    sportModleInfos = mSportModleInfoUtils.queryByTime(startTime, endTime) as ArrayList<SportModleInfo>
-                    initNotify()
-                }
+            instance.getMoreSportData(
+                selectionDate.toString(),
+                object : DeviceSportManager.GetDataSuccess {
+                    override fun onSuccess() {
+                        sportModleInfos = mSportModleInfoUtils.queryByTime(
+                            startTime,
+                            endTime
+                        ) as ArrayList<SportModleInfo>
+                        initNotify()
+                    }
 
-                override fun onError() {
-                    initNotify()
-                }
-            })
+                    override fun onError() {
+                        initNotify()
+                    }
+                })
         } else {
             initNotify()
         }
@@ -137,9 +150,15 @@ class MoreSportActivity : BaseActivity() {
             layoutNoData.visibility = View.GONE
             layoutData.visibility = View.VISIBLE
         }
-        pageManageRecyclerAdapter = MoreSportRecyclerAdapter(context, sportModleInfos)
-        recyclerView.adapter = pageManageRecyclerAdapter
-        pageManageRecyclerAdapter.setmCallback { v, position ->
+
+        moreSportRecyclerAdapter = MoreSportRecyclerAdapter(context, sportModleInfos)
+
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerView.layoutManager = layoutManager
+
+        recyclerView.adapter = moreSportRecyclerAdapter
+        moreSportRecyclerAdapter.setmCallback { v, position ->
             sportModleInfo = sportModleInfos[position]
 
             if (sportModleInfo != null) {
@@ -165,7 +184,20 @@ class MoreSportActivity : BaseActivity() {
                 }
             }
         }
-        pageManageRecyclerAdapter.notifyDataSetChanged()
+        var totalCal = 0
+        for (sportModleInfo in sportModleInfos) {
+            if (sportModleInfo.dataSourceType == 1) {
+                totalCal += sportModleInfo.reportCal.toInt()
+            } else {
+                totalCal += sportModleInfo.calorie.toInt()
+            }
+        }
+
+        val header: View =
+            LayoutInflater.from(this).inflate(R.layout.more_sport_head, recyclerView, false);
+        moreSportRecyclerAdapter.setHeaderView(header)
+        moreSportRecyclerAdapter.setTotalCal(totalCal)
+        moreSportRecyclerAdapter.notifyDataSetChanged()
     }
 
     @OnClick(R.id.layoutCalendar, R.id.start_sport)
@@ -179,7 +211,7 @@ class MoreSportActivity : BaseActivity() {
                 }
             }
             R.id.start_sport -> {
-                startGpsSport();
+                startGpsSport()
             }
         }
     }
@@ -209,14 +241,15 @@ class MoreSportActivity : BaseActivity() {
 
     private fun showSettingGps() {
         AlertDialog.Builder(this)
-                .setTitle(getString(R.string.dialog_prompt)) //设置对话框标题
-                .setMessage(getString(R.string.open_gps)) //设置显示的内容
-                .setPositiveButton(getString(R.string.dialog_yes)) { dialog, which ->
-                    val intent = Intent(
-                            Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                    startActivity(intent) // 设置完成后返回到原来的界面
-                }.setNegativeButton(getString(R.string.dialog_no)) { dialog, which ->
-                }.show() //在按键响应事件中显示此对话框
+            .setTitle(getString(R.string.dialog_prompt)) //设置对话框标题
+            .setMessage(getString(R.string.open_gps)) //设置显示的内容
+            .setPositiveButton(getString(R.string.dialog_yes)) { dialog, which ->
+                val intent = Intent(
+                    Settings.ACTION_LOCATION_SOURCE_SETTINGS
+                )
+                startActivity(intent) // 设置完成后返回到原来的界面
+            }.setNegativeButton(getString(R.string.dialog_no)) { dialog, which ->
+            }.show() //在按键响应事件中显示此对话框
     }
 
 

@@ -156,6 +156,12 @@
         <attr name="stepHistogramView_isDrawX0" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="roundProgress2View">
+        <attr name="round_progress_bg" format="color" />
+        <attr name="round_progress_filling" format="color" />
+        <attr name="round_progress_width" format="integer" />
+    </declare-styleable>
+
     <string-array name="more_sport">
         <item>@string/more_sport_1</item>
         <item>@string/more_sport_2</item>

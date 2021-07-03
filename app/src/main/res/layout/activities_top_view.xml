@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:roundProgress2View="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#313841"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="28dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom|right">
+
+            <LinearLayout
+                android:id="@+id/layoutHeart"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/activities_top_round_bg"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/activities_top_left" />
+
+                <TextView
+                    android:id="@+id/tvHeart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_data_default"
+                    android:textColor="#ffc6cacf"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bpm"
+                    android:textColor="#ffc6cacf"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutMainView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="28dp"
+            android:layout_weight="2">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal">
+
+                <com.zjw.apps3pluspro.view.RoundProgress2View
+                    android:id="@+id/roundViewDistance"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    roundProgress2View:round_progress_bg="#444D58"
+                    roundProgress2View:round_progress_filling="#FFA557"
+                    roundProgress2View:round_progress_width="13" />
+
+                <ImageView
+                    android:id="@+id/ivActivitiesTopDistance"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:background="@mipmap/activities_top_distance"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginBottom="1dp"
+                    android:text="@string/sport_distance"
+                    android:textColor="#ffc6cacf"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivActivitiesTopDistance"
+                    app:layout_constraintRight_toLeftOf="@+id/ivActivitiesTopDistance"
+                    app:layout_constraintTop_toTopOf="@+id/ivActivitiesTopDistance" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <com.zjw.apps3pluspro.view.RoundProgress2View
+                    android:id="@+id/roundViewStep"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    roundProgress2View:round_progress_bg="#444D58"
+                    roundProgress2View:round_progress_filling="#57FFB5"
+                    roundProgress2View:round_progress_width="13" />
+
+                <ImageView
+                    android:id="@+id/ivActivitiesTopStep"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:background="@mipmap/activities_top_step"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginBottom="1dp"
+                    android:text="@string/steps"
+                    android:textColor="#ffc6cacf"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivActivitiesTopStep"
+                    app:layout_constraintRight_toLeftOf="@+id/ivActivitiesTopStep"
+                    app:layout_constraintTop_toTopOf="@+id/ivActivitiesTopStep" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <com.zjw.apps3pluspro.view.RoundProgress2View
+                    android:id="@+id/roundViewCal"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    roundProgress2View:round_progress_bg="#444D58"
+                    roundProgress2View:round_progress_filling="#FFD857"
+                    roundProgress2View:round_progress_width="13" />
+
+                <ImageView
+                    android:id="@+id/ivActivitiesTopCal"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="0dp"
+                    android:background="@mipmap/activities_top_cal"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginBottom="1dp"
+                    android:text="@string/sport_calorie"
+                    android:textColor="#ffc6cacf"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivActivitiesTopCal"
+                    app:layout_constraintRight_toLeftOf="@+id/ivActivitiesTopCal"
+                    app:layout_constraintTop_toTopOf="@+id/ivActivitiesTopCal" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom">
+
+            <LinearLayout
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/activities_top_round_bg"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/activities_top_right" />
+
+                <TextView
+                    android:id="@+id/tvBodyWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/no_data_default"
+                    android:textColor="#ffc6cacf"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tvBodyWeightUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="lib"
+                    android:textColor="#ffc6cacf"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="20dp">
+
+        <LinearLayout
+            android:id="@+id/layoutMoreSport"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:background="@drawable/activities_top_sport_bg"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/activities_top_sport_bg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="workouts"
+                android:textColor="#ffc6cacf"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

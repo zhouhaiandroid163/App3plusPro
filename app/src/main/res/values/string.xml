@@ -1120,6 +1120,8 @@
     <string name="more_sport_202">Rowing machine</string>
     <string name="more_sport_203">Rope skipping</string>
     <string name="more_sport_204">Triathlon</string>
+    <string name="goal">Goal:&#160;</string>
+    <string name="total_cal">Total calories</string>
     <!-- 默认英文 -->
 
     <!-- ========================其他======================== -->

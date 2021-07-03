@@ -95,7 +95,8 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#464E58">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -107,41 +108,37 @@
                 android:orientation="vertical"
                 android:paddingBottom="24dp">
 
-                <TextView
-                    android:id="@+id/tvDataTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="12dp"
-                    android:text="today data"
-                    android:textColor="#000011"
-                    android:textSize="15sp"
+                <include
+                    layout="@layout/page_device_gps_layout"
                     android:visibility="gone" />
 
-                <include layout="@layout/page_device_gps_layout"
-                    android:visibility="gone"/>
+                <include layout="@layout/activities_top_view" />
 
                 <LinearLayout
-                    android:id="@+id/layoutParent"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:background="#464E58"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/layoutLeft"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutRight"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
 
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvDataCardSorting"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/selector_white_bg"
-                    android:gravity="center"
-                    android:text="@string/data_card_sorting"
-                    android:textColor="#ff000011"
-                    android:visibility="gone" />
 
             </LinearLayout>
         </ScrollView>

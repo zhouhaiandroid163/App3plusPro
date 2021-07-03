@@ -41,6 +41,7 @@ import com.zjw.apps3pluspro.module.device.clockdial.ClockDialActivity;
 import com.zjw.apps3pluspro.module.device.clockdial.CustomClockDialUtils;
 import com.zjw.apps3pluspro.module.device.clockdial.MyThemeActivity;
 import com.zjw.apps3pluspro.module.device.clockdial.ThemeMarketActivity;
+import com.zjw.apps3pluspro.module.device.reminde.AlarmClockActivity;
 import com.zjw.apps3pluspro.module.device.reminde.MessagePushActivity;
 import com.zjw.apps3pluspro.module.device.reminde.DisturbActivity;
 import com.zjw.apps3pluspro.module.device.reminde.RemindSettingActivity;
@@ -203,6 +204,8 @@ public class DeviceFragment extends BaseFragment {
     ImageView ivCover3;
     @BindView(R.id.layoutContact)
     LinearLayout layoutContact;
+    @BindView(R.id.layoutAlarm)
+    LinearLayout layoutAlarm;
 
     @BindView(R.id.tvTitleTop)
     TextView tvTitleTop;
@@ -228,13 +231,16 @@ public class DeviceFragment extends BaseFragment {
         } else {
             layoutPhotograph.setVisibility(View.GONE);
         }
-
         if (mBleDeviceTools.getIsSupportRaiseWristBrightenScreen()) {
             layoutRaiseWristBrightenScreen.setVisibility(View.VISIBLE);
         } else {
             layoutRaiseWristBrightenScreen.setVisibility(View.GONE);
         }
-
+        if (mBleDeviceTools.getIsSupportAlarmClock()) {
+            layoutAlarm.setVisibility(View.VISIBLE);
+        } else {
+            layoutAlarm.setVisibility(View.GONE);
+        }
 
         initDeviceView();
         initSwitchCompat();
@@ -676,7 +682,7 @@ public class DeviceFragment extends BaseFragment {
 
 
     @SuppressLint("MissingPermission")
-    @OnClick({R.id.layoutDialMarket, R.id.layoutMessage, R.id.layoutRemind, R.id.layoutAddDevice,
+    @OnClick({R.id.layoutDialMarket, R.id.layoutMessage, R.id.layoutRemind, R.id.layoutAddDevice, R.id.layoutAlarm,
             R.id.layoutFindDevice, R.id.layoutPhotograph, R.id.layoutMoreSetting, R.id.layoutUseGuide, R.id.tvUnbind, R.id.layoutRunningPermission,
             R.id.layoutScreensaver, R.id.layoutContact,
             R.id.layoutNotRemind,
@@ -869,6 +875,13 @@ public class DeviceFragment extends BaseFragment {
             case R.id.layoutRemind:
                 if (homeActivity.DeviceIsConnect()) {
                     startActivity(new Intent(context, RemindSettingActivity.class));
+                } else {
+                    AppUtils.showToast(context, R.string.no_connection_notification);
+                }
+                break;
+            case R.id.layoutAlarm:
+                if (homeActivity.DeviceIsConnect()) {
+                    startActivity(new Intent(context, AlarmClockActivity.class));
                 } else {
                     AppUtils.showToast(context, R.string.no_connection_notification);
                 }

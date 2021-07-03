@@ -303,6 +303,41 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutAlarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_click"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout style="@style/device_fragment_constraint_layout">
+
+                    <TextView
+                        android:id="@+id/tvTitleAlarm"
+                        style="@style/device_fragment_title"
+                        android:text="@string/colok_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        style="@style/device_fragment_message"
+                        android:text="@string/device_remind_set_content"
+                        android:visibility="gone"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitleAlarm" />
+
+                    <ImageView
+                        style="@style/device_fragment_right_image"
+                        android:background="@mipmap/icon_enter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include layout="@layout/line_layout" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/layoutNotRemind"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
