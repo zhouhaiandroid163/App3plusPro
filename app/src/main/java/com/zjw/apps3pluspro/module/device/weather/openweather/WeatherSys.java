@@ -7,7 +7,7 @@ package com.zjw.apps3pluspro.module.device.weather.openweather;
 public class WeatherSys {
     public String type;
     public String id;
-    public String country;
+    public String country = "unknown";
     public String sunrise;
     public String sunset;
     public String pod;
