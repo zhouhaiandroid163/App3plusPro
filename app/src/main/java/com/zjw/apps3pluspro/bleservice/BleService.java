@@ -1726,11 +1726,7 @@ public class BleService extends Service {
                                 if (channelList.size() > 0) {
                                     curCharacteristic = channelList.remove(0);
                                     SysUtils.logContentW(TAG, curCharacteristic.getUuid().toString() + " last channel size = " + channelList.size());
-                                    if (enableNotificationBoolean(TAG, mBluetoothGatt, curCharacteristic)) {
-                                        isEnable = false;
-                                        removeChannelTimer();
-                                        mChannelHandler.postDelayed(mChannelRunnable, 2000);
-                                    } else {
+                                    if (!enableNotificationBooleanNew(mBluetoothGatt, curCharacteristic)) {
                                         isRecycleEnable = true;
                                         connectBleRXError();
                                         return;
@@ -2687,6 +2683,38 @@ public class BleService extends Service {
         }
     }
 
+    private boolean enableNotificationBooleanNew(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+        enableTime = System.currentTimeMillis();
+        try {
+            if (gatt != null) {
+                if (characteristic != null) {
+                    gatt.setCharacteristicNotification(characteristic, true);
+                    final BluetoothGattDescriptor descriptor = characteristic.getDescriptor(BleConstant.CCCD);
+                    descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+
+                    boolean result = gatt.writeDescriptor(descriptor);
+                    if(result){
+                        isEnable = false;
+                        removeChannelTimer();
+                        mChannelHandler.postDelayed(mChannelRunnable, 2000);
+                    }
+                    SysUtils.logContentI(TAG, "enableNotificationBoolean  = " + result);
+                    SysUtils.logAppRunning(TAG, "enableNotificationBoolean  = " + result);
+                    return result;
+                } else {
+                    SysUtils.logContentI(TAG, "enableNotificationBoolean characteristic == null ");
+                    SysUtils.logAppRunning(TAG, "enableNotificationBoolean characteristic == null");
+                    return false;
+                }
+            } else {
+                SysUtils.logContentI(TAG, "enableNotificationBoolean gatt = null " + false);
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     // 计时器
     private Handler OffLineOverHandler = new Handler() {

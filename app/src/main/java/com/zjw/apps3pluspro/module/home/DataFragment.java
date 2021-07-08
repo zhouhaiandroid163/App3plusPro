@@ -782,6 +782,11 @@ public class DataFragment extends BaseFragment {
         if (distanceProgress > 100) {
             tvProgress_distance.setText("100%");
         }
+        if(distanceProgress == 0){
+            ivActivitiesTopDistance.setBackground(getResources().getDrawable(R.mipmap.activities_top_distance));
+        } else {
+            ivActivitiesTopDistance.setBackground(getResources().getDrawable(R.mipmap.activities_top_distance_1));
+        }
         mRoundProgress2View_distance.setProgress(0, distanceProgress, 0);
 
         tvValue_step.setText(steps);
@@ -793,6 +798,7 @@ public class DataFragment extends BaseFragment {
         if (stepProgress > 100) {
             tvProgress_step.setText("100%");
         }
+        ivActivitiesTopStep.setBackground(getResources().getDrawable(R.mipmap.activities_top_step_1));
         mRoundProgress2View_step.setProgress(0, stepProgress, 0);
 
         tvValue_cal.setText(cal);
@@ -804,11 +810,13 @@ public class DataFragment extends BaseFragment {
         if (calProgress > 100) {
             tvProgress_cal.setText("100%");
         }
+        if(calProgress == 0){
+            ivActivitiesTopCal.setBackground(getResources().getDrawable(R.mipmap.activities_top_cal));
+        } else {
+            ivActivitiesTopCal.setBackground(getResources().getDrawable(R.mipmap.activities_top_cal_1));
+        }
         mRoundProgress2View_cal.setProgress(0, calProgress, 0);
 
-        ivActivitiesTopDistance.setBackground(getResources().getDrawable(R.mipmap.activities_top_distance_1));
-        ivActivitiesTopStep.setBackground(getResources().getDrawable(R.mipmap.activities_top_step_1));
-        ivActivitiesTopCal.setBackground(getResources().getDrawable(R.mipmap.activities_top_cal_1));
         roundViewDistance.setProgress(0, distanceProgress, 0);
         roundViewStep.setProgress(0, stepProgress, 0);
         roundViewCal.setProgress(0, calProgress, 0);
